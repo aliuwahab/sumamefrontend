@@ -1,4 +1,4 @@
-# Learn Rite Admin Frontend
+# Somame Admin Frontend
 
 ## User Guide
 
