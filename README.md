@@ -16,64 +16,6 @@ This project structure was generated using the Yeoman flow and customized to add
 
 More information on the gulp tasks [below](user-guide.md).
 
-## Directory structure
-
-Structure follows the [Best Practice Recommendations for Angular App Structure](https://docs.google.com/document/d/1XXMvReO8-Awi1EZXAXS4PzDzdNvV6pGcuaF4Q9821Es/pub)
-
-The root directory generated with default paths configuration for application with name `somameAdmin`:
-
-<pre>
-├──  bower_components/
-├──  configs/
-├──  e2e/
-├──  env/
-├──  gulp/
-├──  nodes_modules/
-│
-├──  src/
-│   ├──  app/
-│   │   ├──  components/
-│   │   │   └──  sidebar/
-│   │   │   │   └──  sidebar.controller.js
-│   │   │   │
-
-│   │   │   └──  navbar/
-│   │   │   │   ├──  navbar.directive.js
-│   │   │   │   ├──  navbar.html
-│   │   │   │   └──  navbar.scss
-│   │   │   │
-│   │   │   └──  webDevTec/
-│   │   │       └──  webDevTec.service.js
-│   │   │
-│   │   ├──  dashboard/
-│   │   │   ├──  dashboard.controller.js
-│   │   │   ├──  dashboard.controller.spec.js
-│   │   │   └──  dasboard.html
-│   │   │
-│   │   └──  index.config.js
-│   │   └──  index.constants.js
-│   │   └──  index.module.js
-│   │   └──  index.route.js
-│   │   └──  index.run.js
-│   │   └──  index.scss
-|   |
-│   ├──  assets/
-│   │   └──  images/
-│   ├──  favico.ico
-│   └──  index.html
-│
-├──  .bowerrc
-├──  .editorconfig
-├──  .gitignore
-├──  .eslintrc
-├──  bower.json
-├──  gulpfile.js
-├──  karma.conf.js
-├──  package.json
-└──  protractor.conf.js
-</pre>
-
-
 ## Features included in the gulpfile
 * *useref* : allow configuration of your files in comments of your HTML file
 * *ngAnnotate* : convert simple injection to complete syntax to be minification proof
