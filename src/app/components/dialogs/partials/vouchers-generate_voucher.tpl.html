@@ -1,0 +1,81 @@
+<md-dialog aria-label="Add Consultant">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Generate Vouchers</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="width:700px;">
+
+      <div ng-if="generatingVouchers" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div ng-if="!generatingVouchers && !finishedGeneratingVouchers">
+        <md-input-container class="sm-input-container">
+          <label>Voucher Duration (In Months)</label>
+          <input type="text" ng-model="newVoucher.duration_in_months" required>
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Number of Vouchers to Generate</label>
+          <input type="text" ng-model="newVoucher.quantity_to_generate" required>
+        </md-input-container>
+      </div>
+
+      <div ng-if="finishedGeneratingVouchers">
+        <div class="voucher-print-section noPrintMargin" print-section>
+          <md-card class="sm-voucher-card" ng-repeat="voucher in generatedVouchers">
+            <md-card-content>
+              <div layout="row">
+                <div layout="column" class="sm-voucher-section-left">
+                  <h1 class="sm-voucher-title">Learn Rite Top Up Voucher</h1>
+                  <h4 class="sm-voucher-subtitle">Learn. Collaborate. Succeed.</h4>
+
+                  <p class="sm-voucher-duration">{{voucher.duration_in_months}} MONTHS (GHC 10)</p>
+                  <div class="sm-voucher-code-container">
+                    {{voucher.voucher_code}}
+                  </div>
+                  <div class="sm-topup-instructions-container">
+                    <p class="sm-topup-instructions-title">TOP UP INSTRUCTIONS</p>
+                    <ol class="sm-topup-instructions-ol">
+                      <li class="sm-topup-instructions-ol-item">Download the Learn Rite mobile app.</li>
+                      <li class="sm-topup-instructions-ol-item">Create an account, verify your phone number and login.</li>
+                      <li class="sm-topup-instructions-ol-item">You'll either be prompted or go settings and choose topup.</li>
+                    </ol>
+                  </div>
+                </div>
+                <div layout="column" class="sm-voucher-section-right">
+                  <h3 class="sm-about-title">About Learn Rite</h3>
+                  <p class="sm-about-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+                  <qrcode version="2" error-correction-level="M" size="80" data="{{voucher.voucher_code}}" class="sm-qr-code-image"></qrcode>
+
+                  <!-- <img class="sm-qr-code-image" src="assets/images/static_qr_code_without_logo.jpg" alt="Learn Rite QR Code"> -->
+                </div>
+              </div>
+            </md-card-content>
+          </md-card>
+        </div>
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button class="md-raised md-accent" ng-show="finishedGeneratingVouchers" print-btn>
+        Print
+      </md-button>
+      <md-button class="md-raised md-accent" ng-click="generateVouchers()" ng-show="!finishedGeneratingVouchers">
+        Generate Vouchers
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

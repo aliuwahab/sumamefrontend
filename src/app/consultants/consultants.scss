@@ -1,0 +1,113 @@
+.sm-consultant-card {
+
+  margin-bottom: 25px;
+
+  .sm-consultant-content {
+    padding-bottom: 0px;
+  }
+
+  .sm-consultant-avatar {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    display: table;
+  }
+  .sm-consultant-name {
+    margin: 5px 0px 5px 20px;
+    font-size: 20px;
+  }
+  .sm-consultant-profile-except {
+    margin: 5px 10px 5px 20px;
+  }
+  .sm-consultant-footer {
+
+    border-top: 1px solid #e0e0e0;
+    padding: 0px 0px 0px 0px;
+    margin: 15px 15px 0px 15px;
+
+    .sm-consultant-footer-metadata {
+      font-size: 12px;
+      margin-right: 80px;
+    }
+
+    .md-button {
+      height: 20px;
+    }
+  }
+}
+
+.sm-cs-view-avatar {
+  border-radius: 50%;
+  height: 130px;
+  width: 130px;
+}
+.sm-cs-info {
+  padding-left: 30px;
+  .sm-cs-info-name {
+    margin-top: 0px;
+  }
+
+}
+.sm-cs-info-contact {
+  margin-top: 0px;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+.sm-cs-profile {
+  border-left: 1px solid #9E9E9E;
+  padding-left: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .sm-consultant-footer-metadata {
+    margin-right: 5px !important;
+  }
+
+  .sm-consultant-footer {
+    .md-button {
+      // width: 20px;
+    }
+  }
+}
+
+
+.sm-consultant-header {
+  background-color: #2196F3;
+  padding-bottom: 30px;
+}
+.sm-consultant-dp {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 10px 0px 10px 0px;
+}
+.sm-consultant-name {
+  margin-top: 0px;
+  color: white;
+  margin-bottom: 0px;
+}
+.sm-consultant-info {
+  background-color: #FAFAFA;
+  padding: 20px 50px 20px 50px;
+}
+.sm-consultant-profile-container {
+  padding: 30px 50px 50px 50px;
+}
+.sm-consultant-school {
+  color: rgba(255, 255, 255, 0.72);
+  margin-top: 0px;
+  font-weight: 100;
+  margin-bottom: 5px;
+}
+.sm-consultant-info-column {
+  width: 49%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+.sm-consultant-info-column.left {
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
+.sm-consultant-info-column.right {
+  padding-left: 30px;
+}

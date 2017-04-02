@@ -1,0 +1,53 @@
+<md-toolbar>
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button"
+            aria-label="Menu Button"
+            hide-gt-md
+            ng-click="onClickMenu();">
+          <md-icon
+            md-svg-icon="assets/icons/menu.svg"
+            aria-label="Menu Icon">
+          </md-icon>
+      </md-button>
+
+      <h2>This Week's Trending Questions</h2>
+
+      <span flex></span>
+
+      <md-button class="md-raised md-accent" href="#go_trending_questions" aria-label="description" md-ripple-size="full">View All Questions</md-button>
+    </div>
+</md-toolbar>
+
+<div class="sm-main-container">
+
+  <div ng-if="!goTrendingLoaded" layout="row" layout-align="center center" style="min-height: 80vh;">
+    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+  </div>
+
+  <div class="flex-grid" ng-if="goTrendingLoaded">
+    <div class="col" ng-repeat="trend in trends">
+      <md-card>
+        <md-card-content class="sm-winner-trender-card" layout-align="center center">
+          <div class="sm-winner-trender-subject">{{trend.subject.subject_name}}</div>
+          <img ng-if="trend.asked_by.display_pictures_urls" class="sm-winner-trender-avatar" ng-src="{{splitDisplayPicUrl(trend.asked_by.display_pictures_urls)}}" alt="Avatar">
+          <img ng-if="!trend.asked_by.display_pictures_urls" class="sm-user-gravatar" gravatar-src="'{{trend.asked_by.email}}'" gravatar-size="200"/>
+          <h3 class="sm-winner-trender-name">{{trend.asked_by.first_name}} {{trend.asked_by.last_name}}</h3>
+          <p class="sm-winner-trender-school">{{trend.asked_by.school.school_name}}</p>
+          <p class="sm-winner-trender-followers"><span><i class="material-icons md-12">supervisor_account</i></span> {{trend.number_of_followers | number:0}} Follower(s)</p>
+          <div class="sm-winner-trender-card-divider"></div>
+          <p class="sm-winner-trender-question">{{trend.question_in_text | characters:90 :false}}</p>
+          <div ng-if="trend.answering_status == 'answered'" class="sm-winner-trender-answered">Answered</div>
+          <md-button class="md-raised md-primary" href="#question/{{trend.id}}" aria-label="description" md-no-ink="false" md-ripple-size="full">See Details</md-button>
+        </md-card-content>
+      </md-card>
+    </div>
+  </div>
+
+  <div ng-if="trends.length == '0'">
+    <md-card>
+      <md-card-content>
+        <p>No trending questions this week.</p>
+      </md-card-content>
+    </md-card>
+  </div>
+</div>

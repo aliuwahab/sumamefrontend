@@ -1,0 +1,104 @@
+<md-dialog aria-label="Add Consultant">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add Examiner</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="width:700px;">
+      <div ng-if="addingConsultant || !allRequiredDataLoaded" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div ng-show="allRequiredDataLoaded && !addingConsultant">
+        <md-input-container class="sm-input-container">
+          <label>Type of Consultant</label>
+          <md-select ng-model="newConsultant.type_of_consultant">
+            <md-option value="chief_examiner">Chief Examiner</md-option>
+            <md-option value="normal_examiner">Normal Examiner</md-option>
+          </md-select>
+        </md-input-container>
+
+        <div layout="row">
+          <md-input-container class="sm-input-container">
+            <label>First Name</label>
+            <input type="text" ng-model="newConsultant.first_name">
+          </md-input-container>
+          <md-input-container class="sm-input-container">
+            <label>Last Name</label>
+            <input type="text" ng-model="newConsultant.last_name">
+          </md-input-container>
+        </div>
+
+        <div layout="row">
+          <md-input-container class="sm-input-container">
+            <label>Email Address</label>
+            <input type="email" ng-model="newConsultant.email">
+          </md-input-container>
+
+          <md-input-container class="sm-input-container">
+            <label>Phone Number</label>
+            <input type="text" ng-model="newConsultant.phone_number">
+          </md-input-container>
+        </div>
+
+        <div layout="row">
+          <md-input-container class="sm-input-container">
+            <label>Title</label>
+            <input type="text" ng-model="newConsultant.user_title">
+          </md-input-container>
+
+          <md-input-container class="sm-input-container">
+            <label>Sub Title</label>
+            <input type="text" ng-model="newConsultant.user_subtitle">
+          </md-input-container>
+        </div>
+
+        <md-input-container style="width:100%;">
+          <label>Assigned Subject</label>
+          <md-select ng-model="newConsultant.subject_id">
+            <md-option ng-value="subject.id" ng-repeat="subject in subjects">{{subject.subject_name}}</md-option>
+          </md-select>
+        </md-input-container>
+
+        <h4>Profile Picture</h4>
+        <div class="sm-dropzone" ngf-select="uploadProfileImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+          <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
+            <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
+            <p>Uploading Image: {{uploadProgress}}% complete</p>
+          </div>
+          <div ng-if="!uploadingImage" layout="column" layout-align="center center">
+            <i class="material-icons md-24">backup</i>
+            <p ng-if="!newConsultant.display_pictures_urls">Click here to select an image</p>
+            <p ng-if="newConsultant.display_pictures_urls">Click here to change image</p>
+
+            <div class="" ng-if="newConsultant.display_pictures_urls" style="max-width:700px">
+              <img style="width: 400px; height: auto;" ng-src="{{newConsultant.display_pictures_urls}}" alt="Answer Image Preview">
+            </div>
+          </div>
+        </div>
+
+        <h4>Profile Text</h4>
+        <md-input-container class="md-block">
+          <textarea ui-tinymce ng-model="newConsultant.user_profile" aria-label="Consultant Profile" md-select-on-focus></textarea>
+        </md-input-container>
+
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="addConsultant()" class="md-raised md-accent">
+        Add Consultant
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

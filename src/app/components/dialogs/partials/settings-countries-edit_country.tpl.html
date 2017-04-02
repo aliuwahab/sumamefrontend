@@ -1,0 +1,59 @@
+<md-dialog aria-label="Add Consultant">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Edit Country</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="min-width:700px;">
+
+      <div ng-if="processingData || loadingPrerequiredData" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div ng-show="!loadingPrerequiredData && !processingData">
+        <md-input-container class="sm-input-container">
+          <label>Country Full Name</label>
+          <input type="text" ng-model="editedObject.country_full_name">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Country Short Name</label>
+          <input type="text" ng-model="editedObject.country_short_name">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Country Code</label>
+          <input type="text" ng-model="editedObject.country_call_code">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Country Description</label>
+          <textarea type="text" ng-model="editedObject.country_description" rows="5"></textarea>
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <md-switch ng-model="editedObject.country_status" class="md-primary" ng-true-value="1" ng-false-value="0" aria-label="school status">
+            <p ng-if="editedObject.country_status == 1">Active</p>
+            <p ng-if="editedObject.country_status == 0">Inactive</p>
+          </md-switch>
+        </md-input-container>
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="performEditOperation('edit_countries')" class="md-raised md-accent">
+        Save Country
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

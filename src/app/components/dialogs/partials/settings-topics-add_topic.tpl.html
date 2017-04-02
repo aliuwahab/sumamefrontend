@@ -1,0 +1,56 @@
+<md-dialog aria-label="Add Consultant">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add Topic</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="min-width:700px;">
+
+      <div ng-if="processingData || loadingPrerequiredData" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div ng-show="!loadingPrerequiredData && !processingData">
+        <md-input-container class="sm-input-container">
+          <label>Topic Name</label>
+          <input type="text" ng-model="newSettingsObject.topic_name">
+        </md-input-container>
+
+        <md-input-container style="width:100%;">
+          <label>Subject</label>
+          <md-select ng-model="newSettingsObject.subject_id">
+            <md-option ng-value="subject.id" ng-repeat="subject in get_subjects.data.subjects">{{subject.subject_name}}</md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Description</label>
+          <textarea ng-model="newSettingsObject.topic_description" rows="2" md-select-on-focus></textarea>
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <md-switch ng-model="newSettingsObject.topic_status" class="md-primary" ng-true-value="1" ng-false-value="0" aria-label="topic status">
+            <p ng-if="newSettingsObject.topic_status == 1">Active</p>
+            <p ng-if="newSettingsObject.topic_status == 0">Inactive</p>
+          </md-switch>
+        </md-input-container>
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="performCreateOperation('add_topics')" class="md-raised md-accent">
+        Add Topic
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

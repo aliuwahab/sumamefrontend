@@ -1,0 +1,192 @@
+/**
+ *  Do not remove the comment below. It's the markers used by wiredep to inject
+ *  sass dependencies when defined in the bower.json of your dependencies
+ */
+// bower:scss
+// endbower
+
+@import url(https://fonts.googleapis.com/css?family=Roboto+Slab:400,700|Roboto:400,700,700italic,400italic);
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(../../bower_components/material-design-iconfont/iconfont/MaterialIcons-Regular.eot); /* For IE6-8 */
+  src: local('Material Icons'),
+       local('MaterialIcons-Regular'),
+       url(../../bower_components/material-design-iconfont/iconfont/MaterialIcons-Regular.woff2) format('woff2'),
+       url(../../bower_components/material-design-iconfont/iconfont/MaterialIcons-Regular.woff) format('woff'),
+       url(../../bower_components/material-design-iconfont/iconfont/MaterialIcons-Regular.ttf) format('truetype');
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  // font-size: 24px;  /* Preferred icon size */
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+i {
+  vertical-align: middle;
+}
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+html {
+  font-family: 'Roboto Slab', serif;
+}
+[layout=row] {
+  flex-direction: row;
+}
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+.sm-main-view {
+  background-color: white;
+}
+md-toolbar.md-default-theme {
+  background-color: black;
+}
+section.jumbotron {
+  margin-bottom: 30px;
+  padding: 1px 30px;
+  background-color: #5aadbb;
+  text-align: center;
+
+  color: white;
+
+  h1 {
+    font-size: 3em;
+  }
+}
+md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar){
+  background-color: white;
+}
+.sm-main-container{
+  padding: 20px;
+  overflow-y: scroll;
+}
+.techs {
+  display: flex;
+  flex-flow: row wrap;
+
+  md-card {
+    width: 30%;
+
+    img.pull-right {
+      float: right;
+      width: 100px;
+    }
+  }
+}
+.table-container{
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 20px;
+  overflow-y: scroll;
+}
+.md-button{
+  text-transform: none;
+  padding: 0px 15px;
+  min-width: 10px;
+  padding: 0px 12px;
+}
+.sm-modal-content{
+  padding: 50px;
+}
+.sm-input-container{
+  width: 100%;
+}
+.wordwrap {
+   white-space: pre-wrap;      /* Webkit */
+   white-space: -moz-pre-wrap; /* Firefox */
+   white-space: -pre-wrap;     /* Opera <7 */
+   white-space: -o-pre-wrap;   /* Opera 7 */
+   word-wrap: break-word;      /* IE */
+}
+.sm-dropzone {
+  background-color: #e0e0e0;
+  width: 100%;
+  min-height: 100px;
+  margin-bottom: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 12px;
+  color: #929292;
+  border: solid 1px #929292;
+  cursor: pointer;
+
+  i {
+    font-size: 30px;
+  }
+}
+.sm-logout-link {
+  color: #e7e7e7;
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+md-toast.md-success-toast-theme {
+  .md-toast-content {
+    background-color: #00C853;
+  }
+}
+md-toast.md-error-toast-theme {
+  .md-toast-content {
+    background-color: #F4511E;
+  }
+}
+md-toast.md-info-toast-theme {
+  .md-toast-content {
+    background-color: #2196F3;
+  }
+}
+.top-progress-bar {
+  position: fixed;
+  top: 59px;
+  z-index: 10002;
+  height: 4px;
+  width: 100%;
+
+  @media only screen and (max-width: 768px) {
+    top: 43px;
+  }
+  @media only screen and (min-width : 769px) and (max-width : 960px) {
+    top: 48px;
+  }
+  @media only screen and (min-width : 320px) and (max-width : 480px) {
+    top: 50px;
+  }
+}
+.offline-ui.offline-ui-down {
+  height: 50px !important;
+}
+.offline-ui.offline-ui-up {
+  height: 50px !important;
+}
+
+/**
+ *  Do not remove the comment below. It's the markers used by gulp-inject to inject
+ *  all your sass files automatically
+ */
+// injector
+
+// endinjector

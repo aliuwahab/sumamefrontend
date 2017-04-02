@@ -1,0 +1,40 @@
+<div layout="row" layout-align="center center">
+  <div class="signup-card-container">
+    <div layout="column" layout-align="center center">
+      <h1>Somame</h1>
+      <h4>Login</h4>
+    </div>
+
+    <form name="loginForm" class="sm-signup-form" ng-submit="loginUser(loginForm.$valid)" novalidate>
+      <md-card>
+        <md-progress-linear md-mode="indeterminate" ng-disabled="!enableProgressBar"></md-progress-linear>
+
+        <md-card-content class="sm-loginform-content">
+
+          <div layout="row">
+            <md-input-container style="width:450px;">
+              <label>Email address</label>
+              <input type="email" ng-model="user.email" required>
+            </md-input-container>
+          </div>
+          <div layout="row">
+            <md-input-container style="width:450px;">
+              <label>Password</label>
+              <input type="password" ng-model="user.password" required>
+            </md-input-container>
+          </div>
+
+          <md-button type="submit" class="md-fab md-accent" aria-label="Login" ng-disabled="loginForm.$invalid">
+            <i class="material-icons">arrow_forward</i>
+          </md-button>
+
+        </md-card-content>
+      </md-card>
+
+      <div layout="row" layout-align="center center">
+        <h4 style="font-weight:normal;">Forgot password? <a href="#reset_password">Click to reset!</a></h4>
+      </div>
+
+    </form>
+  </div>
+</div>

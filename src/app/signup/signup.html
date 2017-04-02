@@ -1,0 +1,53 @@
+<div layout="column" layout-align="center center" style="min-height: 500px">
+  <div class="signup-card-container">
+
+    <div layout="column" layout-align="center center">
+      <h1>Learn Rite</h1>
+      <h4>Signup</h4>
+    </div>
+
+    <form name="signupForm" class="sm-signup-form" ng-submit="createUser(signupForm.$valid)" novalidate>
+      <md-card>
+        <md-card-content class="sm-loginform-content">
+
+          <md-input-container>
+            <label>First Name</label>
+            <input type="text" name="firstname" ng-model="user.firstname" required>
+          </md-input-container>
+
+          <md-input-container>
+            <label>Last Name</label>
+            <input type="text" name="lastname" ng-model="user.lastname" required>
+          </md-input-container>
+
+          <div layout="column">
+            <md-input-container>
+              <label>Email address</label>
+              <input type="email" name="email" ng-model="user.email" required>
+            </md-input-container>
+
+            <md-input-container>
+              <label>Password</label>
+              <input type="password" name="password" ng-model="user.password" required>
+            </md-input-container>
+
+            <md-input-container>
+              <label>Confirm Password</label>
+              <input type="password" name="password" ng-model="user.confirm_password" required>
+            </md-input-container>
+          </div>
+
+          <md-button type="submit" class="md-fab md-warn" aria-label="Signup" ng-disabled="!signupForm.$invalid">
+            <i class="material-icons">arrow_forward</i>
+          </md-button>
+
+        </md-card-content>
+      </md-card>
+
+      <div layout="row" layout-align="center center">
+        <h4>Already have an account? <a href="#login">Login here!</a></h4>
+      </div>
+
+    </form>
+  </div>
+</div>

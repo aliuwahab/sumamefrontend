@@ -1,0 +1,68 @@
+<md-dialog aria-label="Add Consultant">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Edit Answer to {{question.student.firstname}} {{question.student.lastname}}'s Question</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="min-width:700px;">
+
+      <h4>Answer Video</h4>
+      <div class="sm-dropzone" ngf-select="uploadFile($file, 'video')" name="file" ngf-pattern="'video/*'" ngf-accept="'video/*'" ngf-max-size="100MB" ng-disabled="uploadingImage">
+        <div ng-if="uploading_video" layout="column" layout-align="center center" style="min-height: 100px;">
+          <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
+          <p>Uploading Video: {{uploadProgress}}% complete</p>
+        </div>
+        <div ng-if="!uploading_video" layout="column" layout-align="center center">
+          <i class="material-icons md-24">backup</i>
+          <p ng-if="!answer.answer_video_url">Click here to select a video</p>
+          <p ng-if="answer.answer_video_url">Click here to change video</p>
+
+          <div class="" ng-if="answer.answer_video_url" style="max-width:700px">
+            <!-- Video preview here -->
+            <videogular vg-theme="edit_video_config.theme">
+        			<vg-media vg-src="edit_video_config.sources"></vg-media>
+        		</videogular>
+          </div>
+        </div>
+      </div>
+
+      <h4>Answer Image</h4>
+      <div class="sm-dropzone" ngf-select="uploadFile($file, 'image')" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+        <div ng-if="uploading_image" layout="row" layout-align="center center" style="min-height: 100px;">
+          <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
+          <p>Uploading Image: {{uploadProgress}}% complete</p>
+        </div>
+        <div ng-if="!uploading_image" layout="column" layout-align="center center">
+          <i class="material-icons md-24">backup</i>
+          <p ng-if="!answer.answer_image_url">Click here to select an image</p>
+          <p ng-if="answer.answer_image_url">Click here to change image</p>
+
+          <div class="" ng-if="answer.answer_image_url" style="max-width:700px">
+            <img style="width: 400px; height: auto;" ng-src="{{answer.answer_image_url}}" alt="Answer Image Preview">
+          </div>
+        </div>
+      </div>
+
+      <h4>Answer Text</h4>
+      <md-input-container class="md-block">
+        <textarea ui-tinymce="tinymceOptions" ng-model="answer.answer_text" aria-label="Answer Text" rows="5" md-select-on-focus></textarea>
+      </md-input-container>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="editAnswer()" class="md-raised md-accent">
+        Publish Answer
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

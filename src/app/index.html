@@ -1,0 +1,31 @@
+<md-sidenav class="md-sidenav-left md-whiteframe-z2"
+            md-component-id="left"
+            md-is-locked-open="$mdMedia('gt-sm')">
+
+    <header class="nav-header" ss-style-color="{'background-color': 'primary.default'}">
+        <a ng-href="#/" class="logo">
+          <h1>Somame</h1>
+        </a>
+    </header>
+
+    <md-card class="sm-user-info">
+      <md-card-content>
+        <div class="md-media-sm card-media" layout>
+          <img ng-if="!authenticatedUser.display_pictures_urls" class="sm-user-gravatar" gravatar-src="'authenticatedUser.email'" gravatar-size="200"/>
+          <img ng-if="authenticatedUser.display_pictures_urls" class="sm-user-gravatar" ng-src="{{authenticatedUser.display_pictures_urls}}"/>
+        </div>
+        <h2 class="sm-user-display_name" ng-click="showUserEditDialog($event)" style="outline: none;">{{authenticatedUser.first_name}} {{authenticatedUser.last_name}}</h2>
+        <p class="sm-user-role" ng-if="authenticatedUser.user_type == 'admin'">Administrator</p>
+        <p class="sm-user-role" ng-if="authenticatedUser.user_type == 'consultant'"> {{authenticatedUser.subject.subject_name}} Consultant</p>
+      </md-card-content>
+    </md-card>
+
+    <md-content flex role="navigation" ss-style-color="{'background-color': 'primary.default'}">
+        <ss-sidenav flex menu="menu"></ss-sidenav>
+    </md-content>
+    <div layout="row">
+      <a class="sm-logout-link" flex flex-offset="35" href="#logout">Logout <i class="material-icons">arrow_forward</i></a>
+    </div>
+</md-sidenav>
+
+<div ui-view class="sm-main-view" layout="column" flex role="main"></div>
