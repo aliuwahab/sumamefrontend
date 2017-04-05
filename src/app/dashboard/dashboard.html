@@ -41,8 +41,11 @@
   <div layout="row">
     <md-card flex class="dashboard-graphs-card">
       <md-card-content>
-        <h2>102</h2>
-        <p>Pending Tractor Requets</p>
+        <h2 class="dashboard-stat-name">Incoming Request History</h2>
+        <canvas id="line" class="chart chart-line" chart-data="data"
+          chart-labels="labels" chart-series="series" chart-options="options"
+          chart-dataset-override="datasetOverride" chart-click="onClick">
+        </canvas>
       </md-card-content>
     </md-card>
   </div>

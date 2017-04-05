@@ -24,11 +24,6 @@
       'permission',
       'permission.ui',
       'tandibar/ng-rollbar',
-      'com.2fdevs.videogular',
-      'com.2fdevs.videogular.plugins.controls',
-      'com.2fdevs.videogular.plugins.overlayplay',
-      'com.2fdevs.videogular.plugins.poster',
-      'ui.tinymce',
       'angular-momentjs',
       'moment-picker',
       'cl.paging',
@@ -37,6 +32,7 @@
       'monospaced.qrcode',
       'ngSegment',
       'ActivityMonitor',
+      'chart.js',
     ]);
 
 })();

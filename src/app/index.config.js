@@ -9,7 +9,7 @@
   function config($logProvider, $httpProvider, $authProvider, toastrConfig, $momentProvider,
     ssSideNavSectionsProvider, $mdThemingProvider, $mdIconProvider, momentPickerProvider, $provide,
     gravatarServiceProvider, localStorageServiceProvider, RollbarProvider, CacheFactoryProvider,
-    segmentProvider, segmentEvents, ENV) {
+    segmentProvider, segmentEvents, ChartJsProvider, ENV) {
 
     segmentProvider.setKey(ENV.segmentWriteKey);
     segmentProvider.setEvents(segmentEvents);
@@ -84,6 +84,8 @@
       default: 'mm',  // Mystery man as default for missing avatars
     };
     gravatarServiceProvider.secure = true;
+
+    ChartJsProvider.setOptions({ colors: ['#803690', '#00ADF9', '#DCDCDC', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360'] });
 
     // Moment JS Configs
     momentPickerProvider.options({
