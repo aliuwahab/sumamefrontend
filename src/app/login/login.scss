@@ -8,3 +8,42 @@
     right: -35px;
   }
 }
+.login-right-side {
+  background-color: #f7f6f6;
+  height: 100vh;
+  padding: 50px;
+}
+.login-icon {
+  height: 40px;
+  margin-top: 30%;
+  margin-bottom: 10%;
+}
+.login-left-side {
+  // background-color: white;
+  height: 100vh;
+  padding: 20px;
+
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.9)),
+    url(../assets/images/skyline2.png);
+  background-position: 0 165px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow-y: scroll;
+}
+.login-text-logo {
+  color: #ff5d55;
+}
+.login-welcome-title {
+  font-size: 25px;
+}
+.login-welcome-text {
+  font-size: 18px;
+}
+.login-reset-password {
+  font-size: 14px;
+  font-weight: normal;
+  margin-top: 20vh;
+  color: #019ad6;
+}
