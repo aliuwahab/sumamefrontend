@@ -63,20 +63,23 @@ html {
 .sm-main-view {
   background-color: white;
 }
+.view-main-container {
+  padding: 20px;
+
+  background: linear-gradient(
+    rgba(255, 255, 255, 0.9),
+    rgba(255, 255, 255, 0.9)),
+    url(../assets/images/skyline2.png);
+  background-position: 0 -150px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow-y: scroll;
+}
 md-toolbar.md-default-theme {
   background-color: black;
 }
-section.jumbotron {
-  margin-bottom: 30px;
-  padding: 1px 30px;
-  background-color: #5aadbb;
-  text-align: center;
-
-  color: white;
-
-  h1 {
-    font-size: 3em;
-  }
+md-toolbar.md-default-theme:not(.md-menu-toolbar) md-icon, md-toolbar:not(.md-menu-toolbar) md-icon {
+  fill: #f44336;
 }
 md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar){
   background-color: white;
