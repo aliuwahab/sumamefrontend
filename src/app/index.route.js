@@ -156,14 +156,6 @@
         skipIfLoggedIn: skipIfLoggedIn,
       },
     })
-    .state('auth.reset_password', {
-      url: '/reset_password',
-      templateUrl: 'app/reset_password/reset_password.html',
-      controller: 'ResetPasswordController',
-      resolve: {
-        skipIfLoggedIn: skipIfLoggedIn,
-      },
-    })
     .state('auth.logout', {
       url: '/logout',
       templateUrl: 'app/logout/logout.html',

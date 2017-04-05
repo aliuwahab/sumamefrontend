@@ -7,35 +7,68 @@
     <p class="login-welcome-text">Login to the portal with your credentials. Ensure your credentials are kept safe for as security is really important to the success of our customers.</p>
   </div>
   <div class="login-right-side" flex="35">
-    <div layout="column" layout-align="center center">
-      <img src="../assets/icons/login-square-arrow.png" alt="" class="login-icon">
+    <div class="login-container" ng-if="resetShowing == false">
+      <div layout="column" layout-align="center center">
+        <img src="../assets/icons/login-square-arrow.png" alt="" class="login-icon">
+      </div>
+
+      <form name="loginForm" class="sm-signup-form" ng-submit="loginUser(loginForm.$valid)" novalidate>
+
+        <md-progress-linear class="login-progressbar" md-mode="indeterminate" ng-disabled="!enableProgressBar"></md-progress-linear>
+
+        <div layout="row">
+          <md-input-container style="width:450px;">
+            <label>Email address</label>
+            <input type="email" ng-model="user.email" required>
+          </md-input-container>
+        </div>
+        <div layout="row">
+          <md-input-container style="width:450px;">
+            <label>Password</label>
+            <input type="password" ng-model="user.password" required>
+          </md-input-container>
+        </div>
+
+        <div layout="column" layout-align="center center">
+          <md-button type="submit" class="md-raised md-accent" aria-label="Login" ng-disabled="loginForm.$invalid" md-ripple-size="full">
+            Login
+            <i class="material-icons">arrow_forward</i>
+          </md-button>
+        </div>
+
+        <div layout="row" layout-align="center center">
+          <h4 class="login-reset-password" ng-click="flipForm()">Forgot password? Reset!</h4>
+        </div>
+      </form>
     </div>
 
-    <form name="loginForm" class="sm-signup-form" ng-submit="loginUser(loginForm.$valid)" novalidate>
-      <div layout="row">
-        <md-input-container style="width:450px;">
-          <label>Email address</label>
-          <input type="email" ng-model="user.email" required>
-        </md-input-container>
-      </div>
-      <div layout="row">
-        <md-input-container style="width:450px;">
-          <label>Password</label>
-          <input type="password" ng-model="user.password" required>
-        </md-input-container>
-      </div>
-
+    <div class="password-reset-container" ng-if="resetShowing == true" ng-controller="ResetPasswordController">
       <div layout="column" layout-align="center center">
-        <md-button type="submit" class="md-raised md-accent" aria-label="Login" ng-disabled="loginForm.$invalid" md-ripple-size="full">
-          Login
-          <i class="material-icons">arrow_forward</i>
-        </md-button>
+        <img src="../assets/icons/reset.png" alt="" class="login-icon">
       </div>
 
-      <div layout="row" layout-align="center center">
-        <h4 class="login-reset-password">Forgot password? <a class="login-reset-password" href="#reset_password">Click to reset!</a></h4>
-      </div>
+      <form name="resetPasswordForm" class="sm-signup-form" ng-submit="restPassword(resetPasswordForm.$valid)" novalidate>
+        <md-progress-linear class="login-progressbar" md-mode="indeterminate" ng-disabled="!enableProgressBar"></md-progress-linear>
 
-    </form>
+        <div layout="row">
+          <md-input-container style="width:450px;">
+            <label>Enter your email address to reset</label>
+            <input type="email" ng-model="user.email" required>
+          </md-input-container>
+        </div>
+
+        <div layout="column" layout-align="center center">
+          <md-button type="submit" class="md-raised md-accent" aria-label="Login" ng-disabled="resetPasswordForm.$invalid" md-ripple-size="full">
+            Reset Password
+            <i class="material-icons">arrow_forward</i>
+          </md-button>
+        </div>
+
+        <div layout="row" layout-align="center center">
+          <h4 class="login-reset-password" ng-click="flipForm()">Already have an account? Login!</h4>
+        </div>
+
+      </form>
+    </div>
   </div>
 </div>

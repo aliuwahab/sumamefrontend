@@ -11,6 +11,11 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
   segment, ActivityMonitor, logOutAfterSeconds) {
 
   $scope.user = {};
+  $scope.resetShowing = false;
+
+  $scope.flipForm = function () {
+    $scope.resetShowing = !$scope.resetShowing;
+  };
 
   $scope.loginUser = function (isValid) {
 

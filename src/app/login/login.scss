@@ -46,4 +46,12 @@
   font-weight: normal;
   margin-top: 20vh;
   color: #019ad6;
+  cursor: pointer;
+}
+.login-reset-password:hover {
+  color: #ff5d55;
+}
+.login-progressbar {
+  margin-bottom: 30px !important;
+  height: 1px !important;
 }
