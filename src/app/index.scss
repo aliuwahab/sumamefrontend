@@ -18,6 +18,20 @@
        url(../../bower_components/material-design-iconfont/iconfont/MaterialIcons-Regular.woff) format('woff'),
        url(../../bower_components/material-design-iconfont/iconfont/MaterialIcons-Regular.ttf) format('truetype');
 }
+
+body {
+  font-family: "Open Sans";
+}
+
+input,
+button,
+select,
+textarea {
+ font-family: inherit;
+ font-size: inherit;
+ line-height: inherit;
+}
+
 .material-icons {
   font-family: 'Material Icons';
   font-weight: normal;
@@ -74,6 +88,10 @@ html {
   background-size: cover;
   background-repeat: no-repeat;
   overflow-y: scroll;
+}
+.view-main-title {
+  font-size: 35px;
+  color: #019ad6;
 }
 md-toolbar.md-default-theme {
   background-color: black;

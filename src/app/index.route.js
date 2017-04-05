@@ -57,7 +57,7 @@
       },
     })
     .state('app.requests', {
-      url: '/',
+      url: '/requests',
       templateUrl: 'app/requests/requests.html',
       controller: 'RequestsController',
       data: {
@@ -74,7 +74,7 @@
       },
     })
     .state('app.drivers', {
-      url: '/',
+      url: '/drivers',
       templateUrl: 'app/drivers/drivers.html',
       controller: 'DriversController',
       data: {
@@ -91,7 +91,7 @@
       },
     })
     .state('app.vehicles', {
-      url: '/',
+      url: '/vehicles',
       templateUrl: 'app/vehicles/vehicles.html',
       controller: 'VehiclesController',
       data: {
@@ -108,7 +108,7 @@
       },
     })
     .state('app.customers', {
-      url: '/',
+      url: '/customers',
       templateUrl: 'app/customers/customers.html',
       controller: 'VehiclesController',
       data: {
