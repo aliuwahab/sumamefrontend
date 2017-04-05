@@ -42,7 +42,7 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
             resetUserState();
             redefineRoles();
             $scope.enableProgressBar = false;
-            $state.go('app.go_trending');
+            $state.go('app.dashboard');
 
             segment.identify($rootScope.authenticatedUser.id, {
               email: $rootScope.authenticatedUser.email,
