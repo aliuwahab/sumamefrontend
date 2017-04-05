@@ -80,6 +80,8 @@ section.jumbotron {
 }
 md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar){
   background-color: white;
+  border-bottom: 1px solid #d6d6d6;
+  color: #019ad6;
 }
 .sm-main-container{
   padding: 20px;
