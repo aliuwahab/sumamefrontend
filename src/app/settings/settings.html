@@ -1,27 +1,21 @@
 <md-toolbar>
-    <div class="md-toolbar-tools">
-        <md-button class="md-icon-button"
-                   aria-label="Menu Button"
-                   hide-gt-md
-                   ng-click="onClickMenu();">
-            <md-icon
-                    md-svg-icon="assets/icons/menu.svg"
-                    aria-label="Menu Icon">
-            </md-icon>
-        </md-button>
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" aria-label="Menu Button" hide-gt-md ng-click="onClickMenu();">
+      <md-icon
+        md-svg-icon="assets/icons/menu.svg" aria-label="Menu Icon">
+      </md-icon>
+    </md-button>
 
-        <h2>{{currentTab | capitalize:'first'}} Settings</h2>
-
-        <span flex></span>
-
-        <md-button class="md-raised md-accent" ng-disabled="false" aria-label="description"  md-ripple-size="full" ng-click="showDialog($event, 'add_countries', 'add_country')">Add New Staff</md-button>
-
-    </div>
+    <span flex></span>
+  </div>
 </md-toolbar>
 
-<div class="sm-main-container">
+<div class="view-main-container">
+  <h3 class="view-main-title">Settings</h3>
+
   <md-card>
+    <md-card-content>
 
+    </md-card-content>
   </md-card>
-
 </div>

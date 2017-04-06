@@ -10,6 +10,56 @@
   </div>
 </md-toolbar>
 
-<div class="view-main-container" style="min-height: 700px;">
+<div class="view-main-container">
   <h3 class="view-main-title">Requests</h3>
+
+  <md-card>
+    <md-card-content>
+      <md-table-container>
+        <table md-table md-progress="requestsPromise">
+          <thead md-head md-order="query.order" md-on-reorder="getrequests">
+            <tr md-row>
+              <th md-column><span>REQUEST</span></th>
+              <th md-column><span>CUSTOMER NAME</span></th>
+              <th md-column>REQUEST TYPE</th>
+              <th md-column>CUSTOMER LOCATION</th>
+              <th md-column>REQUEST STATUS</th>
+              <th md-column></th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in requests">
+              <td md-cell>{{request.request_name}}</td>
+              <td md-cell>{{request.consumer.first_name}} {{request.consumer.last_name}}</td>
+              <td md-cell>{{request.request_type}}</td>
+              <td md-cell>{{request.consumer.location}}</td>
+              <td md-cell>{{request.request_status}}</td>
+              <td md-cell>
+                <button class="md-button md-raised md-primary" ng-click="viewrequestDetails($event, request)">
+                  <md-tooltip md-direction="top">
+                    View details of {{request.first_name}} {{request.last_name}}
+                  </md-tooltip>
+                  <i class="material-icons">remove_red_eye</i>
+                </button>
+                <button ng-if="request.user_block_status == 'unblocked'" class="md-button md-raised md-warn" ng-click="changeAccountStatus($event, request)">
+                  <md-tooltip md-direction="top">
+                    Block {{request.first_name}} {{request.last_name}}
+                  </md-tooltip>
+                  <i class="material-icons">lock</i>
+                </button>
+                <button ng-if="request.user_block_status == 'blocked'" class="md-button md-raised md-primary" ng-click="changeAccountStatus($event, request)">
+                  <md-tooltip md-direction="top">
+                    Block {{request.first_name}} {{request.last_name}}
+                  </md-tooltip>
+                  <i class="material-icons">vpn_key</i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+
+      <md-table-pagination md-limit="queryParams.limit" md-limit-options="[50, 100, 200]" md-page="queryParams.page" md-total="{{requests.total}}" md-on-paginate="getrequests" md-page-select></md-table-pagination>
+    </md-card-content>
+  </md-card>
 </div>

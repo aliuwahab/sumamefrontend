@@ -1,1 +1,59 @@
-<h1>This is the vehicles view</h1>
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" aria-label="Menu Button" hide-gt-md ng-click="onClickMenu();">
+      <md-icon
+        md-svg-icon="assets/icons/menu.svg" aria-label="Menu Icon">
+      </md-icon>
+    </md-button>
+
+    <span flex></span>
+  </div>
+</md-toolbar>
+
+<div class="view-main-container">
+  <h3 class="view-main-title">Vehicles</h3>
+
+  <md-card>
+    <md-card-content>
+      <md-table-container>
+        <table md-table md-progress="requestsPromise">
+          <thead md-head md-order="query.order" md-on-reorder="getrequests">
+            <tr md-row>
+              <th md-column><span>VEHICLE NAME</span></th>
+              <th md-column>TYPE</th>
+              <th md-column>REGISTRATION</th>
+              <th md-column>DRIVER</th>
+              <th md-column>CURRENT STATUS</th>
+              <th md-column></th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="vehicle in vehicles">
+              <td md-cell>{{vehicle.vehicle_name}}</td>
+              <td md-cell>{{vehicle.vehicle_type}}</td>
+              <td md-cell>{{vehicle.vehicle_registration}}</td>
+              <td md-cell>{{vehicle.vehicle_driver}}</td>
+              <td md-cell>{{vehicle.current_status}}</td>
+              <td md-cell>
+                <button class="md-button md-raised md-primary" ng-click="viewrequestDetails($event, request)">
+                  <md-tooltip md-direction="top">
+                    View details of {{request.first_name}} {{request.last_name}}
+                  </md-tooltip>
+                  <i class="material-icons">remove_red_eye</i>
+                </button>
+                <button class="md-button md-raised md-warn" ng-click="changeAccountStatus($event, request)">
+                  <md-tooltip md-direction="top">
+                    Block {{request.first_name}} {{request.last_name}}
+                  </md-tooltip>
+                  <i class="material-icons">delete_forever</i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+
+      <md-table-pagination md-limit="queryParams.limit" md-limit-options="[50, 100, 200]" md-page="queryParams.page" md-total="{{requests.total}}" md-on-paginate="getrequests" md-page-select></md-table-pagination>
+    </md-card-content>
+  </md-card>
+</div>

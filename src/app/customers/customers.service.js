@@ -8,14 +8,18 @@ angular
 /** @ngInject */
 function CustomersService($http, AuthService, ENV) {
 
-  var apiBaseURL = ENV.apiBaseURL;
+  var apiBaseURL = ENV.fakerAPIBaseURL;
   var authDataString = $.param(AuthService.getAuthData());
 
   var service = {
-
+    getAllCustomers: getAllCustomers,
   };
 
   return service;
+
+  function getAllCustomers() {
+    return $http.get(apiBaseURL + '/consumers');
+  }
 
 }
 })();

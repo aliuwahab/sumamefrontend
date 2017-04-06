@@ -110,7 +110,7 @@
     .state('app.customers', {
       url: '/customers',
       templateUrl: 'app/customers/customers.html',
-      controller: 'VehiclesController',
+      controller: 'CustomersController',
       data: {
         permissions: {
           only: function () {
