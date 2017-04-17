@@ -3,19 +3,23 @@
 
 angular
     .module('somameAdmin')
-    .factory('GoTrendingService', GoTrendingService);
+    .factory('DashboardService', DashboardService);
 
 /** @ngInject */
-function GoTrendingService($http, AuthService, ENV) {
+function DashboardService($http, AuthService, ENV) {
 
   var apiBaseURL = ENV.apiBaseURL;
   var authDataString = $.param(AuthService.getAuthData());
 
   var service = {
-
+    getStatistics: getStatistics,
   };
 
   return service;
+
+  function getStatistics() {
+    return $http.get(apiBaseURL + '/dashboard/statistics?' + authDataString);
+  }
 
 }
 })();

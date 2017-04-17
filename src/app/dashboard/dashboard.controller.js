@@ -6,12 +6,22 @@ angular
     .controller('DashboardController', DashboardController);
 
 /** @ngInject */
-function DashboardController($scope, $rootScope, $state) {
+function DashboardController($scope, $rootScope, $state, DashboardService) {
 
   activate();
 
   function activate() {
+    getStatistics();
+  }
 
+  function getStatistics() {
+    DashboardService.getStatistics()
+    .then(function (response) {
+      $scope.statistics = response.data.data.statistics;
+    })
+    .catch(function (error) {
+      debugger;
+    });
   }
 
   $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];

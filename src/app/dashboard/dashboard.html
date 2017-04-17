@@ -1,6 +1,6 @@
 <div class="view-main-container">
   <div class="">
-    <h1 class="dasboard-welcome-text">Hello, Alhassan!</h1>
+    <h1 class="dasboard-welcome-text">Hello, {{authenticatedUser.first_name}}!</h1>
     <h4 class="dasboard-welcome-subtext">Here's a snapshot of Somame today!</h4>
   </div>
 
@@ -8,7 +8,7 @@
     <md-card flex="25" class="dashboard-statistic-container">
       <md-card-content>
         <img src="../assets/icons/delivery-truck.png" alt="" class="dashboard-stat-icon">
-        <h2 class="dashboard-stat-number">55</h2>
+        <h2 class="dashboard-stat-number">{{statistics.pending_request}}</h2>
         <p class="dashboard-stat-name">Pending Requets</p>
       </md-card-content>
     </md-card>
@@ -16,7 +16,7 @@
     <md-card flex="25" class="dashboard-statistic-container">
       <md-card-content>
         <img src="../assets/icons/car-driver.png" alt="" class="dashboard-stat-icon">
-        <h2 class="dashboard-stat-number">23</h2>
+        <h2 class="dashboard-stat-number">{{statistics.request_in_delivery}}</h2>
         <p class="dashboard-stat-name">In Progress</p>
       </md-card-content>
     </md-card>
@@ -24,7 +24,7 @@
     <md-card flex="25" class="dashboard-statistic-container">
       <md-card-content>
         <img src="../assets/icons/car-driver.png" alt="" class="dashboard-stat-icon">
-        <h2 class="dashboard-stat-number">100</h2>
+        <h2 class="dashboard-stat-number">{{statistics.number_of_valid_drivers}}</h2>
         <p class="dashboard-stat-name">Drivers</p>
       </md-card-content>
     </md-card>
@@ -32,7 +32,7 @@
     <md-card flex="25" class="dashboard-statistic-container">
       <md-card-content>
         <img src="../assets/icons/car.png" alt="" class="dashboard-stat-icon">
-        <h2 class="dashboard-stat-number">200</h2>
+        <h2 class="dashboard-stat-number">{{statistics.number_of_vehicles}}</h2>
         <p class="dashboard-stat-name">Registered Vehicles</p>
       </md-card-content>
     </md-card>
