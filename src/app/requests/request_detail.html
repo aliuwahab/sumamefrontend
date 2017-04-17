@@ -1,0 +1,73 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" aria-label="Menu Button" hide-gt-md ng-click="onClickMenu();">
+      <md-icon
+        md-svg-icon="assets/icons/menu.svg" aria-label="Menu Icon">
+      </md-icon>
+    </md-button>
+
+    <span flex></span>
+
+    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="openMenu($mdMenu, $event)">
+      Update Request
+    </md-button>
+  </div>
+</md-toolbar>
+
+<div class="view-main-container">
+  <h3 class="view-main-title">Details of Kamil's Request</h3>
+
+  <md-card>
+    <md-card-content>
+      <div layout="row">
+        <div class="sm-request-detail-left" flex="50">
+          <div class="sm-rq-detail-user-container" layout="row">
+            <div class="sm-rq-user-img" background-img="../assets/images/kamil.JPG">
+            </div>
+            <!-- <div class="sm-rq-user-img" flex="20">
+              <img class="lr-consultant-avatar" ng-if="!consultant.display_pictures_urls" gravatar-src="'consultant.email'" gravatar-size="200"/>
+            </div> -->
+            <div class="">
+              <h1 class="sm-rq-user-name">Kamil Borsu Nabong</h1>
+              <p class="sm-rq-user-phone">+233 20 796 8538</p>
+            </div>
+          </div>
+
+          <div class="sm-rq-other-details-container">
+            <h3 class="sm-rq-inner-title">Package Details</h3>
+            <div class="sm-rq-pkg-details-container">
+              <i class="material-icons">inbox</i> Small box
+            </div>
+            <img class="sm-rq-pkg-img" src="../assets/images/package_img.jpg" alt="Package Image">
+          </div>
+        </div>
+        <div class="sm-request-detail-right" flex="50">
+          <md-input-container class="sm-input-container">
+            <label>Assign Driver</label>
+            <md-select ng-model="request.driver_id">
+              <md-option value="1">Kamil Nabong</md-option>
+              <md-option value="2">James Klutse</md-option>
+              <md-option value="3">Nana Nyanin</md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="sm-input-container">
+            <label>Request Status</label>
+            <md-select ng-model="request.request_status">
+              <md-option value="assigned">Assigned</md-option>
+              <md-option value="in_progress">In Progress</md-option>
+              <md-option value="delivered">Delivered</md-option>
+            </md-select>
+          </md-input-container>
+
+          <div class="sm-rq-map-container">
+            <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
+              <ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable" icons='p.icons'></ui-gmap-polyline>
+            </ui-gmap-google-map>
+          </div>
+        </div>
+      </div>
+    </md-card-content>
+  </md-card>
+
+</div>

@@ -92,7 +92,7 @@ html {
   background-color: #F8F8F8;
 }
 .view-main-title {
-  font-size: 35px;
+  font-size: 35px !important;
   color: #019ad6;
   margin-left: 5px;
   margin-top: 5px !important;
@@ -209,6 +209,12 @@ md-toast.md-info-toast-theme {
 }
 .offline-ui.offline-ui-up {
   height: 50px !important;
+}
+.sm-map-container {
+
+}
+.angular-google-map-container {
+  height: 400px;
 }
 
 /**

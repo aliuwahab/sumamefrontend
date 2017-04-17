@@ -9,7 +9,7 @@
   function config($logProvider, $httpProvider, $authProvider, toastrConfig, $momentProvider,
     ssSideNavSectionsProvider, $mdThemingProvider, $mdIconProvider, momentPickerProvider, $provide,
     gravatarServiceProvider, localStorageServiceProvider, RollbarProvider, CacheFactoryProvider,
-    segmentProvider, segmentEvents, ChartJsProvider, ENV) {
+    segmentProvider, segmentEvents, ChartJsProvider, uiGmapGoogleMapApiProvider, ENV) {
 
     segmentProvider.setKey(ENV.segmentWriteKey);
     segmentProvider.setEvents(segmentEvents);
@@ -51,6 +51,10 @@
       maxAge: 15 * 60 * 1000, // Items added to the cache expire after 15 minutes
       cacheFlushInterval: 60 * 60 * 1000, // Cache will clear itself every hour
       deleteOnExpire: 'aggressive', // Items will be deleted from cache when they expire
+    });
+
+    uiGmapGoogleMapApiProvider.configure({
+      libraries: 'geometry,visualization,places',
     });
 
     // Toastr Configs

@@ -73,6 +73,23 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.request', {
+      url: '/request/:requestId',
+      templateUrl: 'app/requests/request_detail.html',
+      controller: 'RequestDetailController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['admin', 'consultant'] || false;
+          },
+
+          redirectTo: 'app.go_trending',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
     .state('app.drivers', {
       url: '/drivers',
       templateUrl: 'app/drivers/drivers.html',

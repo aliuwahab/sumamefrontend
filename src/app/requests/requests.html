@@ -7,6 +7,29 @@
     </md-button>
 
     <span flex></span>
+
+    <md-menu>
+      <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="openMenu($mdMenu, $event)">
+        Add Request
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-click="ctrl.redial($event)">
+            Offline Delivery
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="ctrl.checkVoicemail()">
+            Online Purchase
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="ctrl.toggleNotifications()">
+            Equipment Rental
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
   </div>
 </md-toolbar>
 
@@ -19,40 +42,25 @@
         <table md-table md-progress="requestsPromise">
           <thead md-head md-order="query.order" md-on-reorder="getrequests">
             <tr md-row>
-              <th md-column><span>REQUEST</span></th>
+              <th md-column><span>REQUEST ID</span></th>
               <th md-column><span>CUSTOMER NAME</span></th>
               <th md-column>REQUEST TYPE</th>
-              <th md-column>CUSTOMER LOCATION</th>
+              <th md-column>DELIVER TO</th>
               <th md-column>REQUEST STATUS</th>
               <th md-column></th>
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in requests">
-              <td md-cell>{{request.request_name}}</td>
-              <td md-cell>{{request.consumer.first_name}} {{request.consumer.last_name}}</td>
+            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in requests.data">
+              <td md-cell>{{request.id}}</td>
+              <td md-cell>{{request.requester.first_name}} {{request.requester.last_name}}</td>
               <td md-cell>{{request.request_type}}</td>
-              <td md-cell>{{request.consumer.location}}</td>
+              <td md-cell>{{request.delivery_location_name}}</td>
               <td md-cell>{{request.request_status}}</td>
               <td md-cell>
-                <button class="md-button md-raised md-primary" ng-click="viewrequestDetails($event, request)">
-                  <md-tooltip md-direction="top">
-                    View details of {{request.first_name}} {{request.last_name}}
-                  </md-tooltip>
+                <md-button class="md-raised md-primary" href="#request/{{request.id}}" aria-label="description" md-ripple-size="full">
                   <i class="material-icons">remove_red_eye</i>
-                </button>
-                <button ng-if="request.user_block_status == 'unblocked'" class="md-button md-raised md-warn" ng-click="changeAccountStatus($event, request)">
-                  <md-tooltip md-direction="top">
-                    Block {{request.first_name}} {{request.last_name}}
-                  </md-tooltip>
-                  <i class="material-icons">lock</i>
-                </button>
-                <button ng-if="request.user_block_status == 'blocked'" class="md-button md-raised md-primary" ng-click="changeAccountStatus($event, request)">
-                  <md-tooltip md-direction="top">
-                    Block {{request.first_name}} {{request.last_name}}
-                  </md-tooltip>
-                  <i class="material-icons">vpn_key</i>
-                </button>
+                </md-button>
               </td>
             </tr>
           </tbody>
