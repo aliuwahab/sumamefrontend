@@ -30,3 +30,108 @@
 .sm-st-item-icon {
   height: 50px;
 }
+.sm-staff-img {
+  width: 50%;
+  height: auto;
+  border-radius: 100%;
+  margin-top: 10px;
+}
+.sm-staff-profile {
+  font-size: 12px;
+  margin: 5px 5px;
+}
+.sm-staff-title {
+  font-size: 16px;
+  text-transform: capitalize;
+  margin-bottom: 5px;
+}
+.sm-staff-detail {
+  font-size: 10px;
+  margin: 2px;
+}
+
+.flex-grid {
+  display: flex;
+  // justify-content: space-between;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+.flex-grid .col {
+  width: 19%;
+}
+
+@media (max-width: 400px) {
+  .flex-grid {
+    display: block;
+    .col {
+      width: 100%;
+      margin: 0 0 10px 0;
+    }
+  }
+}
+
+// Card Flipping Animation
+.flip-container {
+  -webkit-perspective: 1000;
+  -moz-perspective: 1000;
+  -o-perspective: 1000;
+  perspective: 1000;
+}
+.flip-container:hover .flipper,
+.flip-container.hover .flipper {
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+	transform: rotateY(180deg);
+}
+.flip-container {
+  width: 20%;
+  height: 300px;
+  margin: 5px 5px 15px 5px;
+}
+.front, .back {
+	width: 100%;
+	height: 300px;
+  text-align: center;
+  border-radius: 3px;
+  background-color: #F8F8F8;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+
+.flipper {
+	-webkit-transition: 0.6s;
+	-webkit-transform-style: preserve-3d;
+
+	-moz-transition: 0.6s;
+	-moz-transform-style: preserve-3d;
+
+  -o-transition: 0.6s;
+	-o-transform-style: preserve-3d;
+
+	transition: 0.6s;
+	transform-style: preserve-3d;
+
+	position: relative;
+}
+
+.front, .back {
+	-webkit-backface-visibility: hidden;
+	-moz-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+	backface-visibility: hidden;
+
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.front {
+	z-index: 2;
+}
+
+.back {
+	-webkit-transform: rotateY(180deg);
+	-moz-transform: rotateY(180deg);
+  -o-transform: rotateY(180deg);
+	transform: rotateY(180deg);
+}
