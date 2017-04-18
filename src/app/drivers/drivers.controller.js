@@ -11,19 +11,28 @@ function DriversController($scope, $rootScope, $state, DriversService) {
   activate();
 
   function activate() {
+    $scope.filterParams = {
+      limit: 50,
+      page: 1,
+    };
+
     getAllRequests();
   }
 
   function getAllRequests() {
-    DriversService.getAllDrivers()
+    $scope.requestsPromise = DriversService.getAllDrivers($scope.filterParams)
     .then(function (response) {
-      $scope.drivers = response.data;
+      $scope.drivers = response.data.data.all_drivers;
     })
     .catch(function (error) {
       $scope.error = error.message;
       debugger;
     });
   }
+
+  $scope.approveDriver = function () {
+
+  };
 
 }
 })();

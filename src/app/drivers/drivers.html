@@ -21,25 +21,36 @@
             <tr md-row>
               <th md-column><span>DRIVER NAME</span></th>
               <th md-column>PHONE NUMBER</th>
-              <th md-column>CURRENT STATUS</th>
+              <th md-column>ASSIGNED DELIVERIES</th>
+              <th md-column>STATUS</th>
               <th md-column></th>
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="driver in drivers">
+            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="driver in drivers.data">
               <td md-cell>{{driver.first_name}} {{driver.last_name}}</td>
               <td md-cell>{{driver.phone_number}}</td>
-              <td md-cell>{{driver.current_status}}</td>
+              <td md-cell>{{driver.assigned_deliveries.length}}</td>
+              <td md-cell>
+                <p ng-if="driver.driver_approved == true">APPROVED</p>
+                <p ng-if="driver.driver_approved == false">NOT APPROVED</p>
+              </td>
               <td md-cell>
                 <button class="md-button md-raised md-primary" ng-click="viewrequestDetails($event, request)">
                   <md-tooltip md-direction="top">
-                    View details of {{request.first_name}} {{request.last_name}}
+                    View Driver Details
                   </md-tooltip>
                   <i class="material-icons">remove_red_eye</i>
                 </button>
+                <button class="md-button md-raised md-accent" ng-click="viewrequestDetails($event, request)">
+                  <md-tooltip md-direction="top">
+                    Approve Driver
+                  </md-tooltip>
+                  <i class="material-icons">spellcheck</i>
+                </button>
                 <button class="md-button md-raised md-warn" ng-click="changeAccountStatus($event, request)">
                   <md-tooltip md-direction="top">
-                    Block {{request.first_name}} {{request.last_name}}
+                    Delete Driver
                   </md-tooltip>
                   <i class="material-icons">delete_forever</i>
                 </button>
