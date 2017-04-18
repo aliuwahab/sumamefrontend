@@ -15,11 +15,15 @@ function DashboardController($scope, $rootScope, $state, DashboardService) {
   }
 
   function getStatistics() {
+    $scope.dataLoaded = false;
+
     DashboardService.getStatistics()
     .then(function (response) {
       $scope.statistics = response.data.data.statistics;
+      $scope.dataLoaded = true;
     })
     .catch(function (error) {
+      $scope.dataLoaded = true;
       debugger;
     });
   }
