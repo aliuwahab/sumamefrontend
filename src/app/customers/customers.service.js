@@ -6,9 +6,9 @@ angular
     .factory('CustomersService', CustomersService);
 
 /** @ngInject */
-function CustomersService($http, AuthService, ENV) {
+function CustomersService($http, AuthService, CacheFactory, ENV) {
 
-  var apiBaseURL = ENV.fakerAPIBaseURL;
+  var apiBaseURL = ENV.apiBaseURL;
   var authDataString = $.param(AuthService.getAuthData());
 
   var service = {
@@ -17,8 +17,17 @@ function CustomersService($http, AuthService, ENV) {
 
   return service;
 
-  function getAllCustomers() {
-    return $http.get(apiBaseURL + '/consumers');
+  function getAllCustomers(params) {
+    var queryOptions = $.param(params);
+    var cache = 'customers?page=' + params.page + 'limit=' + params.limit;
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.get(apiBaseURL + '/all/consumers?' + authDataString + '&' + queryOptions, {
+      cache: CacheFactory.get(cache),
+    });
   }
 
 }

@@ -26,20 +26,20 @@
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in customers">
+            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in customers.data">
               <td md-cell>{{customer.first_name}} {{customer.last_name}}</td>
               <td md-cell>{{customer.phone_number}}</td>
               <td md-cell>{{customer.location}}</td>
               <td md-cell>
                 <button class="md-button md-raised md-primary" ng-click="viewrequestDetails($event, request)">
                   <md-tooltip md-direction="top">
-                    View details of {{request.first_name}} {{request.last_name}}
+                    View Customer Details
                   </md-tooltip>
                   <i class="material-icons">remove_red_eye</i>
                 </button>
                 <button class="md-button md-raised md-warn" ng-click="changeAccountStatus($event, request)">
                   <md-tooltip md-direction="top">
-                    Block {{request.first_name}} {{request.last_name}}
+                    Block Customer
                   </md-tooltip>
                   <i class="material-icons">delete_forever</i>
                 </button>
