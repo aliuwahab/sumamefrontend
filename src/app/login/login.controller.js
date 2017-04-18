@@ -40,7 +40,6 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
         var token = response.data.token;
         UserService.getUserProfile(token)
         .then(function (user) {
-          debugger;
           localStorageService.set('profile', user.data.user);
           $rootScope.authenticatedUser = user.data.user;
 
