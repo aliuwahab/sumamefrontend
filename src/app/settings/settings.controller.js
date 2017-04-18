@@ -6,12 +6,12 @@ angular
     .controller('SettingsController', SettingsController);
 
 /** @ngInject */
-function SettingsController($scope, $rootScope, $state, $mdDialog, lodash, Dialog) {
+function SettingsController($scope, $rootScope, $state, $mdDialog, lodash, localStorageService,
+  Dialog) {
 
-  var _ = lodash;
-
-  $state.transitionTo('app.settings.staff');
-  $scope.currentView = 'Staff';
+  var currentView = localStorageService.get('selectedSettingsView') || 'app.settings.staff';
+  $scope.viewName = getStateName(currentView);
+  $state.transitionTo(currentView);
 
   // DIALOG TRIGGER
   $scope.closeDialog = function () {
@@ -19,24 +19,20 @@ function SettingsController($scope, $rootScope, $state, $mdDialog, lodash, Dialo
   };
 
   $scope.changeSettingsTab = function (stateName) {
-    switch (stateName){
-      case 'staff':
-        $state.go('app.settings.staff');
-        $scope.currentView = 'Staff';
-        break;
-      case 'warehouses':
-        $state.go('app.settings.warehouses');
-        $scope.currentView = 'Warehouses';
-        break;
-      case 'pricing':
-        $state.go('app.settings.pricing');
-        $scope.currentView = 'Pricing';
-        break;
-      default:
-
-        //
-    }
+    $state.go(stateName);
+    setCurrentView(stateName);
+    $scope.viewName = getStateName(stateName);
   };
+
+  function setCurrentView(stateName) {
+    localStorageService.set('selectedSettingsView', stateName);
+  }
+
+  function getStateName(state) {
+    var pointIndex = state.lastIndexOf('.');
+    var stateName = state.substring(pointIndex + 1);
+    return stateName;
+  }
 
 }
 })();
