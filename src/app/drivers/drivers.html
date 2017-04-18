@@ -10,6 +10,10 @@
   </div>
 </md-toolbar>
 
+<div ng-if="activateTopProgress" class="top-progress-bar" layout="row">
+  <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+</div>
+
 <div class="view-main-container">
   <h3 class="view-main-title">Drivers</h3>
 
@@ -36,19 +40,26 @@
                 <p ng-if="driver.driver_approved == false">NOT APPROVED</p>
               </td>
               <td md-cell>
-                <button class="md-button md-raised md-primary" ng-click="viewrequestDetails($event, request)">
+                <button class="md-button md-raised md-primary" ng-click="viewDriverDetails($event, driver)">
                   <md-tooltip md-direction="top">
                     View Driver Details
                   </md-tooltip>
                   <i class="material-icons">remove_red_eye</i>
                 </button>
-                <button class="md-button md-raised md-accent" ng-click="viewrequestDetails($event, request)">
+                <button ng-if="!driver.driver_approved" class="md-button md-raised md-accent" ng-click="approveDisapproveDriver(driver)">
                   <md-tooltip md-direction="top">
                     Approve Driver
                   </md-tooltip>
                   <i class="material-icons">spellcheck</i>
                 </button>
-                <button class="md-button md-raised md-warn" ng-click="changeAccountStatus($event, request)">
+                <button ng-if="driver.driver_approved" class="md-button md-raised md-warn" ng-click="approveDisapproveDriver(driver)">
+                  <md-tooltip md-direction="top">
+                    Unapprove Driver
+                  </md-tooltip>
+                  <i class="material-icons">clear</i>
+                </button>
+
+                <button class="md-button md-raised md-warn" ng-click="deleteDriver($event, driver)">
                   <md-tooltip md-direction="top">
                     Delete Driver
                   </md-tooltip>

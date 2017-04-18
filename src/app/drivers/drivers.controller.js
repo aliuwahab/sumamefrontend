@@ -6,7 +6,7 @@ angular
     .controller('DriversController', DriversController);
 
 /** @ngInject */
-function DriversController($scope, $rootScope, $state, DriversService) {
+function DriversController($scope, $rootScope, $state, Dialog, DriversService, ToastsService) {
 
   activate();
 
@@ -30,8 +30,33 @@ function DriversController($scope, $rootScope, $state, DriversService) {
     });
   }
 
-  $scope.approveDriver = function () {
+  $scope.approveDisapproveDriver = function (driver) {
+    var title;
 
+    if (!driver.driver_approved) {
+      title = 'Do you want to approve this driver?';
+    }else {
+      title = 'Do you want to unapprove this driver?';
+    }
+
+    Dialog.confirmAction(title)
+    .then(function () {
+      $scope.activateTopProgress = true;
+
+      DriversService.approveDisapproveDriver(driver.id)
+      .then(function (response) {
+        ToastsService.showToast('success', driver.first_name + ' '
+        + driver.last_name + ' is now approved!');
+        $scope.activateTopProgress = false;
+        getAllRequests();
+      })
+      .catch(function (error) {
+        $scope.activateTopProgress = false;
+        debugger;
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
   };
 
 }

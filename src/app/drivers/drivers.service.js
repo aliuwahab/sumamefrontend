@@ -13,6 +13,7 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
 
   var service = {
     getAllDrivers: getAllDrivers,
+    approveDisapproveDriver: approveDisapproveDriver,
   };
 
   return service;
@@ -28,6 +29,10 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
     return $http.get(apiBaseURL + '/all/drivers?' + authDataString + '&' + queryOptions, {
       cache: CacheFactory.get(cache),
     });
+  }
+
+  function approveDisapproveDriver(id) {
+    return $http.post(apiBaseURL + '/approve/driver?driver_id=' + id + '&' + authDataString);
   }
 
 }
