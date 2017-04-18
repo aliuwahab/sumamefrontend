@@ -65,7 +65,6 @@
     .theme('default')
     .primaryPalette('red', {
       default: '400',
-      // 'hue-1': '400',
     })
     .accentPalette('blue', {
       default: '500',

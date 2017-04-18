@@ -11,10 +11,37 @@
 </md-toolbar>
 
 <div class="view-main-container">
-  <h3 class="view-main-title">Settings</h3>
+  <h3 class="view-main-title">{{currentView}}</h3>
+
+  <div class="" layout="row">
+    <md-button class="sm-st-item-btn" aria-label="setting item" ng-click="changeSettingsTab('staff')">
+      <md-card flex="100">
+        <md-card-content class="sm-st-item-card">
+          <img src="../assets/icons/car-driver.png" alt="" class="sm-st-item-icon">
+          <h2>Staff</h2>
+        </md-card-content>
+      </md-card>
+    </md-button>
+    <md-button class="sm-st-item-btn" aria-label="setting item" ng-click="changeSettingsTab('warehouses')">
+      <md-card flex="100">
+        <md-card-content class="sm-st-item-card">
+          <img src="../assets/icons/car-driver.png" alt="" class="sm-st-item-icon">
+          <h2>Warehouses</h2>
+        </md-card-content>
+      </md-card>
+    </md-button>
+    <md-button class="sm-st-item-btn" aria-label="setting item" ng-click="changeSettingsTab('pricing')">
+      <md-card flex="100">
+        <md-card-content class="sm-st-item-card">
+          <img src="../assets/icons/car-driver.png" alt="" class="sm-st-item-icon">
+          <h2>Pricing</h2>
+        </md-card-content>
+      </md-card>
+    </md-button>
+  </div>
 
   <md-card>
-    <md-card-content>
+    <md-card-content ui-view>
 
     </md-card-content>
   </md-card>

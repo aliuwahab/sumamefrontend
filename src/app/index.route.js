@@ -83,7 +83,7 @@
             return ['admin', 'consultant'] || false;
           },
 
-          redirectTo: 'app.go_trending',
+          redirectTo: 'app.dashboard',
         },
       },
       resolve: {
@@ -151,7 +151,61 @@
             return ['admin'] || false;
           },
 
-          redirectTo: 'app.go_trending',
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.settings.staff', {
+      parent: 'app.settings',
+      url: '/staff',
+      templateUrl: 'app/settings/staff/settings.staff.html',
+      controller: 'StaffController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['admin'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.settings.warehouses', {
+      parent: 'app.settings',
+      url: '/warehouses',
+      templateUrl: 'app/settings/warehouses/settings.warehouses.html',
+      controller: 'WarehousesController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['admin'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.settings.pricing', {
+      parent: 'app.settings',
+      url: '/pricing',
+      templateUrl: 'app/settings/pricing/settings.pricing.html',
+      controller: 'PricingController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['admin'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
         },
       },
       resolve: {
