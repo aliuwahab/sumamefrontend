@@ -6,9 +6,9 @@ angular
     .factory('VehiclesService', VehiclesService);
 
 /** @ngInject */
-function VehiclesService($http, AuthService, ENV) {
+function VehiclesService($http, AuthService, CacheFactory, ENV) {
 
-  var apiBaseURL = ENV.fakerAPIBaseURL;
+  var apiBaseURL = ENV.apiBaseURL;
   var authDataString = $.param(AuthService.getAuthData());
 
   var service = {
@@ -17,8 +17,17 @@ function VehiclesService($http, AuthService, ENV) {
 
   return service;
 
-  function getAllVehicles() {
-    return $http.get(apiBaseURL + '/vehicles');
+  function getAllVehicles(params) {
+    var queryOptions = $.param(params);
+    var cache = 'vehicles?page=' + params.page + 'limit=' + params.limit;
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.get(apiBaseURL + '/vehicles?' + authDataString + '&' + queryOptions, {
+      cache: CacheFactory.get(cache),
+    });
   }
 
 }

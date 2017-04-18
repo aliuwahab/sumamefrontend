@@ -7,6 +7,10 @@
     </md-button>
 
     <span flex></span>
+
+    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="openMenu($mdMenu, $event)">
+      Add Vehicle
+    </md-button>
   </div>
 </md-toolbar>
 
@@ -28,10 +32,10 @@
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="vehicle in vehicles">
+            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="vehicle in vehicles.data">
               <td md-cell>{{vehicle.vehicle_name}}</td>
               <td md-cell>{{vehicle.vehicle_type}}</td>
-              <td md-cell>{{vehicle.vehicle_registration}}</td>
+              <td md-cell>{{vehicle.vehicle_registration_number}}</td>
               <td md-cell>{{vehicle.vehicle_driver}}</td>
               <td md-cell>{{vehicle.current_status}}</td>
               <td md-cell>
