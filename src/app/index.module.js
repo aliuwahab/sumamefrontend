@@ -33,7 +33,7 @@
       'ngSegment',
       'ActivityMonitor',
       'chart.js',
-      'uiGmapgoogle-maps',
+      'ngMap',
     ]);
 
 })();

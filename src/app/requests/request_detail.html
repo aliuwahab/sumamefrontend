@@ -15,7 +15,7 @@
 </md-toolbar>
 
 <div class="view-main-container">
-  <h3 class="view-main-title">Details of Kamil's Request</h3>
+  <h3 class="view-main-title">Details of {{request.requester.first_name}}'s Request</h3>
 
   <md-card>
     <md-card-content>
@@ -28,8 +28,8 @@
               <img class="lr-consultant-avatar" ng-if="!consultant.display_pictures_urls" gravatar-src="'consultant.email'" gravatar-size="200"/>
             </div> -->
             <div class="">
-              <h1 class="sm-rq-user-name">Kamil Borsu Nabong</h1>
-              <p class="sm-rq-user-phone">+233 20 796 8538</p>
+              <h1 class="sm-rq-user-name">{{request.requester.first_name}} {{request.requester.last_name}}</h1>
+              <p class="sm-rq-user-phone">{{request.requester.phone_number}}</p>
             </div>
           </div>
 
@@ -61,9 +61,22 @@
           </md-input-container>
 
           <div class="sm-rq-map-container">
-            <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="true" options="options" bounds="map.bounds">
-              <ui-gmap-polyline ng-repeat="p in polylines" path="p.path" stroke="p.stroke" visible='p.visible' geodesic='p.geodesic' fit="false" editable="p.editable" draggable="p.draggable" icons='p.icons'></ui-gmap-polyline>
-            </ui-gmap-google-map>
+            <ng-map zoom="15" center="" style="height:100%" >
+              <directions
+                draggable="true"
+                travel-mode="DRIVING"
+                origin="19 banana street, Accra, Ghana"
+                destination="National Theatre, Accra, Ghana">
+              </directions>
+              <custom-marker id="start"
+                position="19 banana street, Accra, Ghana">
+                <div> Pickup </div>
+              </custom-marker>
+              <custom-marker id="end"
+                position="National Theatre, Accra, Ghana">
+                <div> Destination </div>
+              </custom-marker>
+            </ng-map>
           </div>
         </div>
       </div>

@@ -7,7 +7,8 @@
 
   /** @ngInject */
   function runBlock($log, $rootScope, $state, $http, PermPermissionStore, PermRoleStore,
-    ssSideNav, localStorageService, Rollbar, segment, ActivityMonitor, logOutAfterSeconds, ENV) {
+    ssSideNav, localStorageService, Rollbar, segment, ActivityMonitor, logOutAfterSeconds,
+    NgMap, ENV) {
 
     if (localStorageService.get('profile')) {
 
@@ -69,6 +70,10 @@
         ActivityMonitor.off('inactive');
       });
     }
+
+    NgMap.getMap().then(function (map) {
+      $rootScope.map = map;
+    });
 
   }
 

@@ -38,7 +38,7 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
       CacheFactory(cache);
     };
 
-    return $http.get(apiBaseURL + '/requests?limit=1&page=1&' + authDataString + '&id' + id, {
+    return $http.get(apiBaseURL + '/view/request?' + authDataString + '&request_id=' + id, {
       cache: CacheFactory.get(cache),
     });
   }
