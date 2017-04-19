@@ -50,27 +50,55 @@
   margin: 2px;
 }
 
+// WAREHOUSES
+.sm-st-wh-item {
+  border-radius: 3px;
+  background-color: #F8F8F8;
+  padding: 10px;
+  margin: 5px 11px 15px 5px;
+  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
+}
+.sm-wh-address-container {
+  margin-bottom: 15px;
+}
+.sm-wh-address-text {
+  font-size: 12px;
+  margin-bottom: 0px;
+}
+.sm-wh-action-btn-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+//  FLEX STYLES
 .flex-grid {
   display: flex;
   // justify-content: space-between;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
-.flex-grid .col {
+.flex-grid .staff-col {
   width: 19%;
+}
+.flex-grid .warehouse-col {
+  width: 30%;
 }
 
 @media (max-width: 400px) {
   .flex-grid {
     display: block;
-    .col {
+    .staff-col {
+      width: 100%;
+      margin: 0 0 10px 0;
+    }
+    .warehouse-col {
       width: 100%;
       margin: 0 0 10px 0;
     }
   }
 }
 
-// Card Flipping Animation
+// CARD FLIPPING ANIMATION
 .flip-container {
   -webkit-perspective: 1000;
   -moz-perspective: 1000;
