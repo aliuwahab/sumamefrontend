@@ -6,7 +6,18 @@ angular
     .controller('RequestsController', RequestsController);
 
 /** @ngInject */
-function RequestsController($scope, $rootScope, $state, RequestsService) {
+function RequestsController($scope, $rootScope, $state, Dialog, RequestsService, NgMap) {
+
+  $scope.types = "['establishment']";
+  $scope.placeChanged = function () {
+    $scope.place = this.getPlace();
+    console.log('location', $scope.place.geometry.location);
+    $scope.map.setCenter($scope.place.geometry.location);
+  };
+
+  NgMap.getMap().then(function (map) {
+    $scope.map = map;
+  });
 
   activate();
 
@@ -19,6 +30,7 @@ function RequestsController($scope, $rootScope, $state, RequestsService) {
     getAllRequests();
   }
 
+  // GET ALL REQUESTS
   function getAllRequests() {
     $scope.requestsPromise = RequestsService.getRequests($scope.filterParams)
     .then(function (response) {
@@ -29,6 +41,17 @@ function RequestsController($scope, $rootScope, $state, RequestsService) {
       debugger;
     });
   }
+
+  /////////////////// HELPER FUNCTIONS ///////////////////////
+
+  // SHOW ADD REQUEST DIALOG
+  $scope.showAddRequestDialog = function (ev, requestType) {
+    $scope.newRequest = {
+
+    };
+
+    Dialog.showCustomDialog(ev, requestType, $scope);
+  };
 
   $scope.openMenu = function ($mdMenu, ev) {
     // originatorEv = ev;

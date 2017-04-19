@@ -14,18 +14,36 @@
       </md-button>
       <md-menu-content width="4">
         <md-menu-item>
-          <md-button ng-click="ctrl.redial($event)">
+          <md-button ng-click="showAddRequestDialog($event, 'add_offline_request')">
             Offline Delivery
+            <md-button aria-label="description">
+              <i class="material-icons">info_outline</i>
+              <md-tooltip md-direction="top">
+                Get anything delivered locally. We'll pickup and deliver.
+              </md-tooltip>
+            </md-button>
           </md-button>
         </md-menu-item>
         <md-menu-item>
-          <md-button ng-click="ctrl.checkVoicemail()">
+          <md-button ng-click="showAddRequestDialog($event, 'add_online_request')">
             Online Purchase
+            <md-button aria-label="description">
+              <i class="material-icons">info_outline</i>
+              <md-tooltip md-direction="top">
+                Purchase from any online shop to any of our warehouses. We'll deliver to your doorstep.
+              </md-tooltip>
+            </md-button>
           </md-button>
         </md-menu-item>
         <md-menu-item>
-          <md-button ng-click="ctrl.toggleNotifications()">
+          <md-button ng-click="showAddRequestDialog($event, 'add_equipment_request')">
             Equipment Rental
+            <md-button aria-label="description">
+              <i class="material-icons">info_outline</i>
+              <md-tooltip md-direction="top">
+                Rent all kinds of industrial and domestic equipment.
+              </md-tooltip>
+            </md-button>
           </md-button>
         </md-menu-item>
       </md-menu-content>
