@@ -59,5 +59,16 @@ function DriversController($scope, $rootScope, $state, Dialog, DriversService, T
     });
   };
 
+  ///////////////////// HELPER FUNCTIONS ///////////////////////
+
+  // SHOW ADD DRIVER DIALOG
+  $scope.showAddDriverDialog = function (ev) {
+    $scope.newRequest = {
+
+    };
+
+    Dialog.showCustomDialog(ev, 'add_driver', $scope);
+  };
+
 }
 })();

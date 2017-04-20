@@ -18,16 +18,17 @@
       add_online_request: 'app/components/dialogs/partials/request-add_online_request.tpl.html',
       add_equipment_request: 'app/components/dialogs/partials/request-add_equipment_request.tpl.html',
 
-      edit_consultant: 'app/components/dialogs/partials/consultants-edit_consultant.tpl.html',
-      view_consultant: 'app/components/dialogs/partials/consultants-view_consultant.tpl.html',
+      // DRIVER DIALOGS
+      add_driver: 'app/components/dialogs/partials/drivers-add_driver.tpl.html',
 
-      // GO TRENDING DIALOGS
-      answer_question: 'app/components/dialogs/partials/go_trending-answer_question.tpl.html',
-      edit_answer: 'app/components/dialogs/partials/go_trending-edit_answer.tpl.html',
-      add_LRQuestion: 'app/components/dialogs/partials/lr_qtns-add_question.tpl.html',
+      // VEHICLE DIALOGS
+      add_vehicle: 'app/components/dialogs/partials/vehicles-add_vehicle.tpl.html',
 
-      // STUDENTS
-      view_student_profile: 'app/components/dialogs/partials/students-view_student.tpl.html',
+      // WAREHOUSE DIALOGS
+      add_warehouse: 'app/components/dialogs/partials/warehouses-add_warehouse.tpl.html',
+
+      // STAFF DIALOGS
+      add_staff: 'app/components/dialogs/partials/staff-add_staff.tpl.html',
     };
 
     // CUSTOMIZE DEFAULT CONFIRM BUTTONS

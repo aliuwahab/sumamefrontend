@@ -7,6 +7,14 @@
     </md-button>
 
     <span flex></span>
+
+    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddDialog($event, 'add_staff')" ng-if="viewName == 'staff'">
+      Add New Staff Member
+    </md-button>
+
+    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddDialog($event, 'add_warehouse')" ng-if="viewName == 'warehouses'">
+      Add New Warehouse
+    </md-button>
   </div>
 </md-toolbar>
 

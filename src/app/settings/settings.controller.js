@@ -34,5 +34,12 @@ function SettingsController($scope, $rootScope, $state, $mdDialog, lodash, local
     return stateName;
   }
 
+  ///////////////////// HELPER FUNCTIONS ///////////////////////
+
+  // SHOW ADD DIALOG
+  $scope.showAddDialog = function (ev, dialogTemplate) {
+    Dialog.showCustomDialog(ev, dialogTemplate, $scope);
+  };
+
 }
 })();
