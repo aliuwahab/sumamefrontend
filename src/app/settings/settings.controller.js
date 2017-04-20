@@ -6,14 +6,33 @@ angular
     .controller('SettingsController', SettingsController);
 
 /** @ngInject */
-function SettingsController($scope, $rootScope, $mdDialog, lodash, Dialog) {
+function SettingsController($scope, $rootScope, $state, $mdDialog, lodash, localStorageService,
+  Dialog) {
 
-  var _ = lodash;
+  var currentView = localStorageService.get('selectedSettingsView') || 'app.settings.staff';
+  $scope.viewName = getStateName(currentView);
+  $state.transitionTo(currentView);
 
   // DIALOG TRIGGER
   $scope.closeDialog = function () {
     $mdDialog.hide();
   };
+
+  $scope.changeSettingsTab = function (stateName) {
+    $state.go(stateName);
+    setCurrentView(stateName);
+    $scope.viewName = getStateName(stateName);
+  };
+
+  function setCurrentView(stateName) {
+    localStorageService.set('selectedSettingsView', stateName);
+  }
+
+  function getStateName(state) {
+    var pointIndex = state.lastIndexOf('.');
+    var stateName = state.substring(pointIndex + 1);
+    return stateName;
+  }
 
 }
 })();

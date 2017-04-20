@@ -80,18 +80,23 @@ html {
 .view-main-container {
   padding: 20px;
 
-  background: linear-gradient(
-    rgba(255, 255, 255, 0.9),
-    rgba(255, 255, 255, 0.9)),
-    url(../assets/images/skyline2.png);
+  // background: linear-gradient(
+  //   rgba(255, 255, 255, 0.9),
+  //   rgba(255, 255, 255, 0.9)),
+  //   url(../assets/images/skyline2.png);
   background-position: 0 -150px;
   background-size: cover;
   background-repeat: no-repeat;
   overflow-y: scroll;
+  height: 100vh;
+  background-color: #F8F8F8;
 }
 .view-main-title {
-  font-size: 35px;
+  font-size: 35px !important;
   color: #019ad6;
+  margin-left: 5px;
+  margin-top: 5px !important;
+  margin-bottom: 20px;
 }
 md-toolbar.md-default-theme {
   background-color: black;
@@ -103,10 +108,15 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
   background-color: white;
   border-bottom: 1px solid #d6d6d6;
   color: #019ad6;
+  padding: 0px 20px;
 }
 .sm-main-container{
   padding: 20px;
   overflow-y: scroll;
+}
+.sm-custom-input-label {
+  color: rgba(0,0,0,0.38);
+  font-weight: 500;
 }
 .techs {
   display: flex;
@@ -147,7 +157,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
    word-wrap: break-word;      /* IE */
 }
 .sm-dropzone {
-  background-color: #e0e0e0;
+  background-color: rgba(224, 224, 224, 0.64);
   width: 100%;
   min-height: 100px;
   margin-bottom: 50px;
@@ -155,7 +165,7 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
   padding-bottom: 10px;
   font-size: 12px;
   color: #929292;
-  border: solid 1px #929292;
+  border: solid 1px rgba(146, 146, 146, 0.23);
   cursor: pointer;
 
   i {
@@ -204,6 +214,12 @@ md-toast.md-info-toast-theme {
 }
 .offline-ui.offline-ui-up {
   height: 50px !important;
+}
+.sm-map-container {
+
+}
+.angular-google-map-container {
+  height: 400px;
 }
 
 /**

@@ -7,9 +7,85 @@
     </md-button>
 
     <span flex></span>
+
+    <md-menu>
+      <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="openMenu($mdMenu, $event)">
+        Add Request
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-click="showAddRequestDialog($event, 'add_offline_request')">
+            Offline Delivery
+            <md-button aria-label="description">
+              <i class="material-icons">info_outline</i>
+              <md-tooltip md-direction="top">
+                Get anything delivered locally. We'll pickup and deliver.
+              </md-tooltip>
+            </md-button>
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="showAddRequestDialog($event, 'add_online_request')">
+            Online Purchase
+            <md-button aria-label="description">
+              <i class="material-icons">info_outline</i>
+              <md-tooltip md-direction="top">
+                Purchase from any online shop to any of our warehouses. We'll deliver to your doorstep.
+              </md-tooltip>
+            </md-button>
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="showAddRequestDialog($event, 'add_equipment_request')">
+            Equipment Rental
+            <md-button aria-label="description">
+              <i class="material-icons">info_outline</i>
+              <md-tooltip md-direction="top">
+                Rent all kinds of industrial and domestic equipment.
+              </md-tooltip>
+            </md-button>
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
   </div>
 </md-toolbar>
 
-<div class="view-main-container" style="min-height: 700px;">
+<div class="view-main-container">
   <h3 class="view-main-title">Requests</h3>
+
+  <md-card>
+    <md-card-content>
+      <md-table-container>
+        <table md-table md-progress="requestsPromise">
+          <thead md-head md-order="query.order" md-on-reorder="getrequests">
+            <tr md-row>
+              <th md-column><span>REQUEST ID</span></th>
+              <th md-column><span>CUSTOMER NAME</span></th>
+              <th md-column>REQUEST TYPE</th>
+              <th md-column>DELIVER TO</th>
+              <th md-column>REQUEST STATUS</th>
+              <th md-column></th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in requests.data">
+              <td md-cell>{{request.id}}</td>
+              <td md-cell>{{request.requester.first_name}} {{request.requester.last_name}}</td>
+              <td md-cell>{{request.request_type}}</td>
+              <td md-cell>{{request.delivery_location_name}}</td>
+              <td md-cell>{{request.request_status}}</td>
+              <td md-cell>
+                <md-button class="md-raised md-primary" href="#request/{{request.id}}" aria-label="description" md-ripple-size="full">
+                  <i class="material-icons">remove_red_eye</i>
+                </md-button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+
+      <md-table-pagination md-limit="queryParams.limit" md-limit-options="[50, 100, 200]" md-page="queryParams.page" md-total="{{requests.total}}" md-on-paginate="getrequests" md-page-select></md-table-pagination>
+    </md-card-content>
+  </md-card>
 </div>

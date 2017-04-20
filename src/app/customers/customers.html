@@ -1,1 +1,55 @@
-<h1>This is the customers view</h1>
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" aria-label="Menu Button" hide-gt-md ng-click="onClickMenu();">
+      <md-icon
+        md-svg-icon="assets/icons/menu.svg" aria-label="Menu Icon">
+      </md-icon>
+    </md-button>
+
+    <span flex></span>
+  </div>
+</md-toolbar>
+
+<div class="view-main-container">
+  <h3 class="view-main-title">Customers</h3>
+
+  <md-card>
+    <md-card-content>
+      <md-table-container>
+        <table md-table md-progress="requestsPromise">
+          <thead md-head md-order="query.order" md-on-reorder="getrequests">
+            <tr md-row>
+              <th md-column><span>CUSTOMER NAME</span></th>
+              <th md-column>PHONE NUMBER</th>
+              <th md-column>LOCATION</th>
+              <th md-column></th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in customers.data">
+              <td md-cell>{{customer.first_name}} {{customer.last_name}}</td>
+              <td md-cell>{{customer.phone_number}}</td>
+              <td md-cell>{{customer.location}}</td>
+              <td md-cell>
+                <button class="md-button md-raised md-primary" ng-click="viewrequestDetails($event, request)">
+                  <md-tooltip md-direction="top">
+                    View Customer Details
+                  </md-tooltip>
+                  <i class="material-icons">remove_red_eye</i>
+                </button>
+                <button class="md-button md-raised md-warn" ng-click="changeAccountStatus($event, request)">
+                  <md-tooltip md-direction="top">
+                    Block Customer
+                  </md-tooltip>
+                  <i class="material-icons">delete_forever</i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+
+      <md-table-pagination md-limit="queryParams.limit" md-limit-options="[50, 100, 200]" md-page="queryParams.page" md-total="{{requests.total}}" md-on-paginate="getrequests" md-page-select></md-table-pagination>
+    </md-card-content>
+  </md-card>
+</div>

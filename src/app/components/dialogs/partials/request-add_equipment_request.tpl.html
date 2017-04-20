@@ -1,0 +1,68 @@
+<md-dialog aria-label="Add Consultant">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add Equipment Request</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="min-width:900px; overflow:hidden;">
+      <div ng-if="loadingRequiredData" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div layout="row" ng-show="!loadingRequiredData">
+
+        <div class="" flex="25">
+          <md-input-container style="width:100%;">
+            <label>Equipment Type</label>
+            <md-select ng-model="newOnlineRequest.somame_warehouse_id">
+              <!-- <md-option ng-value="subject.id" ng-repeat="subject in subjects">{{subject.subject_name}}</md-option> -->
+              <md-option>Construction</md-option>
+              <md-option>Mining</md-option>
+              <md-option>Domestic</md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="sm-input-container">
+            <label>Enter search term</label>
+            <input type="text" ng-model="newOnlineRequest.delievery_order_number">
+          </md-input-container>
+
+          <md-input-container class="sm-input-container">
+            <place-autocomplete label="Where's the final destination of your order?" ng-model="newOnlineRequest.delivery_destination"></place-autocomplete>
+          </md-input-container>
+
+          <md-input-container class="md-block">
+            <label>Any additional instructions?</label>
+            <textarea ui-tinymce ng-model="newOnlineRequest.request_instructions" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
+          </md-input-container>
+        </div>
+
+        <div class="sm-equipment-list" flex="75">
+          <div class="sm-eq-item-container">
+
+          </div>
+          <div class="sm-eq-item-container">
+
+          </div>
+        </div>
+
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="addConsultant()" class="md-raised md-accent">
+        Submit Request
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

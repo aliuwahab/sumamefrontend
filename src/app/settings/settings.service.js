@@ -11,15 +11,25 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
 
   var apiBaseURL = ENV.apiBaseURL;
   var authDataString = $.param(AuthService.getAuthData());
-  var _ = lodash;
 
   var service = {
-
+    getAllWarehouses: getAllWarehouses,
   };
 
   return service;
 
-  // HELPER FUNCTIONS
+  function getAllWarehouses(params) {
+    var queryOptions = $.param(params);
+    var cache = 'warehouses?page=' + params.page + 'limit=' + params.limit;
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.get(apiBaseURL + '/all/sumame/addresses?' + authDataString + '&' + queryOptions, {
+      cache: CacheFactory.get(cache),
+    });
+  }
 
 }
 })();

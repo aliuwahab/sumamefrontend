@@ -7,12 +7,12 @@
 .dasboard-welcome-text {
   font-size: 60px;
   color: #019ad6;
-  margin: 10px 10px;
+  margin: 10px 10px 0px 5px;
 }
 .dasboard-welcome-subtext {
   font-size: 25px;
   color: #019ad6;
-  margin: 20px 10px 30px 10px;
+  margin: 0px 10px 30px 5px;
 }
 .dashboard-stat-icon {
   height: 60px;
@@ -27,4 +27,7 @@
   color: #ff5d55;
   font-weight: 600;
   margin-bottom: 25px !important;
+}
+.md-open-menu-container.md-active {
+  height: 160px;
 }

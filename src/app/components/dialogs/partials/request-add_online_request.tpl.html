@@ -1,0 +1,79 @@
+<md-dialog aria-label="Add Consultant">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add Online Request</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="width:700px;">
+      <div ng-if="loadingRequiredData" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div ng-show="!loadingRequiredData">
+
+        <div class="padded sm-req-online-info" md-whiteframe="3">
+          <h5 class="sm-req-online-info-title">Important Info!</h5>
+          <p>This is meant for shopping abroad when the online shop does not ship to Ghana. First, choose one of our warehouses below as an address which you'll use as your shipping address to make the purchase online. Once you've completed your purchase, fill the form below and expect your order at your doorstep in Ghana.</p>
+        </div>
+
+        <md-input-container style="width:100%;">
+          <label>Choose a warehouse location</label>
+          <md-select ng-model="newOnlineRequest.somame_warehouse_id">
+            <!-- <md-option ng-value="subject.id" ng-repeat="subject in subjects">{{subject.subject_name}}</md-option> -->
+            <md-option>Construction</md-option>
+            <md-option>Mining</md-option>
+            <md-option>Domestic</md-option>
+          </md-select>
+        </md-input-container>
+
+        <div class="sm-dropzone sm-req-address-info" ng-if="newOnlineRequest.somame_warehouse_id">
+          <h5 class="sm-req-online-info-title">UK Warehouse</h5>
+          <p>139 Central Avenue,</p>
+          <p>Haight Ashbury,</p>
+          <p>CA - 94117</p>
+          <p>United States</p>
+        </div>
+
+        <md-input-container class="sm-input-container">
+          <label>Enter order number</label>
+          <input type="text" ng-model="newOnlineRequest.delievery_order_number">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Enter tracking code</label>
+          <input type="text" ng-model="newOnlineRequest.delivery_tracking_number">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <place-autocomplete label="Where's the final destination of your order?" ng-model="newOnlineRequest.delivery_destination"></place-autocomplete>
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Give this request a name</label>
+          <input type="text" ng-model="newOnlineRequest.delivery_name">
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Any additional instructions or a link to the item?</label>
+          <textarea ui-tinymce ng-model="newOnlineRequest.request_instructions" aria-label="Consultant Profile" md-select-on-focus rows="5"></textarea>
+        </md-input-container>
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="addConsultant()" class="md-raised md-accent">
+        Submit Request
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
