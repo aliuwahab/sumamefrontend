@@ -6,7 +6,7 @@
     .run(runBlock);
 
   /** @ngInject */
-  function runBlock($log, $rootScope, $state, $http, PermPermissionStore, PermRoleStore,
+  function runBlock($log, $rootScope, $state, $http, $mdDialog, PermPermissionStore, PermRoleStore,
     ssSideNav, localStorageService, Rollbar, segment, ActivityMonitor, logOutAfterSeconds,
     NgMap, ENV) {
 
@@ -74,6 +74,10 @@
     NgMap.getMap().then(function (map) {
       $rootScope.map = map;
     });
+
+    $rootScope.closeDialog = function () {
+      $mdDialog.hide();
+    };
 
   }
 

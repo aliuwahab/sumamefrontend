@@ -8,17 +8,6 @@ angular
 /** @ngInject */
 function RequestsController($scope, $rootScope, $state, Dialog, RequestsService, NgMap) {
 
-  $scope.types = "['establishment']";
-  $scope.placeChanged = function () {
-    $scope.place = this.getPlace();
-    console.log('location', $scope.place.geometry.location);
-    $scope.map.setCenter($scope.place.geometry.location);
-  };
-
-  NgMap.getMap().then(function (map) {
-    $scope.map = map;
-  });
-
   activate();
 
   function activate() {

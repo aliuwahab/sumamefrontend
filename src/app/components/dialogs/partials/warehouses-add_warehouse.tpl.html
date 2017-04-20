@@ -16,38 +16,17 @@
 
       <div ng-show="!loadingRequiredData">
         <md-input-container class="sm-input-container">
-          <place-autocomplete label="Enter Pickup Location" ng-model="newOfflineRequest.pickup_location"></place-autocomplete>
+          <label>Warehouse Name</label>
+          <input type="text" ng-model="newWarehouse.warehouse_name">
         </md-input-container>
 
         <md-input-container class="sm-input-container">
-          <place-autocomplete label="Enter Destination Location" ng-model="newOfflineRequest.pickup_destination"></place-autocomplete>
+          <place-autocomplete label="Warehouse Location" ng-model="newWarehouse.warehouse_location"></place-autocomplete>
         </md-input-container>
-
-        <md-input-container class="sm-input-container">
-          <label>Give this request a name</label>
-          <input type="text" ng-model="newOfflineRequest.request_name">
-        </md-input-container>
-
-        <h4 class="sm-custom-input-label">Have a picture of your package?</h4>
-        <div class="sm-dropzone" ngf-select="uploadProfileImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
-          <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
-            <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
-            <p>Uploading Image: {{uploadProgress}}% complete</p>
-          </div>
-          <div ng-if="!uploadingImage" layout="column" layout-align="center center">
-            <i class="material-icons md-24">backup</i>
-            <p ng-if="!newOfflineRequest.request_image">Click here to select an image</p>
-            <p ng-if="newOfflineRequest.request_image">Click here to change image</p>
-
-            <div class="" ng-if="newOfflineRequest.request_image" style="max-width:700px">
-              <img style="width: 400px; height: auto;" ng-src="{{newOfflineRequest.request_image}}" alt="Answer Image Preview">
-            </div>
-          </div>
-        </div>
 
         <md-input-container class="md-block">
-          <label>Any additional instructions?</label>
-          <textarea ui-tinymce ng-model="newOfflineRequest.request_instructions" aria-label="Consultant Profile" md-select-on-focus rows="5"></textarea>
+          <label>Warehouse Description</label>
+          <textarea ui-tinymce ng-model="newWarehouse.warehouse_description" aria-label="warehouse description" md-select-on-focus rows="3"></textarea>
         </md-input-container>
       </div>
 

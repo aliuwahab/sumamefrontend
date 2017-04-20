@@ -15,7 +15,7 @@
       <md-menu-content width="4">
         <md-menu-item>
           <md-button ng-click="showAddRequestDialog($event, 'add_offline_request')">
-            Offline Delivery
+            Local Delivery
             <md-button aria-label="description">
               <i class="material-icons">info_outline</i>
               <md-tooltip md-direction="top">
@@ -61,6 +61,7 @@
           <thead md-head md-order="query.order" md-on-reorder="getrequests">
             <tr md-row>
               <th md-column><span>REQUEST ID</span></th>
+              <th md-column><span>TIME REQUESTED</span></th>
               <th md-column><span>CUSTOMER NAME</span></th>
               <th md-column>REQUEST TYPE</th>
               <th md-column>DELIVER TO</th>
@@ -71,6 +72,7 @@
           <tbody md-body>
             <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in requests.data">
               <td md-cell>{{request.id}}</td>
+              <td md-cell>{{request.created_at | date:'medium'}}</td>
               <td md-cell>{{request.requester.first_name}} {{request.requester.last_name}}</td>
               <td md-cell>{{request.request_type}}</td>
               <td md-cell>{{request.delivery_location_name}}</td>

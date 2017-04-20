@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Add Offline Request</h2>
+        <h2>Add Local Delivery Request</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="closeDialog()">
           <i class="material-icons">close</i>
@@ -20,12 +20,12 @@
         </md-input-container>
 
         <md-input-container class="sm-input-container">
-          <place-autocomplete label="Enter Destination Location" ng-model="newOfflineRequest.pickup_destination"></place-autocomplete>
+          <place-autocomplete label="Enter Destination Location" ng-model="newOfflineRequest.destination_location"></place-autocomplete>
         </md-input-container>
 
         <md-input-container class="sm-input-container">
-          <label>Give this request a name</label>
-          <input type="text" ng-model="newOfflineRequest.request_name">
+          <label>Describe the package</label>
+          <input type="text" ng-model="newOfflineRequest.package_description">
         </md-input-container>
 
         <h4 class="sm-custom-input-label">Have a picture of your package?</h4>
@@ -47,7 +47,7 @@
 
         <md-input-container class="md-block">
           <label>Any additional instructions?</label>
-          <textarea ui-tinymce ng-model="newOfflineRequest.request_instructions" aria-label="Consultant Profile" md-select-on-focus rows="5"></textarea>
+          <textarea ui-tinymce ng-model="newOfflineRequest.request_instructions" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
         </md-input-container>
       </div>
 
