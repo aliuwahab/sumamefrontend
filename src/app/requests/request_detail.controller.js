@@ -6,11 +6,15 @@ angular
     .controller('RequestDetailController', RequestDetailController);
 
 /** @ngInject */
-function RequestDetailController($scope, $rootScope, $state, $stateParams, RequestsService) {
+function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stateParams,
+  Dialog, RequestsService, ToastsService, DriversService) {
 
   activate();
 
   function activate() {
+    $scope.searchText    = null;
+    $scope.querySearch   = querySearch;
+
     getRequest();
   }
 
@@ -18,11 +22,98 @@ function RequestDetailController($scope, $rootScope, $state, $stateParams, Reque
     RequestsService.getRequest($stateParams.requestId)
     .then(function (response) {
       $scope.request = response.data.data.request_details;
-      debugger;
+      $scope.requestLoaded = true;
     })
     .catch(function (error) {
       debugger;
     });
+  }
+
+  // TODO: Dispaly driver for already assigned requests
+  $scope.assignRequest = function (driver) {
+    Dialog.confirmAction('Do you want to assign this request to ' + driver.display)
+    .then(function () {
+      $scope.processInProgress = true;
+      var data = {
+        driver_id: driver.id,
+        request_id: $scope.request.id,
+      };
+
+      RequestsService.assignRequestToDriver(data)
+      .then(function (response) {
+        ToastsService.showToast('success', 'Request has been successfully assigned to',
+        driver.display);
+        $scope.processInProgress = false;
+      })
+      .catch(function (error) {
+        $scope.processInProgress = false;
+        debugger;
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
+  };
+
+  $scope.changeRequestStatus = function () {
+    Dialog.confirmAction('Do you want to change the status of this request?')
+    .then(function () {
+      $scope.processInProgress = true;
+
+      var data = {
+        request_id: $scope.request.id,
+        request_status: $scope.request_status,
+      };
+
+      RequestsService.changeRequestStatus(data)
+      .then(function (response) {
+        ToastsService.showToast('success', 'Request status successfully changed!');
+        $scope.processInProgress = false;
+        getAllRequests();
+      })
+      .catch(function (error) {
+        $scope.processInProgress = false;
+        debugger;
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
+  };
+
+  ///////////////// HELPER FUNCTIONS /////////////////
+  function querySearch(query) {
+    var results = query ? $scope.drivers.filter(createFilterFor(query)) : $scope.drivers;
+    var deferred = $q.defer();
+    $timeout(function () {
+      deferred.resolve(results);
+    }, Math.random() * 1000, false);
+    return deferred.promise;
+  }
+
+  function loadAllDrivers() {
+    DriversService.getAllDrivers({ limit: 50, page: 1 })
+    .then(function (drivers) {
+      $scope.drivers =
+      drivers.data.data.all_drivers.data.map(function (driver) {
+        return {
+          id: driver.id,
+          value: driver.first_name.toLowerCase() + ' ' + driver.last_name.toLowerCase(),
+          display: driver.first_name + ' ' + driver.last_name,
+        };
+      });
+    })
+    .catch(function () {
+      debugger;
+    });
+  }
+
+  loadAllDrivers();
+
+  function createFilterFor(query) {
+    var lowercaseQuery = angular.lowercase(query);
+
+    return function filterFn(driver) {
+      return (driver.value.indexOf(lowercaseQuery) === 0);
+    };
   }
 
 }

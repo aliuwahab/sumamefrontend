@@ -14,6 +14,7 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
   var service = {
     getRequests: getRequests,
     getRequest: getRequest,
+    assignRequestToDriver: assignRequestToDriver,
   };
 
   return service;
@@ -41,6 +42,18 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
     return $http.get(apiBaseURL + '/view/request?' + authDataString + '&request_id=' + id, {
       cache: CacheFactory.get(cache),
     });
+  }
+
+  function assignRequestToDriver(data) {
+    var params = $.param(data);
+
+    return $http.post(apiBaseURL + '/assign/request?' + authDataString + '&' + params);
+  }
+
+  function changeRequestStatus(data) {
+    var params = $.param(data);
+
+    return $http.post(apiBaseURL + '/change/request/status?' + authDataString + '&' + params);
   }
 
 }
