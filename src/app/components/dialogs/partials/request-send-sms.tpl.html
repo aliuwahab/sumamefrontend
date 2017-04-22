@@ -1,0 +1,36 @@
+<md-dialog aria-label="Add Consultant">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Send SMS to {{request.requester.first_name}} {{request.requester.last_name}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="width:700px;">
+      <div ng-if="sendingSMS" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div ng-show="!sendingSMS">
+        <md-input-container class="md-block">
+          <label>Type your message here</label>
+          <textarea ui-tinymce ng-model="messageToCustomer" aria-label="message to customer" md-select-on-focus rows="4"></textarea>
+        </md-input-container>
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="sendSMS()" class="md-raised md-accent">
+        Send Message
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

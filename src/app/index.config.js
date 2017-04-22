@@ -9,7 +9,7 @@
   function config($logProvider, $httpProvider, $authProvider, toastrConfig, $momentProvider,
     ssSideNavSectionsProvider, $mdThemingProvider, $mdIconProvider, momentPickerProvider, $provide,
     gravatarServiceProvider, localStorageServiceProvider, RollbarProvider, CacheFactoryProvider,
-    segmentProvider, segmentEvents, ChartJsProvider, ENV) {
+    segmentProvider, segmentEvents, ChartJsProvider, TwilioProvider, ENV) {
 
     segmentProvider.setKey(ENV.segmentWriteKey);
     segmentProvider.setEvents(segmentEvents);
@@ -46,6 +46,11 @@
     $authProvider.tokenHeader = 'token';
     $authProvider.tokenType = '';
     $authProvider.storageType = 'localStorage';
+
+    TwilioProvider.setCredentials({
+      accountSid: ENV.twilioAccountSid,
+      authToken: ENV.twilioAuthToken,
+    });
 
     angular.extend(CacheFactoryProvider.defaults, {
       maxAge: 15 * 60 * 1000, // Items added to the cache expire after 15 minutes

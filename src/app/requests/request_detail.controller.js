@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stateParams,
-  Dialog, RequestsService, ToastsService, DriversService) {
+  Dialog, RequestsService, ToastsService, DriversService, Twilio) {
 
   activate();
 
@@ -76,6 +76,28 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
       });
     }, function () {
       // Dialog has been canccelled
+    });
+  };
+
+  $scope.showMessageDialog = function (ev) {
+    Dialog.showCustomDialog(ev, 'send_message', $scope);
+  };
+
+  $scope.sendSMS = function () {
+    $scope.sendingSMS = true;
+
+    Twilio.create('Messages', {
+      From: '+14248885615',
+      To: $scope.request.requester.phone_number,
+      Body: $scope.messageToCustomer,
+    })
+    .success(function (data, status, headers, config) {
+      $scope.sendingSMS = false;
+      ToastsService.showToast('success', 'Message successfully sent!');
+    })
+    .error(function (data, status, headers, config) {
+      $scope.sendingSMS = false;
+      ToastsService.showToast('error', 'There was an error sending message!');
     });
   };
 

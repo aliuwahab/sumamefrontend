@@ -29,6 +29,9 @@
 
       // STAFF DIALOGS
       add_staff: 'app/components/dialogs/partials/staff-add_staff.tpl.html',
+
+      // SMS
+      send_message: 'app/components/dialogs/partials/request-send-sms.tpl.html',
     };
 
     // CUSTOMIZE DEFAULT CONFIRM BUTTONS

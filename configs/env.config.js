@@ -7,6 +7,8 @@ var shared = {
   awsAccessKeyId: process.env.AWS_ACCESS_KEY_ID,
   awsSecretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   awsS3UserFilesBucket: process.env.AWS_S3_USER_FILES_BUCKET,
+  twilioAccountSid: process.env.TWILIO_ACCOUNT_SID,
+  twilioAuthToken: process.env.TWILIO_AUTH_TOKEN,
   fakerAPIBaseURL: process.env.FAKER_API_BASE_URL,
   debug: process.env.DEBUG || true,
 };
