@@ -50,6 +50,7 @@
       showCustomDialog: showCustomDialog,
       confirmDelete: confirmDelete,
       confirmAction: confirmAction,
+      closeDialog: closeDialog,
     };
 
     return service;
@@ -119,6 +120,10 @@
       .cancel('No');
 
       return $mdDialog.show(confirm);
+    }
+
+    function closeDialog() {
+      $mdDialog.hide();
     }
   }
 })();

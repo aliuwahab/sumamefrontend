@@ -34,14 +34,6 @@
     "angular-permission": "^5.1.0",
     "ng-rollbar": "^1.9.2",
     "aws-sdk": "aws-sdk-js#^2.7.17",
-    "videogular": "^1.4.4",
-    "videogular-themes-default": "^1.4.4",
-    "videogular-controls": "^1.4.4",
-    "videogular-buffering": "^1.4.4",
-    "videogular-overlay-play": "^1.4.4",
-    "videogular-poster": "^1.4.4",
-    "videogular-ima-ads": "^1.4.4",
-    "videogular-angulartics": "^1.4.4",
     "angular-ui-tinymce": "^0.0.18",
     "angular-moment-picker": "moment-picker#^0.9.1",
     "angular-momentjs": "^0.2.2",
@@ -51,8 +43,7 @@
     "angular-segment-analytics": "^1.2.0",
     "angular-activity-monitor": "^1.1.0",
     "angular-chart.js": "^1.1.1",
-    "ngmap": "^1.18.4",
-    "angular-twilio": "*"
+    "ngmap": "^1.18.4"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3"

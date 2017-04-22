@@ -34,7 +34,7 @@
       'ActivityMonitor',
       'chart.js',
       'ngMap',
-      'mcwebb.twilio',
+      'twilio',
     ]);
 
 })();

@@ -94,6 +94,7 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     .success(function (data, status, headers, config) {
       $scope.sendingSMS = false;
       ToastsService.showToast('success', 'Message successfully sent!');
+      Dialog.closeDialog();
     })
     .error(function (data, status, headers, config) {
       $scope.sendingSMS = false;
