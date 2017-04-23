@@ -16,12 +16,19 @@
   height: 35px;
   margin-left: 15px;
 }
-
 .sm-st-item-card {
   text-align: center;
   width: 150px;
-  height: 110px;
-  margin: 0 !important;
+  height: 140px;
+  cursor: pointer;
+  border: 3px solid #fff;
+  outline: none;
+}
+.sm-st-item-title {
+  font-size: 20px;
+}
+.sm-st-item-card:hover {
+  border: 3px solid #019AD6;
 }
 .sm-st-item-btn {
   padding: 0;

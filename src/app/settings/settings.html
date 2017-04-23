@@ -22,30 +22,24 @@
   <h3 class="view-main-title">{{viewName | capitalize:'first'}}</h3>
 
   <div class="" layout="row">
-    <md-button class="sm-st-item-btn" aria-label="setting item" ng-click="changeSettingsTab('app.settings.staff')">
-      <md-card flex="100">
-        <md-card-content class="sm-st-item-card">
-          <img src="../assets/icons/car-driver.png" alt="" class="sm-st-item-icon">
-          <h2>Staff</h2>
-        </md-card-content>
-      </md-card>
-    </md-button>
-    <md-button class="sm-st-item-btn" aria-label="setting item" ng-click="changeSettingsTab('app.settings.warehouses')">
-      <md-card flex="100">
-        <md-card-content class="sm-st-item-card">
-          <img src="../assets/icons/car-driver.png" alt="" class="sm-st-item-icon">
-          <h2>Warehouses</h2>
-        </md-card-content>
-      </md-card>
-    </md-button>
-    <md-button class="sm-st-item-btn" aria-label="setting item" ng-click="changeSettingsTab('app.settings.pricing')">
-      <md-card flex="100">
-        <md-card-content class="sm-st-item-card">
-          <img src="../assets/icons/car-driver.png" alt="" class="sm-st-item-icon">
-          <h2>Pricing</h2>
-        </md-card-content>
-      </md-card>
-    </md-button>
+    <md-card class="sm-st-item-card" ng-style="viewName =='staff' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeSettingsTab('app.settings.staff')">
+      <md-card-content>
+        <img src="../assets/icons/car-driver.png" alt="" class="sm-st-item-icon">
+        <h2 class="sm-st-item-title">Staff</h2>
+      </md-card-content>
+    </md-card>
+    <md-card class="sm-st-item-card" ng-style="viewName =='warehouses' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeSettingsTab('app.settings.warehouses')">
+      <md-card-content>
+        <img src="../assets/icons/warehouse.png" alt="" class="sm-st-item-icon">
+        <h2 class="sm-st-item-title">Warehouses</h2>
+      </md-card-content>
+    </md-card>
+    <md-card class="sm-st-item-card" ng-style="viewName =='pricing' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeSettingsTab('app.settings.pricing')">
+      <md-card-content>
+        <img src="../assets/icons/price-tag.png" alt="" class="sm-st-item-icon">
+        <h2 class="sm-st-item-title">Pricing</h2>
+      </md-card-content>
+    </md-card>
   </div>
 
   <md-card>
