@@ -6,7 +6,8 @@ angular
     .controller('RequestsController', RequestsController);
 
 /** @ngInject */
-function RequestsController($scope, $rootScope, $state, Dialog, RequestsService, NgMap) {
+function RequestsController($scope, $rootScope, $state, $stateParams, Dialog, RequestsService,
+  NgMap) {
 
   activate();
 
@@ -15,6 +16,12 @@ function RequestsController($scope, $rootScope, $state, Dialog, RequestsService,
       limit: 50,
       page: 1,
     };
+
+    if ($stateParams && ($stateParams.referer == 'dashboard')) {
+      $scope.viewName = $stateParams.viewName;
+      $scope.filterParams.request_status = $stateParams.requestStatus;
+      $scope.selectedStatus = $stateParams.requestStatus;
+    }
 
     getAllRequests();
   }
@@ -30,6 +37,35 @@ function RequestsController($scope, $rootScope, $state, Dialog, RequestsService,
       debugger;
     });
   }
+
+  $scope.filterByRequestStatus = function () {
+    switch ($scope.selectedStatus) {
+      case 'pending':
+        $scope.filterParams.request_status = $scope.selectedStatus;
+        $scope.viewName = 'Pending Requests';
+        getAllRequests();
+        break;
+      case 'assigned':
+        $scope.filterParams.request_status = $scope.selectedStatus;
+        $scope.viewName = 'Assigned Requests';
+        getAllRequests();
+        break;
+      case 'delivery-in-progress':
+        $scope.filterParams.request_status = $scope.selectedStatus;
+        $scope.viewName = 'In-Progress Requests';
+        getAllRequests();
+        break;
+      case 'delivered':
+        $scope.filterParams.request_status = $scope.selectedStatus;
+        $scope.viewName = 'Completed Requests';
+        getAllRequests();
+        break;
+      default:
+        delete $scope.filterParams.request_status;
+        $scope.viewName = 'Requests';
+        getAllRequests();
+    }
+  };
 
   /////////////////// HELPER FUNCTIONS ///////////////////////
 

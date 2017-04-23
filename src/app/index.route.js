@@ -60,6 +60,11 @@
       url: '/requests',
       templateUrl: 'app/requests/requests.html',
       controller: 'RequestsController',
+      params: {
+        viewName: null,
+        referer: null,
+        requestStatus: null,
+      },
       data: {
         permissions: {
           only: function () {

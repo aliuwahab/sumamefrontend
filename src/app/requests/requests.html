@@ -6,6 +6,16 @@
       </md-icon>
     </md-button>
 
+    <md-input-container flex="20" flex-sm="100" class="sm-toolbar-select">
+      <md-select ng-model="selectedStatus" placeholder="Filter by Status" ng-change="filterByRequestStatus()">
+        <md-option value="all_requests">All Requests</md-option>
+        <md-option value="pending">Pending</md-option>
+        <md-option value="assigned">Assigned</md-option>
+        <md-option value="delivery-in-progress">In Progress</md-option>
+        <md-option value="delivered">Delivered</md-option>
+      </md-select>
+    </md-input-container>
+
     <span flex></span>
 
     <md-menu>
@@ -52,7 +62,7 @@
 </md-toolbar>
 
 <div class="view-main-container">
-  <h3 class="view-main-title">Requests</h3>
+  <h3 class="view-main-title">{{viewName || 'Requests'}}</h3>
 
   <md-card>
     <md-card-content>
