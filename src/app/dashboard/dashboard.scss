@@ -1,5 +1,10 @@
 .dashboard-statistic-container {
   text-align: center;
+  border: 3px solid #fff;
+  cursor: pointer;
+}
+.dashboard-statistic-container:hover {
+  border: 3px solid #019AD6;
 }
 .dashboard-graphs-card {
   min-height: 430px;

@@ -9,15 +9,15 @@
         </md-button>
       </div>
     </md-toolbar>
-    <md-dialog-content class="sm-modal-content" style="min-width:900px; overflow:hidden;">
+    <md-dialog-content class="sm-modal-content" style="min-width:900px;">
       <div ng-if="loadingRequiredData" layout="row" layout-align="center center" style="min-height: 40vh;">
         <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
       </div>
 
       <div layout="row" ng-show="!loadingRequiredData">
 
-        <div class="" flex="25">
-          <md-input-container style="width:100%;">
+        <div class="" flex="25" style="position:fixed;">
+          <md-input-container class="sm-input-container">
             <label>Equipment Type</label>
             <md-select ng-model="newOnlineRequest.somame_warehouse_id">
               <!-- <md-option ng-value="subject.id" ng-repeat="subject in subjects">{{subject.subject_name}}</md-option> -->
@@ -32,22 +32,49 @@
             <input type="text" ng-model="newOnlineRequest.delievery_order_number">
           </md-input-container>
 
-          <md-input-container class="sm-input-container">
-            <place-autocomplete label="Where's the final destination of your order?" ng-model="newOnlineRequest.delivery_destination"></place-autocomplete>
+          <md-input-container class="sm-input-container sm-rq-rent-filters-input-container">
+            <place-autocomplete label="Destination Location" ng-model="newOnlineRequest.delivery_destination"></place-autocomplete>
           </md-input-container>
 
-          <md-input-container class="md-block">
+          <md-input-container class="md-block sm-rq-rent-filters-input-container">
             <label>Any additional instructions?</label>
             <textarea ui-tinymce ng-model="newOnlineRequest.request_instructions" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
           </md-input-container>
         </div>
 
-        <div class="sm-equipment-list" flex="75">
+        <div class="sm-equipment-list" flex="70" flex-offset="30">
           <div class="sm-eq-item-container">
-
+            <h3>Excavator (Used 12 Months Only)</h3>
+            <p>
+              GHS 1,500 per day
+            </p>
+            <img class="sm-equipment-img" src="../assets/images/equipment_1.jpeg" alt="equipment 1">
+            <div class="">
+              <span flex></span>
+              <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full">Select</md-button>
+            </div>
           </div>
           <div class="sm-eq-item-container">
-
+            <h3>Heavy Construction Machine</h3>
+            <p>
+              GHS 1,500 per day
+            </p>
+            <img class="sm-equipment-img" src="../assets/images/equipment_2.jpg" alt="equipment 1">
+            <div class="">
+              <span flex></span>
+              <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full">Select</md-button>
+            </div>
+          </div>
+          <div class="sm-eq-item-container">
+            <h3>New Ford Pickup up for Rent</h3>
+            <p>
+              GHS 500 per day
+            </p>
+            <img class="sm-equipment-img" src="../assets/images/pickup_1.jpg" alt="equipment 1">
+            <div class="">
+              <span flex></span>
+              <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full">Select</md-button>
+            </div>
           </div>
         </div>
 
@@ -61,7 +88,7 @@
         Cancel
       </md-button>
       <md-button ng-click="addConsultant()" class="md-raised md-accent">
-        Submit Request
+        Reserve Vehicle
       </md-button>
     </md-dialog-actions>
   </form>

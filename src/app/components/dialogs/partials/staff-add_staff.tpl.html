@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Add Local Delivery Request</h2>
+        <h2>Add New Staff Member</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="closeDialog()">
           <i class="material-icons">close</i>
@@ -15,20 +15,34 @@
       </div>
 
       <div ng-show="!loadingRequiredData">
-        <md-input-container class="sm-input-container">
-          <place-autocomplete label="Enter Pickup Location" ng-model="newOfflineRequest.pickup_location"></place-autocomplete>
-        </md-input-container>
+
+        <div class="" layout="row">
+          <md-input-container class="sm-input-container">
+            <label>First Name</label>
+            <input type="text" ng-model="newStaffMember.request_name">
+          </md-input-container>
+
+          <md-input-container class="sm-input-container">
+            <label>Last Name</label>
+            <input type="text" ng-model="newStaffMember.request_name">
+          </md-input-container>
+        </div>
 
         <md-input-container class="sm-input-container">
-          <place-autocomplete label="Enter Destination Location" ng-model="newOfflineRequest.destination_location"></place-autocomplete>
+          <label>Title</label>
+          <input type="text" ng-model="newStaffMember.request_name">
         </md-input-container>
 
-        <md-input-container class="sm-input-container">
-          <label>Describe the package</label>
-          <input type="text" ng-model="newOfflineRequest.package_description">
+        <md-input-container style="width:100%;">
+          <label>Permission Level</label>
+          <md-select ng-model="newVehicle.vehicle_category">
+            <md-option>Admin Access</md-option>
+            <md-option>Manager Access</md-option>
+            <md-option>Support Staff Access</md-option>
+          </md-select>
         </md-input-container>
 
-        <h4 class="sm-custom-input-label">Have a picture of your package?</h4>
+        <h4 class="sm-custom-input-label">Staff Profile Image</h4>
         <div class="sm-dropzone" ngf-select="uploadProfileImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
           <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
             <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
@@ -36,18 +50,18 @@
           </div>
           <div ng-if="!uploadingImage" layout="column" layout-align="center center">
             <i class="material-icons md-24">backup</i>
-            <p ng-if="!newOfflineRequest.request_image">Click here to select an image</p>
-            <p ng-if="newOfflineRequest.request_image">Click here to change image</p>
+            <p ng-if="!newStaffMember.staff_image">Click here to select an image</p>
+            <p ng-if="newStaffMember.staff_image">Click here to change image</p>
 
-            <div class="" ng-if="newOfflineRequest.request_image" style="max-width:700px">
-              <img style="width: 400px; height: auto;" ng-src="{{newOfflineRequest.request_image}}" alt="Answer Image Preview">
+            <div class="" ng-if="newStaffMember.staff_image" style="max-width:700px">
+              <img style="width: 400px; height: auto;" ng-src="{{newStaffMember.staff_image}}" alt="Answer Image Preview">
             </div>
           </div>
         </div>
 
         <md-input-container class="md-block">
-          <label>Any additional instructions?</label>
-          <textarea ui-tinymce ng-model="newOfflineRequest.request_instructions" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
+          <label>Staff Profile Summary</label>
+          <textarea ui-tinymce ng-model="newStaffMember.staff_profile" aria-label="Staff Profile" md-select-on-focus rows="3"></textarea>
         </md-input-container>
       </div>
 
@@ -59,7 +73,7 @@
         Cancel
       </md-button>
       <md-button ng-click="addConsultant()" class="md-raised md-accent">
-        Submit Request
+        Add Staff
       </md-button>
     </md-dialog-actions>
   </form>

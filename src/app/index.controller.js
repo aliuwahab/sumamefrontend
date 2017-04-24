@@ -19,7 +19,6 @@
     // SHOW USER EDIT DIALOG
     $scope.showUserEditDialog = function (ev) {
       $scope.user = angular.copy($rootScope.authenticatedUser);
-      loadAllSubjects();
       Dialog.showCustomDialog(ev, 'edit_user', $scope);
     };
 
@@ -72,30 +71,12 @@
       .catch(function (error) {
         ToastsService.showToast('error', error.message);
       });
-
     };
-
-    // LOAD ALL SUBJECTS
-    function loadAllSubjects() {
-      SettingsService.peformGetOperation('get_subjects')
-      .then(function (data) {
-        $scope.subjects = data.data.data.subjects;
-        $scope.allRequiredDataLoaded = true;
-      })
-      .catch(function () {
-        debugger;
-      });
-    }
 
     // SPLIT PROFILE IMAGE URLS
     $scope.splitDisplayPicUrl = function (string) {
       var urls = string.split(',');
       return urls[0];
-    };
-
-    // CLOSE DIALOG
-    $scope.closeDialog = function () {
-      $mdDialog.hide();
     };
 
   }

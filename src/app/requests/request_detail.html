@@ -8,73 +8,105 @@
 
     <span flex></span>
 
-    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="openMenu($mdMenu, $event)">
-      Update Request
+    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" href="#/requests">
+      Back To All Requests
     </md-button>
   </div>
 </md-toolbar>
+
+<div ng-if="processInProgress" class="top-progress-bar" layout="row">
+  <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+</div>
 
 <div class="view-main-container">
   <h3 class="view-main-title">Details of {{request.requester.first_name}}'s Request</h3>
 
   <md-card>
     <md-card-content>
-      <div layout="row">
+      <div ng-if="!requestLoaded" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div layout="row" ng-if="requestLoaded">
         <div class="sm-request-detail-left" flex="50">
           <div class="sm-rq-detail-user-container" layout="row">
-            <div class="sm-rq-user-img" background-img="../assets/images/kamil.JPG">
+            <div ng-if="request.requester.user_profile_image_url" class="sm-rq-user-img" background-img="{{request.requester.user_profile_image_url}}">
             </div>
-            <!-- <div class="sm-rq-user-img" flex="20">
-              <img class="lr-consultant-avatar" ng-if="!consultant.display_pictures_urls" gravatar-src="'consultant.email'" gravatar-size="200"/>
-            </div> -->
+            <div ng-if="!request.requester.user_profile_image_url" flex="20">
+              <img class="sm-rq-user-img" gravatar-src="'request.requester.email'" gravatar-size="200"/>
+            </div>
             <div class="">
               <h1 class="sm-rq-user-name">{{request.requester.first_name}} {{request.requester.last_name}}</h1>
               <p class="sm-rq-user-phone">{{request.requester.phone_number}}</p>
+              <md-button class="" aria-label="description" ng-click="showMessageDialog()">
+                <i class="material-icons sm-rq-message-icon">message</i>
+                <md-tooltip md-direction="bottom">
+                  Send an SMS Message to {{request.requester.first_name}} {{request.requester.last_name}}.
+                </md-tooltip>
+              </md-button>
             </div>
           </div>
 
           <div class="sm-rq-other-details-container">
-            <h3 class="sm-rq-inner-title">Package Details</h3>
+            <!-- <h3 class="sm-rq-inner-title">Package Details</h3> -->
             <div class="sm-rq-pkg-details-container">
-              <i class="material-icons">inbox</i> Small box
+              <i class="material-icons">inbox</i> {{request.package_description}}
             </div>
-            <img class="sm-rq-pkg-img" src="../assets/images/package_img.jpg" alt="Package Image">
+            <img class="sm-rq-pkg-img" src="{{request.request_image}}" alt="Package Image">
           </div>
         </div>
         <div class="sm-request-detail-right" flex="50">
-          <md-input-container class="sm-input-container">
-            <label>Assign Driver</label>
-            <md-select ng-model="request.driver_id">
-              <md-option value="1">Kamil Nabong</md-option>
-              <md-option value="2">James Klutse</md-option>
-              <md-option value="3">Nana Nyanin</md-option>
-            </md-select>
+
+          <md-input-container class="sm-input-container" style="margin: 0;">
+            <md-autocomplete flex required
+                md-input-name="driversAutocomplete"
+                md-input-minlength="2"
+                md-input-maxlength="18"
+                md-no-cache="$scope.noCache"
+                md-selected-item="selectedDriver"
+                md-selected-item-change="assignRequest(item)"
+                md-search-text="searchText"
+                md-items="item in querySearch(searchText)"
+                md-item-text="item.display"
+                md-require-match
+                md-floating-label="Assign Driver">
+              <md-item-template>
+                <span md-highlight-text="searchText">{{item.display}}</span>
+              </md-item-template>
+              <div ng-messages="searchForm.driversAutocomplete.$error" ng-if="searchForm.driversAutocomplete.$touched">
+                <div ng-message="required">You <b>must</b> select a driver.</div>
+                <div ng-message="md-require-match">Please select an existing driver.</div>
+                <div ng-message="minlength">Your entry is not long enough.</div>
+                <div ng-message="maxlength">Your entry is too long.</div>
+              </div>
+            </md-autocomplete>
           </md-input-container>
 
           <md-input-container class="sm-input-container">
             <label>Request Status</label>
-            <md-select ng-model="request.request_status">
+            <md-select ng-model="request.request_status" ng-change="changeRequestStatus()">
+              <md-option value="pending">Pending</md-option>
               <md-option value="assigned">Assigned</md-option>
-              <md-option value="in_progress">In Progress</md-option>
+              <md-option value="delivery_in_progress">In Progress</md-option>
               <md-option value="delivered">Delivered</md-option>
             </md-select>
           </md-input-container>
 
           <div class="sm-rq-map-container">
-            <ng-map zoom="15" center="" style="height:100%" >
+            <ng-map zoom="13" center="" style="height:68vh" >
               <directions
                 draggable="true"
                 travel-mode="DRIVING"
-                origin="19 banana street, Accra, Ghana"
-                destination="National Theatre, Accra, Ghana">
+                origin="{{request.pickup_location_latitude}},{{request.pickup_location_longitude}}"
+                destination="{{request.delivery_location_latitude}},{{request.delivery_location_longitude}}">
               </directions>
               <custom-marker id="start"
-                position="19 banana street, Accra, Ghana">
-                <div> Pickup </div>
+                position="{{request.pickup_location_latitude}},{{request.pickup_location_longitude}}">
+                <div>{{request.pickup_location_name}}</div>
               </custom-marker>
               <custom-marker id="end"
-                position="National Theatre, Accra, Ghana">
-                <div> Destination </div>
+                position="{{request.delivery_location_latitude}},{{request.delivery_location_longitude}}">
+                <div>{{request.delivery_location_name}}</div>
               </custom-marker>
             </ng-map>
           </div>
@@ -82,5 +114,4 @@
       </div>
     </md-card-content>
   </md-card>
-
 </div>

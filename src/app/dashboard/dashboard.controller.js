@@ -6,7 +6,7 @@ angular
     .controller('DashboardController', DashboardController);
 
 /** @ngInject */
-function DashboardController($scope, $rootScope, $state, DashboardService) {
+function DashboardController($scope, $rootScope, $state, $location, DashboardService) {
 
   activate();
 
@@ -27,6 +27,34 @@ function DashboardController($scope, $rootScope, $state, DashboardService) {
       debugger;
     });
   }
+
+  $scope.gotoMetricPage = function (metricPage) {
+    switch (metricPage) {
+      case 'requests_pending':
+        $state.go('app.requests', {
+          requestStatus: 'pending',
+          viewName: 'Requests Pending',
+          referer: 'dashboard',
+        });
+        break;
+      case 'requests_inprogress':
+        $state.go('app.requests', {
+          requestStatus: 'delivery-in-progress',
+          viewName: 'Requests In Progress',
+          referer: 'dashboard',
+        });
+        break;
+      case 'drivers':
+        $state.go('app.drivers');
+        break;
+      case 'vehicles':
+        $state.go('app.vehicles');
+        break;
+      default:
+
+        // Default
+    }
+  };
 
   $scope.labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
   $scope.series = ['All Requests', 'Successfully Completed'];

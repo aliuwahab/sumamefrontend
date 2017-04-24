@@ -6,7 +6,7 @@ angular
     .controller('VehiclesController', VehiclesController);
 
 /** @ngInject */
-function VehiclesController($scope, $rootScope, $state, VehiclesService) {
+function VehiclesController($scope, $rootScope, $state, Dialog, VehiclesService) {
 
   activate();
 
@@ -29,6 +29,17 @@ function VehiclesController($scope, $rootScope, $state, VehiclesService) {
       debugger;
     });
   }
+
+  ///////////////////// HELPER FUNCTIONS ///////////////////////
+
+  // SHOW ADD VEHICLE DIALOG
+  $scope.showAddVehicleDialog = function (ev) {
+    $scope.newRequest = {
+
+    };
+
+    Dialog.showCustomDialog(ev, 'add_vehicle', $scope);
+  };
 
 }
 })();

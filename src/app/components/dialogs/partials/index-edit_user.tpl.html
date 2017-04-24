@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Edit User Details</h2>
+        <h2>Edit Your Profile Details</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="closeDialog()">
           <i class="material-icons">close</i>
@@ -10,19 +10,11 @@
       </div>
     </md-toolbar>
     <md-dialog-content class="sm-modal-content" style="width:700px;">
-      <div ng-if="updatingUser || !allRequiredDataLoaded" layout="row" layout-align="center center" style="min-height: 40vh;">
+      <div ng-if="updatingUser" layout="row" layout-align="center center" style="min-height: 40vh;">
         <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
       </div>
 
-      <div ng-show="allRequiredDataLoaded && !updatingUser">
-        <md-input-container class="sm-input-container">
-          <label>Type of Consultant</label>
-          <md-select ng-model="user.type_of_consultant" ng-disabled="authenticatedUser.user_type != 'admin'">
-            <md-option value="chief_examiner">Chief Examiner</md-option>
-            <md-option value="normal_examiner">Normal Examiner</md-option>
-          </md-select>
-        </md-input-container>
-
+      <div ng-show="!updatingUser">
         <div layout="row">
           <md-input-container class="sm-input-container">
             <label>First Name</label>
@@ -46,26 +38,12 @@
           </md-input-container>
         </div>
 
-        <div layout="row">
-          <md-input-container class="sm-input-container">
-            <label>Title</label>
-            <input type="text" ng-model="user.user_title">
-          </md-input-container>
-
-          <md-input-container class="sm-input-container">
-            <label>Sub Title</label>
-            <input type="text" ng-model="user.user_subtitle">
-          </md-input-container>
-        </div>
-
-        <md-input-container style="width:100%;">
-          <label>Assigned Subject</label>
-          <md-select ng-model="user.subject_id" ng-disabled="authenticatedUser.user_type != 'admin'">
-            <md-option ng-value="subject.id" ng-repeat="subject in subjects">{{subject.subject_name}}</md-option>
-          </md-select>
+        <md-input-container class="sm-input-container">
+          <label>Title</label>
+          <input type="text" ng-model="user.user_title">
         </md-input-container>
 
-        <h4>Profile Picture</h4>
+        <h4 class="sm-custom-input-label">Profile Picture</h4>
         <div class="sm-dropzone" ngf-select="uploadProfileImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
           <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
             <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
@@ -82,9 +60,9 @@
           </div>
         </div>
 
-        <h4>Profile Text</h4>
         <md-input-container class="md-block">
-          <textarea ui-tinymce ng-model="user.user_profile" aria-label="Consultant Profile" md-select-on-focus></textarea>
+          <label>Profile Text</label>
+          <textarea ui-tinymce ng-model="user.user_profile" aria-label="Consultant Profile" rows="3" md-select-on-focus></textarea>
         </md-input-container>
 
       </div>
@@ -97,7 +75,7 @@
         Cancel
       </md-button>
       <md-button ng-click="updateUserDetails()" class="md-raised md-accent">
-        Save
+        Update
       </md-button>
     </md-dialog-actions>
   </form>
