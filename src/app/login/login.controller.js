@@ -38,6 +38,7 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
       $auth.login($scope.user, loginConfig)
       .then(function (response) {
         var token = response.data.token;
+
         UserService.getUserProfile(token)
         .then(function (user) {
           localStorageService.set('profile', user.data.user);
@@ -77,7 +78,7 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
       .catch(function (error) {
         $scope.enableProgressBar = false;
         localStorageService.clearAll();
-        ToastsService.showToast('error', error.message);
+        ToastsService.showToast('error', error.data.error);
       });
 
     }else {
