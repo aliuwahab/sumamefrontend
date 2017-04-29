@@ -14,6 +14,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
 
   var service = {
     getAllWarehouses: getAllWarehouses,
+    addWarehouse: addWarehouse,
   };
 
   return service;
@@ -29,6 +30,13 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     return $http.get(apiBaseURL + '/all/sumame/addresses?' + authDataString + '&' + queryOptions, {
       cache: CacheFactory.get(cache),
     });
+  }
+
+  function addWarehouse(data) {
+    var params = $.param(data);
+    debugger;
+
+    return $http.post(apiBaseURL + '/create/sumame/address?' + authDataString + '&' + data);
   }
 
 }

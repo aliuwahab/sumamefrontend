@@ -67,14 +67,52 @@ function RequestsController($scope, $rootScope, $state, $stateParams, Dialog, Re
     }
   };
 
+  $scope.addRequest = function (requestType) {
+    switch (requestType) {
+      case 'goods_delivery':
+        $scope.newRequest = $scope.newOfflineRequest;
+        break;
+      case 'online_purchase_delivery':
+        $scope.newRequest = $scope.newOnlineRequest;
+        break;
+      case 'vehicle_request':
+        $scope.newRequest = $scope.newEquipmentRequest;
+        break;
+      default:
+    }
+
+    $scope.newRequest.request_type = requestType;
+    populateNewRequestData();
+
+    debugger;
+
+    RequestsService.addRequest($scope.newRequest)
+    .then(function (response) {
+      debugger;
+    })
+    .catch(function (error) {
+      $scope.error = error.data.message;
+      debugger;
+    });
+  };
+
+  function populateNewRequestData() {
+    $scope.newRequest.pickup_location_name = $scope.pickupLocation.name;
+    $scope.newRequest.pickup_location_latitude = $scope.pickupLocation.latitude;
+    $scope.newRequest.pickup_location_longitude = $scope.pickupLocation.longitude;
+
+    $scope.newRequest.delivery_location_name = $scope.deliveryLocation.name;
+    $scope.newRequest.delivery_location_latitude = $scope.deliveryLocation.latitude;
+    $scope.newRequest.delivery_location_longitude = $scope.deliveryLocation.longitude;
+
+    $scope.newRequest.requester_id = $rootScope.authenticatedUser.id;
+    $scope.newRequest.requester_status = 'pending';
+  }
+
   /////////////////// HELPER FUNCTIONS ///////////////////////
 
   // SHOW ADD REQUEST DIALOG
   $scope.showAddRequestDialog = function (ev, requestType) {
-    $scope.newRequest = {
-
-    };
-
     Dialog.showCustomDialog(ev, requestType, $scope);
   };
 

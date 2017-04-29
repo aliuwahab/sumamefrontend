@@ -76,11 +76,16 @@
   text-align: center;
   margin-top: 20px;
 }
+.sm-wh-map-container {
+  margin: 10px;
+}
+.sm-wh-map {
+  height: 100px !important;
+}
 
 //  FLEX STYLES
 .flex-grid {
   display: flex;
-  // justify-content: space-between;
   justify-content: flex-start;
   flex-wrap: wrap;
 }

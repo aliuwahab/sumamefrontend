@@ -8,11 +8,18 @@ angular
 /** @ngInject */
 function PricingController($scope, $rootScope, $state, $mdDialog, lodash, Dialog) {
 
-  var _ = lodash;
+  activate();
 
-  // DIALOG TRIGGER
-  $scope.closeDialog = function () {
-    $mdDialog.hide();
+  function activate() {
+
+  }
+
+  ///////////////////// HELPER FUNCTIONS ///////////////////////
+
+  // SHOW ADD DIALOG
+  $scope.showAddStaffDialog = function (ev) {
+    $scope.newPricing = {};
+    Dialog.showCustomDialog(ev, 'add_pricing', $scope);
   };
 
 }

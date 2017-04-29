@@ -34,5 +34,34 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
     });
   }
 
+  $scope.addWarehouse = function () {
+
+    $scope.newWarehouse.location_latitude = $scope.warehouseLocation.latitude;
+    $scope.newWarehouse.location_longitude = $scope.warehouseLocation.longitude;
+    debugger;
+
+    $scope.addingWarehouse = true;
+    SettingsService.addWarehouse($scope.newWarehouse)
+    .then(function (response) {
+      debugger;
+      $scope.addingWarehouse = false;
+    })
+    .catch(function (error) {
+      $scope.error = error.data.message;
+      $scope.addingWarehouse = false;
+      debugger;
+    });
+  };
+
+  ///////////////////// HELPER FUNCTIONS ///////////////////////
+
+  // SHOW ADD DIALOG
+  $scope.showAddWarehouseDialog = function (ev) {
+    $scope.newWarehouse = {
+      created_by: $rootScope.authenticatedUser.id,
+    };
+    Dialog.showCustomDialog(ev, 'add_warehouse', $scope);
+  };
+
 }
 })();

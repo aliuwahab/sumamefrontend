@@ -8,13 +8,30 @@
 
     <span flex></span>
 
-    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddDialog($event, 'add_staff')" ng-if="viewName == 'staff'">
-      Add New Staff Member
-    </md-button>
+    <div ng-if="viewName == 'staff'">
+      <div ng-controller="StaffController">
+        <md-button aria-label="add new staff member" class="md-raised md-accent" ng-click="showAddStaffDialog($event)">
+          Add New Staff Member
+        </md-button>
+      </div>
+    </div>
 
-    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddDialog($event, 'add_warehouse')" ng-if="viewName == 'warehouses'">
-      Add New Warehouse
-    </md-button>
+    <div ng-if="viewName == 'warehouses'">
+      <div ng-controller="WarehousesController">
+        <md-button aria-label="add new warehouse" class="md-raised md-accent" ng-click="showAddWarehouseDialog($event)">
+          Add New Warehouse
+        </md-button>
+      </div>
+    </div>
+
+    <div ng-if="viewName == 'pricing'">
+      <div ng-controller="PricingController">
+        <md-button aria-label="add new pricing" class="md-raised md-accent" ng-click="showAddDialog($event)">
+          Add New Pricing Scheme
+        </md-button>
+      </div>
+    </div>
+
   </div>
 </md-toolbar>
 

@@ -13,11 +13,6 @@ function SettingsController($scope, $rootScope, $state, $mdDialog, lodash, local
   $scope.viewName = getStateName(currentView);
   $state.transitionTo(currentView);
 
-  // DIALOG TRIGGER
-  $scope.closeDialog = function () {
-    $mdDialog.hide();
-  };
-
   $scope.changeSettingsTab = function (stateName) {
     $state.go(stateName);
     setCurrentView(stateName);
@@ -35,11 +30,6 @@ function SettingsController($scope, $rootScope, $state, $mdDialog, lodash, local
   }
 
   ///////////////////// HELPER FUNCTIONS ///////////////////////
-
-  // SHOW ADD DIALOG
-  $scope.showAddDialog = function (ev, dialogTemplate) {
-    Dialog.showCustomDialog(ev, dialogTemplate, $scope);
-  };
 
 }
 })();

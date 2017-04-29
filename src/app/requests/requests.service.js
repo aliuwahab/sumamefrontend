@@ -15,6 +15,7 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
     getRequests: getRequests,
     getRequest: getRequest,
     assignRequestToDriver: assignRequestToDriver,
+    addRequest: addRequest,
   };
 
   return service;
@@ -54,6 +55,13 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
     var params = $.param(data);
 
     return $http.post(apiBaseURL + '/change/request/status?' + authDataString + '&' + params);
+  }
+
+  function addRequest(data) {
+    var params = $.param(data);
+    debugger;
+
+    return $http.post(apiBaseURL + '/make/request?' + authDataString + '&' + params);
   }
 
 }

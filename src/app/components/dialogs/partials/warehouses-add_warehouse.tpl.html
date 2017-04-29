@@ -1,5 +1,5 @@
 <md-dialog aria-label="Add Consultant">
-  <form>
+  <form ng-controller="WarehousesController">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <h2>Add New Warehouse</h2>
@@ -10,23 +10,43 @@
       </div>
     </md-toolbar>
     <md-dialog-content class="sm-modal-content" style="width:700px;">
-      <div ng-if="loadingRequiredData" layout="row" layout-align="center center" style="min-height: 40vh;">
+      <div ng-if="addingWarehouse" layout="row" layout-align="center center" style="min-height: 40vh;">
         <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
       </div>
 
-      <div ng-show="!loadingRequiredData">
+      <div ng-show="!addingWarehouse">
         <md-input-container class="sm-input-container">
           <label>Warehouse Name</label>
-          <input type="text" ng-model="newWarehouse.warehouse_name">
+          <input type="text" ng-model="newWarehouse.name">
         </md-input-container>
 
         <md-input-container class="sm-input-container">
-          <place-autocomplete label="Warehouse Location" ng-model="newWarehouse.warehouse_location"></place-autocomplete>
+          <place-autocomplete label="Warehouse Location" ng-model="warehouseLocation"></place-autocomplete>
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Warehouse Address Line 1</label>
+          <input type="text" ng-model="newWarehouse.address_line_one">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Warehouse Address Line 1</label>
+          <input type="text" ng-model="newWarehouse.address_line_two">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>State</label>
+          <input type="text" ng-model="newWarehouse.state">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Country</label>
+          <input type="text" ng-model="newWarehouse.country">
         </md-input-container>
 
         <md-input-container class="md-block">
           <label>Warehouse Description</label>
-          <textarea ui-tinymce ng-model="newWarehouse.warehouse_description" aria-label="warehouse description" md-select-on-focus rows="3"></textarea>
+          <textarea ui-tinymce ng-model="newWarehouse.description" aria-label="warehouse description" md-select-on-focus rows="3"></textarea>
         </md-input-container>
       </div>
 
@@ -37,7 +57,7 @@
       <md-button ng-click="closeDialog()" class="md-raised md-warn">
         Cancel
       </md-button>
-      <md-button ng-click="addConsultant()" class="md-raised md-accent">
+      <md-button ng-click="addWarehouse()" class="md-raised md-accent">
         Add Warehouse
       </md-button>
     </md-dialog-actions>

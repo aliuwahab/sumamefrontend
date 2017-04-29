@@ -16,11 +16,11 @@
 
       <div ng-show="!loadingRequiredData">
         <md-input-container class="sm-input-container">
-          <place-autocomplete label="Enter Pickup Location" ng-model="newOfflineRequest.pickup_location"></place-autocomplete>
+          <place-autocomplete label="Enter Pickup Location" ng-model="pickupLocation"></place-autocomplete>
         </md-input-container>
 
         <md-input-container class="sm-input-container">
-          <place-autocomplete label="Enter Destination Location" ng-model="newOfflineRequest.destination_location"></place-autocomplete>
+          <place-autocomplete label="Enter Destination Location" ng-model="deliveryLocation"></place-autocomplete>
         </md-input-container>
 
         <md-input-container class="sm-input-container">
@@ -47,7 +47,7 @@
 
         <md-input-container class="md-block">
           <label>Any additional instructions?</label>
-          <textarea ui-tinymce ng-model="newOfflineRequest.request_instructions" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
+          <textarea ui-tinymce ng-model="newOfflineRequest.request_additional_description" aria-label="Request Instructions" md-select-on-focus rows="3"></textarea>
         </md-input-container>
       </div>
 
@@ -58,7 +58,7 @@
       <md-button ng-click="closeDialog()" class="md-raised md-warn">
         Cancel
       </md-button>
-      <md-button ng-click="addConsultant()" class="md-raised md-accent">
+      <md-button ng-click="addRequest('goods_delivery')" class="md-raised md-accent">
         Submit Request
       </md-button>
     </md-dialog-actions>

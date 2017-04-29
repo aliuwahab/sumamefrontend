@@ -8,11 +8,18 @@ angular
 /** @ngInject */
 function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog) {
 
-  var _ = lodash;
+  activate();
 
-  // DIALOG TRIGGER
-  $scope.closeDialog = function () {
-    $mdDialog.hide();
+  function activate() {
+
+  }
+
+  ///////////////////// HELPER FUNCTIONS ///////////////////////
+
+  // SHOW ADD DIALOG
+  $scope.showAddStaffDialog = function (ev) {
+    $scope.newStaff = {};
+    Dialog.showCustomDialog(ev, 'add_staff', $scope);
   };
 
 }
