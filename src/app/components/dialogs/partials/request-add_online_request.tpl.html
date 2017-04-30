@@ -42,12 +42,29 @@
         </md-input-container>
 
         <md-input-container class="sm-input-container">
+          <label>Enter item value</label>
+          <input type="text" ng-model="newOnlineRequest.item_value">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
           <label>Enter tracking code</label>
           <input type="text" ng-model="newOnlineRequest.online_tracking_number">
         </md-input-container>
 
         <md-input-container class="sm-input-container">
-          <place-autocomplete label="Where should we deliver your order?" ng-model="mapping.deliveryLocation"></place-autocomplete>
+          <place-autocomplete label="Where should we deliver your item?" ng-model="mapping.deliveryLocation"></place-autocomplete>
+        </md-input-container>
+
+        <md-input-container>
+          <md-checkbox ng-model="newOnlineRequest.hazardous_substance" aria-label="Is this a hazardous substance?">
+            This is a hazardous substance.
+          </md-checkbox>
+        </md-input-container>
+
+        <md-input-container>
+          <md-checkbox ng-model="newOnlineRequest.fast_track" aria-label="Is this a hazardous substance?">
+            I need this shipment fast-tracked. Use Airfreight instead of Seafreight.
+          </md-checkbox>
         </md-input-container>
 
         <md-input-container class="md-block">
