@@ -30,6 +30,22 @@ function VehiclesController($scope, $rootScope, $state, Dialog, VehiclesService)
     });
   }
 
+  $scope.addVehicle = function () {
+    $scope.addingVehicle = true;
+    VehiclesService.addVehicle($scope.newVehicle)
+    .then(function (response) {
+      $scope.addingVehicle = false;
+      ToastsService.showToast('success', 'Vehicle successfully added');
+      $rootScope.closeDialog();
+      getAllVehicles();
+    })
+    .catch(function (error) {
+      $scope.addingVehicle = false;
+      ToastsService.showToast('error', error.data.message);
+      debugger;
+    });
+  };
+
   ///////////////////// HELPER FUNCTIONS ///////////////////////
 
   // SHOW ADD VEHICLE DIALOG

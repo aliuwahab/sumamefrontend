@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Add New Vehicle</h2>
+        <h2>Add New Courier Vehicle</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="closeDialog()">
           <i class="material-icons">close</i>
@@ -21,23 +21,15 @@
           <input type="text" ng-model="newVehicle.vehicle_name">
         </md-input-container>
 
-        <md-input-container style="width:100%;">
-          <label>Vehicle Category</label>
-          <md-select ng-model="newVehicle.vehicle_category">
-            <!-- <md-option ng-value="subject.id" ng-repeat="subject in subjects">{{subject.subject_name}}</md-option> -->
-            <md-option>Construction</md-option>
-            <md-option>Mining</md-option>
-            <md-option>Domestic</md-option>
-          </md-select>
-        </md-input-container>
-
-        <md-input-container style="width:100%;">
-          <label>Vehicle Type</label>
-          <md-select ng-model="newVehicle.vehicle_type">
-            <!-- <md-option ng-value="subject.id" ng-repeat="subject in subjects">{{subject.subject_name}}</md-option> -->
-            <md-option>Truck</md-option>
-            <md-option>Taxi</md-option>
-            <md-option>Trailer</md-option>
+        <md-input-container class="sm-input-container">
+          <label>Vehicle Price Category</label>
+          <md-select ng-model="newVehicle.vehicle_price_category">
+            <md-option value="1">Motorbike or Similar</md-option>
+            <md-option value="2">Tricycle or Similar</md-option>
+            <md-option value="3">Abossey Okine Macho or Similar</md-option>
+            <md-option value="4">Kia Bongo or Similar</md-option>
+            <md-option value="5">Kia Rhino or Similar</md-option>
+            <md-option value="6">Articulated Truck or Similar</md-option>
           </md-select>
         </md-input-container>
 
