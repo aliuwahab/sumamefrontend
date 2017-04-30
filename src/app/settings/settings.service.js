@@ -15,10 +15,34 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
   var service = {
     getAllWarehouses: getAllWarehouses,
     addWarehouse: addWarehouse,
+    getAllStaff: getAllStaff,
+    addStaff: addStaff,
   };
 
   return service;
 
+  /////// STAFF FUNCTIONS ////////////
+  function getAllStaff(params) {
+    var queryOptions = $.param(params);
+    var cache = 'staff?page=' + params.page + 'limit=' + params.limit;
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.get(apiBaseURL + '/all/sumame/users?' + authDataString + '&' + queryOptions, {
+      cache: CacheFactory.get(cache),
+    });
+  }
+
+  function addStaff(data) {
+    var params = $.param(data);
+    debugger;
+
+    return $http.post(apiBaseURL + '/create/admin/user?' + authDataString + '&' + params);
+  }
+
+  /////// WAREHOUSE FUNCTIONS ////////////
   function getAllWarehouses(params) {
     var queryOptions = $.param(params);
     var cache = 'warehouses?page=' + params.page + 'limit=' + params.limit;
@@ -36,7 +60,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     var params = $.param(data);
     debugger;
 
-    return $http.post(apiBaseURL + '/create/sumame/address?' + authDataString + '&' + data);
+    return $http.post(apiBaseURL + '/create/sumame/address?' + authDataString + '&' + params);
   }
 
 }
