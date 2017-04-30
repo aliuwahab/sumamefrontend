@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
   ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
-  SettingsService) {
+  SettingsService, VehiclesService) {
 
   activate();
 
@@ -90,7 +90,6 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     populateCommonRequestData();
 
     $scope.addingRequest = true;
-
     RequestsService.addRequest($scope.newRequest)
     .then(function (response) {
       $scope.addingRequest = false;
@@ -103,7 +102,7 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     })
     .catch(function (error) {
       $scope.addingRequest = false;
-      ToastsService.showToast('success', error.data.message);
+      ToastsService.showToast('error', error.data.message);
       debugger;
     });
   };
@@ -215,12 +214,17 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     }else if (requestType == 'add_online_request') {
       $scope.newOnlineRequest = {};
       loadAllWarehouses();
+    }else if (requestType == 'add_equipment_request') {
+      $scope.newEquipmentRequest = {};
+      $scope.equipmentSelectionConfirmed = false;
+      $scope.selectedEquipment = null;
+      loadVehicles();
     }
   };
 
   function loadAllWarehouses() {
     $scope.loadingRequiredOnlineRequestData = true;
-    SettingsService.getAllWarehouses($scope.filterParams)
+    SettingsService.getAllWarehouses({ limit: 50, page: 1 })
     .then(function (response) {
       $scope.loadingRequiredOnlineRequestData = false;
       $scope.warehouses = response.data.data.all_requested_addresses;
@@ -228,6 +232,25 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     .catch(function (error) {
       $scope.error = error.message;
       $scope.loadingRequiredOnlineRequestData = false;
+      debugger;
+    });
+  }
+
+  function loadVehicles() {
+    $scope.vehicleFilterParams = {
+      limit: 50,
+      page: 1,
+    };
+
+    $scope.loadingRequiredEquimentRequestData = true;
+    VehiclesService.getAllVehicles($scope.vehicleFilterParams)
+    .then(function (response) {
+      $scope.vehicles = response.data.data.all_vehicles;
+      $scope.loadingRequiredEquimentRequestData = false;
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      $scope.loadingRequiredEquimentRequestData = false;
       debugger;
     });
   }

@@ -2,7 +2,8 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Add Equipment Request</h2>
+        <h2 ng-show="!equipmentSelectionConfirmed">Search Equipment</h2>
+        <h2 ng-show="equipmentSelectionConfirmed">Confirm Location and Request</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="closeDialog()">
           <i class="material-icons">close</i>
@@ -10,73 +11,90 @@
       </div>
     </md-toolbar>
     <md-dialog-content class="sm-modal-content" style="min-width:900px;">
-      <div ng-if="loadingRequiredData" layout="row" layout-align="center center" style="min-height: 40vh;">
+      <div ng-if="loadingRequiredEquimentRequestData || addingRequest" layout="row" layout-align="center center" style="min-height: 40vh;">
         <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
       </div>
 
-      <div layout="row" ng-show="!loadingRequiredData">
+      <div layout="row" ng-show="!loadingRequiredEquimentRequestData && !addingRequest">
+        <div class="" ng-show="!equipmentSelectionConfirmed">
+          <div class="" flex="25" style="position:fixed;">
+            <md-input-container class="sm-input-container">
+              <label>Choose Category</label>
+              <md-select ng-model="newEquipmentRequest.vehicle_type">
+                <md-option value="oil_and_gas">Oil and Gas</md-option>
+                <md-option value="construction">Construction</md-option>
+                <md-option value="mining">Mining</md-option>
+                <md-option value="domestic_equipment">Domestic Equipment</md-option>
+                <md-option value="vehicle">Vehicles</md-option>
+                <md-option value="truck">Others</md-option>
+              </md-select>
+            </md-input-container>
 
-        <div class="" flex="25" style="position:fixed;">
-          <md-input-container class="sm-input-container">
-            <label>Equipment Type</label>
-            <md-select ng-model="newOnlineRequest.somame_warehouse_id">
-              <!-- <md-option ng-value="subject.id" ng-repeat="subject in subjects">{{subject.subject_name}}</md-option> -->
-              <md-option>Construction</md-option>
-              <md-option>Mining</md-option>
-              <md-option>Domestic</md-option>
-            </md-select>
-          </md-input-container>
+            <md-input-container class="sm-input-container">
+              <label>Search equipment</label>
+              <input type="text" ng-model="equipmentSearchTerm">
+            </md-input-container>
+          </div>
 
-          <md-input-container class="sm-input-container">
-            <label>Enter search term</label>
-            <input type="text" ng-model="newOnlineRequest.delievery_order_number">
-          </md-input-container>
+          <div class="sm-equipment-list" flex="67" flex-offset="30">
+            <div class="sm-eq-item-container" ng-repeat="vehicle in vehicles.data" ng-style="selectedEquipment == vehicle && {'border':'3px solid #019AD6'}">
+              <h3>{{vehicle.vehicle_name}}</h3>
+              <p>
+                GHS 1,500 per day
+              </p>
+              <img class="sm-equipment-img" ng-src="{{vehicle.vehicle_image}}">
+              <div class="">
+                <span flex></span>
+                <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full" ng-click="selectedEquipment = vehicle">Select</md-button>
+              </div>
+            </div>
+            <div class="sm-eq-item-container">
+              <h3>Excavator (Used 12 Months Only)</h3>
+              <p>
+                GHS 1,500 per day
+              </p>
+              <img class="sm-equipment-img" src="../assets/images/equipment_1.jpeg" alt="equipment 1">
+              <div class="">
+                <span flex></span>
+                <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full" ng-click="selectedEquipment = vehicle">Select</md-button>
+              </div>
+            </div>
+            <div class="sm-eq-item-container">
+              <h3>Heavy Construction Machine</h3>
+              <p>
+                GHS 1,500 per day
+              </p>
+              <img class="sm-equipment-img" src="../assets/images/equipment_2.jpg" alt="equipment 1">
+              <div class="">
+                <span flex></span>
+                <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full">Select</md-button>
+              </div>
+            </div> -->
+            <div class="sm-eq-item-container">
+              <h3>New Ford Pickup up for Rent</h3>
+              <p>
+                GHS 500 per day
+              </p>
+              <img class="sm-equipment-img" src="../assets/images/pickup_1.jpg" alt="equipment 1">
+              <div class="">
+                <span flex></span>
+                <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full">Select</md-button>
+              </div>
+            </div>
+          </div>
+        </div>
 
+        <div class="" ng-show="equipmentSelectionConfirmed" style="width:100%;">
           <md-input-container class="sm-input-container sm-rq-rent-filters-input-container">
-            <place-autocomplete label="Destination Location" ng-model="newOnlineRequest.delivery_destination"></place-autocomplete>
+            <place-autocomplete label="Where will you use the equipment" ng-model="mapping.deliveryLocation"></place-autocomplete>
           </md-input-container>
 
           <md-input-container class="md-block sm-rq-rent-filters-input-container">
             <label>Any additional instructions?</label>
-            <textarea ui-tinymce ng-model="newOnlineRequest.request_instructions" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
+            <textarea ui-tinymce ng-model="newEquipmentRequest.request_additional_description" aria-label="any additional instructions?" md-select-on-focus rows="3"></textarea>
           </md-input-container>
         </div>
 
-        <div class="sm-equipment-list" flex="70" flex-offset="30">
-          <div class="sm-eq-item-container">
-            <h3>Excavator (Used 12 Months Only)</h3>
-            <p>
-              GHS 1,500 per day
-            </p>
-            <img class="sm-equipment-img" src="../assets/images/equipment_1.jpeg" alt="equipment 1">
-            <div class="">
-              <span flex></span>
-              <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full">Select</md-button>
-            </div>
-          </div>
-          <div class="sm-eq-item-container">
-            <h3>Heavy Construction Machine</h3>
-            <p>
-              GHS 1,500 per day
-            </p>
-            <img class="sm-equipment-img" src="../assets/images/equipment_2.jpg" alt="equipment 1">
-            <div class="">
-              <span flex></span>
-              <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full">Select</md-button>
-            </div>
-          </div>
-          <div class="sm-eq-item-container">
-            <h3>New Ford Pickup up for Rent</h3>
-            <p>
-              GHS 500 per day
-            </p>
-            <img class="sm-equipment-img" src="../assets/images/pickup_1.jpg" alt="equipment 1">
-            <div class="">
-              <span flex></span>
-              <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full">Select</md-button>
-            </div>
-          </div>
-        </div>
 
       </div>
 
@@ -87,8 +105,14 @@
       <md-button ng-click="closeDialog()" class="md-raised md-warn">
         Cancel
       </md-button>
-      <md-button ng-click="addConsultant()" class="md-raised md-accent">
-        Reserve Vehicle
+      <md-button ng-disabled="!equipmentSelectionConfirmed" ng-click="equipmentSelectionConfirmed = !equipmentSelectionConfirmed" class="md-raised">
+        Go back
+      </md-button>
+      <md-button ng-show="!equipmentSelectionConfirmed" ng-click="equipmentSelectionConfirmed = !equipmentSelectionConfirmed" class="md-raised md-accent">
+        Next
+      </md-button>
+      <md-button ng-show="equipmentSelectionConfirmed" ng-click="addRequest('vehicle_request')" class="md-raised md-accent">
+        Submit Equipment Request
       </md-button>
     </md-dialog-actions>
   </form>
