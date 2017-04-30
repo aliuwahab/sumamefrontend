@@ -2,9 +2,9 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Add Local Delivery Request</h2>
+        <h2>{{modalTitle}}</h2>
         <span flex></span>
-        <md-button class="md-icon-button" ng-click="closeDialog()">
+        <md-button class="md-icon-button" ng-click="cancelOfflineRequest()">
           <i class="material-icons">close</i>
         </md-button>
       </div>
@@ -15,52 +15,120 @@
       </div>
 
       <div ng-show="!loadingRequiredData">
-        <md-input-container class="sm-input-container">
-          <place-autocomplete label="Enter Pickup Location" ng-model="pickupLocation"></place-autocomplete>
-        </md-input-container>
+        <wizard
+        name="offlineRequestWizard"
+        on-finish="submitOfflineRequest()"
+        hide-indicators="true">
+          <wz-step wz-title="location">
+            <div class="" layout="row">
+              <div class="" flex="50">
+                <md-input-container class="sm-input-container">
+                  <place-autocomplete label="Enter Pickup Location" ng-model="mapping.pickupLocation"></place-autocomplete>
+                </md-input-container>
 
-        <md-input-container class="sm-input-container">
-          <place-autocomplete label="Enter Destination Location" ng-model="deliveryLocation"></place-autocomplete>
-        </md-input-container>
-
-        <md-input-container class="sm-input-container">
-          <label>Describe the package</label>
-          <input type="text" ng-model="newOfflineRequest.package_description">
-        </md-input-container>
-
-        <h4 class="sm-custom-input-label">Have a picture of your package?</h4>
-        <div class="sm-dropzone" ngf-select="uploadProfileImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
-          <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
-            <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
-            <p>Uploading Image: {{uploadProgress}}% complete</p>
-          </div>
-          <div ng-if="!uploadingImage" layout="column" layout-align="center center">
-            <i class="material-icons md-24">backup</i>
-            <p ng-if="!newOfflineRequest.request_image">Click here to select an image</p>
-            <p ng-if="newOfflineRequest.request_image">Click here to change image</p>
-
-            <div class="" ng-if="newOfflineRequest.request_image" style="max-width:700px">
-              <img style="width: 400px; height: auto;" ng-src="{{newOfflineRequest.request_image}}" alt="Answer Image Preview">
+                <md-input-container class="sm-input-container">
+                  <place-autocomplete label="Enter Destination Location" ng-model="mapping.deliveryLocation"></place-autocomplete>
+                </md-input-container>
+              </div>
+              <div class="" flex="40" flex-offset="10">
+                <ng-map zoom="13" center="" style="height:40vh" >
+                  <directions
+                    draggable="true"
+                    travel-mode="DRIVING"
+                    origin="{{mapping.pickupLocation.latitude}},{{mapping.pickupLocation.longitude}}"
+                    destination="{{mapping.deliveryLocation.latitude}},{{mapping.deliveryLocation.longitude}}">
+                  </directions>
+                  <custom-marker id="start"
+                    position="{{mapping.pickupLocation.latitude}},{{mapping.pickupLocation.longitude}}">
+                    <div>{{request.pickup_location_name}}</div>
+                  </custom-marker>
+                  <custom-marker id="end"
+                    position="{{mapping.deliveryLocation.latitude}},{{mapping.deliveryLocation.longitude}}">
+                    <div>{{request.delivery_location_name}}</div>
+                  </custom-marker>
+                </ng-map>
+              </div>
             </div>
-          </div>
-        </div>
+          </wz-step>
+          <wz-step wz-title="vehicle_type">
+            <div class="flex-grid" layout="row">
+              <md-card class="sm-delivery-vehicle-type" ng-repeat="vehicle in deliveryVehicleTypes" background-img="{{vehicle.image}}" ng-click="selectVehicleType(vehicle)" ng-style="selectedVehicleType.value == vehicle.value && {'border':'3px solid #019AD6'}">
+                <md-card-footer layout-align="center end">
+                  <h3 class="sm-delivery-vehicle-type-title">{{vehicle.name}}</h3>
+                </md-card-footer>
+              </md-card>
+            </div>
+          </wz-step>
+          <wz-step wz-title="confirm">
+            <div class="padded sm-req-online-info" md-whiteframe="3" layout="row">
+              <div class="sm-offline-information-box" flex="33">
+                <h4 class="sm-offline-information-title">Location</h4>
+                <p class="sm-offline-info-location"><span class="sm-offline-info-location-id">From:</span> <br/> {{mapping.pickupLocation.name}}</p>
+                <p class="sm-offline-info-location"><span class="sm-offline-info-location-id">To:</span> <br/> {{mapping.deliveryLocation.name}}</p>
+              </div>
+              <div class="sm-offline-information-box middle" layout="column" flex="33">
+                <div class="">
+                  <h4 class="sm-offline-information-title">Distance</h4>
+                  <p class="sm-offline-info-distance">{{deliveryDistance}} km</p>
+                </div>
+                <div class="">
+                  <h4 class="sm-offline-information-title">Vehicle Type</h4>
+                  <p class="sm-offline-info-distance">{{selectedVehicleType.name}}</p>
+                </div>
+              </div>
+              <div class="sm-offline-information-box right" flex="33">
+                <h4 class="sm-offline-information-title">Fare</h4>
+                <p class="sm-offline-info-price">GHS 1,235.00</p>
+              </div>
+            </div>
 
-        <md-input-container class="md-block">
-          <label>Any additional instructions?</label>
-          <textarea ui-tinymce ng-model="newOfflineRequest.request_additional_description" aria-label="Request Instructions" md-select-on-focus rows="3"></textarea>
-        </md-input-container>
+            <!-- <md-input-container class="sm-input-container">
+              <label>Describe the package</label>
+              <input type="text" ng-model="newOfflineRequest.package_description">
+            </md-input-container> -->
+
+            <h4 class="sm-custom-input-label">Have a picture of your package?</h4>
+            <div class="sm-dropzone" ngf-select="uploadProfileImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+              <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
+                <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
+                <p>Uploading Image: {{uploadProgress}}% complete</p>
+              </div>
+              <div ng-if="!uploadingImage" layout="column" layout-align="center center">
+                <i class="material-icons md-24">backup</i>
+                <p ng-if="!newOfflineRequest.request_image">Click here to select an image</p>
+                <p ng-if="newOfflineRequest.request_image">Click here to change image</p>
+
+                <div class="" ng-if="newOfflineRequest.request_image" style="max-width:700px">
+                  <img style="width: 400px; height: auto;" ng-src="{{newOfflineRequest.request_image}}" alt="Answer Image Preview">
+                </div>
+              </div>
+            </div>
+
+            <md-input-container class="md-block">
+              <label>Any additional instructions or package description?</label>
+              <textarea ng-model="newOfflineRequest.request_additional_description" aria-label="Request Instructions" rows="5"></textarea>
+            </md-input-container>
+          </wz-step>
+        </wizard>
       </div>
 
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
       <span flex></span>
-      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+      <md-button ng-click="cancelOfflineRequest()" class="md-raised md-warn">
         Cancel
       </md-button>
-      <md-button ng-click="addRequest('goods_delivery')" class="md-raised md-accent">
+      <md-button ng-disabled="offlineWizardCurrentStep == 0" ng-click="offlineRequestPrevStep()" class="md-raised">
+        Prev Step
+      </md-button>
+      <md-button ng-show="offlineWizardCurrentStep < 2" ng-click="offlineRequestNextStep()" class="md-raised md-accent">
+        Next Step
+      </md-button>
+      <md-button ng-show="offlineWizardCurrentStep == 2" ng-click="addRequest('goods_delivery')" class="md-raised md-accent">
         Submit Request
       </md-button>
+
     </md-dialog-actions>
   </form>
 </md-dialog>

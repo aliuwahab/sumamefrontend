@@ -98,3 +98,63 @@
   margin-bottom: 10px;
   margin-left: -10px;
 }
+.sm-delivery-vehicle-type {
+  height: 150px;
+  width: 31%;
+  background-size: contain !important;
+  background-repeat: no-repeat;
+  border: 3px solid transparent;
+  cursor: pointer;
+  outline: none;
+}
+.sm-delivery-vehicle-type:hover {
+  border: 3px solid #EF5350;
+}
+.sm-offline-information-box {
+
+}
+.sm-offline-information-title {
+  margin: 0px;
+  font-size: 12px;
+}
+
+@media (max-width: 400px) {
+  .flex-grid {
+    display: block;
+    .sm-delivery-vehicle-type {
+      width: 100%;
+      margin: 0 0 10px 0;
+    }
+  }
+}
+.sm-delivery-vehicle-type-title {
+  text-align: center;
+  margin-bottom: 0px;
+  font-size: 11px;
+}
+.sm-offline-information-box.middle {
+  border-left: 1px solid #ccc;
+  border-right: 1px solid #ccc;
+  padding-left: 16px;
+}
+.sm-offline-information-box.right {
+  padding-left: 16px;
+}
+.sm-offline-info-location {
+  font-size: 10px;
+}
+.sm-offline-info-location-id {
+  font-weight: bold;
+  font-size: 8px;
+}
+.sm-offline-info-distance {
+  font-size: 20px;
+  font-weight: bold;
+  margin-top: 0px;
+  color: #019AD6;
+}
+.sm-offline-info-price {
+  font-size: 30px;
+  font-weight: bold;
+  color: #019AD6;
+}
