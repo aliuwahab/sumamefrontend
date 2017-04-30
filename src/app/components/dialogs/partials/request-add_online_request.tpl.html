@@ -24,12 +24,12 @@
         <md-input-container style="width:100%;">
           <label>Choose a warehouse location</label>
           <md-select ng-model="selectedWarehouse">
-            <md-option ng-value="warehouse" ng-repeat="warehouse in warehouses.data">{{warehouse.description}}</md-option>
+            <md-option ng-value="warehouse" ng-repeat="warehouse in warehouses.data">{{warehouse.name}}</md-option>
           </md-select>
         </md-input-container>
 
         <div class="sm-dropzone sm-req-address-info" ng-if="selectedWarehouse">
-          <h5 class="sm-req-online-info-title">{{selectedWarehouse.description}}</h5>
+          <h5 class="sm-req-online-info-title">{{selectedWarehouse.name}}</h5>
           <p>{{selectedWarehouse.address_line_one}}</p>
           <p>{{selectedWarehouse.address_line_two}}</p>
           <p>{{selectedWarehouse.state}}</p>
