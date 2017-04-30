@@ -176,7 +176,7 @@
       },
       {
         id: 'vehicles',
-        name: 'Vehicles',
+        name: 'Courier Vehicles',
         state: 'app.vehicles',
         type: 'link',
         icon: 'question_answer',
