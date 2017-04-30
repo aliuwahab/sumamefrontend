@@ -175,9 +175,16 @@
         icon: 'supervisor_account',
       },
       {
-        id: 'vehicles',
+        id: 'courier_vehicles',
         name: 'Courier Vehicles',
         state: 'app.vehicles',
+        type: 'link',
+        icon: 'question_answer',
+      },
+      {
+        id: 'equipment',
+        name: 'Equipment',
+        state: 'app.equipment',
         type: 'link',
         icon: 'question_answer',
       },

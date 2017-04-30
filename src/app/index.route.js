@@ -129,6 +129,23 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.equipment', {
+      url: '/equipment',
+      templateUrl: 'app/rental_equipment/rental_equipment.html',
+      controller: 'EquipmentController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['admin', 'consultant'] || false;
+          },
+
+          redirectTo: 'auth.login',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
     .state('app.customers', {
       url: '/customers',
       templateUrl: 'app/customers/customers.html',
