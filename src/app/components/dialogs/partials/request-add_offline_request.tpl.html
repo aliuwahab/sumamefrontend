@@ -10,11 +10,11 @@
       </div>
     </md-toolbar>
     <md-dialog-content class="sm-modal-content" style="width:700px;">
-      <div ng-if="loadingRequiredData" layout="row" layout-align="center center" style="min-height: 40vh;">
+      <div ng-if="addingRequest" layout="row" layout-align="center center" style="min-height: 40vh;">
         <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
       </div>
 
-      <div ng-show="!loadingRequiredData">
+      <div ng-show="!addingRequest">
         <wizard
         name="offlineRequestWizard"
         on-finish="submitOfflineRequest()"
@@ -31,7 +31,7 @@
                 </md-input-container>
               </div>
               <div class="" flex="40" flex-offset="10">
-                <ng-map zoom="13" center="" style="height:40vh" >
+                <ng-map zoom="13" center="" style="height:30vh" >
                   <directions
                     draggable="true"
                     travel-mode="DRIVING"
@@ -69,7 +69,7 @@
               <div class="sm-offline-information-box middle" layout="column" flex="33">
                 <div class="">
                   <h4 class="sm-offline-information-title">Distance</h4>
-                  <p class="sm-offline-info-distance">{{deliveryDistance}} km</p>
+                  <p class="sm-offline-info-distance">{{deliveryDistance | number: 2}} km</p>
                 </div>
                 <div class="">
                   <h4 class="sm-offline-information-title">Vehicle Type</h4>
@@ -78,7 +78,7 @@
               </div>
               <div class="sm-offline-information-box right" flex="33">
                 <h4 class="sm-offline-information-title">Fare</h4>
-                <p class="sm-offline-info-price">GHS 1,235.00</p>
+                <p class="sm-offline-info-price">GHS {{calculatedFare.totalFare | number: 2}}</p>
               </div>
             </div>
 

@@ -11,69 +11,12 @@
     var _ = lodash;
 
     var requiredFields = {
-      goTrendingAnswer: [
+      offlineRequest: [
         { field: 'answer_video_url', friendlyName: 'Answer Video', },
       ],
       consultant: [
         { field: 'subject_id', friendlyName: 'Assigned Subject' },
         { field: 'user_subtitle', friendlyName: 'Subtitle' },
-        { field: 'user_title', friendlyName: 'Title' },
-        { field: 'phone_number', friendlyName: 'Phone Number' },
-        { field: 'email', friendlyName: 'Email Address' },
-        { field: 'last_name', friendlyName: 'Last Name' },
-        { field: 'first_name', friendlyName: 'First Name' },
-        { field: 'type_of_consultant', friendlyName: 'Type of Consultant' },
-      ],
-      likeWassceQuestion: [
-        { field: 'correct_answer', friendlyName: 'Correct Answer' },
-        { field: 'answer_options', friendlyName: 'At least one Answer Option' },
-        { field: 'question_in_text', friendlyName: 'Question Text' },
-        { field: 'topic_id', friendlyName: 'Topic' },
-        { field: 'subject_id', friendlyName: 'Subject' },
-      ],
-      pastWassceQuestion: [
-        { field: 'correct_answer', friendlyName: 'Correct Answer' },
-        { field: 'answer_options', friendlyName: 'At least one Answer Option' },
-        { field: 'question_in_text', friendlyName: 'Question Text' },
-        { field: 'topic_id', friendlyName: 'Topic' },
-        { field: 'subject_id', friendlyName: 'Subject' },
-        { field: 'question_year', friendlyName: 'Question Year' },
-      ],
-      voucher: [
-        { field: 'quantity_to_generate', friendlyName: 'Number of Vouchers' },
-        { field: 'duration_in_months', friendlyName: 'Voucher Duration' },
-      ],
-      countries: [
-        { field: 'country_call_code', friendlyName: 'Country Code' },
-        { field: 'country_short_name', friendlyName: 'Country Short Name' },
-        { field: 'country_full_name', friendlyName: 'Country Full Name' },
-      ],
-      schools: [
-        { field: 'country_id', friendlyName: 'Country' },
-        { field: 'school_location', friendlyName: 'School Location' },
-        { field: 'school_name', friendlyName: 'School Name' },
-      ],
-      courses: [
-        { field: 'course_name', friendlyName: 'Programme Name' },
-      ],
-      subjects: [
-        { field: 'subject_type', friendlyName: 'Subject Type' },
-        { field: 'subject_name', friendlyName: 'Subject Name' },
-      ],
-      topics: [
-        { field: 'subject_id', friendlyName: 'Subject' },
-        { field: 'topic_name', friendlyName: 'Topic Name' },
-      ],
-      sound: [
-        { field: 'sound_url', friendlyName: 'A sound file' },
-        { field: 'sound_name', friendlyName: 'Subject' },
-      ],
-      grade: [
-        { field: 'interpretation', friendlyName: 'Grade Interpretation' },
-        { field: 'description', friendlyName: 'Grade Description' },
-        { field: 'grade_letter', friendlyName: 'Grade Letter' },
-        { field: 'upper_bound', friendlyName: 'Grade Upper Bound' },
-        { field: 'lower_bound', friendlyName: 'Grade Lower Bound' },
       ],
     };
 

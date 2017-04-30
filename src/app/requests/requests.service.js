@@ -59,7 +59,6 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
 
   function addRequest(data) {
     var params = $.param(data);
-    debugger;
 
     return $http.post(apiBaseURL + '/make/request?' + authDataString + '&' + params);
   }

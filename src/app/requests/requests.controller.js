@@ -6,8 +6,8 @@ angular
     .controller('RequestsController', RequestsController);
 
 /** @ngInject */
-function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog, RequestsService,
-  NgMap, uiGmapGoogleMapApi, WizardHandler) {
+function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
+  ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService) {
 
   activate();
 
@@ -72,6 +72,7 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
   };
 
   $scope.addRequest = function (requestType) {
+
     switch (requestType) {
       case 'goods_delivery':
         $scope.newRequest = $scope.newOfflineRequest;
@@ -88,25 +89,54 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     $scope.newRequest.request_type = requestType;
     populateNewRequestData();
 
-    debugger;
+    $scope.addingRequest = true;
 
     RequestsService.addRequest($scope.newRequest)
     .then(function (response) {
-      debugger;
+      $scope.addingRequest = false;
+      ToastsService.showToast('success', 'Request successfully added');
+      $rootScope.closeDialog();
+      var requestsCache = 'requests?page=' + $scope.filterParams.page + 'limit=' + $scope.filterParams.limit;
+      CachingService.destroyOnCreateOperation(requestsCache);
+      getAllRequests();
     })
     .catch(function (error) {
-      $scope.error = error.data.message;
+      $scope.addingRequest = false;
+      ToastsService.showToast('success', error.data.message);
       debugger;
     });
   };
 
   $scope.offlineRequestNextStep = function () {
-    WizardHandler.wizard('offlineRequestWizard').next();
-    $scope.offlineWizardCurrentStep = WizardHandler.wizard('offlineRequestWizard').currentStepNumber();
-    changeOfflineRequestModalTitle();
 
-    if ($scope.offlineWizardCurrentStep == 1) {
-      calculateDeliveryDistance();
+    if ($scope.offlineWizardCurrentStep == 0) {
+      if ($scope.mapping.pickupLocation.latitude && $scope.mapping.deliveryLocation.latitude) {
+        executeNextStep();
+        PriceCalculator.calculateDeliveryDistance($scope.mapping.pickupLocation, $scope.mapping.deliveryLocation)
+        .then(function (response) {
+          $scope.deliveryDistance = response;
+        })
+        .catch(function (error) {
+          debugger;
+        });
+      }else {
+        ToastsService.showToast('error', 'Please enter valid locations for pickup and delivery');
+      }
+    } else if ($scope.offlineWizardCurrentStep == 1) {
+      if ($scope.selectedVehicleType && $scope.deliveryDistance) {
+        executeNextStep();
+        $scope.calculatedFare =
+        PriceCalculator.calculateOfflineDeliveryFare($scope.deliveryDistance,
+          $scope.selectedVehicleType.pricing, $scope.selectedVehicleType.base_fare);
+      }else {
+        ToastsService.showToast('error', 'Please choose a delivery service type');
+      }
+    }
+
+    function executeNextStep() {
+      WizardHandler.wizard('offlineRequestWizard').next();
+      $scope.offlineWizardCurrentStep = WizardHandler.wizard('offlineRequestWizard').currentStepNumber();
+      changeOfflineRequestModalTitle();
     }
   };
 
@@ -146,31 +176,6 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     $scope.selectedVehicleType = vehicle;
   };
 
-  function calculateDeliveryDistance() {
-    if ($scope.mapping.pickupLocation && $scope.mapping.deliveryLocation) {
-      uiGmapGoogleMapApi.then(function (maps) {
-        var directionsService = new maps.DirectionsService();
-
-        var request = {
-          origin: new maps.LatLng(
-           $scope.mapping.pickupLocation.latitude,
-           $scope.mapping.pickupLocation.longitude
-          ),
-          destination: new maps.LatLng(
-            $scope.mapping.deliveryLocation.latitude,
-            $scope.mapping.deliveryLocation.longitude
-          ),
-          travelMode: maps.TravelMode['DRIVING'],
-          optimizeWaypoints: true,
-        };
-
-        directionsService.route(request, function (response, status) {
-          status == 'OK' ?  $scope.deliveryDistance = (response.routes[0].legs[0].distance.value) / 1000 : ToastsService.showToast('error', 'There was an error in distance calculation. Try again or contact Klloyds directly.');
-        });
-      });
-    }
-  }
-
   function populateNewRequestData() {
     $scope.newRequest.pickup_location_name = $scope.mapping.pickupLocation.name;
     $scope.newRequest.pickup_location_latitude = $scope.mapping.pickupLocation.latitude;
@@ -179,9 +184,10 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     $scope.newRequest.delivery_location_name = $scope.mapping.deliveryLocation.name;
     $scope.newRequest.delivery_location_latitude = $scope.mapping.deliveryLocation.latitude;
     $scope.newRequest.delivery_location_longitude = $scope.mapping.deliveryLocation.longitude;
+    $scope.newRequest.estimated_delivery_distance = $scope.deliveryDistance;
 
     $scope.newRequest.requester_id = $rootScope.authenticatedUser.id;
-    $scope.newRequest.requester_status = 'pending';
+    $scope.newRequest.request_status = 'pending';
   }
 
   // SHOW ADD REQUEST DIALOG
@@ -189,6 +195,7 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     Dialog.showCustomDialog(ev, requestType, $scope);
 
     if (requestType == 'add_offline_request') {
+      $scope.newOfflineRequest = {};
       $scope.modalTitle = 'Set your pickup and delivery locations (Step 1 of 3)';
 
       $scope.deliveryVehicleTypes = [
@@ -196,26 +203,31 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
           name: 'Motorbike',
           value: 'motorbike',
           image: '../assets/images/delivery-vehicle-motorbike.jpg',
+          base_fare: 5,
           pricing: [
             {
               lower_bound: 0,
               upper_bound: 40,
-              amount: 43,
+              fare: 1,
+              calculated_fare: 0,
             },
             {
               lower_bound: 41,
               upper_bound: 60,
-              amount: 23,
+              fare: 0.7,
+              calculated_fare: 0,
             },
             {
               lower_bound: 61,
               upper_bound: 90,
-              amount: 10,
+              fare: 0.3,
+              calculated_fare: 0,
             },
             {
-              lower_bound: 61,
+              lower_bound: 92,
               upper_bound: 'infinity',
-              amount: 3,
+              fare: 0.1,
+              calculated_fare: 0,
             },
           ],
         },
@@ -223,26 +235,31 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
           name: 'Tri-Cycle',
           value: 'tri_cycle',
           image: '../assets/images/delivery-vehicle-tricycle.jpg',
+          base_fare: 10,
           pricing: [
             {
               lower_bound: 0,
               upper_bound: 40,
-              amount: 43,
+              fare: 2,
+              calculated_fare: 0,
             },
             {
               lower_bound: 41,
               upper_bound: 60,
-              amount: 23,
+              fare: 1,
+              calculated_fare: 0,
             },
             {
               lower_bound: 61,
               upper_bound: 90,
-              amount: 10,
+              fare: 0.8,
+              calculated_fare: 0,
             },
             {
-              lower_bound: 61,
+              lower_bound: 92,
               upper_bound: 'infinity',
-              amount: 3,
+              fare: 0.1,
+              calculated_fare: 0,
             },
           ],
         },
@@ -250,26 +267,31 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
           name: 'Abossey Okine Macho',
           value: 'abossey_okine_macho_similar',
           image: '../assets/images/delivery-vehicle-type-7.jpg',
+          base_fare: 25,
           pricing: [
             {
               lower_bound: 0,
               upper_bound: 40,
-              amount: 43,
+              fare: 10,
+              calculated_fare: 0,
             },
             {
               lower_bound: 41,
               upper_bound: 60,
-              amount: 23,
+              fare: 5,
+              calculated_fare: 0,
             },
             {
               lower_bound: 61,
               upper_bound: 90,
-              amount: 10,
+              fare: 2,
+              calculated_fare: 0,
             },
             {
-              lower_bound: 61,
+              lower_bound: 92,
               upper_bound: 'infinity',
-              amount: 3,
+              fare: 0.5,
+              calculated_fare: 0,
             },
           ],
         },
@@ -277,26 +299,31 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
           name: 'Kia K2700 or similar',
           value: 'kia_k2700_similar',
           image: '../assets/images/delivery-vehicle-kia-2700.jpg',
+          base_fare: 50,
           pricing: [
             {
               lower_bound: 0,
               upper_bound: 40,
-              amount: 43,
+              fare: 15,
+              calculated_fare: 0,
             },
             {
               lower_bound: 41,
               upper_bound: 60,
-              amount: 23,
+              fare: 10,
+              calculated_fare: 0,
             },
             {
               lower_bound: 61,
               upper_bound: 90,
-              amount: 10,
+              fare: 3,
+              calculated_fare: 0,
             },
             {
-              lower_bound: 61,
+              lower_bound: 92,
               upper_bound: 'infinity',
-              amount: 3,
+              fare: 0.5,
+              calculated_fare: 0,
             },
           ],
         },
@@ -304,26 +331,31 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
           name: 'Sprinter Van or similar',
           value: 'sprinter_van_similar',
           image: '../assets/images/delivery-vehicle-sprinter-van.jpg',
+          base_fare: 150,
           pricing: [
             {
               lower_bound: 0,
               upper_bound: 40,
-              amount: 43,
+              fare: 15,
+              calculated_fare: 0,
             },
             {
               lower_bound: 41,
               upper_bound: 60,
-              amount: 23,
+              fare: 10,
+              calculated_fare: 0,
             },
             {
               lower_bound: 61,
               upper_bound: 90,
-              amount: 10,
+              fare: 3,
+              calculated_fare: 0,
             },
             {
-              lower_bound: 61,
+              lower_bound: 92,
               upper_bound: 'infinity',
-              amount: 3,
+              fare: 1,
+              calculated_fare: 0,
             },
           ],
         },
@@ -331,26 +363,31 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
           name: 'Kia Bongo or similar',
           value: 'kia_bongo_similar',
           image: '../assets/images/delivery-vehicle-kia-bongo.jpg',
+          base_fare: 150,
           pricing: [
             {
               lower_bound: 0,
               upper_bound: 40,
-              amount: 43,
+              fare: 20,
+              calculated_fare: 0,
             },
             {
               lower_bound: 41,
               upper_bound: 60,
-              amount: 23,
+              fare: 15,
+              calculated_fare: 0,
             },
             {
               lower_bound: 61,
               upper_bound: 90,
-              amount: 10,
+              fare: 8,
+              calculated_fare: 0,
             },
             {
-              lower_bound: 61,
+              lower_bound: 92,
               upper_bound: 'infinity',
-              amount: 3,
+              fare: 3,
+              calculated_fare: 0,
             },
           ],
         },
@@ -358,26 +395,31 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
           name: 'Kia Mighty or similar',
           value: 'kia_mighty_similar',
           image: '../assets/images/delivery-vehicle-type-7.jpg',
+          base_fare: 150,
           pricing: [
             {
               lower_bound: 0,
               upper_bound: 40,
-              amount: 43,
+              fare: 20,
+              calculated_fare: 0,
             },
             {
               lower_bound: 41,
               upper_bound: 60,
-              amount: 23,
+              fare: 15,
+              calculated_fare: 0,
             },
             {
               lower_bound: 61,
               upper_bound: 90,
-              amount: 10,
+              fare: 10,
+              calculated_fare: 0,
             },
             {
-              lower_bound: 61,
+              lower_bound: 92,
               upper_bound: 'infinity',
-              amount: 3,
+              fare: 3,
+              calculated_fare: 0,
             },
           ],
         },
@@ -385,26 +427,31 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
           name: 'Kia Rhino or similar',
           value: 'kia_rhino_similar',
           image: '../assets/images/delivery-vehicle-kia-rhino.jpg',
+          base_fare: 250,
           pricing: [
             {
               lower_bound: 0,
               upper_bound: 40,
-              amount: 43,
+              fare: 25,
+              calculated_fare: 0,
             },
             {
               lower_bound: 41,
               upper_bound: 60,
-              amount: 23,
+              fare: 15,
+              calculated_fare: 0,
             },
             {
               lower_bound: 61,
               upper_bound: 90,
-              amount: 10,
+              fare: 10,
+              calculated_fare: 0,
             },
             {
-              lower_bound: 61,
+              lower_bound: 92,
               upper_bound: 'infinity',
-              amount: 3,
+              fare: 5,
+              calculated_fare: 0,
             },
           ],
         },
@@ -412,26 +459,31 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
           name: 'Articulated Truck',
           value: 'articulated_truck_similar',
           image: '../assets/images/delivery-vehicle-articulated-truck.jpg',
+          base_fare: 500,
           pricing: [
             {
               lower_bound: 0,
               upper_bound: 40,
-              amount: 43,
+              fare: 43,
+              calculated_fare: 0,
             },
             {
               lower_bound: 41,
               upper_bound: 60,
-              amount: 23,
+              fare: 23,
+              calculated_fare: 0,
             },
             {
               lower_bound: 61,
               upper_bound: 90,
-              amount: 10,
+              fare: 15,
+              calculated_fare: 0,
             },
             {
-              lower_bound: 61,
+              lower_bound: 92,
               upper_bound: 'infinity',
-              amount: 3,
+              fare: 10,
+              calculated_fare: 0,
             },
           ],
         },
@@ -439,26 +491,31 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
           name: '20 Seater Bus',
           value: '20_seater_bus_similar',
           image: '../assets/images/delivery-vehicle-20-seater-bus.jpg',
+          base_fare: 300,
           pricing: [
             {
               lower_bound: 0,
               upper_bound: 40,
-              amount: 43,
+              fare: 25,
+              calculated_fare: 0,
             },
             {
               lower_bound: 41,
               upper_bound: 60,
-              amount: 23,
+              fare: 15,
+              calculated_fare: 0,
             },
             {
               lower_bound: 61,
               upper_bound: 90,
-              amount: 10,
+              fare: 10,
+              calculated_fare: 0,
             },
             {
-              lower_bound: 61,
+              lower_bound: 92,
               upper_bound: 'infinity',
-              amount: 3,
+              fare: 5,
+              calculated_fare: 0,
             },
           ],
         },
@@ -466,26 +523,31 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
           name: '60 Seater Bus',
           value: '60_seater_bus_similar',
           image: '../assets/images/delivery-vehicle-60-seater-bus.jpg',
+          base_fare: 500,
           pricing: [
             {
               lower_bound: 0,
               upper_bound: 40,
-              amount: 43,
+              fare: 43,
+              calculated_fare: 0,
             },
             {
               lower_bound: 41,
               upper_bound: 60,
-              amount: 23,
+              fare: 23,
+              calculated_fare: 0,
             },
             {
               lower_bound: 61,
               upper_bound: 90,
-              amount: 10,
+              fare: 10,
+              calculated_fare: 0,
             },
             {
-              lower_bound: 61,
+              lower_bound: 92,
               upper_bound: 'infinity',
-              amount: 3,
+              fare: 3,
+              calculated_fare: 0,
             },
           ],
         },
