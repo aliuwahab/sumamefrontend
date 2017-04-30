@@ -6,7 +6,7 @@
   <div class="warehouse-col flip-container" ontouchstart="this.classList.toggle('hover');" ng-repeat="warehouse in warehouses.data">
     <div class="flipper">
       <div class="front">
-        <h1>{{warehouse.description}}</h1>
+        <h1>{{warehouse.name}}</h1>
         <div class="sm-wh-address-container">
           <p class="sm-wh-address-text">19 Banana Street,</p>
           <p class="sm-wh-address-text">Ambassadorial Enclave - East Legon</p>
@@ -14,7 +14,7 @@
         </div>
       </div>
       <div class="back">
-        <h2 class="sm-staff-name">{{warehouse.description}}</h2>
+        <h2 class="sm-staff-name">{{warehouse.name}}</h2>
         <div class="sm-wh-map-container">
           <ng-map class="sm-wh-map" center="{{warehouse.location_latitude}}, {{warehouse.location_longitude}}" zoom="10">
             <marker position="{{warehouse.location_latitude}}, {{warehouse.location_longitude}}" title="{{warehouse.description}} location"></marker>

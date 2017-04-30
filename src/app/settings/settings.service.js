@@ -58,7 +58,6 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
 
   function addWarehouse(data) {
     var params = $.param(data);
-    debugger;
 
     return $http.post(apiBaseURL + '/create/sumame/address?' + authDataString + '&' + params);
   }

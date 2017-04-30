@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dialog,
-  SettingsService) {
+  SettingsService, ToastsService) {
 
   activate();
 
@@ -38,17 +38,19 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
 
     $scope.newWarehouse.location_latitude = $scope.warehouseLocation.latitude;
     $scope.newWarehouse.location_longitude = $scope.warehouseLocation.longitude;
-    debugger;
 
     $scope.addingWarehouse = true;
     SettingsService.addWarehouse($scope.newWarehouse)
     .then(function (response) {
-      debugger;
       $scope.addingWarehouse = false;
+      ToastsService.showToast('success', 'Warehouse successfully added');
+      $rootScope.closeDialog();
+      getAllWarehouses();
     })
     .catch(function (error) {
       $scope.error = error.data.message;
       $scope.addingWarehouse = false;
+      ToastsService.showToast('error', error.data.message);
       debugger;
     });
   };
