@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dialog,
-  SettingsService, ToastsService) {
+  SettingsService, ToastsService, CachingService) {
 
   activate();
 
@@ -44,6 +44,8 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
     .then(function (response) {
       $scope.addingWarehouse = false;
       ToastsService.showToast('success', 'Warehouse successfully added');
+      var requestsCache = 'warehouses?page=' + $scope.filterParams.page + 'limit=' + $scope.filterParams.limit;
+      CachingService.destroyOnCreateOperation(requestsCache);
       $rootScope.closeDialog();
       getAllWarehouses();
     })

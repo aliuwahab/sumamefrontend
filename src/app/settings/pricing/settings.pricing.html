@@ -45,9 +45,21 @@
           </md-table-container>
         </md-content>
       </md-tab>
-      <md-tab label="ONLINE PURCHASE PRICING">
-        <md-content class="md-padding">
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla venenatis ante augue. Phasellus volutpat neque ac dui mattis vulputate. Etiam consequat aliquam cursus. In sodales pretium ultrices. Maecenas lectus est, sollicitudin consectetur felis nec, feugiat ultricies mi.</p>
+      <md-tab label="ONLINE PURCHASE PRICING" md-on-select="getPercentagePricingDetails()">
+        <md-content class="md-padding" layout="row">
+          <h3>Online Pricing Percentage:</h3>
+          <md-input-container>
+            <input type="text" ng-model="user.name" ng-disabled="!editingOnlinePercentage">
+          </md-input-container>
+          <button class="md-button md-raised md-warn" ng-if="!editingOnlinePercentage" ng-click="editingOnlinePercentage = !editingOnlinePercentage">
+            <md-tooltip md-direction="top">
+              Edit Online Percentage
+            </md-tooltip>
+            <i class="material-icons">edit</i>
+          </button>
+          <button class="md-button md-raised md-warn" ng-if="editingOnlinePercentage" ng-click="updateOnlinePercentage()">
+            Save New Value
+          </button>
         </md-content>
       </md-tab>
     </md-tabs>

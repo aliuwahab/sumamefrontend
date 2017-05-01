@@ -15,8 +15,20 @@ SettingsService, ToastsService, ValidationService, UploadService) {
     getAllVehicleCategories();
   }
 
-  function getPricingDetails() {
+  function getAllVehicleCategories() {
+    $scope.loadingCategories = SettingsService.getAllVehicleCategories()
+    .then(function (response) {
+      $scope.categories = response.data.data.categories;
+    })
+    .catch(function (error) {
+      ToastsService.showToast('error', error.message);
+      debugger;
+    });
+  }
+
+  $scope.getPercentagePricingDetails = function () {
     $scope.loadingPricing = true;
+    $scope.editingOnlinePercentage = false;
 
     SettingsService.getPricingDetails()
     .then(function (response) {
@@ -29,18 +41,7 @@ SettingsService, ToastsService, ValidationService, UploadService) {
       $scope.loadingWarehouses = false;
       debugger;
     });
-  }
-
-  function getAllVehicleCategories() {
-    $scope.loadingCategories = SettingsService.getAllVehicleCategories()
-    .then(function (response) {
-      $scope.categories = response.data.data.categories;
-    })
-    .catch(function (error) {
-      ToastsService.showToast('error', error.message);
-      debugger;
-    });
-  }
+  };
 
   $scope.updateOnlinePurchasePricePercentage = function () {
     $scope.updatingPrecentagePricing = true;
