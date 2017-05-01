@@ -18,6 +18,11 @@
         { field: 'subject_id', friendlyName: 'Assigned Subject' },
         { field: 'user_subtitle', friendlyName: 'Subtitle' },
       ],
+      pricePoint: [
+        { field: 'fare', friendlyName: 'Fare' },
+        { field: 'upper_bound', friendlyName: 'Upper Bound' },
+        { field: 'lower_bound', friendlyName: 'Lower Bound' },
+      ],
     };
 
     var service = {
@@ -38,23 +43,24 @@
       return deferred.promise;
     }
 
-    function validateGrading(gradingSystem, gradePoint) {
-      var gradeValidation = {
+    function validateGrading(pricing, pricePoint) {
+      var priceValidation = {
         valid: true,
       };
 
-      if (isNaN(parseInt(gradePoint.lower_bound)) || isNaN(parseInt(gradePoint.upper_bound))) {
-        gradeValidation.valid = false;
-        gradeValidation.message = 'Upper Bound and Lower Bound must be numbers';
-      }else if (parseInt(gradePoint.lower_bound) >= parseInt(gradePoint.upper_bound)) {
-        gradeValidation.valid = false;
-        gradeValidation.message = 'Lower bound cannot be greater than or equal to upper bound';
-      } else if (isInRange(gradingSystem, gradePoint)) {
-        gradeValidation.valid = false;
-        gradeValidation.message = 'This range conflicts with a previous range';
+      if (isNaN(parseInt(pricePoint.lower_bound)) || (isNaN(parseInt(pricePoint.upper_bound)) &&
+      pricePoint.upper_bound != 'infinity')) {
+        priceValidation.valid = false;
+        priceValidation.message = 'Upper Bound and Lower Bound must be numbers or "infinity"';
+      }else if (parseInt(pricePoint.lower_bound) >= parseInt(pricePoint.upper_bound)) {
+        priceValidation.valid = false;
+        priceValidation.message = 'Lower bound cannot be greater than or equal to upper bound';
+      } else if (isInRange(pricing, pricePoint)) {
+        priceValidation.valid = false;
+        priceValidation.message = 'This range conflicts with a previous range';
       }
 
-      return gradeValidation;
+      return priceValidation;
     }
 
     ///// HELPER FUNCTIONS /////
