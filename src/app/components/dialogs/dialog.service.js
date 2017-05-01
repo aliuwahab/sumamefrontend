@@ -30,6 +30,9 @@
       // STAFF DIALOGS
       add_staff: 'app/components/dialogs/partials/staff-add_staff.tpl.html',
 
+      // PRICING DIALOGS
+      add_service_category: 'app/components/dialogs/partials/pricing-add_service_category.tpl.html',
+
       // SMS
       send_message: 'app/components/dialogs/partials/request-send-sms.tpl.html',
     };

@@ -17,6 +17,9 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     addWarehouse: addWarehouse,
     getAllStaff: getAllStaff,
     addStaff: addStaff,
+    getPricingDetails: getPricingDetails,
+    getAllVehicleCategories: getAllVehicleCategories,
+    addPriceCategory: addPriceCategory,
   };
 
   return service;
@@ -60,6 +63,46 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     var params = $.param(data);
 
     return $http.post(apiBaseURL + '/create/sumame/address?' + authDataString + '&' + params);
+  }
+
+  /////// PRICING FUNCTIONS ////////////
+  function getPricingDetails() {
+
+    var cache = 'pricingDetails';
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.get(apiBaseURL + '/all/price/estimates?' + authDataString, {
+      cache: CacheFactory.get(cache),
+    });
+  }
+
+  function getAllVehicleCategories() {
+
+    var cache = 'vehicleCategories';
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.get(apiBaseURL + '/all/vehicles/categories?' + authDataString, {
+      cache: CacheFactory.get(cache),
+    });
+  }
+
+  function addPriceCategory(data) {
+    var params = $.param(data);
+
+    return $http.post(apiBaseURL + '/create/vehicle/category?' + authDataString + '&' + params);
+  }
+
+  function updateOnlinePurchasePricePercentage(data) {
+    var params = $.param(data);
+    debugger;
+
+    return $http.post(apiBaseURL + '/create/price/percentage?' + authDataString + '&' + params);
   }
 
 }
