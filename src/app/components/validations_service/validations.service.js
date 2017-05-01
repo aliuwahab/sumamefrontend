@@ -27,7 +27,7 @@
 
     var service = {
       validate: validate,
-      validateGrading: validateGrading,
+      validatePricing: validatePricing,
     };
 
     return service;
@@ -43,21 +43,25 @@
       return deferred.promise;
     }
 
-    function validateGrading(pricing, pricePoint) {
+    function validatePricing(pricing, pricePoint) {
       var priceValidation = {
         valid: true,
       };
 
-      if (isNaN(parseInt(pricePoint.lower_bound)) || (isNaN(parseInt(pricePoint.upper_bound)) &&
-      pricePoint.upper_bound != 'infinity')) {
+      if (isAfterInfinity(pricing)) {
         priceValidation.valid = false;
-        priceValidation.message = 'Upper Bound and Lower Bound must be numbers or "infinity"';
+        priceValidation.message = 'You cannot add a price point after "infinity".';
+      }else if (isNaN(parseInt(pricePoint.lower_bound)) || isNaN(parseInt(pricePoint.fare))  ||
+      (isNaN(parseInt(pricePoint.upper_bound)) && pricePoint.upper_bound != 'infinity')) {
+        priceValidation.valid = false;
+        priceValidation.message = 'Only "infinity" is accepted as an Upper ' +
+        'Bound value, any other value must be a number.';
       }else if (parseInt(pricePoint.lower_bound) >= parseInt(pricePoint.upper_bound)) {
         priceValidation.valid = false;
-        priceValidation.message = 'Lower bound cannot be greater than or equal to upper bound';
+        priceValidation.message = 'Lower bound cannot be greater than or equal to upper bound.';
       } else if (isInRange(pricing, pricePoint)) {
         priceValidation.valid = false;
-        priceValidation.message = 'This range conflicts with a previous range';
+        priceValidation.message = 'This range conflicts with a previous range.';
       }
 
       return priceValidation;
@@ -83,24 +87,29 @@
       return result;
     }
 
-    function isInRange(gradingSystem, gradePoint) {
-
+    function isInRange(pricing, pricePoint) {
       var inRange = false;
+      var testPricePoint = angular.copy(pricePoint);
+      delete testPricePoint.fare;
 
-      _.map(gradingSystem, function (grade) {
+      _.map(pricing, function (price) {
+        var lowerbound = parseInt(price.lower_bound);
+        var upperbound = parseInt(price.upper_bound);
 
-        var lowerbound = parseInt(grade.lower_bound);
-        var upperbound = parseInt(grade.upper_bound);
-
-        _.mapValues(gradePoint, function (value) {
+        _.mapValues(testPricePoint, function (value) {
           if (!isNaN(value)) {
             var test = _.inRange(value, lowerbound, upperbound + 1) ? inRange = true : false;
           }
         });
-
       });
 
       return inRange;
+    }
+
+    function isAfterInfinity(pricing) {
+      return _.some(pricing, function (price) {
+        return price.upper_bound == 'infinity';
+      });
     }
 
   }
