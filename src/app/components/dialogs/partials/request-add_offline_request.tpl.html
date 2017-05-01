@@ -10,11 +10,11 @@
       </div>
     </md-toolbar>
     <md-dialog-content class="sm-modal-content" style="width:700px;">
-      <div ng-if="addingRequest" layout="row" layout-align="center center" style="min-height: 40vh;">
+      <div ng-if="loadingRequiredOfflineRequestData || addingRequest" layout="row" layout-align="center center" style="min-height: 40vh;">
         <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
       </div>
 
-      <div ng-show="!addingRequest">
+      <div ng-show="!loadingRequiredOfflineRequestData && !addingRequest">
         <wizard
         name="offlineRequestWizard"
         on-finish="submitOfflineRequest()"
@@ -52,9 +52,9 @@
           </wz-step>
           <wz-step wz-title="vehicle_type">
             <div class="flex-grid" layout="row">
-              <md-card class="sm-delivery-vehicle-type" ng-repeat="vehicle in deliveryVehicleTypes" background-img="{{vehicle.image}}" ng-click="selectVehicleType(vehicle)" ng-style="selectedVehicleType.value == vehicle.value && {'border':'3px solid #019AD6'}">
+              <md-card class="sm-delivery-vehicle-type" ng-repeat="category in categories" background-img="{{category.category_image}}" ng-click="selectServiceCategory(category)" ng-style="selectedServiceCategory == category && {'border':'3px solid #019AD6'}">
                 <md-card-footer layout-align="center end">
-                  <h3 class="sm-delivery-vehicle-type-title">{{vehicle.name}}</h3>
+                  <h3 class="sm-delivery-vehicle-type-title">{{category.category_name}}</h3>
                 </md-card-footer>
               </md-card>
             </div>

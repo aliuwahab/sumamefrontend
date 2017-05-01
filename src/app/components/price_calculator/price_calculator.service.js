@@ -16,7 +16,8 @@
     return service;
 
     // CALCULATE OFFLINE DELIVERY PRICING
-    function calculateOfflineDeliveryFare(distance, pricing, baseFare) {
+    function calculateOfflineDeliveryFare(distance, pricingString, baseFare) {
+      var pricing = JSON.parse(pricingString);
       var distanceRemainder = distance;
       var totalFare = 0;
 
@@ -29,18 +30,18 @@
         var multiplierDistance;
 
         if (i == (pricing.length - 1) || isNaN(pricing[i].upper_bound)) {
-          pricing[i].calculated_fare = pricing[i].fare * distanceRemainder;
-          totalFare += pricing[i].calculated_fare;
+          pricing[i].calculatedFare = pricing[i].fare * distanceRemainder;
+          totalFare += pricing[i].calculatedFare;
           break;
         }else {
           if (distanceRemainder > pricing[i].upper_bound) {
             multiplierDistance = pricing[i].upper_bound - pricing[i].lower_bound;
-            pricing[i].calculated_fare = pricing[i].fare * multiplierDistance;
-            totalFare += pricing[i].calculated_fare;
+            pricing[i].calculatedFare = pricing[i].fare * multiplierDistance;
+            totalFare += pricing[i].calculatedFare;
             distanceRemainder -= multiplierDistance;
           }else {
-            pricing[i].calculated_fare = pricing[i].fare * distanceRemainder;
-            totalFare += pricing[i].calculated_fare;
+            pricing[i].calculatedFare = pricing[i].fare * distanceRemainder;
+            totalFare += pricing[i].calculatedFare;
             break;
           }
         }
