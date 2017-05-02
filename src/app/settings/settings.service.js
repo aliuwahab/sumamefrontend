@@ -33,7 +33,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
       CacheFactory(cache);
     };
 
-    return $http.get(apiBaseURL + '/all/sumame/users?' + authDataString + '&' + queryOptions, {
+    return $http.get(apiBaseURL + '/all?' + authDataString, {
       cache: CacheFactory.get(cache),
     });
   }

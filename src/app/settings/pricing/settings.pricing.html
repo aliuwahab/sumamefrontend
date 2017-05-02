@@ -49,7 +49,7 @@
         <md-content class="md-padding" layout="row">
           <h3>Online Pricing Percentage:</h3>
           <md-input-container>
-            <input type="text" ng-model="user.name" ng-disabled="!editingOnlinePercentage">
+            <input type="text" ng-model="percentagePrice" aria-label="percentage pricing input" ng-disabled="!editingOnlinePercentage">
           </md-input-container>
           <button class="md-button md-raised md-warn" ng-if="!editingOnlinePercentage" ng-click="editingOnlinePercentage = !editingOnlinePercentage">
             <md-tooltip md-direction="top">
