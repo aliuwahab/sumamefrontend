@@ -41,6 +41,15 @@ function OnlineRequestsController($scope, $rootScope, $state, $timeout, $statePa
     });
   };
 
+  $scope.calculateRequestCost = function () {
+    if (!isNaN($scope.itemValue)) {
+      $scope.newRequest.request_cost =
+      PriceCalculator.calculateOnlineDeliveryFare(0.45, $scope.itemValue);
+    }else {
+      ToastsService.showToast('error', 'This field must be a valid number.');
+    }
+  };
+
   ////////////////////// HELPER FUNCTIONS ///////////////////////////
 
   function populateNewOnlineRequestData() {
@@ -56,8 +65,23 @@ function OnlineRequestsController($scope, $rootScope, $state, $timeout, $statePa
   function loadAllWarehouses() {
     SettingsService.getAllWarehouses({ limit: 50, page: 1 })
     .then(function (response) {
-      $scope.loadingRequiredOnlineRequestData = false;
       $scope.warehouses = response.data.data.all_requested_addresses;
+      // getPricePercentage();
+      $scope.loadingRequiredOnlineRequestData = false; // Delete this when get price function is working
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      $scope.loadingRequiredOnlineRequestData = false;
+      debugger;
+    });
+  }
+
+  function getPricePercentage() {
+    SettingsService.getPricingDetails()
+    .then(function (response) {
+      debugger;
+      $scope.loadingRequiredOnlineRequestData = false;
+      $scope.pricePercentage = response.data.data.estimates;
     })
     .catch(function (error) {
       $scope.error = error.message;

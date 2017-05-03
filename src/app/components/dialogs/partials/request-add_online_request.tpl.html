@@ -43,8 +43,13 @@
 
         <md-input-container class="sm-input-container">
           <label>Enter item value</label>
-          <input type="text" ng-model="itemValue">
+          <input type="text" ng-model="itemValue" ng-change="calculateRequestCost()">
         </md-input-container>
+
+        <div class="sm-dropzone sm-rq-fare-container" ng-if="newRequest.request_cost">
+          <h6>The delivery fare for this item will be:</h6>
+          <h2 class="sm-req-online-info-title">GHS {{newRequest.request_cost | number: 2}}</h2>
+        </div>
 
         <md-input-container class="sm-input-container">
           <label>Enter tracking code</label>
@@ -56,13 +61,13 @@
         </md-input-container>
 
         <md-input-container>
-          <md-checkbox ng-model="newRequest.hazardous_substance" aria-label="Is this a hazardous substance?">
+          <md-checkbox ng-model="newRequest.request_is_hazardous" aria-label="Is this a hazardous substance?">
             This is a hazardous substance.
           </md-checkbox>
         </md-input-container>
 
         <md-input-container>
-          <md-checkbox ng-model="newRequest.fast_track" aria-label="Is this a hazardous substance?">
+          <md-checkbox ng-model="newRequest.request_needs_fast_tracking" aria-label="Is this a hazardous substance?">
             I need this shipment fast-tracked. Use Airfreight instead of Seafreight.
           </md-checkbox>
         </md-input-container>

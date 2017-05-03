@@ -10,6 +10,7 @@
 
     var service = {
       calculateOfflineDeliveryFare: calculateOfflineDeliveryFare,
+      calculateOnlineDeliveryFare: calculateOnlineDeliveryFare,
       calculateDeliveryDistance: calculateDeliveryDistance,
     };
 
@@ -53,6 +54,10 @@
         totalFare: totalFare,
         pricingDetails: pricing,
       };
+    }
+
+    function calculateOnlineDeliveryFare(percentagePrice, itemValue) {
+      return percentagePrice * itemValue;
     }
 
     function calculateDeliveryDistance(pickupLocation, deliveryLocation) {
