@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
   ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
-  SettingsService) {
+  SettingsService, UploadService) {
 
   activate();
 
@@ -27,7 +27,7 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
   $scope.addOfflineRequest = function () {
     populateNewOfflineRequestData();
     $scope.addingRequest = true;
-
+    debugger;
     RequestsService.addRequest($scope.newRequest)
     .then(function (response) {
       $scope.addingRequest = false;
@@ -118,6 +118,7 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
     $scope.newRequest.delivery_location_longitude = $scope.mapping.deliveryLocation.longitude;
 
     $scope.newRequest.estimated_delivery_distance = $scope.deliveryDistance;
+    $scope.newRequest.request_cost = $scope.calculatedFare.totalFare;
   }
 
   function loadAllVehicleCategories() {
@@ -133,6 +134,32 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
       debugger;
     });
   }
+
+  // UPLOAD IMAGE
+  $scope.uploadImage = function (file) {
+    $scope.s3Uploader = UploadService;
+
+    if (file) {
+      $scope.uploadingImage = true;
+
+      $scope.$watch('s3Uploader.getUploadProgress()', function (newVal) {
+        console.log('Progress', newVal);
+        $scope.uploadProgress = newVal;
+      });
+
+      UploadService.uploadFileToS3(file, 'request', 'image')
+      .then(function (url) {
+        $scope.newRequest.request_image = url;
+        $scope.uploadingImage = false;
+        $scope.uploadProgress = 0;
+      })
+      .catch(function (error) {
+        $scope.uploadingImage = false;
+      });
+    }else {
+      ToastsService.showToast('error', 'Please select a valid file');
+    }
+  };
 
 }
 })();

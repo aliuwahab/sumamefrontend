@@ -82,31 +82,26 @@
               </div>
             </div>
 
-            <!-- <md-input-container class="sm-input-container">
-              <label>Describe the package</label>
-              <input type="text" ng-model="newOfflineRequest.package_description">
-            </md-input-container> -->
-
             <h4 class="sm-custom-input-label">Have a picture of your package?</h4>
-            <div class="sm-dropzone" ngf-select="uploadProfileImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+            <div class="sm-dropzone" ngf-select="uploadImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
               <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
                 <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
                 <p>Uploading Image: {{uploadProgress}}% complete</p>
               </div>
               <div ng-if="!uploadingImage" layout="column" layout-align="center center">
                 <i class="material-icons md-24">backup</i>
-                <p ng-if="!newOfflineRequest.request_image">Click here to select an image</p>
-                <p ng-if="newOfflineRequest.request_image">Click here to change image</p>
+                <p ng-if="!newRequest.request_image">Click here to select an image</p>
+                <p ng-if="newRequest.request_image">Click here to change image</p>
 
-                <div class="" ng-if="newOfflineRequest.request_image" style="max-width:700px">
-                  <img style="width: 400px; height: auto;" ng-src="{{newOfflineRequest.request_image}}" alt="Answer Image Preview">
+                <div class="" ng-if="newRequest.request_image" style="max-width:700px">
+                  <img style="width: 400px; height: auto;" ng-src="{{newRequest.request_image}}" alt="Answer Image Preview">
                 </div>
               </div>
             </div>
 
             <md-input-container class="md-block">
               <label>Any additional instructions or package description?</label>
-              <textarea ng-model="newOfflineRequest.request_additional_description" aria-label="Request Instructions" rows="5"></textarea>
+              <textarea ng-model="newRequest.request_additional_description" aria-label="Request Instructions" rows="5"></textarea>
             </md-input-container>
           </wz-step>
         </wizard>
