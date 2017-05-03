@@ -15,7 +15,7 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
   function activate() {
 
     $scope.filterParams = {
-      limit: 50,
+      limit: 20,
       page: 1,
     };
 
@@ -223,8 +223,14 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
       $scope.loadingRequiredEquimentRequestData = true;
       $scope.equipmentFilterParams = {
         page: 1,
-        limit: 50,
+        limit: 2,
       };
+
+      $scope.loadMoreEquipment = function () {
+        $scope.filteringEquipment = true;
+        loadEquipment();
+      };
+
       loadEquipment();
     }
   };

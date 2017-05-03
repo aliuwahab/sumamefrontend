@@ -40,7 +40,7 @@
             <div ng-if="filteringEquipment" layout="row" layout-align="center center" style="min-height: 40vh; min-width: 720px;">
               <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
             </div>
-            <div class="" ng-if="!filteringEquipment">
+            <div class="" ng-if="!filteringEquipment" style="min-width: 650px;">
               <div class="sm-eq-item-container" ng-repeat="equipment in equipment.data" ng-style="selectedEquipment == equipment && {'border':'3px solid #019AD6'}">
                 <h3>{{equipment.equipment_name}}</h3>
                 <p>
@@ -52,6 +52,10 @@
                   <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full" ng-click="selectedEquipment = equipment">Select</md-button>
                 </div>
               </div>
+
+              <section ng-if="equipment.data.length != '0' && equipment.total > equipmentFilterParams.limit" layout="row" layout-align="center end" layout-padding="">
+                <cl-paging flex cl-pages="equipment.last_page" , cl-steps="6" , cl-page-changed="loadMoreEquipment()" , cl-align="center center" , cl-current-page="equipmentFilterParams.page"></cl-paging>
+              </section>
             </div>
           </div>
         </div>
