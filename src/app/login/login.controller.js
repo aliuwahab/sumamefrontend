@@ -100,16 +100,16 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
   }
 
   function resetUserState() {
-    if ($rootScope.authenticatedUser.user_type == 'staff' ||
-    $rootScope.authenticatedUser.user_type == 'normal') {
+    if ($rootScope.authenticatedUser.admin_type == 'staff' ||
+    $rootScope.authenticatedUser.admin_type == 'normal') {
       ssSideNav.setVisible('settings', false);
     }
   }
 
   function redefineRoles() {
     PermPermissionStore
-    .defineManyPermissions(['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
-    'seeCustomers',
+    .defineManyPermissions(['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles',
+    'seeEquipment', 'seeCustomers',
     ],
     function () {
       return ['super', 'staff', 'normal'].indexOf($rootScope.authenticatedUser.admin_type) != -1;
