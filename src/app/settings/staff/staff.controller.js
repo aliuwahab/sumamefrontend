@@ -12,16 +12,15 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
   activate();
 
   function activate() {
-    // getAllStaff();
+    getAllStaff();
   }
 
   function getAllStaff() {
     $scope.loadingStaff = true;
     SettingsService.getAllStaff()
     .then(function (response) {
-      $scope.staff = response.data.data.all_staff;
+      $scope.staff = response.data.data.admins;
       $scope.loadingStaff = false;
-      debugger;
     })
     .catch(function (error) {
       $scope.error = error.message;
