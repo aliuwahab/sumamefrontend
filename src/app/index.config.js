@@ -168,7 +168,7 @@
         icon: 'add_shopping_cart',
       },
       {
-        id: 'Drivers',
+        id: 'drivers',
         name: 'Drivers',
         state: 'app.drivers',
         type: 'link',

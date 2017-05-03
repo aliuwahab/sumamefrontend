@@ -46,7 +46,7 @@
       data: {
         permissions: {
           only: function () {
-            return ['admin', 'consultant'] || false;
+            return ['super', 'normal', 'staff'] || false;
           },
 
           redirectTo: 'auth.login',
@@ -68,7 +68,7 @@
       data: {
         permissions: {
           only: function () {
-            return ['admin', 'consultant'] || false;
+            return ['super', 'normal', 'staff'] || false;
           },
 
           redirectTo: 'auth.login',
@@ -85,7 +85,7 @@
       data: {
         permissions: {
           only: function () {
-            return ['admin', 'consultant'] || false;
+            return ['super', 'normal', 'staff'] || false;
           },
 
           redirectTo: 'app.dashboard',
@@ -102,7 +102,7 @@
       data: {
         permissions: {
           only: function () {
-            return ['admin', 'consultant'] || false;
+            return ['super', 'normal', 'staff'] || false;
           },
 
           redirectTo: 'auth.login',
@@ -119,7 +119,7 @@
       data: {
         permissions: {
           only: function () {
-            return ['admin', 'consultant'] || false;
+            return ['super', 'normal', 'staff'] || false;
           },
 
           redirectTo: 'auth.login',
@@ -136,7 +136,7 @@
       data: {
         permissions: {
           only: function () {
-            return ['admin', 'consultant'] || false;
+            return ['super', 'normal', 'staff'] || false;
           },
 
           redirectTo: 'auth.login',
@@ -153,7 +153,7 @@
       data: {
         permissions: {
           only: function () {
-            return ['admin', 'consultant'] || false;
+            return ['super', 'normal', 'staff'] || false;
           },
 
           redirectTo: 'auth.login',
@@ -170,7 +170,7 @@
       data: {
         permissions: {
           only: function () {
-            return ['admin'] || false;
+            return ['super'] || false;
           },
 
           redirectTo: 'app.dashboard',
@@ -188,7 +188,7 @@
       data: {
         permissions: {
           only: function () {
-            return ['admin'] || false;
+            return ['super'] || false;
           },
 
           redirectTo: 'app.dashboard',
@@ -206,7 +206,7 @@
       data: {
         permissions: {
           only: function () {
-            return ['admin'] || false;
+            return ['super'] || false;
           },
 
           redirectTo: 'app.dashboard',
@@ -224,7 +224,7 @@
       data: {
         permissions: {
           only: function () {
-            return ['admin'] || false;
+            return ['super'] || false;
           },
 
           redirectTo: 'app.dashboard',
