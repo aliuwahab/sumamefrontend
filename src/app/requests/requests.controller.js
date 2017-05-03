@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
   ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
-  SettingsService, VehiclesService) {
+  SettingsService, EquipmentService) {
 
   activate();
 
@@ -220,7 +220,12 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
       $scope.newEquipmentRequest = {};
       $scope.equipmentSelectionConfirmed = false;
       $scope.selectedEquipment = null;
-      loadVehicles();
+      $scope.loadingRequiredEquimentRequestData = true;
+      $scope.equipmentFilterParams = {
+        page: 1,
+        limit: 50,
+      };
+      loadEquipment();
     }
   };
 
@@ -238,21 +243,17 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     });
   }
 
-  function loadVehicles() {
-    $scope.vehicleFilterParams = {
-      limit: 50,
-      page: 1,
-    };
-
-    $scope.loadingRequiredEquimentRequestData = true;
-    VehiclesService.getAllVehicles($scope.vehicleFilterParams)
+  function loadEquipment() {
+    EquipmentService.getAllEquipment($scope.equipmentFilterParams)
     .then(function (response) {
-      $scope.vehicles = response.data.data.all_vehicles;
+      $scope.equipment = response.data.data.rental_equipment;
       $scope.loadingRequiredEquimentRequestData = false;
+      $scope.filteringEquipment = false;
     })
     .catch(function (error) {
       $scope.error = error.message;
       $scope.loadingRequiredEquimentRequestData = false;
+      $scope.filteringEquipment = false;
       debugger;
     });
   }
@@ -270,6 +271,25 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
       debugger;
     });
   }
+
+  $scope.filterEquipment = function (type) {
+    switch (type) {
+      case 'category':
+        $scope.filteringEquipment = true;
+        loadEquipment();
+        break;
+      case 'search':
+        if ($scope.equipmentFilterParams.equipment_category) {
+          delete $scope.equipmentFilterParams.equipment_category;
+        }
+
+        $scope.equipmentFilterParams.search = value;
+        $scope.filteringEquipment = true;
+        loadEquipment();
+        break;
+      default:
+    }
+  };
 
 }
 })();
