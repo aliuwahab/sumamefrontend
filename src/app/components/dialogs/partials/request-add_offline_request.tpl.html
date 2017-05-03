@@ -1,4 +1,4 @@
-<md-dialog aria-label="Add Consultant">
+<md-dialog aria-label="add offline request" ng-controller="OfflineRequestsController">
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
@@ -125,7 +125,7 @@
       <md-button ng-show="offlineWizardCurrentStep < 2" ng-click="offlineRequestNextStep()" class="md-raised md-accent">
         Next Step
       </md-button>
-      <md-button ng-show="offlineWizardCurrentStep == 2" ng-click="addRequest('goods_delivery')" class="md-raised md-accent">
+      <md-button ng-show="offlineWizardCurrentStep == 2" ng-click="addOfflineRequest()" class="md-raised md-accent">
         Submit Request
       </md-button>
 
