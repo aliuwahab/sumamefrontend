@@ -25,9 +25,8 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
   return service;
 
   /////// STAFF FUNCTIONS ////////////
-  function getAllStaff(params) {
-    var queryOptions = $.param(params);
-    var cache = 'staff?page=' + params.page + 'limit=' + params.limit;
+  function getAllStaff() {
+    var cache = 'staff';
 
     if (!CacheFactory.get(cache)) {
       CacheFactory(cache);
@@ -40,7 +39,6 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
 
   function addStaff(data) {
     var params = $.param(data);
-    debugger;
 
     return $http.post(apiBaseURL + '/create/admin/user?' + authDataString + '&' + params);
   }

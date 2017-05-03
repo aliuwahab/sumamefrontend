@@ -7,22 +7,17 @@ angular
 
 /** @ngInject */
 function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, ToastsService,
-  SettingsService) {
+  SettingsService, CachingService) {
 
   activate();
 
   function activate() {
-    $scope.filterParams = {
-      limit: 50,
-      page: 1,
-    };
-
     // getAllStaff();
   }
 
   function getAllStaff() {
     $scope.loadingStaff = true;
-    SettingsService.getAllStaff($scope.filterParams)
+    SettingsService.getAllStaff()
     .then(function (response) {
       $scope.staff = response.data.data.all_staff;
       $scope.loadingStaff = false;
@@ -36,15 +31,14 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
   }
 
   $scope.addStaff = function () {
-    debugger;
     $scope.addingStaff = true;
     SettingsService.addStaff($scope.newStaffMember)
     .then(function (response) {
       $scope.addingStaff = false;
       $rootScope.closeDialog();
       ToastsService.showToast('success', 'Staff member successfully added!');
-
-      // getAllStaff();
+      CachingService.destroyOnCreateOperation('staff');
+      getAllStaff();
     })
     .catch(function (error) {
       $scope.addingStaff = false;
