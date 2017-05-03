@@ -26,17 +26,15 @@ function EquipmentService($http, AuthService, CacheFactory, ENV) {
       CacheFactory(cache);
     };
 
-    return $http.get(apiBaseURL + '/vehicles?' + authDataString + '&' + queryOptions, {
+    return $http.get(apiBaseURL + '/all/rental/equipment?' + authDataString + '&' + queryOptions, {
       cache: CacheFactory.get(cache),
     });
   }
 
   function addEquipment(data) {
     var params = $.param(data);
-    debugger;
 
-    return $http.post(apiBaseURL + '/create/vehicle?' + authDataString + '&' + params);
+    return $http.post(apiBaseURL + '/add/rental/equipment?' + authDataString + '&' + params);
   }
-
 }
 })();

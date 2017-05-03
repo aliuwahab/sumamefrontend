@@ -24,6 +24,9 @@
       // VEHICLE DIALOGS
       add_vehicle: 'app/components/dialogs/partials/vehicles-add_vehicle.tpl.html',
 
+      // EQUIPMENT DIALOGS
+      add_equipment: 'app/components/dialogs/partials/equipment-add_equipment.tpl.html',
+
       // WAREHOUSE DIALOGS
       add_warehouse: 'app/components/dialogs/partials/warehouses-add_warehouse.tpl.html',
 
