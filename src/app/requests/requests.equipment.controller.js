@@ -25,7 +25,7 @@ function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stat
 
     $scope.equipmentFilterParams = {
       page: 1,
-      limit: 2,
+      limit: 20,
     };
 
     $scope.loadMoreEquipment = function () {
