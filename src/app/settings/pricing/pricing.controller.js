@@ -32,8 +32,7 @@ SettingsService, ToastsService, ValidationService, UploadService) {
 
     SettingsService.getPricingDetails()
     .then(function (response) {
-      debugger;
-      $scope.pricingDetails = response.data.data.all_requested_addresses;
+      $scope.pricingDetails = response.data.data.price_estaimates[0];
       $scope.loadingWarehouses = false;
     })
     .catch(function (error) {
@@ -45,17 +44,18 @@ SettingsService, ToastsService, ValidationService, UploadService) {
 
   $scope.updateOnlinePurchasePricePercentage = function () {
     $scope.updatingPrecentagePricing = true;
-    SettingsService.updateOnlinePurchasePricePercentage($scope.newPercentage)
+    SettingsService.updateOnlinePurchasePricePercentage($scope.pricingDetails)
     .then(function (response) {
+      debugger;
       $scope.updatingPrecentagePricing = false;
+      $scope.percentageEdited = false;
       ToastsService.showToast('success', 'Percentage successfully updated');
-      getAllWarehouses();
     })
     .catch(function (error) {
-      $scope.error = error.data.message;
-      $scope.updatingPrecentagePricing = false;
-      ToastsService.showToast('error', error.data.message);
       debugger;
+      $scope.updatingPrecentagePricing = false;
+      $scope.percentageEdited = false;
+      ToastsService.showToast('error', error.data.message);
     });
   };
 

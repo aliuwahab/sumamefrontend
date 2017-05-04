@@ -20,6 +20,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     getPricingDetails: getPricingDetails,
     getAllVehicleCategories: getAllVehicleCategories,
     addPriceCategory: addPriceCategory,
+    updateOnlinePurchasePricePercentage: updateOnlinePurchasePricePercentage,
   };
 
   return service;
@@ -97,6 +98,11 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
   }
 
   function updateOnlinePurchasePricePercentage(data) {
+    // var cleanedData = _.omit(question, [
+    //   'created_at',
+    //   'created_by',
+    //   'updated_at',
+    // ]);
     var params = $.param(data);
     debugger;
 
