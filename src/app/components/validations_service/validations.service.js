@@ -11,75 +11,23 @@
     var _ = lodash;
 
     var requiredFields = {
-      goTrendingAnswer: [
+      offlineRequest: [
         { field: 'answer_video_url', friendlyName: 'Answer Video', },
       ],
       consultant: [
         { field: 'subject_id', friendlyName: 'Assigned Subject' },
         { field: 'user_subtitle', friendlyName: 'Subtitle' },
-        { field: 'user_title', friendlyName: 'Title' },
-        { field: 'phone_number', friendlyName: 'Phone Number' },
-        { field: 'email', friendlyName: 'Email Address' },
-        { field: 'last_name', friendlyName: 'Last Name' },
-        { field: 'first_name', friendlyName: 'First Name' },
-        { field: 'type_of_consultant', friendlyName: 'Type of Consultant' },
       ],
-      likeWassceQuestion: [
-        { field: 'correct_answer', friendlyName: 'Correct Answer' },
-        { field: 'answer_options', friendlyName: 'At least one Answer Option' },
-        { field: 'question_in_text', friendlyName: 'Question Text' },
-        { field: 'topic_id', friendlyName: 'Topic' },
-        { field: 'subject_id', friendlyName: 'Subject' },
-      ],
-      pastWassceQuestion: [
-        { field: 'correct_answer', friendlyName: 'Correct Answer' },
-        { field: 'answer_options', friendlyName: 'At least one Answer Option' },
-        { field: 'question_in_text', friendlyName: 'Question Text' },
-        { field: 'topic_id', friendlyName: 'Topic' },
-        { field: 'subject_id', friendlyName: 'Subject' },
-        { field: 'question_year', friendlyName: 'Question Year' },
-      ],
-      voucher: [
-        { field: 'quantity_to_generate', friendlyName: 'Number of Vouchers' },
-        { field: 'duration_in_months', friendlyName: 'Voucher Duration' },
-      ],
-      countries: [
-        { field: 'country_call_code', friendlyName: 'Country Code' },
-        { field: 'country_short_name', friendlyName: 'Country Short Name' },
-        { field: 'country_full_name', friendlyName: 'Country Full Name' },
-      ],
-      schools: [
-        { field: 'country_id', friendlyName: 'Country' },
-        { field: 'school_location', friendlyName: 'School Location' },
-        { field: 'school_name', friendlyName: 'School Name' },
-      ],
-      courses: [
-        { field: 'course_name', friendlyName: 'Programme Name' },
-      ],
-      subjects: [
-        { field: 'subject_type', friendlyName: 'Subject Type' },
-        { field: 'subject_name', friendlyName: 'Subject Name' },
-      ],
-      topics: [
-        { field: 'subject_id', friendlyName: 'Subject' },
-        { field: 'topic_name', friendlyName: 'Topic Name' },
-      ],
-      sound: [
-        { field: 'sound_url', friendlyName: 'A sound file' },
-        { field: 'sound_name', friendlyName: 'Subject' },
-      ],
-      grade: [
-        { field: 'interpretation', friendlyName: 'Grade Interpretation' },
-        { field: 'description', friendlyName: 'Grade Description' },
-        { field: 'grade_letter', friendlyName: 'Grade Letter' },
-        { field: 'upper_bound', friendlyName: 'Grade Upper Bound' },
-        { field: 'lower_bound', friendlyName: 'Grade Lower Bound' },
+      pricePoint: [
+        { field: 'fare', friendlyName: 'Fare' },
+        { field: 'upper_bound', friendlyName: 'Upper Bound' },
+        { field: 'lower_bound', friendlyName: 'Lower Bound' },
       ],
     };
 
     var service = {
       validate: validate,
-      validateGrading: validateGrading,
+      validatePricing: validatePricing,
     };
 
     return service;
@@ -95,23 +43,28 @@
       return deferred.promise;
     }
 
-    function validateGrading(gradingSystem, gradePoint) {
-      var gradeValidation = {
+    function validatePricing(pricing, pricePoint) {
+      var priceValidation = {
         valid: true,
       };
 
-      if (isNaN(parseInt(gradePoint.lower_bound)) || isNaN(parseInt(gradePoint.upper_bound))) {
-        gradeValidation.valid = false;
-        gradeValidation.message = 'Upper Bound and Lower Bound must be numbers';
-      }else if (parseInt(gradePoint.lower_bound) >= parseInt(gradePoint.upper_bound)) {
-        gradeValidation.valid = false;
-        gradeValidation.message = 'Lower bound cannot be greater than or equal to upper bound';
-      } else if (isInRange(gradingSystem, gradePoint)) {
-        gradeValidation.valid = false;
-        gradeValidation.message = 'This range conflicts with a previous range';
+      if (isAfterInfinity(pricing)) {
+        priceValidation.valid = false;
+        priceValidation.message = 'You cannot add a price point after "infinity".';
+      }else if (isNaN(parseInt(pricePoint.lower_bound)) || isNaN(parseInt(pricePoint.fare))  ||
+      (isNaN(parseInt(pricePoint.upper_bound)) && pricePoint.upper_bound != 'infinity')) {
+        priceValidation.valid = false;
+        priceValidation.message = 'Only "infinity" is accepted as an Upper ' +
+        'Bound value, any other value must be a number.';
+      }else if (parseInt(pricePoint.lower_bound) >= parseInt(pricePoint.upper_bound)) {
+        priceValidation.valid = false;
+        priceValidation.message = 'Lower bound cannot be greater than or equal to upper bound.';
+      } else if (isInRange(pricing, pricePoint)) {
+        priceValidation.valid = false;
+        priceValidation.message = 'This range conflicts with a previous range.';
       }
 
-      return gradeValidation;
+      return priceValidation;
     }
 
     ///// HELPER FUNCTIONS /////
@@ -134,24 +87,29 @@
       return result;
     }
 
-    function isInRange(gradingSystem, gradePoint) {
-
+    function isInRange(pricing, pricePoint) {
       var inRange = false;
+      var testPricePoint = angular.copy(pricePoint);
+      delete testPricePoint.fare;
 
-      _.map(gradingSystem, function (grade) {
+      _.map(pricing, function (price) {
+        var lowerbound = parseInt(price.lower_bound);
+        var upperbound = parseInt(price.upper_bound);
 
-        var lowerbound = parseInt(grade.lower_bound);
-        var upperbound = parseInt(grade.upper_bound);
-
-        _.mapValues(gradePoint, function (value) {
+        _.mapValues(testPricePoint, function (value) {
           if (!isNaN(value)) {
             var test = _.inRange(value, lowerbound, upperbound + 1) ? inRange = true : false;
           }
         });
-
       });
 
       return inRange;
+    }
+
+    function isAfterInfinity(pricing) {
+      return _.some(pricing, function (price) {
+        return price.upper_bound == 'infinity';
+      });
     }
 
   }

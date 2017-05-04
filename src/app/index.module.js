@@ -33,8 +33,10 @@
       'ngSegment',
       'ActivityMonitor',
       'chart.js',
+      'uiGmapgoogle-maps',
       'ngMap',
       'twilio',
+      'mgo-angular-wizard',
     ]);
 
 })();

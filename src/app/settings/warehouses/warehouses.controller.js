@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dialog,
-  SettingsService) {
+  SettingsService, ToastsService, CachingService) {
 
   activate();
 
@@ -33,6 +33,39 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
       debugger;
     });
   }
+
+  $scope.addWarehouse = function () {
+
+    $scope.newWarehouse.location_latitude = $scope.warehouseLocation.latitude;
+    $scope.newWarehouse.location_longitude = $scope.warehouseLocation.longitude;
+
+    $scope.addingWarehouse = true;
+    SettingsService.addWarehouse($scope.newWarehouse)
+    .then(function (response) {
+      $scope.addingWarehouse = false;
+      ToastsService.showToast('success', 'Warehouse successfully added');
+      var requestsCache = 'warehouses?page=' + $scope.filterParams.page + 'limit=' + $scope.filterParams.limit;
+      CachingService.destroyOnCreateOperation(requestsCache);
+      $rootScope.closeDialog();
+      getAllWarehouses();
+    })
+    .catch(function (error) {
+      $scope.error = error.data.message;
+      $scope.addingWarehouse = false;
+      ToastsService.showToast('error', error.data.message);
+      debugger;
+    });
+  };
+
+  ///////////////////// HELPER FUNCTIONS ///////////////////////
+
+  // SHOW ADD DIALOG
+  $scope.showAddWarehouseDialog = function (ev) {
+    $scope.newWarehouse = {
+      created_by: $rootScope.authenticatedUser.id,
+    };
+    Dialog.showCustomDialog(ev, 'add_warehouse', $scope);
+  };
 
 }
 })();

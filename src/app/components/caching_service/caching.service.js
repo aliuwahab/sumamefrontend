@@ -6,12 +6,11 @@
     .factory('CachingService', CachingService);
 
   /** @ngInject */
-  function CachingService(CacheFactory, lodash) {
-
-    var _ = lodash;
+  function CachingService(CacheFactory) {
 
     var service = {
       destroy: destroy,
+      destroyOnCreateOperation: destroyOnCreateOperation,
     };
 
     return service;

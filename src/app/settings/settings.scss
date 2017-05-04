@@ -1,18 +1,36 @@
+.sm-category-pricing-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 3px;
+}
+.sm-category-pricing-container.new {
+  margin-top: 20px;
+}
+.sm-category-pricing-container.existing {
+  padding-top: 35px;
+}
 .sm-btn-add-grade {
-  height: 20px;
-  margin-top: 14px;
+  margin: 0;
+  margin-top: 14px !important;
+  height: 35px;
+  margin-left: 15px;
 }
 .sm-tab-content {
   background-color: white;
   padding-top: 20px;
 }
+.sm-grade-input {
+  width: 31%;
+}
 .sm-new-grade-input {
   padding-left: 0px;
   margin-bottom: 0px;
+  margin-top: 0px;
+  width: 31%;
 }
 .sm-btn-new-grade {
   margin: 0;
-  margin-top: 10px !important;
+  margin-top: -3px !important;
   height: 35px;
   margin-left: 15px;
 }
@@ -76,11 +94,16 @@
   text-align: center;
   margin-top: 20px;
 }
+.sm-wh-map-container {
+  margin: 10px;
+}
+.sm-wh-map {
+  height: 100px !important;
+}
 
 //  FLEX STYLES
 .flex-grid {
   display: flex;
-  // justify-content: space-between;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
@@ -88,7 +111,7 @@
   width: 19%;
 }
 .flex-grid .warehouse-col {
-  width: 30%;
+  width: 24%;
 }
 
 @media (max-width: 400px) {

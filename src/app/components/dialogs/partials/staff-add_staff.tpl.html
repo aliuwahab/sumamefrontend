@@ -10,36 +10,51 @@
       </div>
     </md-toolbar>
     <md-dialog-content class="sm-modal-content" style="width:700px;">
-      <div ng-if="loadingRequiredData" layout="row" layout-align="center center" style="min-height: 40vh;">
+      <div ng-if="addingStaff" layout="row" layout-align="center center" style="min-height: 40vh;">
         <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
       </div>
 
-      <div ng-show="!loadingRequiredData">
+      <div ng-show="!addingStaff">
+
+        <md-input-container class="sm-input-container">
+          <label>Staff Permission Level</label>
+          <md-select ng-model="newStaffMember.admin_type">
+            <md-option value="super">Administrator Access</md-option>
+            <md-option value="normal">Service Access</md-option>
+            <md-option value="staff">View Access</md-option>
+          </md-select>
+        </md-input-container>
 
         <div class="" layout="row">
           <md-input-container class="sm-input-container">
             <label>First Name</label>
-            <input type="text" ng-model="newStaffMember.request_name">
+            <input type="text" ng-model="newStaffMember.first_name">
           </md-input-container>
 
           <md-input-container class="sm-input-container">
             <label>Last Name</label>
-            <input type="text" ng-model="newStaffMember.request_name">
+            <input type="text" ng-model="newStaffMember.last_name">
           </md-input-container>
         </div>
 
         <md-input-container class="sm-input-container">
-          <label>Title</label>
-          <input type="text" ng-model="newStaffMember.request_name">
+          <label>Username</label>
+          <input type="text" ng-model="newStaffMember.username">
         </md-input-container>
 
-        <md-input-container style="width:100%;">
-          <label>Permission Level</label>
-          <md-select ng-model="newVehicle.vehicle_category">
-            <md-option>Admin Access</md-option>
-            <md-option>Manager Access</md-option>
-            <md-option>Support Staff Access</md-option>
-          </md-select>
+        <md-input-container class="sm-input-container">
+          <label>Email Address</label>
+          <input type="text" ng-model="newStaffMember.email">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Phone Number</label>
+          <input type="text" ng-model="newStaffMember.phone_number">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Title</label>
+          <input type="text" ng-model="newStaffMember.user_profile_title">
         </md-input-container>
 
         <h4 class="sm-custom-input-label">Staff Profile Image</h4>
@@ -50,18 +65,18 @@
           </div>
           <div ng-if="!uploadingImage" layout="column" layout-align="center center">
             <i class="material-icons md-24">backup</i>
-            <p ng-if="!newStaffMember.staff_image">Click here to select an image</p>
-            <p ng-if="newStaffMember.staff_image">Click here to change image</p>
+            <p ng-if="!newStaffMember.user_profile_image_url">Click here to select an image</p>
+            <p ng-if="newStaffMember.user_profile_image_url">Click here to change image</p>
 
-            <div class="" ng-if="newStaffMember.staff_image" style="max-width:700px">
-              <img style="width: 400px; height: auto;" ng-src="{{newStaffMember.staff_image}}" alt="Answer Image Preview">
+            <div class="" ng-if="newStaffMember.user_profile_image_url" style="max-width:700px">
+              <img style="width: 400px; height: auto;" ng-src="{{newStaffMember.user_profile_image_url}}" alt="Answer Image Preview">
             </div>
           </div>
         </div>
 
         <md-input-container class="md-block">
           <label>Staff Profile Summary</label>
-          <textarea ui-tinymce ng-model="newStaffMember.staff_profile" aria-label="Staff Profile" md-select-on-focus rows="3"></textarea>
+          <textarea ui-tinymce ng-model="newStaffMember.user_profile_description" aria-label="Staff Profile" md-select-on-focus rows="3"></textarea>
         </md-input-container>
       </div>
 
@@ -72,7 +87,7 @@
       <md-button ng-click="closeDialog()" class="md-raised md-warn">
         Cancel
       </md-button>
-      <md-button ng-click="addConsultant()" class="md-raised md-accent">
+      <md-button ng-click="addStaff()" class="md-raised md-accent">
         Add Staff
       </md-button>
     </md-dialog-actions>

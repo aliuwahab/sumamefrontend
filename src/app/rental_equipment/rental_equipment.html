@@ -8,14 +8,14 @@
 
     <span flex></span>
 
-    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddVehicleDialog($event)">
-      Add New Courier Vehicle
+    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddEquipmentDialog($event)">
+      Add New Equipment
     </md-button>
   </div>
 </md-toolbar>
 
 <div class="view-main-container">
-  <h3 class="view-main-title">Courier Vehicles</h3>
+  <h3 class="view-main-title">Rental Equipment</h3>
 
   <md-card>
     <md-card-content>
@@ -23,31 +23,35 @@
         <table md-table md-progress="requestsPromise">
           <thead md-head md-order="query.order" md-on-reorder="getrequests">
             <tr md-row>
-              <th md-column><span>VEHICLE NAME</span></th>
-              <th md-column>TYPE</th>
-              <th md-column>REGISTRATION</th>
-              <th md-column>DRIVER</th>
-              <th md-column>CURRENT STATUS</th>
+              <th md-column><span>EQUIPMENT NAME</span></th>
+              <th md-column>CATEGORY</th>
+              <th md-column>LOCATION</th>
+              <th md-column>RENTED OUT?</th>
               <th md-column></th>
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="vehicle in vehicles.data">
-              <td md-cell>{{vehicle.vehicle_name}}</td>
-              <td md-cell>{{vehicle.vehicle_type}}</td>
-              <td md-cell>{{vehicle.vehicle_registration_number}}</td>
-              <td md-cell>{{vehicle.vehicle_driver}}</td>
-              <td md-cell>{{vehicle.current_status}}</td>
+            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="equipment in equipment.data">
+              <td md-cell>{{equipment.equipment_name}}</td>
+              <td md-cell>{{equipment.equipment_category}}</td>
+              <td md-cell>{{equipment.equipment_location_name}}</td>
+              <td md-cell>{{equipment.equipment_hired}}</td>
               <td md-cell>
                 <button class="md-button md-raised md-primary" ng-click="viewrequestDetails($event, request)">
                   <md-tooltip md-direction="top">
-                    View details of {{request.first_name}} {{request.last_name}}
+                    View Equipment Details
                   </md-tooltip>
                   <i class="material-icons">remove_red_eye</i>
                 </button>
+                <button class="md-button md-raised md-accent" ng-click="viewrequestDetails($event, request)">
+                  <md-tooltip md-direction="top">
+                    Edit Equipment
+                  </md-tooltip>
+                  <i class="material-icons">edit</i>
+                </button>
                 <button class="md-button md-raised md-warn" ng-click="changeAccountStatus($event, request)">
                   <md-tooltip md-direction="top">
-                    Block {{request.first_name}} {{request.last_name}}
+                    Delete Equipment
                   </md-tooltip>
                   <i class="material-icons">delete_forever</i>
                 </button>

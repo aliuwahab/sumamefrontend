@@ -6,14 +6,16 @@ angular
     .controller('RequestsController', RequestsController);
 
 /** @ngInject */
-function RequestsController($scope, $rootScope, $state, $stateParams, Dialog, RequestsService,
-  NgMap) {
+function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
+  ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
+  SettingsService, EquipmentService) {
 
   activate();
 
   function activate() {
+
     $scope.filterParams = {
-      limit: 50,
+      limit: 20,
       page: 1,
     };
 
@@ -67,21 +69,25 @@ function RequestsController($scope, $rootScope, $state, $stateParams, Dialog, Re
     }
   };
 
-  /////////////////// HELPER FUNCTIONS ///////////////////////
+  ////////////////////// HELPER FUNCTIONS ///////////////////////////
+
+  $scope.openMenu = function ($mdMenu, ev) {
+    $mdMenu.open(ev);
+  };
 
   // SHOW ADD REQUEST DIALOG
   $scope.showAddRequestDialog = function (ev, requestType) {
-    $scope.newRequest = {
-
-    };
-
     Dialog.showCustomDialog(ev, requestType, $scope);
   };
 
-  $scope.openMenu = function ($mdMenu, ev) {
-    // originatorEv = ev;
-    $mdMenu.open(ev);
-  };
+  $rootScope.$on('newRequestAdded', function () {
+    ToastsService.showToast('success', 'Request successfully added');
+    $rootScope.closeDialog();
+    var requestsCache = 'requests?page=' +
+    $scope.filterParams.page + 'limit=' + $scope.filterParams.limit;
+    CachingService.destroyOnCreateOperation(requestsCache);
+    getAllRequests();
+  });
 
 }
 })();

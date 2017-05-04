@@ -31,28 +31,35 @@
       });
 
       PermPermissionStore
-      .defineManyPermissions(['seeGoTrending', 'seeLRQuestions', 'seeWASSCEQuestions'],
+      .defineManyPermissions(['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles',
+      'seeEquipment', 'seeCustomers',
+      ],
       function () {
-        return ['admin', 'consultant'].indexOf($rootScope.authenticatedUser.user_type) != -1;
+        return ['super', 'staff', 'normal'].indexOf($rootScope.authenticatedUser.admin_type) != -1;
       });
 
       PermPermissionStore
-      .defineManyPermissions(['seeConsultants', 'seeStudents', 'seeVouchers', 'seeSettings'],
+      .defineManyPermissions(['seeSettings'],
       function () {
-        return (['admin'].indexOf($rootScope.authenticatedUser.user_type) != -1);
+        return (['super'].indexOf($rootScope.authenticatedUser.admin_type) != -1);
       });
 
       PermRoleStore
       .defineManyRoles({
-        admin: ['seeGoTrending', 'seeSettings'],
-        consultant: ['seeGoTrending'],
+        super: ['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
+        'seeCustomers', 'seeSettings',
+        ],
+        normal: ['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
+        'seeCustomers',
+        ],
+        staff: ['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
+        'seeCustomers',
+        ],
       });
     }
 
-    if ($rootScope.authenticatedUser && $rootScope.authenticatedUser.user_type == 'consultant') {
-      ssSideNav.setVisible('consultants', false);
-      ssSideNav.setVisible('students', false);
-      ssSideNav.setVisible('vouchers', false);
+    if ($rootScope.authenticatedUser && ($rootScope.authenticatedUser.admin_type == 'staff' ||
+      $rootScope.authenticatedUser.admin_type == 'normal')) {
       ssSideNav.setVisible('settings', false);
     }
 

@@ -1,1 +1,67 @@
-<h1>Pricing View</h1>
+<div>
+  <md-content>
+    <md-tabs md-dynamic-height md-border-bottom>
+      <md-tab label="SERVICE CATEGORIES">
+        <md-content class="md-padding">
+          <md-table-container>
+            <table md-table md-progress="loadingCategories">
+              <thead md-head md-order="query.order" md-on-reorder="getrequests">
+                <tr md-row>
+                  <th md-column>CATEGORY ID</th>
+                  <th md-column><span>CATEGORY NAME</span></th>
+                  <th md-column>CATEGORY BASE PRICE</th>
+                  <th md-column></th>
+                </tr>
+              </thead>
+              <tbody md-body>
+                <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="category in categories">
+                  <td md-cell>{{category.id}}</td>
+                  <td md-cell>{{category.category_name}}</td>
+                  <td md-cell>GHS {{category.category_base_fare}}</td>
+
+                  <td md-cell>
+                    <button class="md-button md-raised md-primary" ng-click="viewCategoryDetails($event, category)">
+                      <md-tooltip md-direction="top">
+                        View Category Details
+                      </md-tooltip>
+                      <i class="material-icons">remove_red_eye</i>
+                    </button>
+                    <button class="md-button md-raised md-accent" ng-click="editCategory(category)">
+                      <md-tooltip md-direction="top">
+                        Edit Category
+                      </md-tooltip>
+                      <i class="material-icons">edit</i>
+                    </button>
+                    <button class="md-button md-raised md-warn" ng-click="deleteCategory($event, category)">
+                      <md-tooltip md-direction="top">
+                        Delete Category
+                      </md-tooltip>
+                      <i class="material-icons">delete_forever</i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </md-table-container>
+        </md-content>
+      </md-tab>
+      <md-tab label="ONLINE PURCHASE PRICING" md-on-select="getPercentagePricingDetails()">
+        <md-content class="md-padding" layout="row">
+          <h3>Online Pricing Percentage:</h3>
+          <md-input-container>
+            <input type="text" ng-model="percentagePrice" aria-label="percentage pricing input" ng-disabled="!editingOnlinePercentage">
+          </md-input-container>
+          <button class="md-button md-raised md-warn" ng-if="!editingOnlinePercentage" ng-click="editingOnlinePercentage = !editingOnlinePercentage">
+            <md-tooltip md-direction="top">
+              Edit Online Percentage
+            </md-tooltip>
+            <i class="material-icons">edit</i>
+          </button>
+          <button class="md-button md-raised md-warn" ng-if="editingOnlinePercentage" ng-click="updateOnlinePercentage()">
+            Save New Value
+          </button>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>

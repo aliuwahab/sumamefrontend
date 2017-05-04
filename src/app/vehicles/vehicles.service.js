@@ -13,6 +13,7 @@ function VehiclesService($http, AuthService, CacheFactory, ENV) {
 
   var service = {
     getAllVehicles: getAllVehicles,
+    addVehicle: addVehicle,
   };
 
   return service;
@@ -28,6 +29,13 @@ function VehiclesService($http, AuthService, CacheFactory, ENV) {
     return $http.get(apiBaseURL + '/vehicles?' + authDataString + '&' + queryOptions, {
       cache: CacheFactory.get(cache),
     });
+  }
+
+  function addVehicle(data) {
+    var params = $.param(data);
+    debugger;
+
+    return $http.post(apiBaseURL + '/create/vehicle?' + authDataString + '&' + params);
   }
 
 }
