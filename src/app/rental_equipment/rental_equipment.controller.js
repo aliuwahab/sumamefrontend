@@ -41,13 +41,40 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
     .then(function (response) {
       $scope.addingEquipment = false;
       ToastsService.showToast('success', 'Equipment successfully added');
-      var cache = 'equipment?page=' + $scope.filterParams.page + 'limit=' +
-      $scope.filterParams.limit;
-      CachingService.destroyOnCreateOperation(cache);
+      reloadEquipment();
       $rootScope.closeDialog();
-      getAllEquipment();
     })
     .catch(function (error) {
+      $scope.addingEquipment = false;
+      ToastsService.showToast('error', error.data.message);
+    });
+  };
+
+  $scope.updateEquipment = function () {
+
+    if ($scope.equipmentLocation && $scope.equipmentLocation.latitude) {
+      $scope.selectedEquipment.equipment_location_name = $scope.equipmentLocation.name;
+      $scope.selectedEquipment.equipment_location_latitude = $scope.equipmentLocation.latitude;
+      $scope.selectedEquipment.equipment_location_longitude = $scope.equipmentLocation.longitude;
+    }else {
+      $scope.selectedEquipment.equipment_location_name = $scope.existingEquipmentLocation.name;
+      $scope.selectedEquipment.location_latitude = $scope.existingEquipmentLocation.latitude;
+      $scope.selectedEquipment.location_longitude = $scope.existingEquipmentLocation.longitude;
+    }
+
+    $scope.selectedEquipment.equipment_id = $scope.selectedEquipment.id;
+
+    $scope.addingEquipment = true;
+    EquipmentService.updateEquipment($scope.selectedEquipment)
+    .then(function (response) {
+      debugger;
+      $scope.addingEquipment = false;
+      ToastsService.showToast('success', 'Equipment successfully updated');
+      reloadEquipment();
+      $rootScope.closeDialog();
+    })
+    .catch(function (error) {
+      debugger;
       $scope.addingEquipment = false;
       ToastsService.showToast('error', error.data.message);
     });
@@ -61,6 +88,17 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
       created_by: $rootScope.authenticatedUser.id,
     };
     Dialog.showCustomDialog(ev, 'add_equipment', $scope);
+  };
+
+  // SHOW UPDATE VEHICLE DIALOG
+  $scope.showUpdateEquipmentDialog = function (ev, equipment) {
+    $scope.selectedEquipment = equipment;
+    $scope.existingEquipmentLocation = {
+      name: equipment.equipment_location_name,
+      latitude: equipment.equipment_location_latitude,
+      longitude: equipment.equipment_location_longitude,
+    };
+    Dialog.showCustomDialog(ev, 'update_equipment', $scope);
   };
 
   // UPLOAD IMAGE
@@ -88,6 +126,13 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
       ToastsService.showToast('error', 'Please select a valid file');
     }
   };
+
+  function reloadEquipment() {
+    var cache = 'equipment?page=' + $scope.filterParams.page + 'limit=' +
+    $scope.filterParams.limit;
+    CachingService.destroyOnCreateOperation(cache);
+    getAllEquipment();
+  }
 
 }
 })();

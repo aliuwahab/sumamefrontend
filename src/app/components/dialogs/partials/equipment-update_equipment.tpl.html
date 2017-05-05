@@ -1,0 +1,80 @@
+<md-dialog aria-label="Add Consultant">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Update Rental Equipment</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="width:700px;">
+      <div ng-if="loadingRequiredData" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div ng-show="!loadingRequiredData">
+
+        <md-input-container class="sm-input-container">
+          <label>Equipment Name</label>
+          <input type="text" ng-model="selectedEquipment.equipment_name">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Equipment Category</label>
+          <md-select ng-model="selectedEquipment.equipment_category">
+            <md-option value="oil_and_gas">Oil and Gas</md-option>
+            <md-option value="construction">Construction</md-option>
+            <md-option value="mining">Mining</md-option>
+            <md-option value="domestic">Domestic Equipment</md-option>
+            <md-option value="vehicle">Vehicles</md-option>
+            <md-option value="others">Others</md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <place-autocomplete label="Equipment Location" ng-model="equipmentLocation"></place-autocomplete>
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Equipment Price/Day (This should be a number)</label>
+          <input type="text" ng-model="selectedEquipment.equipment_price_per_day">
+        </md-input-container>
+
+        <h4 class="sm-custom-input-label">Equipment Image</h4>
+        <div class="sm-dropzone" ngf-select="uploadImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+          <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
+            <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
+            <p>Uploading Image: {{uploadProgress}}% complete</p>
+          </div>
+          <div ng-if="!uploadingImage" layout="column" layout-align="center center">
+            <i class="material-icons md-24">backup</i>
+            <p ng-if="!selectedEquipment.equipment_image">Click here to select an image</p>
+            <p ng-if="selectedEquipment.equipment_image">Click here to change image</p>
+
+            <div class="" ng-if="selectedEquipment.equipment_image" style="max-width:700px">
+              <img style="width: 400px; height: auto;" ng-src="{{selectedEquipment.equipment_image}}" alt="Equipment Image Preview">
+            </div>
+          </div>
+        </div>
+
+        <md-input-container class="md-block">
+          <label>Equipment Description</label>
+          <textarea ui-tinymce ng-model="selectedEquipment.equipment_description" aria-label="equipment description" md-select-on-focus rows="3"></textarea>
+        </md-input-container>
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="updateEquipment()" class="md-raised md-accent">
+        Update Equipment
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

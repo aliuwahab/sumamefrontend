@@ -28,6 +28,7 @@
 
       // EQUIPMENT DIALOGS
       add_equipment: 'app/components/dialogs/partials/equipment-add_equipment.tpl.html',
+      update_equipment: 'app/components/dialogs/partials/equipment-update_equipment.tpl.html',
 
       // WAREHOUSE DIALOGS
       add_warehouse: 'app/components/dialogs/partials/warehouses-add_warehouse.tpl.html',
