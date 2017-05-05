@@ -69,6 +69,30 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     }
   };
 
+  $scope.cancelRequest = function (request) {
+    Dialog.confirmAction('Do you want to cancel this request?')
+    .then(function () {
+      $scope.processInProgress = true;
+      var data = {
+        admin_id: $rootScope.authenticatedUser.id,
+        request_id: request.id,
+      };
+
+      RequestsService.cancelRequest(data)
+      .then(function (response) {
+        ToastsService.showToast('success', 'Request has been successfully cancelled');
+        $scope.processInProgress = false;
+        reloadRequests();
+      })
+      .catch(function (error) {
+        $scope.processInProgress = false;
+        debugger;
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
+  };
+
   ////////////////////// HELPER FUNCTIONS ///////////////////////////
 
   $scope.openMenu = function ($mdMenu, ev) {
@@ -83,11 +107,15 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
   $rootScope.$on('newRequestAdded', function () {
     ToastsService.showToast('success', 'Request successfully added');
     $rootScope.closeDialog();
+    reloadRequests();
+  });
+
+  function reloadRequests() {
     var requestsCache = 'requests?page=' +
     $scope.filterParams.page + 'limit=' + $scope.filterParams.limit;
     CachingService.destroyOnCreateOperation(requestsCache);
     getAllRequests();
-  });
+  }
 
 }
 })();
