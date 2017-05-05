@@ -29,6 +29,7 @@
 
       // WAREHOUSE DIALOGS
       add_warehouse: 'app/components/dialogs/partials/warehouses-add_warehouse.tpl.html',
+      update_warehouse: 'app/components/dialogs/partials/warehouses-update_warehouse.tpl.html',
 
       // STAFF DIALOGS
       add_staff: 'app/components/dialogs/partials/staff-add_staff.tpl.html',

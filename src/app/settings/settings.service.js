@@ -15,6 +15,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
   var service = {
     getAllWarehouses: getAllWarehouses,
     addWarehouse: addWarehouse,
+    updateWarehouse: updateWarehouse,
     getAllStaff: getAllStaff,
     addStaff: addStaff,
     getPricingDetails: getPricingDetails,
@@ -64,6 +65,19 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     return $http.post(apiBaseURL + '/create/sumame/address?' + authDataString + '&' + params);
   }
 
+  function updateWarehouse(data) {
+    var cleanedData = _.omit(data, [
+      'created_at',
+      'updated_at',
+      '$$hashKey',
+    ]);
+    debugger;
+    var params = $.param(cleanedData);
+    debugger;
+
+    return $http.post(apiBaseURL + '/update/sumame/address?' + authDataString + '&' + params);
+  }
+
   /////// PRICING FUNCTIONS ////////////
   function getPricingDetails() {
 
@@ -98,11 +112,6 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
   }
 
   function updateOnlinePurchasePricePercentage(data) {
-    // var cleanedData = _.omit(question, [
-    //   'created_at',
-    //   'created_by',
-    //   'updated_at',
-    // ]);
     var params = $.param(data);
     debugger;
 
