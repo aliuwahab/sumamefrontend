@@ -23,6 +23,7 @@
 
       // VEHICLE DIALOGS
       add_vehicle: 'app/components/dialogs/partials/vehicles-add_vehicle.tpl.html',
+      update_vehicle: 'app/components/dialogs/partials/vehicles-update_vehicle.tpl.html',
 
       // EQUIPMENT DIALOGS
       add_equipment: 'app/components/dialogs/partials/equipment-add_equipment.tpl.html',
