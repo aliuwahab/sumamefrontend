@@ -6,7 +6,8 @@ angular
     .controller('DriversController', DriversController);
 
 /** @ngInject */
-function DriversController($scope, $rootScope, $state, Dialog, DriversService, ToastsService) {
+function DriversController($scope, $rootScope, $state, Dialog, DriversService, ToastsService,
+CachingService) {
 
   activate();
 
@@ -16,10 +17,10 @@ function DriversController($scope, $rootScope, $state, Dialog, DriversService, T
       page: 1,
     };
 
-    getAllRequests();
+    getAllDrivers();
   }
 
-  function getAllRequests() {
+  function getAllDrivers() {
     $scope.requestsPromise = DriversService.getAllDrivers($scope.filterParams)
     .then(function (response) {
       $scope.drivers = response.data.data.all_drivers;
@@ -30,7 +31,7 @@ function DriversController($scope, $rootScope, $state, Dialog, DriversService, T
     });
   }
 
-  $scope.approveDisapproveDriver = function (driver) {
+  $scope.approveUnapproveDriver = function (driver, action) {
     var title;
 
     if (!driver.driver_approved) {
@@ -43,12 +44,12 @@ function DriversController($scope, $rootScope, $state, Dialog, DriversService, T
     .then(function () {
       $scope.activateTopProgress = true;
 
-      DriversService.approveDisapproveDriver(driver.id)
+      DriversService.approveUnapproveDriver(driver.id, action)
       .then(function (response) {
         ToastsService.showToast('success', driver.first_name + ' '
-        + driver.last_name + ' is now approved!');
+        + driver.last_name + ' is now ' + action + 'd!');
         $scope.activateTopProgress = false;
-        getAllRequests();
+        reloadDrivers();
       })
       .catch(function (error) {
         $scope.activateTopProgress = false;
@@ -63,12 +64,19 @@ function DriversController($scope, $rootScope, $state, Dialog, DriversService, T
 
   // SHOW ADD DRIVER DIALOG
   $scope.showAddDriverDialog = function (ev) {
-    $scope.newRequest = {
-
+    $scope.newDriver = {
+      created_by: $rootScope.authenticatedUser.id,
     };
 
     Dialog.showCustomDialog(ev, 'add_driver', $scope);
   };
+
+  function reloadDrivers() {
+    var cache = 'drivers?page=' + $scope.filterParams.page +
+    'limit=' + $scope.filterParams.limit;
+    CachingService.destroyOnCreateOperation(cache);
+    getAllDrivers();
+  }
 
 }
 })();
