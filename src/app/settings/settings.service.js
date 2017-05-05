@@ -71,9 +71,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
       'updated_at',
       '$$hashKey',
     ]);
-    debugger;
     var params = $.param(cleanedData);
-    debugger;
 
     return $http.post(apiBaseURL + '/update/sumame/address?' + authDataString + '&' + params);
   }

@@ -99,9 +99,9 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
   };
 
   function updateAfterWarehouseOperation() {
-    var requestsCache = 'warehouses?page=' +
+    var cache = 'warehouses?page=' +
     $scope.filterParams.page + 'limit=' + $scope.filterParams.limit;
-    CachingService.destroyOnCreateOperation(requestsCache);
+    CachingService.destroyOnCreateOperation(cache);
     $rootScope.closeDialog();
     getAllWarehouses();
   }
