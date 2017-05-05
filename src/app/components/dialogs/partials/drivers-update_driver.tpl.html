@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Add New Driver</h2>
+        <h2>Update Driver</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="closeDialog()">
           <i class="material-icons">close</i>
@@ -18,33 +18,33 @@
         <div class="" layout="row">
           <md-input-container class="sm-input-container">
             <label>First Name</label>
-            <input type="text" ng-model="newDriver.first_name">
+            <input type="text" ng-model="selectedDriver.first_name">
           </md-input-container>
 
           <md-input-container class="sm-input-container">
             <label>Last Name</label>
-            <input type="text" ng-model="newDriver.last_name">
+            <input type="text" ng-model="selectedDriver.last_name">
           </md-input-container>
         </div>
 
         <md-input-container class="sm-input-container">
           <label>Username</label>
-          <input type="text" ng-model="newDriver.username">
+          <input type="text" ng-model="selectedDriver.username">
         </md-input-container>
 
         <md-input-container class="sm-input-container">
           <label>Phone Number</label>
-          <input type="text" ng-model="newDriver.phone_number">
+          <input type="text" ng-model="selectedDriver.phone_number">
         </md-input-container>
 
         <md-input-container class="sm-input-container">
           <label>Password</label>
-          <input type="text" ng-model="newDriver.password">
+          <input type="text" ng-model="selectedDriver.password">
         </md-input-container>
 
         <!-- <md-input-container class="sm-input-container">
           <label>Assign Vehicle</label>
-          <input type="text" ng-model="newDriver.vehicle_registration_number">
+          <input type="text" ng-model="selectedDriver.vehicle_registration_number">
         </md-input-container> -->
 
         <h4 class="sm-custom-input-label">Driver Image</h4>
@@ -55,18 +55,18 @@
           </div>
           <div ng-if="!uploadingImage" layout="column" layout-align="center center">
             <i class="material-icons md-24">backup</i>
-            <p ng-if="!newDriver.user_profile_image_url">Click here to select an image</p>
-            <p ng-if="newDriver.user_profile_image_url">Click here to change image</p>
+            <p ng-if="!selectedDriver.user_profile_image_url">Click here to select an image</p>
+            <p ng-if="selectedDriver.user_profile_image_url">Click here to change image</p>
 
-            <div class="" ng-if="newDriver.user_profile_image_url" style="max-width:700px">
-              <img style="width: 400px; height: auto;" ng-src="{{newDriver.user_profile_image_url}}" alt="Answer Image Preview">
+            <div class="" ng-if="selectedDriver.user_profile_image_url" style="max-width:700px">
+              <img style="width: 400px; height: auto;" ng-src="{{selectedDriver.user_profile_image_url}}" alt="Answer Image Preview">
             </div>
           </div>
         </div>
 
         <md-input-container class="md-block">
           <label>Driver Profile</label>
-          <textarea ui-tinymce ng-model="newDriver.user_profile_description" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
+          <textarea ui-tinymce ng-model="selectedDriver.user_profile_description" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
         </md-input-container>
       </div>
 
@@ -77,8 +77,8 @@
       <md-button ng-click="closeDialog()" class="md-raised md-warn">
         Cancel
       </md-button>
-      <md-button ng-click="addDriver()" class="md-raised md-accent">
-        Add Driver
+      <md-button ng-click="updateDriver()" class="md-raised md-accent">
+        Update Driver
       </md-button>
     </md-dialog-actions>
   </form>

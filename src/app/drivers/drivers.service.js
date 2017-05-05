@@ -13,6 +13,8 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
 
   var service = {
     getAllDrivers: getAllDrivers,
+    addDriver: addDriver,
+    updateDriver: updateDriver,
     approveUnapproveDriver: approveUnapproveDriver,
   };
 
@@ -29,6 +31,23 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
     return $http.get(apiBaseURL + '/all/drivers?' + authDataString + '&' + queryOptions, {
       cache: CacheFactory.get(cache),
     });
+  }
+
+  function addDriver(data) {
+    var params = $.param(data);
+    debugger;
+    return $http.post(apiBaseURL + '/create/driver?' + authDataString + '&' + params);
+  }
+
+  function updateDriver(data) {
+    var cleanedData = _.omit(data, [
+      'created_at',
+      'updated_at',
+      '$$hashKey',
+    ]);
+    var params = $.param(cleanedData);
+
+    return $http.post(apiBaseURL + '/update/driver?' + authDataString + '&' + params);
   }
 
   function approveUnapproveDriver(id, action) {

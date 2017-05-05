@@ -20,6 +20,7 @@
 
       // DRIVER DIALOGS
       add_driver: 'app/components/dialogs/partials/drivers-add_driver.tpl.html',
+      update_driver: 'app/components/dialogs/partials/drivers-update_driver.tpl.html',
 
       // VEHICLE DIALOGS
       add_vehicle: 'app/components/dialogs/partials/vehicles-add_vehicle.tpl.html',
