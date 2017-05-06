@@ -13,7 +13,9 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
 
   var service = {
     getAllDrivers: getAllDrivers,
-    approveDisapproveDriver: approveDisapproveDriver,
+    addDriver: addDriver,
+    updateDriver: updateDriver,
+    approveUnapproveDriver: approveUnapproveDriver,
   };
 
   return service;
@@ -31,8 +33,25 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
     });
   }
 
-  function approveDisapproveDriver(id) {
-    return $http.post(apiBaseURL + '/approve/driver?driver_id=' + id + '&' + authDataString);
+  function addDriver(data) {
+    var params = $.param(data);
+    debugger;
+    return $http.post(apiBaseURL + '/create/driver?' + authDataString + '&' + params);
+  }
+
+  function updateDriver(data) {
+    var cleanedData = _.omit(data, [
+      'created_at',
+      'updated_at',
+      '$$hashKey',
+    ]);
+    var params = $.param(cleanedData);
+
+    return $http.post(apiBaseURL + '/update/driver?' + authDataString + '&' + params);
+  }
+
+  function approveUnapproveDriver(id, action) {
+    return $http.post(apiBaseURL + '/' + action + '/driver?driver_id=' + id + '&' + authDataString);
   }
 
 }

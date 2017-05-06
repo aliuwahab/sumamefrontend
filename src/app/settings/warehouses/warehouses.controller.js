@@ -35,25 +35,46 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
   }
 
   $scope.addWarehouse = function () {
-
     $scope.newWarehouse.location_latitude = $scope.warehouseLocation.latitude;
     $scope.newWarehouse.location_longitude = $scope.warehouseLocation.longitude;
-
     $scope.addingWarehouse = true;
+
     SettingsService.addWarehouse($scope.newWarehouse)
     .then(function (response) {
       $scope.addingWarehouse = false;
       ToastsService.showToast('success', 'Warehouse successfully added');
-      var requestsCache = 'warehouses?page=' + $scope.filterParams.page + 'limit=' + $scope.filterParams.limit;
-      CachingService.destroyOnCreateOperation(requestsCache);
-      $rootScope.closeDialog();
-      getAllWarehouses();
+      updateAfterWarehouseOperation();
     })
     .catch(function (error) {
-      $scope.error = error.data.message;
       $scope.addingWarehouse = false;
       ToastsService.showToast('error', error.data.message);
       debugger;
+    });
+  };
+
+  $scope.updateWarehouse = function () {
+
+    if ($scope.warehouseLocation && $scope.warehouseLocation.latitude) {
+      $scope.selectedWarehouse.location_latitude = $scope.warehouseLocation.latitude;
+      $scope.selectedWarehouse.location_longitude = $scope.warehouseLocation.longitude;
+    }else {
+      $scope.selectedWarehouse.location_latitude = $scope.existingWarehouseLocation.latitude;
+      $scope.selectedWarehouse.location_longitude = $scope.existingWarehouseLocation.longitude;
+    }
+
+    $scope.selectedWarehouse.created_by = $scope.selectedWarehouse.created_by.id;
+    $scope.selectedWarehouse.address_id = $scope.selectedWarehouse.id;
+    $scope.addingWarehouse = true;
+
+    SettingsService.updateWarehouse($scope.selectedWarehouse)
+    .then(function (response) {
+      $scope.addingWarehouse = false;
+      ToastsService.showToast('success', 'Warehouse successfully updated');
+      updateAfterWarehouseOperation();
+    })
+    .catch(function (error) {
+      $scope.addingWarehouse = false;
+      ToastsService.showToast('error', error.data.message);
     });
   };
 
@@ -66,6 +87,24 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
     };
     Dialog.showCustomDialog(ev, 'add_warehouse', $scope);
   };
+
+  $scope.showUpdateWarehouseDialog = function (ev, warehouse) {
+    $scope.selectedWarehouse = angular.copy(warehouse);
+    $scope.existingWarehouseLocation = {
+      latitude: warehouse.location_latitude,
+      longitude: warehouse.location_longitude,
+    };
+
+    Dialog.showCustomDialog(ev, 'update_warehouse', $scope);
+  };
+
+  function updateAfterWarehouseOperation() {
+    var cache = 'warehouses?page=' +
+    $scope.filterParams.page + 'limit=' + $scope.filterParams.limit;
+    CachingService.destroyOnCreateOperation(cache);
+    $rootScope.closeDialog();
+    getAllWarehouses();
+  }
 
 }
 })();

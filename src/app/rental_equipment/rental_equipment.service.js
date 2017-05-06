@@ -14,6 +14,7 @@ function EquipmentService($http, AuthService, CacheFactory, ENV) {
   var service = {
     getAllEquipment: getAllEquipment,
     addEquipment: addEquipment,
+    updateEquipment: updateEquipment,
   };
 
   return service;
@@ -35,6 +36,18 @@ function EquipmentService($http, AuthService, CacheFactory, ENV) {
     var params = $.param(data);
 
     return $http.post(apiBaseURL + '/add/rental/equipment?' + authDataString + '&' + params);
+  }
+
+  function updateEquipment(data) {
+    var cleanedData = _.omit(data, [
+      'created_at',
+      'updated_at',
+      '$$hashKey',
+    ]);
+    debugger;
+    var params = $.param(cleanedData);
+
+    return $http.post(apiBaseURL + '/update/rental/equipment?' + authDataString + '&' + params);
   }
 }
 })();

@@ -61,6 +61,10 @@
   </div>
 </md-toolbar>
 
+<div ng-if="processInProgress" class="top-progress-bar" layout="row">
+  <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+</div>
+
 <div class="view-main-container">
   <h3 class="view-main-title">{{viewName || 'Requests'}}</h3>
 
@@ -70,10 +74,10 @@
         <table md-table md-progress="requestsPromise">
           <thead md-head md-order="query.order" md-on-reorder="getrequests">
             <tr md-row>
-              <th md-column><span>REQUEST ID</span></th>
+              <!-- <th md-column><span>REQUEST ID</span></th> -->
               <th md-column><span>TIME REQUESTED</span></th>
               <th md-column><span>CUSTOMER NAME</span></th>
-              <th md-column>REQUEST TYPE</th>
+              <!-- <th md-column>REQUEST TYPE</th> -->
               <th md-column>DELIVER TO</th>
               <th md-column>REQUEST STATUS</th>
               <th md-column></th>
@@ -81,15 +85,18 @@
           </thead>
           <tbody md-body>
             <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in requests.data">
-              <td md-cell>{{request.id}}</td>
+              <!-- <td md-cell>{{request.id}}</td> -->
               <td md-cell>{{request.created_at | date:'medium'}}</td>
               <td md-cell>{{request.requester.first_name}} {{request.requester.last_name}}</td>
-              <td md-cell>{{request.request_type}}</td>
+              <!-- <td md-cell>{{request.request_type}}</td> -->
               <td md-cell>{{request.delivery_location_name}}</td>
               <td md-cell>{{request.request_status}}</td>
               <td md-cell>
                 <md-button class="md-raised md-primary" href="#request/{{request.id}}" aria-label="description" md-ripple-size="full">
                   <i class="material-icons">remove_red_eye</i>
+                </md-button>
+                <md-button class="md-raised md-warn" aria-label="description" md-ripple-size="full" ng-click="cancelRequest(request)">
+                  <i class="material-icons">cancel</i>
                 </md-button>
               </td>
             </tr>

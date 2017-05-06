@@ -1,3 +1,7 @@
+<div ng-if="processInProgress" class="top-progress-bar" layout="row">
+  <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+</div>
+
 <div>
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom>
@@ -26,13 +30,13 @@
                       </md-tooltip>
                       <i class="material-icons">remove_red_eye</i>
                     </button>
-                    <button class="md-button md-raised md-accent" ng-click="editCategory(category)">
+                    <button class="md-button md-raised md-accent" ng-click="showUpateCategoryDialog($event, category)">
                       <md-tooltip md-direction="top">
                         Edit Category
                       </md-tooltip>
                       <i class="material-icons">edit</i>
                     </button>
-                    <button class="md-button md-raised md-warn" ng-click="deleteCategory($event, category)">
+                    <button class="md-button md-raised md-warn" ng-click="deletePriceCategory($event, category)">
                       <md-tooltip md-direction="top">
                         Delete Category
                       </md-tooltip>
@@ -46,19 +50,17 @@
         </md-content>
       </md-tab>
       <md-tab label="ONLINE PURCHASE PRICING" md-on-select="getPercentagePricingDetails()">
-        <md-content class="md-padding" layout="row">
-          <h3>Online Pricing Percentage:</h3>
-          <md-input-container>
-            <input type="text" ng-model="percentagePrice" aria-label="percentage pricing input" ng-disabled="!editingOnlinePercentage">
-          </md-input-container>
-          <button class="md-button md-raised md-warn" ng-if="!editingOnlinePercentage" ng-click="editingOnlinePercentage = !editingOnlinePercentage">
-            <md-tooltip md-direction="top">
-              Edit Online Percentage
-            </md-tooltip>
-            <i class="material-icons">edit</i>
-          </button>
-          <button class="md-button md-raised md-warn" ng-if="editingOnlinePercentage" ng-click="updateOnlinePercentage()">
-            Save New Value
+        <md-content class="md-padding">
+          <h3>What percentage of online purchases is fare?</h3>
+          <div class="" layout="row">
+            <md-input-container class="sm-input-container-percentage" flex="5">
+              <input type="text" class="sm-input-percentage" ng-model="pricingDetails.price_percentage_per_value" ng-change="percentageEdited = 'true'" aria-label="percentage pricing input">
+            </md-input-container>
+            <div class="sm-percentage-percent">%</div>
+          </div>
+
+          <button class="md-button md-raised md-accent sm-btn-percentage" ng-disabled="!percentageEdited" ng-click="updateOnlinePurchasePricePercentage()">
+            Save New Percentage
           </button>
         </md-content>
       </md-tab>

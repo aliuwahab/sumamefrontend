@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Add New Courier Vehicle</h2>
+        <h2>Update Courier Vehicle</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="closeDialog()">
           <i class="material-icons">close</i>
@@ -18,19 +18,19 @@
 
         <md-input-container class="sm-input-container">
           <label>Vehicle Name</label>
-          <input type="text" ng-model="newVehicle.vehicle_name">
+          <input type="text" ng-model="selectedVehicle.vehicle_name">
         </md-input-container>
 
         <md-input-container style="width:100%;">
           <label>Vehicle Service Category</label>
-          <md-select ng-model="newVehicle.vehicle_category_id">
+          <md-select ng-model="selectedVehicle.vehicle_category_id">
             <md-option ng-value="priceCategory.id" ng-repeat="priceCategory in priceCategories">{{priceCategory.category_name}}</md-option>
           </md-select>
         </md-input-container>
 
         <md-input-container class="sm-input-container">
           <label>Vehicle Registration Number</label>
-          <input type="text" ng-model="newVehicle.vehicle_registration_number">
+          <input type="text" ng-model="selectedVehicle.vehicle_registration_number">
         </md-input-container>
 
         <h4 class="sm-custom-input-label">Vehicle Image</h4>
@@ -41,18 +41,18 @@
           </div>
           <div ng-if="!uploadingImage" layout="column" layout-align="center center">
             <i class="material-icons md-24">backup</i>
-            <p ng-if="!newVehicle.vehicle_image">Click here to select an image</p>
-            <p ng-if="newVehicle.vehicle_image">Click here to change image</p>
+            <p ng-if="!selectedVehicle.vehicle_image">Click here to select an image</p>
+            <p ng-if="selectedVehicle.vehicle_image">Click here to change image</p>
 
-            <div class="" ng-if="newVehicle.vehicle_image" style="max-width:700px">
-              <img style="width: 400px; height: auto;" ng-src="{{newVehicle.vehicle_image}}" alt="Answer Image Preview">
+            <div class="" ng-if="selectedVehicle.vehicle_image" style="max-width:700px">
+              <img style="width: 400px; height: auto;" ng-src="{{selectedVehicle.vehicle_image}}" alt="Answer Image Preview">
             </div>
           </div>
         </div>
 
         <md-input-container class="md-block">
           <label>Vehicle Description</label>
-          <textarea ui-tinymce ng-model="newVehicle.vehicle_description" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
+          <textarea ui-tinymce ng-model="selectedVehicle.vehicle_description" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
         </md-input-container>
       </div>
 
@@ -63,8 +63,8 @@
       <md-button ng-click="closeDialog()" class="md-raised md-warn">
         Cancel
       </md-button>
-      <md-button ng-click="addVehicle()" class="md-raised md-accent">
-        Add Vehicle
+      <md-button ng-click="updateVehicle()" class="md-raised md-accent">
+        Update Vehicle
       </md-button>
     </md-dialog-actions>
   </form>

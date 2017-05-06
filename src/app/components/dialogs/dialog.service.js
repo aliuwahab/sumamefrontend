@@ -20,21 +20,26 @@
 
       // DRIVER DIALOGS
       add_driver: 'app/components/dialogs/partials/drivers-add_driver.tpl.html',
+      update_driver: 'app/components/dialogs/partials/drivers-update_driver.tpl.html',
 
       // VEHICLE DIALOGS
       add_vehicle: 'app/components/dialogs/partials/vehicles-add_vehicle.tpl.html',
+      update_vehicle: 'app/components/dialogs/partials/vehicles-update_vehicle.tpl.html',
 
       // EQUIPMENT DIALOGS
       add_equipment: 'app/components/dialogs/partials/equipment-add_equipment.tpl.html',
+      update_equipment: 'app/components/dialogs/partials/equipment-update_equipment.tpl.html',
 
       // WAREHOUSE DIALOGS
       add_warehouse: 'app/components/dialogs/partials/warehouses-add_warehouse.tpl.html',
+      update_warehouse: 'app/components/dialogs/partials/warehouses-update_warehouse.tpl.html',
 
       // STAFF DIALOGS
       add_staff: 'app/components/dialogs/partials/staff-add_staff.tpl.html',
 
       // PRICING DIALOGS
       add_service_category: 'app/components/dialogs/partials/pricing-add_service_category.tpl.html',
+      update_service_category: 'app/components/dialogs/partials/pricing-update_service_category.tpl.html',
 
       // SMS
       send_message: 'app/components/dialogs/partials/request-send-sms.tpl.html',
