@@ -1,3 +1,7 @@
+<div ng-if="processInProgress" class="top-progress-bar" layout="row">
+  <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+</div>
+
 <div>
   <md-content>
     <md-tabs md-dynamic-height md-border-bottom>
@@ -26,13 +30,13 @@
                       </md-tooltip>
                       <i class="material-icons">remove_red_eye</i>
                     </button>
-                    <button class="md-button md-raised md-accent" ng-click="editCategory(category)">
+                    <button class="md-button md-raised md-accent" ng-click="showUpateCategoryDialog($event, category)">
                       <md-tooltip md-direction="top">
                         Edit Category
                       </md-tooltip>
                       <i class="material-icons">edit</i>
                     </button>
-                    <button class="md-button md-raised md-warn" ng-click="deleteCategory($event, category)">
+                    <button class="md-button md-raised md-warn" ng-click="deletePriceCategory($event, category)">
                       <md-tooltip md-direction="top">
                         Delete Category
                       </md-tooltip>

@@ -1,0 +1,114 @@
+<md-dialog aria-label="Add New Category">
+  <form ng-controller="PricingController">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Update Service Category</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="width:700px;">
+      <div ng-if="addingPriceCategory" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div ng-show="!addingPriceCategory">
+
+        <md-input-container class="sm-input-container">
+          <label>Category Name</label>
+          <input type="text" ng-model="selectedCategory.category_name">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Category Base Fare (This should be a number)</label>
+          <input type="text" ng-model="selectedCategory.category_base_fare">
+        </md-input-container>
+
+        <md-input-container class="md-block">
+          <label>Category Description</label>
+          <textarea ui-tinymce ng-model="selectedCategory.category_description" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
+        </md-input-container>
+
+        <h4 class="sm-custom-input-label">Category Image</h4>
+        <div class="sm-dropzone" ngf-select="uploadImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+          <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
+            <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
+            <p>Uploading Image: {{uploadProgress}}% complete</p>
+          </div>
+          <div ng-if="!uploadingImage" layout="column" layout-align="center center">
+            <i class="material-icons md-24">backup</i>
+            <p ng-if="!selectedCategory.category_image">Click here to select an image</p>
+            <p ng-if="selectedCategory.category_image">Click here to change image</p>
+
+            <div class="" ng-if="selectedCategory.category_image" style="max-width:700px">
+              <img style="width: 400px; height: auto;" ng-src="{{selectedCategory.category_image}}" alt="Answer Image Preview">
+            </div>
+          </div>
+        </div>
+
+        <h4 class="sm-custom-input-label">Category Pricing</h4>
+        <div class="">
+
+          <div class="sm-category-pricing-container existing" ng-if="categoryPricing.length > 0">
+            <div layout="row" ng-repeat="price in categoryPricing">
+              <md-input-container class="sm-grade-input">
+                <label>Lower Bound (km)</label>
+                <input type="text" ng-model="price.lower_bound">
+              </md-input-container>
+
+              <md-input-container class="sm-grade-input">
+                <label>Upper Bound (km)</label>
+                <input type="text" ng-model="price.upper_bound">
+              </md-input-container class="sm-grade-input">
+
+              <md-input-container class="sm-grade-input">
+                <label>Far (GHS)</label>
+                <input type="text" ng-model="price.fare">
+              </md-input-container>
+
+              <md-button class="md-raised md-warn sm-btn-add-grade" aria-label="delete price point" md-no-ink="false" md-ripple-size="full" ng-click="deletePricePoint($index)"><i class="material-icons">delete_forever</i></md-button>
+            </div>
+          </div>
+
+          <div layout="column" class="sm-category-pricing-container new">
+            <h4>Add New Price Point:</h4>
+            <form name="newPricePoint" class="sm-signup-form" novalidate>
+              <div layout="row">
+                <md-input-container class="sm-new-grade-input">
+                  <label>Lower Bound (km)</label>
+                  <input type="text" ng-model="newPricePoint.lower_bound">
+                </md-input-container>
+
+                <md-input-container class="sm-new-grade-input">
+                  <label>Upper Bound (km)</label>
+                  <input type="text" ng-model="newPricePoint.upper_bound">
+                </md-input-container>
+
+                <md-input-container class="sm-new-grade-input">
+                  <label>Amount/Kilometer (GHS)</label>
+                  <input type="text" ng-model="newPricePoint.fare">
+                </md-input-container>
+
+                <md-button class="md-raised md-accent sm-btn-new-grade" aria-label="add price point" md-no-ink="false" md-ripple-size="full" ng-click="addPricePoint()"><i class="material-icons">add</i></md-button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="updatePriceCategory()" class="md-raised md-accent">
+        Update Category
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

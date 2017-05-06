@@ -39,6 +39,7 @@
 
       // PRICING DIALOGS
       add_service_category: 'app/components/dialogs/partials/pricing-add_service_category.tpl.html',
+      update_service_category: 'app/components/dialogs/partials/pricing-update_service_category.tpl.html',
 
       // SMS
       send_message: 'app/components/dialogs/partials/request-send-sms.tpl.html',

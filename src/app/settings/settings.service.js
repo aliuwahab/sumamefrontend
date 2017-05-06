@@ -21,6 +21,8 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     getPricingDetails: getPricingDetails,
     getAllVehicleCategories: getAllVehicleCategories,
     addPriceCategory: addPriceCategory,
+    updatePriceCategory: updatePriceCategory,
+    deletePriceCategory: deletePriceCategory,
     updateOnlinePurchasePricePercentage: updateOnlinePurchasePricePercentage,
   };
 
@@ -92,7 +94,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
 
   function getAllVehicleCategories() {
 
-    var cache = 'vehicleCategories';
+    var cache = 'priceCategories';
 
     if (!CacheFactory.get(cache)) {
       CacheFactory(cache);
@@ -107,6 +109,23 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     var params = $.param(data);
 
     return $http.post(apiBaseURL + '/create/vehicle/category?' + authDataString + '&' + params);
+  }
+
+  function updatePriceCategory(data) {
+    var cleanedData = _.omit(data, [
+      'created_at',
+      'updated_at',
+      '$$hashKey',
+    ]);
+    var params = $.param(cleanedData);
+    debugger;
+    return $http.post(apiBaseURL + '/update/vehicles/categories?' + authDataString + '&' + params);
+  }
+
+  function deletePriceCategory(data) {
+    var params = $.param(data);
+    debugger;
+    return $http.post(apiBaseURL + '/delete/vehicle/category?' + authDataString + '&' + params);
   }
 
   function updateOnlinePurchasePricePercentage(data) {

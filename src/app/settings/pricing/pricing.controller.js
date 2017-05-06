@@ -96,6 +96,7 @@ SettingsService, ToastsService, ValidationService, UploadService) {
       $scope.addingPriceCategory = false;
       ToastsService.showToast('success', 'New category successfully created!');
       $rootScope.closeDialog();
+      reloadPriceCategories();
     })
     .catch(function (error) {
       $scope.addingPriceCategory = false;
@@ -105,7 +106,56 @@ SettingsService, ToastsService, ValidationService, UploadService) {
     });
   };
 
-  // SHOW ADD DIALOG
+  $scope.updatePriceCategory = function () {
+    var stringifiedCategoryPricing = JSON.stringify($scope.categoryPricing);
+    $scope.selectedCategory.category_pricing = stringifiedCategoryPricing;
+    $scope.addingPriceCategory = true;
+    debugger;
+    SettingsService.updatePriceCategory($scope.selectedCategory)
+    .then(function (response) {
+      debugger;
+      $scope.addingPriceCategory = false;
+      ToastsService.showToast('success', 'Category successfully updated!');
+      $rootScope.closeDialog();
+      reloadPriceCategories();
+    })
+    .catch(function (error) {
+      debugger;
+      $scope.addingPriceCategory = false;
+      ToastsService.showToast('error', error.data.message);
+      $rootScope.closeDialog();
+      debugger;
+    });
+  };
+
+  $scope.deletePriceCategory = function (ev, category) {
+    Dialog.confirmAction('Do you want to delete this category?')
+    .then(function () {
+      $scope.processInProgress = true;
+
+      var data = {
+        category_id: category.id,
+      };
+
+      SettingsService.deletePriceCategory(data)
+      .then(function (response) {
+        debugger;
+        ToastsService.showToast('success', 'Price category has been successfully deleted!');
+        $scope.processInProgress = false;
+        reloadPriceCategories();
+        $rootScope.closeDialog();
+      })
+      .catch(function (error) {
+        debugger;
+        $scope.processInProgress = false;
+        ToastsService.showToast('error', error.data.message);
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
+  };
+
+  // SHOW ADD CATEGORY DIALOG
   $scope.showAddServiceCategoryDialog = function (ev) {
     $scope.newCategory = {
       created_by: $rootScope.authenticatedUser.id,
@@ -114,6 +164,13 @@ SettingsService, ToastsService, ValidationService, UploadService) {
     $scope.pricingPristine = true;
     $scope.newPricePoint = {};
     Dialog.showCustomDialog(ev, 'add_service_category', $scope);
+  };
+
+  // SHOW UPDATE CATEGORY DIALOG
+  $scope.showUpateCategoryDialog = function (ev, category) {
+    $scope.selectedCategory = category;
+    $scope.categoryPricing = JSON.parse(category.category_pricing);
+    Dialog.showCustomDialog(ev, 'update_service_category', $scope);
   };
 
   // UPLOAD IMAGE
@@ -141,6 +198,12 @@ SettingsService, ToastsService, ValidationService, UploadService) {
       ToastsService.showToast('error', 'Please select a valid file');
     }
   };
+
+  function reloadPriceCategories() {
+    var cache = 'priceCategories';
+    CachingService.destroyOnCreateOperation(cache);
+    getAllVehicleCategories();
+  }
 
 }
 })();
