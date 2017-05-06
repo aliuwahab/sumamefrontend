@@ -163,6 +163,23 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.invoices', {
+      url: '/invoices',
+      templateUrl: 'app/invoices/invoices.html',
+      controller: 'InvoicesController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal'] || false;
+          },
+
+          redirectTo: 'auth.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
     .state('app.settings', {
       url: '/settings',
       templateUrl: 'app/settings/settings.html',

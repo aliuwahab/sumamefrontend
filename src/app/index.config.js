@@ -196,6 +196,13 @@
         icon: 'supervisor_account',
       },
       {
+        id: 'invoices',
+        name: 'Invoices',
+        state: 'app.invoices',
+        type: 'link',
+        icon: 'supervisor_account',
+      },
+      {
         id: 'settings',
         name: 'Settings',
         state: 'app.settings',
