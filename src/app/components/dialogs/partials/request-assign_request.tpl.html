@@ -1,0 +1,63 @@
+<md-dialog aria-label="add online purchase request">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Assign Request to Driver</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="width:700px;">
+      <div ng-if="assigningRequest" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div ng-show="!assigningRequest">
+
+        <div class="padded sm-req-online-info" md-whiteframe="3">
+          <!-- <h5 class="sm-req-online-info-title">Important Info!</h5> -->
+          <p>Assigned driver will receive both SMS and push notifications with the request details and additional instructions.</p>
+        </div>
+
+        <md-input-container class="sm-input-container" style="margin: 0;">
+          <md-autocomplete flex required
+              md-input-name="driversAutocomplete"
+              md-input-minlength="2"
+              md-input-maxlength="18"
+              md-no-cache="$scope.noCache"
+              md-selected-item="selectedDriver"
+              md-selected-item-change="assignRequest(item)"
+              md-search-text="searchText"
+              md-items="item in querySearch(searchText)"
+              md-item-text="item.display"
+              md-require-match
+              md-floating-label="Enter Driver Name to Search">
+            <md-item-template>
+              <span md-highlight-text="searchText">{{item.display}}</span>
+            </md-item-template>
+            <div ng-messages="searchForm.driversAutocomplete.$error" ng-if="searchForm.driversAutocomplete.$touched">
+              <div ng-message="required">You <b>must</b> select a driver.</div>
+              <div ng-message="md-require-match">Please select an existing driver.</div>
+              <div ng-message="minlength">Your entry is not long enough.</div>
+              <div ng-message="maxlength">Your entry is too long.</div>
+            </div>
+          </md-autocomplete>
+        </md-input-container>
+
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="addOnlineRequest()" class="md-raised md-accent">
+        Submit Request
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

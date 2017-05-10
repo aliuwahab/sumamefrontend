@@ -17,6 +17,7 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
     assignRequestToDriver: assignRequestToDriver,
     addRequest: addRequest,
     cancelRequest: cancelRequest,
+    changeRequestStatus: changeRequestStatus,
   };
 
   return service;
