@@ -6,7 +6,7 @@ angular
     .controller('CustomersController', CustomersController);
 
 /** @ngInject */
-function CustomersController($scope, $rootScope, $state, CustomersService) {
+function CustomersController($scope, $rootScope, $state, CustomersService, Dialog) {
 
   activate();
 
@@ -30,6 +30,12 @@ function CustomersController($scope, $rootScope, $state, CustomersService) {
       debugger;
     });
   }
+
+  // SHOW CUSTOMER DIALOG
+  $scope.showCustomerDialog = function (ev, customer, dialog) {
+    $scope.selectedCustomer = customer;
+    Dialog.showCustomDialog(ev, dialog, $scope);
+  };
 
 }
 })();

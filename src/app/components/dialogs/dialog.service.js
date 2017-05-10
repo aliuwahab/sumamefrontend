@@ -21,6 +21,7 @@
       // DRIVER DIALOGS
       add_driver: 'app/components/dialogs/partials/drivers-add_driver.tpl.html',
       update_driver: 'app/components/dialogs/partials/drivers-update_driver.tpl.html',
+      view_driver: 'app/components/dialogs/partials/drivers-view_driver.tpl.html',
 
       // VEHICLE DIALOGS
       add_vehicle: 'app/components/dialogs/partials/vehicles-add_vehicle.tpl.html',
@@ -43,6 +44,9 @@
 
       // SMS
       send_message: 'app/components/dialogs/partials/request-send-sms.tpl.html',
+
+      // CUSTOMERS DIALOGS
+      view_customer: 'app/components/dialogs/partials/customers-view_customer.tpl.html',
     };
 
     // CUSTOMIZE DEFAULT CONFIRM BUTTONS

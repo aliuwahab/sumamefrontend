@@ -1,0 +1,75 @@
+.sm-cs-view-avatar {
+  border-radius: 50%;
+  height: 130px;
+  width: 130px;
+}
+.sm-cs-info {
+  padding-left: 30px;
+  .sm-cs-info-name {
+    margin-top: 0px;
+  }
+
+}
+.sm-cs-info-contact {
+  margin-top: 0px;
+  margin-bottom: 5px;
+  font-size: 16px;
+}
+.sm-cs-profile {
+  border-left: 1px solid #9E9E9E;
+  padding-left: 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .sm-driver-footer-metadata {
+    margin-right: 5px !important;
+  }
+
+  .sm-driver-footer {
+    .md-button {
+      // width: 20px;
+    }
+  }
+}
+
+
+.sm-driver-header {
+  background-color: #2196F3;
+  padding-bottom: 30px;
+}
+.sm-driver-dp {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  margin: 10px 0px 10px 0px;
+}
+.sm-driver-name {
+  margin-top: 0px;
+  color: white;
+  margin-bottom: 0px;
+}
+.sm-driver-info {
+  background-color: #FAFAFA;
+  padding: 20px 50px 20px 50px;
+}
+.sm-driver-profile-container {
+  padding: 30px 50px 50px 50px;
+}
+.sm-driver-school {
+  color: rgba(255, 255, 255, 0.72);
+  margin-top: 0px;
+  font-weight: 100;
+  margin-bottom: 5px;
+}
+.sm-driver-info-column {
+  width: 49%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+.sm-driver-info-column.left {
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
+.sm-driver-info-column.right {
+  padding-left: 30px;
+}

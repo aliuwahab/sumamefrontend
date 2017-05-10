@@ -31,7 +31,7 @@
               <td md-cell>{{customer.phone_number}}</td>
               <td md-cell>{{customer.location}}</td>
               <td md-cell>
-                <button class="md-button md-raised md-primary" ng-click="viewrequestDetails($event, request)">
+                <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">
                   <md-tooltip md-direction="top">
                     View Customer Details
                   </md-tooltip>

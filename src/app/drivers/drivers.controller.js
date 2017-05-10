@@ -107,10 +107,10 @@ CachingService, UploadService) {
     Dialog.showCustomDialog(ev, 'add_driver', $scope);
   };
 
-  // SHOW UPDATE DRIVER DIALOG
-  $scope.showUpdateDriverDialog = function (ev, driver) {
+  // SHOW DRIVER DIALOG
+  $scope.showDriverDialog = function (ev, driver, dialog) {
     $scope.selectedDriver = driver;
-    Dialog.showCustomDialog(ev, 'update_driver', $scope);
+    Dialog.showCustomDialog(ev, dialog, $scope);
   };
 
   function reloadDrivers() {
