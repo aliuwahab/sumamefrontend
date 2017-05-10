@@ -38,6 +38,10 @@ function InvoicesController($scope, $rootScope, $state, Dialog, InvoicesService,
     Dialog.showCustomDialog(ev, 'add_equipment', $scope);
   };
 
+  $scope.showInvoiceDetails = function () {
+
+  };
+
   function reloadInvoices() {
     var cache = 'invoices?page=' + $scope.filterParams.page + 'limit=' +
     $scope.filterParams.limit;
