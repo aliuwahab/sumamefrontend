@@ -14,7 +14,7 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
 
   function activate() {
     $scope.newRequest = {
-      request_type: 'goods_delivery',
+      request_type: 'offline_delivery',
       requester_id: $rootScope.authenticatedUser.id,
       request_status: 'pending',
     };
