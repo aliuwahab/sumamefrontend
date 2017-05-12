@@ -27,7 +27,7 @@ function OnlineRequestsController($scope, $rootScope, $state, $timeout, $statePa
   $scope.addOnlineRequest = function () {
 
     populateNewOnlineRequestData();
-    debugger;
+
     $scope.addingRequest = true;
     RequestsService.addRequest($scope.newRequest)
     .then(function (response) {
