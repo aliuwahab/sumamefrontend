@@ -58,8 +58,10 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
       $scope.selectedEquipment.equipment_location_longitude = $scope.equipmentLocation.longitude;
     }else {
       $scope.selectedEquipment.equipment_location_name = $scope.existingEquipmentLocation.name;
-      $scope.selectedEquipment.location_latitude = $scope.existingEquipmentLocation.latitude;
-      $scope.selectedEquipment.location_longitude = $scope.existingEquipmentLocation.longitude;
+      $scope.selectedEquipment.equipment_location_latitude =
+      $scope.existingEquipmentLocation.latitude;
+      $scope.selectedEquipment.equipment_location_longitude =
+      $scope.existingEquipmentLocation.longitude;
     }
 
     $scope.selectedEquipment.equipment_id = $scope.selectedEquipment.id;
@@ -67,14 +69,12 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
     $scope.addingEquipment = true;
     EquipmentService.updateEquipment($scope.selectedEquipment)
     .then(function (response) {
-      debugger;
       $scope.addingEquipment = false;
       ToastsService.showToast('success', 'Equipment successfully updated');
       reloadEquipment();
       $rootScope.closeDialog();
     })
     .catch(function (error) {
-      debugger;
       $scope.addingEquipment = false;
       ToastsService.showToast('error', error.data.message);
     });
