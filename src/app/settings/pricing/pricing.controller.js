@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function PricingController($scope, $rootScope, $state, $mdDialog, lodash, Dialog,
-SettingsService, ToastsService, ValidationService, UploadService) {
+SettingsService, ToastsService, ValidationService, UploadService, CachingService) {
 
   activate();
 
