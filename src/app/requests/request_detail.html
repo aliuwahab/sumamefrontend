@@ -265,6 +265,9 @@
                 <i class="material-icons">inbox</i> <span class="bold-span">Date Created: </span> {{request.created_at}}
               </div>
               <div class="sm-rq-pkg-details-container">
+                <i class="material-icons">inbox</i> <span class="bold-span">Total Value of Item: </span> GHS {{request.request_item_value | number:2}}
+              </div>
+              <div class="sm-rq-pkg-details-container">
                 <i class="material-icons">inbox</i> <span class="bold-span">Total Cost: </span> GHS {{request.request_cost | number:2}}
               </div>
             </div>
@@ -280,6 +283,18 @@
 
           <div class="sm-rq-other-details-container">
             <h3 class="sm-rq-inner-title">Package Information</h3>
+            <div class="sm-rq-pkg-details-container" layout="row">
+              <div class="request_package_details_icon_container" ng-if="request.request_is_hazardous">
+                <img class="request_package_details_icons" src="../assets/icons/hazard.png" alt="Request Is Harzadous">
+                <p class="request_package_hazard_icon-label">Hazardous!</p>
+              </div>
+              <div class="request_package_details_icon_container" ng-if="request.request_needs_fast_tracking">
+                <img class="request_package_details_icons" src="../assets/icons/airfreight.png" alt="Request Is Harzadous">
+                <p class="request_package_airfreight_icon-label">Air Freight</p>
+              </div>
+
+              <p ng-if="!request.request_is_hazardous && !request.request_needs_fast_tracking">This request is neither hazardous nor needs fastracking.</p>
+            </div>
             <div class="sm-rq-pkg-details-container">
               <img ng-if="request.request_image" class="sm-rq-pkg-img" ng-src="{{request.request_image}}" alt="Package Image">
               <p ng-if="!request.request_image">No image has been attached to this request.</p>
