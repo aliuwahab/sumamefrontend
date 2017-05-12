@@ -137,19 +137,16 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
       $scope.processInProgress = true;
 
       var data = {
-        category_id: category.id,
+        vehicle_category_id: category.id,
       };
 
       SettingsService.deletePriceCategory(data)
       .then(function (response) {
-        debugger;
         ToastsService.showToast('success', 'Price category has been successfully deleted!');
         $scope.processInProgress = false;
         reloadPriceCategories();
-        $rootScope.closeDialog();
       })
       .catch(function (error) {
-        debugger;
         $scope.processInProgress = false;
         ToastsService.showToast('error', error.data.message);
       });
