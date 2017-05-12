@@ -27,28 +27,31 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
   }
 
   $scope.getPercentagePricingDetails = function () {
-    $scope.loadingPricing = true;
+    $scope.loadingPricePercentage = true;
     $scope.editingOnlinePercentage = false;
 
     SettingsService.getPricingDetails()
     .then(function (response) {
       $scope.pricingDetails = response.data.data.price_estaimates[0];
-      $scope.loadingWarehouses = false;
+      $scope.loadingPricePercentage = false;
     })
     .catch(function (error) {
       $scope.error = error.message;
-      $scope.loadingWarehouses = false;
+      $scope.loadingPricePercentage = false;
       debugger;
     });
   };
 
   $scope.updateOnlinePurchasePricePercentage = function () {
+    debugger;
     $scope.updatingPrecentagePricing = true;
-    SettingsService.updateOnlinePurchasePricePercentage($scope.pricingDetails)
+    SettingsService.updateOnlinePurchasePricePercentage({
+      price_percentage_per_value: $scope.pricingDetails.price_percentage_per_value,
+    })
     .then(function (response) {
-      debugger;
       $scope.updatingPrecentagePricing = false;
       $scope.percentageEdited = false;
+      CachingService.destroyOnCreateOperation('pricingDetails');
       ToastsService.showToast('success', 'Percentage successfully updated');
     })
     .catch(function (error) {

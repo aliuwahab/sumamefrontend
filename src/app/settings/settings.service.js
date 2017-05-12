@@ -135,8 +135,6 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
 
   function updateOnlinePurchasePricePercentage(data) {
     var params = $.param(data);
-    debugger;
-
     return $http.post(apiBaseURL + '/create/price/percentage?' + authDataString + '&' + params);
   }
 
