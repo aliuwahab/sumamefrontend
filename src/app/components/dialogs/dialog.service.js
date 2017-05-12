@@ -27,10 +27,12 @@
       // VEHICLE DIALOGS
       add_vehicle: 'app/components/dialogs/partials/vehicles-add_vehicle.tpl.html',
       update_vehicle: 'app/components/dialogs/partials/vehicles-update_vehicle.tpl.html',
+      view_vehicle: 'app/components/dialogs/partials/vehicles-view_vehicle.tpl.html',
 
       // EQUIPMENT DIALOGS
       add_equipment: 'app/components/dialogs/partials/equipment-add_equipment.tpl.html',
       update_equipment: 'app/components/dialogs/partials/equipment-update_equipment.tpl.html',
+      view_equipment: 'app/components/dialogs/partials/equipment-view_equipment.tpl.html',
 
       // WAREHOUSE DIALOGS
       add_warehouse: 'app/components/dialogs/partials/warehouses-add_warehouse.tpl.html',

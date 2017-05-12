@@ -1,0 +1,35 @@
+<md-dialog aria-label="view equipment">
+  <form>
+    <md-dialog-content class="sm-modal-content" style="width:900px; padding:0px;">
+      <div class="sm-equipment-header" layout="column" layout-align="center center">
+        <h1 class="sm-driver-name">{{selectedVehicle.vehicle_name}}</h1>
+        <h4 class="sm-driver-school">{{selectedVehicle.vehicle_category}}</h4>
+      </div>
+      <div class="sm-equipment-info">
+        <div class="" layout="row">
+          <div class="sm-driver-info-column left">
+            <p class="sm-cs-info-contact"><i class="material-icons">room</i> Current Location:  {{selectedVehicle.vehicle_location_name}}</p>
+          </div>
+          <div class="sm-driver-info-column right">
+            <p class="sm-cs-info-contact"><i class="material-icons">mail_outline</i> Price:  {{selectedVehicle.equipment_price_per_day}} per day</p>
+            <p class="sm-cs-info-contact"><i class="material-icons">mail_outline</i> Rented Out?:   <span ng-show="selectedVehicle.equipment_hired">YES</span> <span ng-show="!selectedVehicle.equipment_hired">NO</span></p>
+          </div>
+        </div>
+      </div>
+      <div class="sm-driver-profile-container">
+        <img class="sm-view-equipment-image" ng-src="{{selectedVehicle.vehicle_image}}" alt="equipment image">
+      </div>
+      <div class="sm-driver-info">
+        <h3>Description</h3>
+        <div ng-bind-html="selectedVehicle.vehicle_description"></div>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-primary">
+        Close
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

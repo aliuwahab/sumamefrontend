@@ -83,6 +83,11 @@ UploadService, ToastsService, CachingService) {
     Dialog.showCustomDialog(ev, 'update_vehicle', $scope);
   };
 
+  $scope.showViewVehicleDialog = function (ev, vehicle) {
+    $scope.selectedVehicle = vehicle;
+    Dialog.showCustomDialog(ev, 'view_vehicle', $scope);
+  };
+
   function loadAllVehicleCategories() {
     $scope.loadingRequiredData = true;
     SettingsService.getAllVehicleCategories()

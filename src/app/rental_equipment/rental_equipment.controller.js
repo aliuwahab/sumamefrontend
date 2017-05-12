@@ -101,6 +101,12 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
     Dialog.showCustomDialog(ev, 'update_equipment', $scope);
   };
 
+  // SHOW VIEW VEHICLE DIALOG
+  $scope.showViewEquipmentDialog = function (ev, equipment) {
+    $scope.selectedEquipment = equipment;
+    Dialog.showCustomDialog(ev, 'view_equipment', $scope);
+  };
+
   // UPLOAD IMAGE
   $scope.uploadImage = function (file) {
     $scope.s3Uploader = UploadService;
