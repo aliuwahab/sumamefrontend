@@ -35,7 +35,6 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
 
   function addDriver(data) {
     var params = $.param(data);
-    debugger;
     return $http.post(apiBaseURL + '/create/driver?' + authDataString + '&' + params);
   }
 
@@ -46,8 +45,7 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
       '$$hashKey',
     ]);
     var params = $.param(cleanedData);
-
-    return $http.post(apiBaseURL + '/update/driver?' + authDataString + '&' + params);
+    return $http.post(apiBaseURL + '/update/driver/account?' + authDataString + '&' + params);
   }
 
   function approveUnapproveDriver(id, action) {

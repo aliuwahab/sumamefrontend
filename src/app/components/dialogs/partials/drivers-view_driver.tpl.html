@@ -11,8 +11,8 @@
 
     <md-dialog-content class="sm-modal-content" style="width:700px; padding:0px;">
       <div class="sm-driver-header" layout="column" layout-align="center center">
-        <div class="sm-driver-dp" ng-if="selectedDriver.display_pictures_urls" background-img="{{splitDisplayPicUrl(selectedDriver.display_pictures_urls)}}"></div>
-        <img class="sm-driver-dp" ng-if="!selectedDriver.display_pictures_urls" gravatar-src="'selectedDriver.email'" gravatar-size="200"/>
+        <div class="sm-driver-dp" ng-if="selectedDriver.user_profile_image_url" background-img="{{selectedDriver.user_profile_image_url}}"></div>
+        <img class="sm-driver-dp" ng-if="!selectedDriver.user_profile_image_url" gravatar-src="'selectedDriver.email'" gravatar-size="200"/>
         <h1 class="sm-driver-name">{{selectedDriver.first_name}} {{selectedDriver.last_name}}</h1>
         <h4 class="sm-driver-school">Driver</h4>
       </div>
@@ -26,7 +26,7 @@
       </div>
       <div class="sm-driver-profile-container">
         <h3>Profile Description</h3>
-        <div ng-bind-html="selectedDriver.user_profile"></div>
+        <div ng-bind-html="selectedDriver.user_profile_description"></div>
       </div>
       <div class="sm-driver-info" layout="row">
         <p ng-if="selectedDriver.created_at" class="sm-cs-info-contact"><i class="material-icons">schedule</i>Added: {{selectedDriver.created_at | date:"MMMM d, y 'at ' h:mma"}}</p>

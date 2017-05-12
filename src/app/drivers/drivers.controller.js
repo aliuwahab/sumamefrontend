@@ -40,6 +40,7 @@ CachingService, UploadService) {
       debugger;
       ToastsService.showToast('success', 'Driver successfully added!');
       $scope.addingDriver = false;
+      $rootScope.closeDialog();
       reloadDrivers();
     })
     .catch(function (error) {
@@ -51,17 +52,17 @@ CachingService, UploadService) {
   $scope.updateDriver = function () {
 
     $scope.addingDriver = true;
+    $scope.selectedDriver.driver_id = $scope.selectedDriver.id;
 
     DriversService.updateDriver($scope.selectedDriver)
     .then(function (response) {
-      debugger;
       ToastsService.showToast('success', 'Driver successfully added!');
       $scope.addingDriver = false;
+      $rootScope.closeDialog();
       reloadDrivers();
     })
     .catch(function (error) {
       $scope.addingDriver = false;
-      debugger;
     });
   };
 
