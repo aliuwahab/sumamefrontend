@@ -18,6 +18,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     updateWarehouse: updateWarehouse,
     getAllStaff: getAllStaff,
     addStaff: addStaff,
+    deleteStaff: deleteStaff,
     getPricingDetails: getPricingDetails,
     getAllVehicleCategories: getAllVehicleCategories,
     addPriceCategory: addPriceCategory,
@@ -78,6 +79,11 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     return $http.post(apiBaseURL + '/update/sumame/address?' + authDataString + '&' + params);
   }
 
+  function deleteStaff(data) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/delete/user?' + authDataString + '&' + params);
+  }
+
   /////// PRICING FUNCTIONS ////////////
   function getPricingDetails() {
 
@@ -124,7 +130,6 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
 
   function deletePriceCategory(data) {
     var params = $.param(data);
-    debugger;
     return $http.post(apiBaseURL + '/delete/vehicle/category?' + authDataString + '&' + params);
   }
 
