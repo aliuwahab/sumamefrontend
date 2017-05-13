@@ -43,7 +43,6 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
   };
 
   $scope.updateOnlinePurchasePricePercentage = function () {
-    debugger;
     $scope.updatingPrecentagePricing = true;
     SettingsService.updateOnlinePurchasePricePercentage({
       price_percentage_per_value: $scope.pricingDetails.price_percentage_per_value,
