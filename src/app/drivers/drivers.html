@@ -44,13 +44,13 @@
                 <p ng-if="driver.driver_approved == false">NOT APPROVED</p>
               </td>
               <td md-cell>
-                <button class="md-button md-raised md-primary" ng-click="viewDriverDetails($event, driver)">
+                <button class="md-button md-raised md-primary" ng-click="showDriverDialog($event, driver, 'view_driver')">
                   <md-tooltip md-direction="top">
                     View Driver Details
                   </md-tooltip>
                   <i class="material-icons">remove_red_eye</i>
                 </button>
-                <button class="md-button md-raised md-accent" ng-click="showUpdateDriverDialog($event, driver)">
+                <button class="md-button md-raised md-accent" ng-click="showDriverDialog($event, driver, 'update_driver')">
                   <md-tooltip md-direction="top">
                     Edit Driver Details
                   </md-tooltip>

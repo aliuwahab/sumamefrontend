@@ -33,13 +33,13 @@
 .sm-rq-pkg-details-container {
   color: #7a7a7a;
   margin-bottom: 20px;
-  font-size: 18px;
+  font-size: 13px;
 }
 .sm-rq-pkg-img {
   width: 100%;
 }
 .sm-rq-map-container {
-  margin-top: 50px;
+  // margin-top: 50px;
 }
 .sm-add-request-modal-content {
   padding: 0px;
@@ -80,7 +80,7 @@
 
 }
 .sm-rq-rent-filters-input-container {
-  margin: 0px;
+  width: 900px;
 }
 .sm-rq-message-icon {
   font-size: 25px;
@@ -169,4 +169,27 @@
   font-size: 16px;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+.sm-rq-sms-button {
+  margin: 0;
+  padding: 0;
+}
+.bold-span {
+  font-weight: bold;
+}
+.request_package_details_icon_container {
+  text-align: center;
+  width: 65px;
+  margin-right: 20px;
+}
+.request_package_hazard_icon-label {
+  margin-top: 0;
+  color: #d60a2a;
+}
+.request_package_airfreight_icon-label {
+  margin-top: 0;
+  color: #2bb035;
+}
+.request_package_details_icons {
+  height: 32px;
 }

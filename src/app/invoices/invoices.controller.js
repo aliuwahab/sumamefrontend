@@ -22,7 +22,7 @@ function InvoicesController($scope, $rootScope, $state, Dialog, InvoicesService,
   function getAllInvoices() {
     $scope.requestsPromise = InvoicesService.getAllInvoices($scope.filterParams)
     .then(function (response) {
-      $scope.invoices = response.data.data.rental_equipment;
+      $scope.invoices = response.data.data.invoices;
     })
     .catch(function (error) {
       $scope.error = error.message;
@@ -36,6 +36,10 @@ function InvoicesController($scope, $rootScope, $state, Dialog, InvoicesService,
   $scope.showAddEquipmentDialog = function (ev, invoice) {
     $scope.selectedInvoice = invoice;
     Dialog.showCustomDialog(ev, 'add_equipment', $scope);
+  };
+
+  $scope.showInvoiceDetails = function () {
+
   };
 
   function reloadInvoices() {

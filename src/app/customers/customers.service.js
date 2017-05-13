@@ -13,6 +13,7 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
 
   var service = {
     getAllCustomers: getAllCustomers,
+    changeCustomerStatus: changeCustomerStatus,
   };
 
   return service;
@@ -28,6 +29,11 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
     return $http.get(apiBaseURL + '/all/consumers?' + authDataString + '&' + queryOptions, {
       cache: CacheFactory.get(cache),
     });
+  }
+
+  function changeCustomerStatus(data, action) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/' + action + '/user?' + authDataString + '&' + params);
   }
 
 }

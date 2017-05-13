@@ -21,7 +21,7 @@ function EquipmentService($http, AuthService, CacheFactory, ENV) {
 
   function getAllEquipment(params) {
     var queryOptions = $.param(params);
-    var cache = 'equipment?page=' + params.page + 'limit=' + params.limit;
+    var cache = 'equipment?' + queryOptions;
 
     if (!CacheFactory.get(cache)) {
       CacheFactory(cache);

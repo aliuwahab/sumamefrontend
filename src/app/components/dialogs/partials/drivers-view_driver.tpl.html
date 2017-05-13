@@ -1,0 +1,43 @@
+<md-dialog aria-label="Add driver">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content class="sm-modal-content" style="width:700px; padding:0px;">
+      <div class="sm-driver-header" layout="column" layout-align="center center">
+        <div class="sm-driver-dp" ng-if="selectedDriver.user_profile_image_url" background-img="{{selectedDriver.user_profile_image_url}}"></div>
+        <img class="sm-driver-dp" ng-if="!selectedDriver.user_profile_image_url" gravatar-src="'selectedDriver.email'" gravatar-size="200"/>
+        <h1 class="sm-driver-name">{{selectedDriver.first_name}} {{selectedDriver.last_name}}</h1>
+        <h4 class="sm-driver-school">Driver</h4>
+      </div>
+      <div class="sm-driver-info" layout="row">
+        <div class="sm-driver-info-column left">
+          <p ng-if="selectedDriver.email" class="sm-cs-info-contact"><i class="material-icons">mail_outline</i>  {{selectedDriver.email}}</p>
+        </div>
+        <div class="sm-driver-info-column right">
+          <p ng-if="selectedDriver.phone_number" class="sm-cs-info-contact"><i class="material-icons">phone_android</i>  {{selectedDriver.phone_number}}</p>
+        </div>
+      </div>
+      <div class="sm-driver-profile-container">
+        <h3>Profile Description</h3>
+        <div ng-bind-html="selectedDriver.user_profile_description"></div>
+      </div>
+      <div class="sm-driver-info" layout="row">
+        <p ng-if="selectedDriver.created_at" class="sm-cs-info-contact"><i class="material-icons">schedule</i>Added: {{selectedDriver.created_at | date:"MMMM d, y 'at ' h:mma"}}</p>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-primary">
+        Close
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

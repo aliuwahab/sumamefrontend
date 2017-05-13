@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stateParams,
-  Dialog, RequestsService, ToastsService, DriversService, Twilio) {
+  Dialog, RequestsService, ToastsService, DriversService, Twilio, EquipmentService) {
 
   activate();
 
@@ -22,7 +22,13 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     RequestsService.getRequest($stateParams.requestId)
     .then(function (response) {
       $scope.request = response.data.data.request_details;
-      $scope.requestLoaded = true;
+
+      if ($scope.request.request_type == 'equipment_request') {
+        // getEquipment();
+        $scope.requestLoaded = true;
+      } else {
+        $scope.requestLoaded = true;
+      }
     })
     .catch(function (error) {
       debugger;
@@ -54,14 +60,14 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     });
   };
 
-  $scope.changeRequestStatus = function () {
+  $scope.changeRequestStatus = function (status) {
     Dialog.confirmAction('Do you want to change the status of this request?')
     .then(function () {
       $scope.processInProgress = true;
 
       var data = {
         request_id: $scope.request.id,
-        request_status: $scope.request_status,
+        request_status: status,
       };
 
       RequestsService.changeRequestStatus(data)
@@ -102,6 +108,23 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     });
   };
 
+  // GET EQUIPMENT
+  function getEquipment() {
+    EquipmentService.getAllEquipment({
+      equipment_id: $scope.request.equipment_id,
+    })
+    .then(function (response) {
+      debugger;
+      $scope.equipment = response.data.data.rental_equipment;
+      $scope.requestLoaded = true;
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      $scope.requestLoaded = true;
+      debugger;
+    });
+  }
+
   ///////////////// HELPER FUNCTIONS /////////////////
   function querySearch(query) {
     var results = query ? $scope.drivers.filter(createFilterFor(query)) : $scope.drivers;
@@ -138,6 +161,14 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
       return (driver.value.indexOf(lowercaseQuery) === 0);
     };
   }
+
+  $scope.showAssignRequestDialog = function (ev) {
+    Dialog.showCustomDialog(ev, 'assign_request', $scope);
+  };
+
+  $scope.openStatusMenu = function ($mdMenu, ev) {
+    $mdMenu.open(ev);
+  };
 
 }
 })();

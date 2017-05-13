@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function PricingController($scope, $rootScope, $state, $mdDialog, lodash, Dialog,
-SettingsService, ToastsService, ValidationService, UploadService) {
+SettingsService, ToastsService, ValidationService, UploadService, CachingService) {
 
   activate();
 
@@ -27,28 +27,30 @@ SettingsService, ToastsService, ValidationService, UploadService) {
   }
 
   $scope.getPercentagePricingDetails = function () {
-    $scope.loadingPricing = true;
+    $scope.loadingPricePercentage = true;
     $scope.editingOnlinePercentage = false;
 
     SettingsService.getPricingDetails()
     .then(function (response) {
       $scope.pricingDetails = response.data.data.price_estaimates[0];
-      $scope.loadingWarehouses = false;
+      $scope.loadingPricePercentage = false;
     })
     .catch(function (error) {
       $scope.error = error.message;
-      $scope.loadingWarehouses = false;
+      $scope.loadingPricePercentage = false;
       debugger;
     });
   };
 
   $scope.updateOnlinePurchasePricePercentage = function () {
     $scope.updatingPrecentagePricing = true;
-    SettingsService.updateOnlinePurchasePricePercentage($scope.pricingDetails)
+    SettingsService.updateOnlinePurchasePricePercentage({
+      price_percentage_per_value: $scope.pricingDetails.price_percentage_per_value,
+    })
     .then(function (response) {
-      debugger;
       $scope.updatingPrecentagePricing = false;
       $scope.percentageEdited = false;
+      CachingService.destroyOnCreateOperation('pricingDetails');
       ToastsService.showToast('success', 'Percentage successfully updated');
     })
     .catch(function (error) {
@@ -134,19 +136,16 @@ SettingsService, ToastsService, ValidationService, UploadService) {
       $scope.processInProgress = true;
 
       var data = {
-        category_id: category.id,
+        vehicle_category_id: category.id,
       };
 
       SettingsService.deletePriceCategory(data)
       .then(function (response) {
-        debugger;
         ToastsService.showToast('success', 'Price category has been successfully deleted!');
         $scope.processInProgress = false;
         reloadPriceCategories();
-        $rootScope.closeDialog();
       })
       .catch(function (error) {
-        debugger;
         $scope.processInProgress = false;
         ToastsService.showToast('error', error.data.message);
       });

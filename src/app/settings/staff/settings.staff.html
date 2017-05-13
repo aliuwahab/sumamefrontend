@@ -1,8 +1,16 @@
+<div ng-if="processInProgress" class="top-progress-bar" layout="row">
+  <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+</div>
+
 <div ng-if="loadingStaff" layout="row" layout-align="center center" style="min-height: 40vh;">
   <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
 </div>
 
 <div class="flex-grid" layout="row" ng-if="!loadingStaff">
+  <div class="staff-no-staff-container" layout-align="center center" ng-show="staff.length <= 1">
+    <h2>Add your first staff. You don't have any yet!</h2>
+    <p>Click on the Add New Staff Member button to add staff to your organization.</p>
+  </div>
   <div class="staff-col flip-container" ontouchstart="this.classList.toggle('hover');" ng-repeat="staffmember in staff" ng-if="staffmember.id != authenticatedUser.id">
     <div class="flipper">
       <div class="front">
@@ -22,7 +30,7 @@
             Edit Staff Details
           </md-tooltip>
         </md-button>
-        <md-button class="md-raised md-warn" href="http://google.com" aria-label="description" md-ripple-size="full">
+        <md-button class="md-raised md-warn" aria-label="description" md-ripple-size="full" ng-click="deleteStaff($event, staffmember)">
           <i class="material-icons">delete_forever</i>
           <md-tooltip md-direction="top">
             Delete Staff

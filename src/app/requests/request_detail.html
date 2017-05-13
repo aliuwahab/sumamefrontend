@@ -7,10 +7,37 @@
     </md-button>
 
     <span flex></span>
-
-    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" href="#/requests">
+    <md-button aria-label="Open phone interactions menu" class="md-raised" href="#/requests">
       Back To All Requests
     </md-button>
+    <md-button ng-if="request.request_deliverer.length == 0" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAssignRequestDialog($event)">
+      Assign Request
+    </md-button>
+    <md-button ng-if="request.request_deliverer.length > 0" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAssignRequestDialog($event)">
+      Change Driver
+    </md-button>
+    <md-menu>
+      <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="openStatusMenu($mdMenu, $event)">
+        Change Status
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-click="changeRequestStatus('pending')">
+            Pending
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="changeRequestStatus('declined')">
+            Rejected
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="changeRequestStatus('completed')">
+            Completed
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
   </div>
 </md-toolbar>
 
@@ -18,10 +45,16 @@
   <md-progress-linear md-mode="indeterminate"></md-progress-linear>
 </div>
 
-<div class="view-main-container">
-  <h3 class="view-main-title">Details of {{request.requester.first_name}}'s Request</h3>
+<div ng-if="!requestLoaded" layout="row" layout-align="center center" style="min-height: 70vh;">
+  <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+</div>
 
-  <md-card>
+<div class="view-main-container" ng-if="requestLoaded">
+  <h3 class="view-main-title" ng-if="request.request_type == 'offline_delivery'">Offline Request</h3>
+  <h3 class="view-main-title" ng-if="request.request_type == 'online_purchase_delivery'">Online Purchase Request</h3>
+  <h3 class="view-main-title" ng-if="request.request_type == 'equipment_request'">Equipment Request</h3>
+
+  <md-card ng-if="request.request_type == 'equipment_request'">
     <md-card-content>
       <div ng-if="!requestLoaded" layout="row" layout-align="center center" style="min-height: 40vh;">
         <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
@@ -30,15 +63,18 @@
       <div layout="row" ng-if="requestLoaded">
         <div class="sm-request-detail-left" flex="50">
           <div class="sm-rq-detail-user-container" layout="row">
-            <div ng-if="request.requester.user_profile_image_url" class="sm-rq-user-img" background-img="{{request.requester.user_profile_image_url}}">
+            <div class="" flex="30">
+              <div ng-if="request.requester.user_profile_image_url" class="sm-rq-user-img" background-img="{{request.requester.user_profile_image_url}}">
+              </div>
+              <div ng-if="!request.requester.user_profile_image_url" flex="20">
+                <img class="sm-rq-user-img" gravatar-src="'request.requester.email'" gravatar-size="200"/>
+              </div>
             </div>
-            <div ng-if="!request.requester.user_profile_image_url" flex="20">
-              <img class="sm-rq-user-img" gravatar-src="'request.requester.email'" gravatar-size="200"/>
-            </div>
-            <div class="">
+
+            <div class="" flex="70">
               <h1 class="sm-rq-user-name">{{request.requester.first_name}} {{request.requester.last_name}}</h1>
               <p class="sm-rq-user-phone">{{request.requester.phone_number}}</p>
-              <md-button class="" aria-label="description" ng-click="showMessageDialog()">
+              <md-button class="sm-rq-sms-button" aria-label="description" ng-click="showMessageDialog()">
                 <i class="material-icons sm-rq-message-icon">message</i>
                 <md-tooltip md-direction="bottom">
                   Send an SMS Message to {{request.requester.first_name}} {{request.requester.last_name}}.
@@ -48,52 +84,232 @@
           </div>
 
           <div class="sm-rq-other-details-container">
-            <!-- <h3 class="sm-rq-inner-title">Package Details</h3> -->
-            <div class="sm-rq-pkg-details-container">
-              <i class="material-icons">inbox</i> {{request.package_description}}
+
+            <h3 class="sm-rq-inner-title">Request Details</h3>
+            <div class="" layout="row">
+              <div class="" flex="50">
+                <div class="sm-rq-pkg-details-container">
+                  <i class="material-icons">inbox</i> <span class="bold-span">Date Created: </span> {{request.created_at}}
+                </div>
+                <div class="sm-rq-pkg-details-container">
+                  <i class="material-icons">inbox</i> <span class="bold-span">Status: </span> {{request.request_status}}
+                </div>
+              </div>
+              <div class="" flex="50">
+                <div class="sm-rq-pkg-details-container">
+                  <i class="material-icons">inbox</i> <span class="bold-span">Days Requested: </span> 45 Days
+                </div>
+                <div class="sm-rq-pkg-details-container">
+                  <i class="material-icons">inbox</i> <span class="bold-span">Total Cost: </span> GHS {{request.request_cost | number:2}}
+                </div>
+              </div>
             </div>
-            <img class="sm-rq-pkg-img" src="{{request.request_image}}" alt="Package Image">
+
+            <h3 class="sm-rq-inner-title">Equipment</h3>
+            <div class="sm-rq-pkg-details-container">
+              <img class="sm-rq-pkg-img" ng-src="{{request.equipment_requested.equipment_image}}" alt="Package Image">
+            </div>
           </div>
         </div>
         <div class="sm-request-detail-right" flex="50">
-
-          <md-input-container class="sm-input-container" style="margin: 0;">
-            <md-autocomplete flex required
-                md-input-name="driversAutocomplete"
-                md-input-minlength="2"
-                md-input-maxlength="18"
-                md-no-cache="$scope.noCache"
-                md-selected-item="selectedDriver"
-                md-selected-item-change="assignRequest(item)"
-                md-search-text="searchText"
-                md-items="item in querySearch(searchText)"
-                md-item-text="item.display"
-                md-require-match
-                md-floating-label="Assign Driver">
-              <md-item-template>
-                <span md-highlight-text="searchText">{{item.display}}</span>
-              </md-item-template>
-              <div ng-messages="searchForm.driversAutocomplete.$error" ng-if="searchForm.driversAutocomplete.$touched">
-                <div ng-message="required">You <b>must</b> select a driver.</div>
-                <div ng-message="md-require-match">Please select an existing driver.</div>
-                <div ng-message="minlength">Your entry is not long enough.</div>
-                <div ng-message="maxlength">Your entry is too long.</div>
-              </div>
-            </md-autocomplete>
-          </md-input-container>
-
-          <md-input-container class="sm-input-container">
-            <label>Request Status</label>
-            <md-select ng-model="request.request_status" ng-change="changeRequestStatus()">
-              <md-option value="pending">Pending</md-option>
-              <md-option value="assigned">Assigned</md-option>
-              <md-option value="delivery_in_progress">In Progress</md-option>
-              <md-option value="delivered">Delivered</md-option>
-            </md-select>
-          </md-input-container>
+          <div class="">
+            <h3 class="sm-rq-inner-title">Additional Instructions</h3>
+            <p ng-if="request.request_additional_description">{{request.request_additional_description}}</p>
+            <p ng-if="!request.request_additional_description">No additional instructions added to this request.</p>
+          </div>
 
           <div class="sm-rq-map-container">
-            <ng-map zoom="13" center="" style="height:68vh" >
+            <h3 class="sm-rq-inner-title">Route</h3>
+            <ng-map zoom="13" center="" style="height:50vh" >
+              <directions
+                draggable="true"
+                travel-mode="DRIVING"
+                origin="{{request.pickup_location_latitude}},{{request.pickup_location_longitude}}"
+                destination="{{request.delivery_location_latitude}},{{request.delivery_location_longitude}}">
+              </directions>
+              <custom-marker id="start"
+                position="{{request.pickup_location_latitude}},{{request.pickup_location_longitude}}">
+                <div>{{request.pickup_location_name}}</div>
+              </custom-marker>
+              <custom-marker id="end"
+                position="{{request.delivery_location_latitude}},{{request.delivery_location_longitude}}">
+                <div>{{request.delivery_location_name}}</div>
+              </custom-marker>
+            </ng-map>
+          </div>
+        </div>
+      </div>
+    </md-card-content>
+  </md-card>
+
+  <md-card ng-if="request.request_type == 'offline_delivery'">
+    <md-card-content>
+      <div ng-if="!requestLoaded" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div layout="row" ng-if="requestLoaded">
+        <div class="sm-request-detail-left" flex="50">
+          <div class="sm-rq-detail-user-container" layout="row">
+            <div class="" flex="30">
+              <div ng-if="request.requester.user_profile_image_url" class="sm-rq-user-img" background-img="{{request.requester.user_profile_image_url}}">
+              </div>
+              <div ng-if="!request.requester.user_profile_image_url" flex="20">
+                <img class="sm-rq-user-img" gravatar-src="'request.requester.email'" gravatar-size="200"/>
+              </div>
+            </div>
+
+            <div class="" flex="70">
+              <h1 class="sm-rq-user-name">{{request.requester.first_name}} {{request.requester.last_name}}</h1>
+              <p class="sm-rq-user-phone">{{request.requester.phone_number}}</p>
+              <md-button class="sm-rq-sms-button" aria-label="description" ng-click="showMessageDialog()">
+                <i class="material-icons sm-rq-message-icon">message</i>
+                <md-tooltip md-direction="bottom">
+                  Send an SMS Message to {{request.requester.first_name}} {{request.requester.last_name}}.
+                </md-tooltip>
+              </md-button>
+            </div>
+          </div>
+
+          <h3 class="sm-rq-inner-title">Request Details</h3>
+          <div class="" layout="row">
+            <div class="" flex="50">
+              <div class="sm-rq-pkg-details-container">
+                <i class="material-icons">inbox</i> <span class="bold-span">Date Created: </span> {{request.created_at}}
+              </div>
+              <div class="sm-rq-pkg-details-container">
+                <i class="material-icons">inbox</i> <span class="bold-span">Total Cost: </span> GHS {{request.request_cost | number:2}}
+              </div>
+            </div>
+            <div class="" flex="50">
+              <div class="sm-rq-pkg-details-container">
+                <i class="material-icons">inbox</i> <span class="bold-span">Assigned To: </span> {{request.request_deliverer[0].first_name}} {{request.request_deliverer[0].last_name}}
+              </div>
+              <div class="sm-rq-pkg-details-container">
+                <i class="material-icons">inbox</i> <span class="bold-span">Status: </span> {{request.request_status}}
+              </div>
+            </div>
+          </div>
+
+          <div class="sm-rq-other-details-container">
+            <h3 class="sm-rq-inner-title">Package Image</h3>
+            <div class="sm-rq-pkg-details-container">
+              <img ng-if="request.request_image" class="sm-rq-pkg-img" ng-src="{{request.request_image}}" alt="Package Image">
+              <p ng-if="!request.request_image">No image has been attached to this request.</p>
+            </div>
+          </div>
+        </div>
+        <div class="sm-request-detail-right" flex="50">
+          <div class="">
+            <h3 class="sm-rq-inner-title">Additional Instructions</h3>
+            <p ng-if="request.request_additional_description">{{request.request_additional_description}}</p>
+            <p ng-if="!request.request_additional_description">No additional instructions added to this request.</p>
+          </div>
+          <div class="sm-rq-map-container">
+            <h3 class="sm-rq-inner-title">Route</h3>
+            <ng-map zoom="13" center="" style="height:50vh" >
+              <directions
+                draggable="true"
+                travel-mode="DRIVING"
+                origin="{{request.pickup_location_latitude}},{{request.pickup_location_longitude}}"
+                destination="{{request.delivery_location_latitude}},{{request.delivery_location_longitude}}">
+              </directions>
+              <custom-marker id="start"
+                position="{{request.pickup_location_latitude}},{{request.pickup_location_longitude}}">
+                <div>{{request.pickup_location_name}}</div>
+              </custom-marker>
+              <custom-marker id="end"
+                position="{{request.delivery_location_latitude}},{{request.delivery_location_longitude}}">
+                <div>{{request.delivery_location_name}}</div>
+              </custom-marker>
+            </ng-map>
+          </div>
+        </div>
+      </div>
+    </md-card-content>
+  </md-card>
+
+  <md-card ng-if="request.request_type == 'online_purchase_delivery'">
+    <md-card-content>
+      <div ng-if="!requestLoaded" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div layout="row" ng-if="requestLoaded">
+        <div class="sm-request-detail-left" flex="50">
+          <div class="sm-rq-detail-user-container" layout="row">
+            <div class="" flex="30">
+              <div ng-if="request.requester.user_profile_image_url" class="sm-rq-user-img" background-img="{{request.requester.user_profile_image_url}}">
+              </div>
+              <div ng-if="!request.requester.user_profile_image_url" flex="20">
+                <img class="sm-rq-user-img" gravatar-src="'request.requester.email'" gravatar-size="200"/>
+              </div>
+            </div>
+
+            <div class="" flex="70">
+              <h1 class="sm-rq-user-name">{{request.requester.first_name}} {{request.requester.last_name}}</h1>
+              <p class="sm-rq-user-phone">{{request.requester.phone_number}}</p>
+              <md-button class="sm-rq-sms-button" aria-label="description" ng-click="showMessageDialog()">
+                <i class="material-icons sm-rq-message-icon">message</i>
+                <md-tooltip md-direction="bottom">
+                  Send an SMS Message to {{request.requester.first_name}} {{request.requester.last_name}}.
+                </md-tooltip>
+              </md-button>
+            </div>
+          </div>
+
+          <h3 class="sm-rq-inner-title">Request Details</h3>
+          <div class="" layout="row">
+            <div class="" flex="50">
+              <div class="sm-rq-pkg-details-container">
+                <i class="material-icons">inbox</i> <span class="bold-span">Date Created: </span> {{request.created_at}}
+              </div>
+              <div class="sm-rq-pkg-details-container">
+                <i class="material-icons">inbox</i> <span class="bold-span">Total Value of Item: </span> GHS {{request.request_item_value | number:2}}
+              </div>
+              <div class="sm-rq-pkg-details-container">
+                <i class="material-icons">inbox</i> <span class="bold-span">Total Cost: </span> GHS {{request.request_cost | number:2}}
+              </div>
+            </div>
+            <div class="" flex="50">
+              <div class="sm-rq-pkg-details-container">
+                <i class="material-icons">inbox</i> <span class="bold-span">Assigned To: </span> {{request.request_deliverer[0].first_name}} {{request.request_deliverer[0].last_name}}
+              </div>
+              <div class="sm-rq-pkg-details-container">
+                <i class="material-icons">inbox</i> <span class="bold-span">Status: </span> {{request.request_status}}
+              </div>
+            </div>
+          </div>
+
+          <div class="sm-rq-other-details-container">
+            <h3 class="sm-rq-inner-title">Package Information</h3>
+            <div class="sm-rq-pkg-details-container" layout="row">
+              <div class="request_package_details_icon_container" ng-if="request.request_is_hazardous">
+                <img class="request_package_details_icons" src="../assets/icons/hazard.png" alt="Request Is Harzadous">
+                <p class="request_package_hazard_icon-label">Hazardous!</p>
+              </div>
+              <div class="request_package_details_icon_container" ng-if="request.request_needs_fast_tracking">
+                <img class="request_package_details_icons" src="../assets/icons/airfreight.png" alt="Request Is Harzadous">
+                <p class="request_package_airfreight_icon-label">Air Freight</p>
+              </div>
+
+              <p ng-if="!request.request_is_hazardous && !request.request_needs_fast_tracking">This request is neither hazardous nor needs fastracking.</p>
+            </div>
+            <div class="sm-rq-pkg-details-container">
+              <img ng-if="request.request_image" class="sm-rq-pkg-img" ng-src="{{request.request_image}}" alt="Package Image">
+              <p ng-if="!request.request_image">No image has been attached to this request.</p>
+            </div>
+          </div>
+        </div>
+        <div class="sm-request-detail-right" flex="50">
+          <div class="">
+            <h3 class="sm-rq-inner-title">Additional Instructions</h3>
+            <p ng-if="request.request_additional_description">{{request.request_additional_description}}</p>
+            <p ng-if="!request.request_additional_description">No additional instructions added to this request.</p>
+          </div>
+          <div class="sm-rq-map-container">
+            <h3 class="sm-rq-inner-title">Route</h3>
+            <ng-map zoom="13" center="" style="height:50vh" >
               <directions
                 draggable="true"
                 travel-mode="DRIVING"

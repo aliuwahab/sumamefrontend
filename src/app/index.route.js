@@ -180,6 +180,23 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.invoice', {
+      url: '/invoice/:invoiceId',
+      templateUrl: 'app/invoices/invoice_detail.html',
+      controller: 'InvoicesController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
     .state('app.settings', {
       url: '/settings',
       templateUrl: 'app/settings/settings.html',

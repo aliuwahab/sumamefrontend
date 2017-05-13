@@ -17,18 +17,22 @@
       add_offline_request: 'app/components/dialogs/partials/request-add_offline_request.tpl.html',
       add_online_request: 'app/components/dialogs/partials/request-add_online_request.tpl.html',
       add_equipment_request: 'app/components/dialogs/partials/request-add_equipment_request.tpl.html',
+      assign_request: 'app/components/dialogs/partials/request-assign_request.tpl.html',
 
       // DRIVER DIALOGS
       add_driver: 'app/components/dialogs/partials/drivers-add_driver.tpl.html',
       update_driver: 'app/components/dialogs/partials/drivers-update_driver.tpl.html',
+      view_driver: 'app/components/dialogs/partials/drivers-view_driver.tpl.html',
 
       // VEHICLE DIALOGS
       add_vehicle: 'app/components/dialogs/partials/vehicles-add_vehicle.tpl.html',
       update_vehicle: 'app/components/dialogs/partials/vehicles-update_vehicle.tpl.html',
+      view_vehicle: 'app/components/dialogs/partials/vehicles-view_vehicle.tpl.html',
 
       // EQUIPMENT DIALOGS
       add_equipment: 'app/components/dialogs/partials/equipment-add_equipment.tpl.html',
       update_equipment: 'app/components/dialogs/partials/equipment-update_equipment.tpl.html',
+      view_equipment: 'app/components/dialogs/partials/equipment-view_equipment.tpl.html',
 
       // WAREHOUSE DIALOGS
       add_warehouse: 'app/components/dialogs/partials/warehouses-add_warehouse.tpl.html',
@@ -43,6 +47,9 @@
 
       // SMS
       send_message: 'app/components/dialogs/partials/request-send-sms.tpl.html',
+
+      // CUSTOMERS DIALOGS
+      view_customer: 'app/components/dialogs/partials/customers-view_customer.tpl.html',
     };
 
     // CUSTOMIZE DEFAULT CONFIRM BUTTONS
