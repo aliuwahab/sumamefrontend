@@ -10,6 +10,10 @@
   </div>
 </md-toolbar>
 
+<div ng-if="processInProgress" class="top-progress-bar" layout="row">
+  <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+</div>
+
 <div class="view-main-container">
   <h3 class="view-main-title">Customers</h3>
 
@@ -20,6 +24,7 @@
           <thead md-head md-order="query.order" md-on-reorder="getrequests">
             <tr md-row>
               <th md-column><span>CUSTOMER NAME</span></th>
+              <th md-column>CUSTOMER TYPE</th>
               <th md-column>PHONE NUMBER</th>
               <th md-column>LOCATION</th>
               <th md-column></th>
@@ -28,6 +33,10 @@
           <tbody md-body>
             <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in customers.data">
               <td md-cell>{{customer.first_name}} {{customer.last_name}}</td>
+              <td md-cell>
+                <span ng-if="customer.consumer_type == 'business'">Business</span>
+                <span ng-if="customer.consumer_type == 'individual'">Individual</span>
+              </td>
               <td md-cell>{{customer.phone_number}}</td>
               <td md-cell>{{customer.location}}</td>
               <td md-cell>
@@ -37,11 +46,17 @@
                   </md-tooltip>
                   <i class="material-icons">remove_red_eye</i>
                 </button>
-                <button class="md-button md-raised md-warn" ng-click="changeAccountStatus($event, request)">
+                <button class="md-button md-raised md-warn" ng-if="customer.user_block_status == 'unblocked'" ng-click="changeCustomerStatus(customer, 'block')">
                   <md-tooltip md-direction="top">
                     Block Customer
                   </md-tooltip>
-                  <i class="material-icons">delete_forever</i>
+                  <i class="material-icons">block</i>
+                </button>
+                <button class="md-button md-raised md-accent" ng-if="customer.user_block_status == 'blocked'" ng-click="changeCustomerStatus(customer, 'unblock')">
+                  <md-tooltip md-direction="top">
+                    Unblock Customer
+                  </md-tooltip>
+                  <i class="material-icons">done_all</i>
                 </button>
               </td>
             </tr>
