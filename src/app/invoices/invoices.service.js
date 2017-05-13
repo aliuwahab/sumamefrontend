@@ -25,7 +25,7 @@ function InvoicesService($http, AuthService, CacheFactory, ENV) {
       CacheFactory(cache);
     };
 
-    return $http.get(apiBaseURL + '/all/rental/equipment?' + authDataString + '&' + queryOptions, {
+    return $http.get(apiBaseURL + '/invoices?' + authDataString + '&' + queryOptions, {
       cache: CacheFactory.get(cache),
     });
   }

@@ -22,7 +22,7 @@ function InvoicesController($scope, $rootScope, $state, Dialog, InvoicesService,
   function getAllInvoices() {
     $scope.requestsPromise = InvoicesService.getAllInvoices($scope.filterParams)
     .then(function (response) {
-      $scope.invoices = response.data.data.rental_equipment;
+      $scope.invoices = response.data.data.invoices;
     })
     .catch(function (error) {
       $scope.error = error.message;
