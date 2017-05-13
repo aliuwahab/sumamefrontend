@@ -7,6 +7,10 @@
 </div>
 
 <div class="flex-grid" layout="row" ng-if="!loadingStaff">
+  <div class="" layout-align="center center" ng-show="staff.length <= 1">
+    <h2>Add your first staff. You don't have any yet!</h2>
+    <p>Click on the Add New Staff Member button to add staff to your organization.</p>
+  </div>
   <div class="staff-col flip-container" ontouchstart="this.classList.toggle('hover');" ng-repeat="staffmember in staff" ng-if="staffmember.id != authenticatedUser.id">
     <div class="flipper">
       <div class="front">
