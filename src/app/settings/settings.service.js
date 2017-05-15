@@ -113,7 +113,6 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
 
   function addPriceCategory(data) {
     var params = $.param(data);
-
     return $http.post(apiBaseURL + '/create/vehicle/category?' + authDataString + '&' + params);
   }
 
@@ -124,8 +123,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
       '$$hashKey',
     ]);
     var params = $.param(cleanedData);
-    debugger;
-    return $http.post(apiBaseURL + '/update/vehicles/categories?' + authDataString + '&' + params);
+    return $http.post(apiBaseURL + '/update/vehicle/category?' + authDataString + '&' + params);
   }
 
   function deletePriceCategory(data) {
