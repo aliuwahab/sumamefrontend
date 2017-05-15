@@ -27,6 +27,16 @@
           </md-button>
         </md-menu-item>
         <md-menu-item>
+          <md-button ng-click="changeRequestStatus('assigned')">
+            Assigned
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="changeRequestStatus('delivery-in-progress')">
+            Delivery In Progress
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
           <md-button ng-click="changeRequestStatus('declined')">
             Rejected
           </md-button>
