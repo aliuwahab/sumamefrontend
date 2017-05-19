@@ -111,18 +111,17 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
   $scope.updatePriceCategory = function () {
     var stringifiedCategoryPricing = JSON.stringify($scope.categoryPricing);
     $scope.selectedCategory.category_pricing = stringifiedCategoryPricing;
+    $scope.selectedCategory.category_id = $scope.selectedCategory.id;
     $scope.addingPriceCategory = true;
-    debugger;
+
     SettingsService.updatePriceCategory($scope.selectedCategory)
     .then(function (response) {
-      debugger;
       $scope.addingPriceCategory = false;
       ToastsService.showToast('success', 'Category successfully updated!');
       $rootScope.closeDialog();
       reloadPriceCategories();
     })
     .catch(function (error) {
-      debugger;
       $scope.addingPriceCategory = false;
       ToastsService.showToast('error', error.data.message);
       $rootScope.closeDialog();

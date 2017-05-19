@@ -15,6 +15,7 @@ function VehiclesService($http, AuthService, CacheFactory, ENV) {
     getAllVehicles: getAllVehicles,
     addVehicle: addVehicle,
     updateVehicle: updateVehicle,
+    assignVehicleToDriver: assignVehicleToDriver,
   };
 
   return service;
@@ -34,8 +35,12 @@ function VehiclesService($http, AuthService, CacheFactory, ENV) {
 
   function addVehicle(data) {
     var params = $.param(data);
-
     return $http.post(apiBaseURL + '/create/vehicle?' + authDataString + '&' + params);
+  }
+
+  function assignVehicleToDriver(data) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/assign/vehicle/driver?' + authDataString + '&' + params);
   }
 
   function updateVehicle(data) {

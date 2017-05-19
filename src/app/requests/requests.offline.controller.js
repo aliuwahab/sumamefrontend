@@ -27,7 +27,7 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
   $scope.addOfflineRequest = function () {
     populateNewOfflineRequestData();
     $scope.addingRequest = true;
-    debugger;
+
     RequestsService.addRequest($scope.newRequest)
     .then(function (response) {
       $scope.addingRequest = false;

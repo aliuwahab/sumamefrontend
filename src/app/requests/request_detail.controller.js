@@ -7,7 +7,8 @@ angular
 
 /** @ngInject */
 function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stateParams,
-  Dialog, RequestsService, ToastsService, DriversService, Twilio, EquipmentService) {
+  Dialog, RequestsService, ToastsService, DriversService, Twilio, EquipmentService,
+  CachingService) {
 
   activate();
 
@@ -22,34 +23,28 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     RequestsService.getRequest($stateParams.requestId)
     .then(function (response) {
       $scope.request = response.data.data.request_details;
-
-      if ($scope.request.request_type == 'equipment_request') {
-        // getEquipment();
-        $scope.requestLoaded = true;
-      } else {
-        $scope.requestLoaded = true;
-      }
+      $scope.requestLoaded = true;
+      $scope.processInProgress = false;
     })
     .catch(function (error) {
       debugger;
     });
   }
 
-  // TODO: Dispaly driver for already assigned requests
-  $scope.assignRequest = function (driver) {
-    Dialog.confirmAction('Do you want to assign this request to ' + driver.display)
+  $scope.assignRequest = function () {
+    Dialog.confirmAction('Do you want to assign this request to ' + $scope.selectedDriver.display)
     .then(function () {
       $scope.processInProgress = true;
       var data = {
-        driver_id: driver.id,
+        driver_id: $scope.selectedDriver.id,
         request_id: $scope.request.id,
       };
 
       RequestsService.assignRequestToDriver(data)
       .then(function (response) {
-        ToastsService.showToast('success', 'Request has been successfully assigned to',
-        driver.display);
-        $scope.processInProgress = false;
+        response.data.code == 200 ? ToastsService.showToast('success', response.data.message) :
+        ToastsService.showToast('error', response.data.message);
+        reloadRequest();
       })
       .catch(function (error) {
         $scope.processInProgress = false;
@@ -73,10 +68,10 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
       RequestsService.changeRequestStatus(data)
       .then(function (response) {
         ToastsService.showToast('success', 'Request status successfully changed!');
-        $scope.processInProgress = false;
-        getAllRequests();
+        reloadRequest();
       })
       .catch(function (error) {
+        ToastsService.showToast('success', 'Request status successfully changed!');
         $scope.processInProgress = false;
         debugger;
       });
@@ -169,6 +164,12 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
   $scope.openStatusMenu = function ($mdMenu, ev) {
     $mdMenu.open(ev);
   };
+
+  function reloadRequest() {
+    var cache = 'request?id=' + $scope.request.id;
+    CachingService.destroyOnCreateOperation(cache);
+    getRequest();
+  }
 
 }
 })();

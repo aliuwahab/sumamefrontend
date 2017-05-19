@@ -26,25 +26,25 @@
               <th md-column><span>INVOICE NO.</span></th>
               <th md-column>BUSINESS</th>
               <th md-column>AMOUNT</th>
-              <th md-column><span>DUE DATE</span></th>
+              <th md-column><span>INOVICE DATE</span></th>
               <th md-column>STATUS</th>
               <th md-column></th>
             </tr>
           </thead>
           <tbody md-body>
             <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="invoice in invoices.data">
-              <td md-cell>2313</td>
-              <td md-cell>Stanbic Ghana</td>
-              <td md-cell>GHS 345.22</td>
-              <td md-cell>5/05/2017</td>
-              <td md-cell>NOT PAID</td>
+              <td md-cell>{{invoice.id}}</td>
+              <td md-cell>{{invoice.invoice_receiver.business_name}}</td>
+              <td md-cell>GHS {{invoice.total_invoice_amount}}</td>
+              <td md-cell>{{invoice.created_at}}</td>
               <td md-cell>
-                <button class="md-button md-raised md-primary" ng-click="showInvoiceDetails($event, invoice)">
-                  <md-tooltip md-direction="top">
-                    View Invoice Details
-                  </md-tooltip>
+                <span ng-if="invoice.invoice_paid">PAID</span>
+                <span ng-if="!invoice.invoice_paid">NOT PAID</span>
+              </td>
+              <td md-cell>
+                <md-button class="md-raised md-primary" href="#invoice/{{invoice.id}}" aria-label="description" md-ripple-size="full">
                   <i class="material-icons">remove_red_eye</i>
-                </button>
+                </md-button>
                 <button class="md-button md-raised md-accent" ng-click="markInvoiceAsPaid($event, invoice)">
                   <md-tooltip md-direction="top">
                     Mark As Paid

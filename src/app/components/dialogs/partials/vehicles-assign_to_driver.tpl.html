@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Assign Request to Driver</h2>
+        <h2>Assign Vehicle to Driver</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="closeDialog()">
           <i class="material-icons">close</i>
@@ -10,16 +10,11 @@
       </div>
     </md-toolbar>
     <md-dialog-content class="sm-modal-content" style="width:700px;">
-      <div ng-if="assigningRequest" layout="row" layout-align="center center" style="min-height: 40vh;">
+      <div ng-if="loadingDrivers" layout="row" layout-align="center center" style="min-height: 40vh;">
         <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
       </div>
 
-      <div ng-show="!assigningRequest">
-
-        <div class="padded sm-req-online-info" md-whiteframe="3">
-          <p>Assigned driver will receive both SMS and push notifications with the request details and additional instructions.</p>
-        </div>
-
+      <div ng-show="!loadingDrivers">
         <md-input-container class="sm-input-container" style="margin: 0;">
           <md-autocomplete flex required
               md-input-name="driversAutocomplete"
@@ -27,6 +22,7 @@
               md-input-maxlength="18"
               md-no-cache="$scope.noCache"
               md-selected-item="selectedDriver"
+              md-selected-item-change="assignRequest(item)"
               md-search-text="searchText"
               md-items="item in querySearch(searchText)"
               md-item-text="item.display"
@@ -43,7 +39,6 @@
             </div>
           </md-autocomplete>
         </md-input-container>
-
       </div>
 
     </md-dialog-content>
@@ -53,7 +48,7 @@
       <md-button ng-click="closeDialog()" class="md-raised md-warn">
         Cancel
       </md-button>
-      <md-button ng-click="assignRequest()" class="md-raised md-accent">
+      <md-button ng-click="assignVehicle()" class="md-raised md-accent">
         Assign
       </md-button>
     </md-dialog-actions>
