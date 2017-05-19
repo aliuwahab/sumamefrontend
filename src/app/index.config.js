@@ -200,7 +200,7 @@
         name: 'Invoices',
         state: 'app.invoices',
         type: 'link',
-        icon: 'supervisor_account',
+        icon: 'payment',
       },
       {
         id: 'settings',
