@@ -120,8 +120,10 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     var cleanedData = _.omit(data, [
       'created_at',
       'updated_at',
+      'status',
       '$$hashKey',
     ]);
+
     var params = $.param(cleanedData);
     return $http.post(apiBaseURL + '/update/vehicle/category?' + authDataString + '&' + params);
   }
