@@ -6,7 +6,8 @@ angular
     .controller('InvoicesController', InvoicesController);
 
 /** @ngInject */
-function InvoicesController($scope, $rootScope, $state, Dialog, InvoicesService, ToastsService) {
+function InvoicesController($scope, $rootScope, $state, Dialog, InvoicesService,
+  ToastsService) {
 
   activate();
 
@@ -31,16 +32,6 @@ function InvoicesController($scope, $rootScope, $state, Dialog, InvoicesService,
   }
 
   ///////////////////// HELPER FUNCTIONS ///////////////////////
-
-  // SHOW ADD VEHICLE DIALOG
-  $scope.showAddEquipmentDialog = function (ev, invoice) {
-    $scope.selectedInvoice = invoice;
-    Dialog.showCustomDialog(ev, 'add_equipment', $scope);
-  };
-
-  $scope.showInvoiceDetails = function () {
-
-  };
 
   function reloadInvoices() {
     var cache = 'invoices?page=' + $scope.filterParams.page + 'limit=' +
