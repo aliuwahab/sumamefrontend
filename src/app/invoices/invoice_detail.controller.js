@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function InvoiceDetailController($scope, $rootScope, $state, $stateParams, Dialog, InvoicesService,
-  ToastsService) {
+  ToastsService, CachingService) {
 
   activate();
 
@@ -46,12 +46,10 @@ function InvoiceDetailController($scope, $rootScope, $state, $stateParams, Dialo
 
       InvoicesService.changeInvoicePaymentStatus(data)
       .then(function (response) {
-        debugger;
         ToastsService.showToast('success', 'Inovice status successfully changed!');
         reloadInvoice();
       })
       .catch(function (error) {
-        debugger;
         ToastsService.showToast('error', 'There was a problem changing invoice status!');
         $scope.processInProgress = false;
         debugger;
