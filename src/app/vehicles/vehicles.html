@@ -14,6 +14,10 @@
   </div>
 </md-toolbar>
 
+<div ng-if="processInProgress" class="top-progress-bar" layout="row">
+  <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+</div>
+
 <div class="view-main-container">
   <h3 class="view-main-title">Courier Vehicles</h3>
 
@@ -36,7 +40,7 @@
               <td md-cell>{{vehicle.vehicle_name}}</td>
               <td md-cell>{{vehicle.vehicle_type}}</td>
               <td md-cell>{{vehicle.vehicle_registration_number}}</td>
-              <td md-cell>{{vehicle.vehicle_driver}}</td>
+              <td md-cell>{{vehicle.assigned_driver.first_name}} {{vehicle.assigned_driver.last_name}}</td>
               <td md-cell>{{vehicle.current_status}}</td>
               <td md-cell>
                 <button class="md-button md-raised md-primary" ng-click="showViewVehicleDialog($event, vehicle)">
@@ -44,6 +48,12 @@
                     View Vehicle Details
                   </md-tooltip>
                   <i class="material-icons">remove_red_eye</i>
+                </button>
+                <button class="md-button md-raised md-primary" ng-click="showAssignVehicleDialog($event, vehicle)">
+                  <md-tooltip md-direction="top">
+                    Assign to a driver
+                  </md-tooltip>
+                  <i class="material-icons">person_add</i>
                 </button>
                 <button class="md-button md-raised md-accent" ng-click="showUpdateVehicleDialog($event, vehicle)">
                   <md-tooltip md-direction="top">

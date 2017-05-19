@@ -28,6 +28,7 @@
       add_vehicle: 'app/components/dialogs/partials/vehicles-add_vehicle.tpl.html',
       update_vehicle: 'app/components/dialogs/partials/vehicles-update_vehicle.tpl.html',
       view_vehicle: 'app/components/dialogs/partials/vehicles-view_vehicle.tpl.html',
+      assign_vehicle: 'app/components/dialogs/partials/vehicles-assign_to_driver.tpl.html',
 
       // EQUIPMENT DIALOGS
       add_equipment: 'app/components/dialogs/partials/equipment-add_equipment.tpl.html',
