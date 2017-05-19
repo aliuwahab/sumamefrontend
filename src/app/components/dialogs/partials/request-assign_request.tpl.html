@@ -17,7 +17,6 @@
       <div ng-show="!assigningRequest">
 
         <div class="padded sm-req-online-info" md-whiteframe="3">
-          <!-- <h5 class="sm-req-online-info-title">Important Info!</h5> -->
           <p>Assigned driver will receive both SMS and push notifications with the request details and additional instructions.</p>
         </div>
 
@@ -28,7 +27,6 @@
               md-input-maxlength="18"
               md-no-cache="$scope.noCache"
               md-selected-item="selectedDriver"
-              md-selected-item-change="assignRequest(item)"
               md-search-text="searchText"
               md-items="item in querySearch(searchText)"
               md-item-text="item.display"
@@ -55,8 +53,8 @@
       <md-button ng-click="closeDialog()" class="md-raised md-warn">
         Cancel
       </md-button>
-      <md-button ng-click="addOnlineRequest()" class="md-raised md-accent">
-        Submit Request
+      <md-button ng-click="assignRequest()" class="md-raised md-accent">
+        Assign
       </md-button>
     </md-dialog-actions>
   </form>

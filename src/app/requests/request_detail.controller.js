@@ -31,20 +31,19 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     });
   }
 
-  // TODO: Dispaly driver for already assigned requests
-  $scope.assignRequest = function (driver) {
-    Dialog.confirmAction('Do you want to assign this request to ' + driver.display)
+  $scope.assignRequest = function () {
+    Dialog.confirmAction('Do you want to assign this request to ' + $scope.selectedDriver.display)
     .then(function () {
       $scope.processInProgress = true;
       var data = {
-        driver_id: driver.id,
+        driver_id: $scope.selectedDriver.id,
         request_id: $scope.request.id,
       };
 
       RequestsService.assignRequestToDriver(data)
       .then(function (response) {
-        ToastsService.showToast('success', 'Request has been successfully assigned to',
-        driver.display);
+        response.data.code == 200 ? ToastsService.showToast('success', response.data.message) :
+        ToastsService.showToast('error', response.data.message);
         reloadRequest();
       })
       .catch(function (error) {
