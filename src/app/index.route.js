@@ -183,7 +183,7 @@
     .state('app.invoice', {
       url: '/invoice/:invoiceId',
       templateUrl: 'app/invoices/invoice_detail.html',
-      controller: 'InvoicesController',
+      controller: 'InvoiceDetailController',
       data: {
         permissions: {
           only: function () {
