@@ -13,6 +13,8 @@ function InvoicesService($http, AuthService, CacheFactory, ENV) {
 
   var service = {
     getAllInvoices: getAllInvoices,
+    getInvoice: getInvoice,
+    changeInvoicePaymentStatus: changeInvoicePaymentStatus,
   };
 
   return service;
@@ -28,6 +30,23 @@ function InvoicesService($http, AuthService, CacheFactory, ENV) {
     return $http.get(apiBaseURL + '/invoices?' + authDataString + '&' + queryOptions, {
       cache: CacheFactory.get(cache),
     });
+  }
+
+  function getInvoice(id) {
+    var cache = 'invoice?id=' + id;
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.get(apiBaseURL + '/view/invoice?' + authDataString + '&invoice_id=' + id, {
+      cache: CacheFactory.get(cache),
+    });
+  }
+
+  function changeInvoicePaymentStatus(data) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/update/invoice?' + authDataString + '&' + params);
   }
 }
 })();
