@@ -31,7 +31,7 @@
               <th md-column>CATEGORY</th>
               <th md-column>REGISTRATION</th>
               <th md-column>DRIVER</th>
-              <th md-column>CURRENT STATUS</th>
+              <th md-column>IN DELIVERY?</th>
               <th md-column></th>
             </tr>
           </thead>
@@ -40,8 +40,11 @@
               <td md-cell>{{vehicle.vehicle_name}}</td>
               <td md-cell>{{vehicle.vehicle_type}}</td>
               <td md-cell>{{vehicle.vehicle_registration_number}}</td>
-              <td md-cell>{{vehicle.assigned_driver.first_name}} {{vehicle.assigned_driver.last_name}}</td>
-              <td md-cell>{{vehicle.current_status}}</td>
+              <td md-cell>{{vehicle.driver.first_name}} {{vehicle.driver.last_name}}</td>
+              <td md-cell>
+                <span ng-if="vehicle.in_delivery">Yes</span>
+                <span ng-if="!vehicle.in_delivery">No</span>
+              </td>
               <td md-cell>
                 <button class="md-button md-raised md-primary" ng-click="showViewVehicleDialog($event, vehicle)">
                   <md-tooltip md-direction="top">
