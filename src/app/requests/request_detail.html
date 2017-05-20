@@ -110,7 +110,26 @@
                   <i class="material-icons">today</i> <span class="bold-span">Days Requested: </span> 45 Days
                 </div>
                 <div class="sm-rq-pkg-details-container">
-                  <i class="material-icons">payment</i> <span class="bold-span">Total Cost: </span> GHS {{request.request_cost | number:2}}
+                  <i class="material-icons">payment</i> <span class="bold-span">Total Cost:
+                    <span ng-if="!showInput">GHS {{request.request_cost | number:2}}</span>
+                    <span ng-if="showInput"> <input class="sm-rq-cost-input" type="text" ng-model="newRequestData.new_request_cost"> </span>
+                    <span>
+                      <md-button class="sm-rq-sms-button" aria-label="description" ng-show="!showInput" ng-click="showInput = true">
+                        <i class="material-icons sm-rq-message-icon">edit</i>
+                        <md-tooltip md-direction="bottom">
+                          Change the cost of this request
+                      </md-button>
+                      <md-button class="sm-rq-sms-button" aria-label="description" ng-show="showInput" ng-click="changeRequestCost()">
+                        <i class="material-icons sm-rq-message-icon">done</i>
+                        <md-tooltip md-direction="bottom">
+                          Save
+                      </md-button>
+                      <md-button class="sm-rq-sms-button" aria-label="description" ng-show="showInput" ng-click="showInput = false">
+                        <i class="material-icons sm-rq-message-icon">close</i>
+                        <md-tooltip md-direction="bottom">
+                          Cancel
+                      </md-button>
+                    </span>
                 </div>
               </div>
             </div>
@@ -196,7 +215,27 @@
                 <i class="material-icons">today</i> <span class="bold-span">Date Created: </span> {{request.created_at}}
               </div>
               <div class="sm-rq-pkg-details-container">
-                <i class="material-icons">payment</i> <span class="bold-span">Total Cost: </span> GHS {{request.request_cost | number:2}}
+                <i class="material-icons">payment</i>
+                <span class="bold-span">Total Cost: </span>
+                <span ng-if="!showInput">GHS {{request.request_cost | number:2}}</span>
+                <span ng-if="showInput"> <input class="sm-rq-cost-input" type="text" ng-model="newRequestData.new_request_cost"> </span>
+                <span>
+                  <md-button class="sm-rq-sms-button" aria-label="description" ng-show="!showInput" ng-click="showInput = true">
+                    <i class="material-icons sm-rq-message-icon">edit</i>
+                    <md-tooltip md-direction="bottom">
+                      Change the cost of this request
+                  </md-button>
+                  <md-button class="sm-rq-sms-button" aria-label="description" ng-show="showInput" ng-click="changeRequestCost()">
+                    <i class="material-icons sm-rq-message-icon">done</i>
+                    <md-tooltip md-direction="bottom">
+                      Save
+                  </md-button>
+                  <md-button class="sm-rq-sms-button" aria-label="description" ng-show="showInput" ng-click="showInput = false">
+                    <i class="material-icons sm-rq-message-icon">close</i>
+                    <md-tooltip md-direction="bottom">
+                      Cancel
+                  </md-button>
+                </span>
               </div>
             </div>
             <div class="" flex="50">
@@ -294,7 +333,26 @@
                 <i class="material-icons">payment</i> <span class="bold-span">Total Value of Item: </span> GHS {{request.request_item_value | number:2}}
               </div>
               <div class="sm-rq-pkg-details-container">
-                <i class="material-icons">payment</i> <span class="bold-span">Total Cost: </span> GHS {{request.request_cost | number:2}}
+                <i class="material-icons">payment</i> <span class="bold-span">Total Cost: </span>
+                <span ng-if="!showInput">GHS {{request.request_cost | number:2}}</span>
+                <span ng-if="showInput"> <input class="sm-rq-cost-input" type="text" ng-model="newRequestData.new_request_cost"> </span>
+                <span>
+                  <md-button class="sm-rq-sms-button" aria-label="description" ng-show="!showInput" ng-click="showInput = true">
+                    <i class="material-icons sm-rq-message-icon">edit</i>
+                    <md-tooltip md-direction="bottom">
+                      Change the cost of this request
+                  </md-button>
+                  <md-button class="sm-rq-sms-button" aria-label="description" ng-show="showInput" ng-click="changeRequestCost()">
+                    <i class="material-icons sm-rq-message-icon">done</i>
+                    <md-tooltip md-direction="bottom">
+                      Save
+                  </md-button>
+                  <md-button class="sm-rq-sms-button" aria-label="description" ng-show="showInput" ng-click="showInput = false">
+                    <i class="material-icons sm-rq-message-icon">close</i>
+                    <md-tooltip md-direction="bottom">
+                      Cancel
+                  </md-button>
+                </span>
               </div>
             </div>
             <div class="" flex="50">

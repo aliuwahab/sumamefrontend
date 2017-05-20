@@ -18,6 +18,7 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
     addRequest: addRequest,
     cancelRequest: cancelRequest,
     changeRequestStatus: changeRequestStatus,
+    changeRequestCost: changeRequestCost,
   };
 
   return service;
@@ -49,25 +50,26 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
 
   function assignRequestToDriver(data) {
     var params = $.param(data);
-
     return $http.post(apiBaseURL + '/assign/request?' + authDataString + '&' + params);
   }
 
   function changeRequestStatus(data) {
     var params = $.param(data);
-
     return $http.post(apiBaseURL + '/change/request/status?' + authDataString + '&' + params);
+  }
+
+  function changeRequestCost(data) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/change/request/cost?' + authDataString + '&' + params);
   }
 
   function addRequest(data) {
     var params = $.param(data);
-
     return $http.post(apiBaseURL + '/make/request?' + authDataString + '&' + params);
   }
 
   function cancelRequest(data) {
     var params = $.param(data);
-
     return $http.post(apiBaseURL + '/cancel/request?' + authDataString + '&' + params);
   }
 
