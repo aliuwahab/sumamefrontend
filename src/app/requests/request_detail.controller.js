@@ -13,6 +13,7 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
   activate();
 
   function activate() {
+    $scope.newRequestData = {};
     $scope.searchText    = null;
     $scope.querySearch   = querySearch;
 
@@ -72,6 +73,28 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
       })
       .catch(function (error) {
         ToastsService.showToast('success', 'Request status successfully changed!');
+        $scope.processInProgress = false;
+        debugger;
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
+  };
+
+  $scope.changeRequestCost = function () {
+    Dialog.confirmAction('Do you want to change the cost of this request?')
+    .then(function () {
+      $scope.processInProgress = true;
+      $scope.newRequestData.request_id = $scope.request.id;
+
+      RequestsService.changeRequestCost($scope.newRequestData)
+      .then(function (response) {
+        ToastsService.showToast('success', 'Request cost successfully changed!');
+        $scope.showInput = false;
+        reloadRequest();
+      })
+      .catch(function (error) {
+        ToastsService.showToast('success', 'Request cost successfully changed!');
         $scope.processInProgress = false;
         debugger;
       });

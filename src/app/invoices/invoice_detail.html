@@ -73,7 +73,7 @@
                   <h4><span ng-if="$index < 10">0</span>{{$index + 1}}</h4>
                 </div>
                 <div class="invoice-item-description">
-                  <h4>{{item.requester.first_name}} {{item.requester.last_name}}</h4>
+                  <h4>{{item.requester.first_name || 'Unknown'}} {{item.requester.last_name || 'Requester'}}</h4>
                   <p>{{item.pickup_location_name}} - {{item.delivery_location_name}}</p>
                   <p class="invoice-item-date">24th September, 2017</p>
                 </div>
