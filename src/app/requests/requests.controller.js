@@ -70,27 +70,32 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
   };
 
   $scope.cancelRequest = function (request) {
-    Dialog.confirmAction('Do you want to cancel this request?')
-    .then(function () {
-      $scope.processInProgress = true;
-      var data = {
-        admin_id: $rootScope.authenticatedUser.id,
-        request_id: request.id,
-      };
+    if (request.request_status != 'pending' && request.request_status != 'declined') {
+      ToastsService.showToast('error', request.request_status +
+      ' requests cannot be deleted');
+    } else {
+      Dialog.confirmAction('Do you want to cancel this request?')
+      .then(function () {
+        $scope.processInProgress = true;
+        var data = {
+          admin_id: $rootScope.authenticatedUser.id,
+          request_id: request.id,
+        };
 
-      RequestsService.cancelRequest(data)
-      .then(function (response) {
-        ToastsService.showToast('success', 'Request has been successfully cancelled');
-        $scope.processInProgress = false;
-        reloadRequests();
-      })
-      .catch(function (error) {
-        $scope.processInProgress = false;
-        debugger;
+        RequestsService.cancelRequest(data)
+        .then(function (response) {
+          ToastsService.showToast('success', 'Request has been successfully cancelled');
+          $scope.processInProgress = false;
+          reloadRequests();
+        })
+        .catch(function (error) {
+          $scope.processInProgress = false;
+          debugger;
+        });
+      }, function () {
+        // Dialog has been canccelled
       });
-    }, function () {
-      // Dialog has been canccelled
-    });
+    }
   };
 
   ////////////////////// HELPER FUNCTIONS ///////////////////////////
