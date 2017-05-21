@@ -19,6 +19,7 @@
       <div class="sm-driver-info" layout="row">
         <div class="sm-driver-info-column left">
           <p ng-if="selectedCustomer.email" class="sm-cs-info-contact"><i class="material-icons">mail_outline</i>  {{selectedCustomer.email}}</p>
+          <p ng-if="selectedCustomer.account_confirmation_code" class="sm-cs-info-contact"><i class="material-icons">mail_outline</i> Confirmation Code: {{selectedCustomer.account_confirmation_code}}</p>
         </div>
         <div class="sm-driver-info-column right">
           <p ng-if="selectedCustomer.phone_number" class="sm-cs-info-contact"><i class="material-icons">phone_android</i>  {{selectedCustomer.phone_number}}</p>
