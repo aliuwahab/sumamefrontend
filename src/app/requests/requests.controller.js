@@ -25,6 +25,19 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
       $scope.selectedStatus = $stateParams.requestStatus;
     }
 
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher(ENV.pusherApiKey, {
+      cluster: 'eu',
+      encrypted: true,
+    });
+
+    var channel = pusher.subscribe('requests');
+    channel.bind('request_added', function (data) {
+      debugger;
+    });
+
     getAllRequests();
   }
 
