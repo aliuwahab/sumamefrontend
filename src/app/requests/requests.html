@@ -6,15 +6,7 @@
       </md-icon>
     </md-button>
 
-    <md-input-container flex="20" flex-sm="100" class="sm-toolbar-select">
-      <md-select ng-model="selectedStatus" placeholder="Filter by Status" ng-change="filterByRequestStatus()">
-        <md-option value="all_requests">All Requests</md-option>
-        <md-option value="pending">Pending</md-option>
-        <md-option value="assigned">Assigned</md-option>
-        <md-option value="delivery-in-progress">In Progress</md-option>
-        <md-option value="delivered">Delivered</md-option>
-      </md-select>
-    </md-input-container>
+    <!-- <h3 class="view-main-title">Requests</h3> -->
 
     <span flex></span>
 
@@ -66,45 +58,43 @@
 </div>
 
 <div class="view-main-container">
-  <h3 class="view-main-title">{{viewName || 'Requests'}}</h3>
+
+  <div class="" layout="row">
+    <md-card class="sm-st-item-card" ng-style="viewName =='pending' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.pending')">
+      <md-card-content>
+        <img src="../assets/icons/staff.png" alt="" class="sm-st-item-icon">
+        <h2 class="sm-st-item-title">Pending</h2>
+      </md-card-content>
+    </md-card>
+    <md-card class="sm-st-item-card" ng-style="viewName =='assigned' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.assigned')">
+      <md-card-content>
+        <img src="../assets/icons/staff.png" alt="" class="sm-st-item-icon">
+        <h2 class="sm-st-item-title">Assigned</h2>
+      </md-card-content>
+    </md-card>
+    <md-card class="sm-st-item-card" ng-style="viewName == 'delivery-in-progress' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.delivery-in-progress')">
+      <md-card-content>
+        <img src="../assets/icons/warehouse.png" alt="" class="sm-st-item-icon">
+        <h2 class="sm-st-item-title">In Progress</h2>
+      </md-card-content>
+    </md-card>
+    <md-card class="sm-st-item-card" ng-style="viewName =='declined' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.declined')">
+      <md-card-content>
+        <img src="../assets/icons/price-tag.png" alt="" class="sm-st-item-icon">
+        <h2 class="sm-st-item-title">Declined</h2>
+      </md-card-content>
+    </md-card>
+    <md-card class="sm-st-item-card" ng-style="viewName =='completed' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.completed')">
+      <md-card-content>
+        <img src="../assets/icons/price-tag.png" alt="" class="sm-st-item-icon">
+        <h2 class="sm-st-item-title">Completed</h2>
+      </md-card-content>
+    </md-card>
+  </div>
 
   <md-card>
-    <md-card-content>
-      <md-table-container>
-        <table md-table md-progress="requestsPromise">
-          <thead md-head md-order="query.order" md-on-reorder="getrequests">
-            <tr md-row>
-              <!-- <th md-column><span>REQUEST ID</span></th> -->
-              <th md-column><span>TIME REQUESTED</span></th>
-              <th md-column><span>CUSTOMER NAME</span></th>
-              <!-- <th md-column>REQUEST TYPE</th> -->
-              <th md-column>DELIVER TO</th>
-              <th md-column>REQUEST STATUS</th>
-              <th md-column></th>
-            </tr>
-          </thead>
-          <tbody md-body>
-            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in requests.data">
-              <!-- <td md-cell>{{request.id}}</td> -->
-              <td md-cell>{{request.created_at | date:'medium'}}</td>
-              <td md-cell>{{request.requester.first_name}} {{request.requester.last_name}}</td>
-              <!-- <td md-cell>{{request.request_type}}</td> -->
-              <td md-cell>{{request.delivery_location_name}}</td>
-              <td md-cell>{{request.request_status}}</td>
-              <td md-cell>
-                <md-button class="md-raised md-primary" href="#request/{{request.id}}" aria-label="description" md-ripple-size="full">
-                  <i class="material-icons">remove_red_eye</i>
-                </md-button>
-                <md-button class="md-raised md-warn" aria-label="description" md-ripple-size="full" ng-click="cancelRequest(request)">
-                  <i class="material-icons">cancel</i>
-                </md-button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </md-table-container>
+    <md-card-content ui-view>
 
-      <md-table-pagination md-limit="queryParams.limit" md-limit-options="[50, 100, 200]" md-page="queryParams.page" md-total="{{requests.total}}" md-on-paginate="getrequests" md-page-select></md-table-pagination>
     </md-card-content>
   </md-card>
 </div>

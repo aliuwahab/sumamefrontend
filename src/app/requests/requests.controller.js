@@ -8,15 +8,20 @@ angular
 /** @ngInject */
 function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
   ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
-  SettingsService, EquipmentService, ENV) {
+  SettingsService, EquipmentService, localStorageService, ngAudio, ENV) {
 
   activate();
 
   function activate() {
 
+    var currentView = localStorageService.get('selectedRequestsView') || 'app.requests.pending';
+    $scope.viewName = getStateName(currentView);
+    $state.transitionTo(currentView);
+
     $scope.filterParams = {
       limit: 20,
       page: 1,
+      request_status: $scope.viewName,
     };
 
     if ($stateParams && ($stateParams.referer == 'dashboard')) {
@@ -24,6 +29,8 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
       $scope.filterParams.request_status = $stateParams.requestStatus;
       $scope.selectedStatus = $stateParams.requestStatus;
     }
+
+    $scope.newRequestSound = ngAudio.load('../assets/sounds/bbm.mp3');
 
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
@@ -33,53 +40,28 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
       encrypted: true,
     });
 
-    var channel = pusher.subscribe('requests');
-    channel.bind('request_added', function (data) {
-      debugger;
-    });
+    var channel = pusher.subscribe('request');
 
-    getAllRequests();
+    channel.bind('request-made', function (data) {
+      $scope.newRequestSound.play();
+      reloadRequests(data.request.request_status);
+    });
   }
 
   // GET ALL REQUESTS
-  function getAllRequests() {
-    $scope.requestsPromise = RequestsService.getRequests($scope.filterParams)
+  $scope.getAllRequests = function (status) {
+    status ? $scope.filterParams.request_status = status : false;
+    var requestsName = status + 'Requests';
+    var promiseName = status + 'RequestsPromise';
+
+    $scope[promiseName] = RequestsService.getRequests($scope.filterParams)
     .then(function (response) {
-      $scope.requests = response.data.data.all_request;
+      $scope[requestsName] = response.data.data.all_request;
     })
     .catch(function (error) {
       $scope.error = error.message;
       debugger;
     });
-  }
-
-  $scope.filterByRequestStatus = function () {
-    switch ($scope.selectedStatus) {
-      case 'pending':
-        $scope.filterParams.request_status = $scope.selectedStatus;
-        $scope.viewName = 'Pending Requests';
-        getAllRequests();
-        break;
-      case 'assigned':
-        $scope.filterParams.request_status = $scope.selectedStatus;
-        $scope.viewName = 'Assigned Requests';
-        getAllRequests();
-        break;
-      case 'delivery-in-progress':
-        $scope.filterParams.request_status = $scope.selectedStatus;
-        $scope.viewName = 'In-Progress Requests';
-        getAllRequests();
-        break;
-      case 'delivered':
-        $scope.filterParams.request_status = $scope.selectedStatus;
-        $scope.viewName = 'Completed Requests';
-        getAllRequests();
-        break;
-      default:
-        delete $scope.filterParams.request_status;
-        $scope.viewName = 'Requests';
-        getAllRequests();
-    }
   };
 
   $scope.cancelRequest = function (request) {
@@ -128,11 +110,36 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     reloadRequests();
   });
 
-  function reloadRequests() {
-    var requestsCache = 'requests?page=' +
-    $scope.filterParams.page + 'limit=' + $scope.filterParams.limit;
+  $scope.changeRequestsTab = function (stateName) {
+    $state.go(stateName);
+    setCurrentView(stateName);
+    $scope.viewName = getStateName(stateName);
+  };
+
+  function setCurrentView(stateName) {
+    localStorageService.set('selectedRequestsView', stateName);
+  }
+
+  function getStateName(state) {
+    var pointIndex = state.lastIndexOf('.');
+    var stateName = state.substring(pointIndex + 1);
+    return stateName;
+  }
+
+  function reloadRequests(status) {
+    status ? $scope.filterParams.request_status = status : false;
+    var requestsCache = 'requests?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(requestsCache);
-    getAllRequests();
+    var requestsName = status + 'Requests';
+
+    RequestsService.getRequests($scope.filterParams)
+    .then(function (response) {
+      $scope[requestsName] = response.data.data.all_request;
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      debugger;
+    });
   }
 
 }

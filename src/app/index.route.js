@@ -78,6 +78,96 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.requests.pending', {
+      parent: 'app.requests',
+      url: '/pending',
+      templateUrl: 'app/requests/pending/pending.html',
+      controller: 'PendingRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.assigned', {
+      parent: 'app.requests',
+      url: '/assigned',
+      templateUrl: 'app/requests/assigned/assigned.html',
+      controller: 'AssignedRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.delivery-in-progress', {
+      parent: 'app.requests',
+      url: '/in-progress',
+      templateUrl: 'app/requests/in_progress/in_progress.html',
+      controller: 'InProgressRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.declined', {
+      parent: 'app.requests',
+      url: '/declined',
+      templateUrl: 'app/requests/declined/declined.html',
+      controller: 'DeclinedRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.completed', {
+      parent: 'app.requests',
+      url: '/completed',
+      templateUrl: 'app/requests/completed/completed.html',
+      controller: 'CompletedRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
     .state('app.request', {
       url: '/request/:requestId',
       templateUrl: 'app/requests/request_detail.html',

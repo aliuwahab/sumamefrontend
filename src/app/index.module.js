@@ -37,6 +37,7 @@
       'ngMap',
       'twilio',
       'mgo-angular-wizard',
+      'ngAudio',
     ]);
 
 })();

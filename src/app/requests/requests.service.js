@@ -25,7 +25,7 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
 
   function getRequests(params) {
     var queryOptions = $.param(params);
-    var cache = 'requests?page=' + params.page + 'limit=' + params.limit;
+    var cache = 'requests?' + queryOptions;
 
     if (!CacheFactory.get(cache)) {
       CacheFactory(cache);
