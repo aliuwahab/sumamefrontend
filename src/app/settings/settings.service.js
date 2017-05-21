@@ -93,7 +93,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
       CacheFactory(cache);
     };
 
-    return $http.get(apiBaseURL + '/all/price/estimates?' + authDataString, {
+    return $http.get(ENV.absoluteApiBaseURL + '/all/price/estimates?' + authDataString, {
       cache: CacheFactory.get(cache),
     });
   }
