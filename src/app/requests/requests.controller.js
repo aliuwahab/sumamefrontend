@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
   ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
-  SettingsService, EquipmentService) {
+  SettingsService, EquipmentService, ENV) {
 
   activate();
 
