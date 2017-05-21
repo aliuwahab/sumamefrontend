@@ -6,7 +6,7 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, $httpProvider, $authProvider, toastrConfig, $momentProvider,
+  function config($logProvider, $compileProvider, $httpProvider, $authProvider, toastrConfig, $momentProvider,
     ssSideNavSectionsProvider, $mdThemingProvider, $mdIconProvider, momentPickerProvider, $provide,
     gravatarServiceProvider, localStorageServiceProvider, RollbarProvider, CacheFactoryProvider,
     segmentProvider, segmentEvents, ChartJsProvider, TwilioProvider, ENV) {
@@ -18,7 +18,8 @@
     });
 
     // Enable log
-    $logProvider.debugEnabled(true);
+    $logProvider.debugEnabled(ENV.debug);
+    $compileProvider.debugInfoEnabled(ENV.debug);
 
     RollbarProvider.init({
       accessToken: ENV.rollbarAccessToken,

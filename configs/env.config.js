@@ -11,7 +11,7 @@ var shared = {
   twilioAccountSid: process.env.TWILIO_ACCOUNT_SID,
   twilioAuthToken: process.env.TWILIO_AUTH_TOKEN,
   fakerAPIBaseURL: process.env.FAKER_API_BASE_URL,
-  debug: process.env.DEBUG || true,
+  debug: process.env.DEBUG || false,
 };
 
 // Mashup of all ENV Vars
