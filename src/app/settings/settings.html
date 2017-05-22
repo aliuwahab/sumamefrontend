@@ -6,6 +6,8 @@
       </md-icon>
     </md-button>
 
+    <h3 class="view-main-title">{{viewName | capitalize:'first'}}</h3>
+
     <span flex></span>
 
     <div ng-if="viewName == 'staff'">
@@ -36,7 +38,6 @@
 </md-toolbar>
 
 <div class="view-main-container">
-  <h3 class="view-main-title">{{viewName | capitalize:'first'}}</h3>
 
   <div class="" layout="row">
     <md-card class="sm-st-item-card" ng-style="viewName =='staff' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeSettingsTab('app.settings.staff')">
