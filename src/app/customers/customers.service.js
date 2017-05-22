@@ -14,6 +14,7 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
   var service = {
     getAllCustomers: getAllCustomers,
     changeCustomerStatus: changeCustomerStatus,
+    searchCustomers: searchCustomers,
   };
 
   return service;
@@ -34,6 +35,19 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
   function changeCustomerStatus(data, action) {
     var params = $.param(data);
     return $http.post(apiBaseURL + '/' + action + '/user?' + authDataString + '&' + params);
+  }
+
+  function searchCustomers(params) {
+    var queryOptions = $.param(params);
+    var cache = 'customers?' + queryOptions;
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.post(apiBaseURL + '/search/consumers?' + authDataString + '&' + queryOptions, {
+      cache: CacheFactory.get(cache),
+    });
   }
 
 }

@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
   ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
-  SettingsService, EquipmentService, localStorageService, ngAudio, ENV) {
+  SettingsService, EquipmentService, localStorageService, ngAudio, CustomersService, ENV) {
 
   activate();
 
@@ -43,7 +43,10 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     var channel = pusher.subscribe('request');
 
     channel.bind('request-made', function (data) {
-      $scope.newRequestSound.play();
+      if (!data.request.request_source || data.request.request_source != 'admin') {
+        $scope.newRequestSound.play();
+      }
+
       reloadRequests(data.request.request_status);
     });
   }

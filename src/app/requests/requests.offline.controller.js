@@ -8,15 +8,16 @@ angular
 /** @ngInject */
 function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
   ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
-  SettingsService, UploadService) {
+  SettingsService, UploadService, CustomersService) {
 
   activate();
 
   function activate() {
+    $scope.data = {};
     $scope.newRequest = {
       request_type: 'offline_delivery',
-      requester_id: $rootScope.authenticatedUser.id,
       request_status: 'pending',
+      request_source: 'admin',
     };
     $scope.offlineWizardCurrentStep = 0;
     $scope.mapping = {};
@@ -43,7 +44,9 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
   $scope.offlineRequestNextStep = function () {
 
     if ($scope.offlineWizardCurrentStep == 0) {
-      if ($scope.mapping.pickupLocation.latitude && $scope.mapping.deliveryLocation.latitude) {
+      if ($scope.mapping.pickupLocation.latitude &&
+        $scope.mapping.deliveryLocation.latitude &&
+        $scope.data.selectedCustomer) {
         executeNextStep();
         PriceCalculator.calculateDeliveryDistance($scope.mapping.pickupLocation,
         $scope.mapping.deliveryLocation)
@@ -54,7 +57,7 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
           debugger;
         });
       }else {
-        ToastsService.showToast('error', 'Please enter valid locations for pickup and delivery');
+        ToastsService.showToast('error', 'Please enter valid locations and CustomersService');
       }
     } else if ($scope.offlineWizardCurrentStep == 1) {
       if ($scope.selectedServiceCategory && $scope.deliveryDistance) {
@@ -119,6 +122,7 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
 
     $scope.newRequest.estimated_delivery_distance = $scope.deliveryDistance;
     $scope.newRequest.request_cost = $scope.calculatedFare.totalFare;
+    $scope.newRequest.requester_id = $scope.data.selectedCustomer.id;
   }
 
   function loadAllVehicleCategories() {
@@ -159,6 +163,17 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
     }else {
       ToastsService.showToast('error', 'Please select a valid file');
     }
+  };
+
+  /// SEARCH FUNCTION
+  $scope.querySearch = function (query) {
+    return CustomersService.searchCustomers({ search_key: query, limit: 10, page: 1 })
+    .then(function (customersResults) {
+      return customersResults.data.data.search_results.data;
+    })
+    .catch(function (error) {
+      debugger;
+    });
   };
 
 }

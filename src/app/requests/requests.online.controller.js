@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function OnlineRequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
   ToastsService, RequestsService, PriceCalculator, CachingService, UploadService,
-  SettingsService) {
+  SettingsService, CustomersService) {
 
   activate();
 
@@ -17,9 +17,9 @@ function OnlineRequestsController($scope, $rootScope, $state, $timeout, $statePa
     $scope.loadingRequiredOnlineRequestData = true;
     $scope.newRequest = {
       request_type: 'online_purchase_delivery',
-      requester_id: $rootScope.authenticatedUser.id,
       request_status: 'pending',
       estimated_delivery_distance: 0,
+      request_source: 'admin',
     };
     loadAllWarehouses();
   }
@@ -60,6 +60,8 @@ function OnlineRequestsController($scope, $rootScope, $state, $timeout, $statePa
     $scope.newRequest.delivery_location_name = $scope.mapping.deliveryLocation.name;
     $scope.newRequest.delivery_location_latitude = $scope.mapping.deliveryLocation.latitude;
     $scope.newRequest.delivery_location_longitude = $scope.mapping.deliveryLocation.longitude;
+
+    $scope.newRequest.requester_id = $scope.data.selectedCustomer.id;
   }
 
   function loadAllWarehouses() {
@@ -113,6 +115,17 @@ function OnlineRequestsController($scope, $rootScope, $state, $timeout, $statePa
     }else {
       ToastsService.showToast('error', 'Please select a valid file');
     }
+  };
+
+  /// SEARCH FUNCTION
+  $scope.querySearch = function (query) {
+    return CustomersService.searchCustomers({ search_key: query, limit: 10, page: 1 })
+    .then(function (customersResults) {
+      return customersResults.data.data.search_results.data;
+    })
+    .catch(function (error) {
+      debugger;
+    });
   };
 
 }
