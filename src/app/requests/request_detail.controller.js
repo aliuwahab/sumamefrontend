@@ -13,10 +13,6 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
   activate();
 
   function activate() {
-    $scope.newRequestData = {};
-    $scope.searchText    = null;
-    $scope.querySearch   = querySearch;
-
     getRequest();
   }
 
@@ -33,11 +29,12 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
   }
 
   $scope.assignRequest = function () {
-    Dialog.confirmAction('Do you want to assign this request to ' + $scope.selectedDriver.display)
+    Dialog.confirmAction('Do you want to assign this request to ' +
+    $scope.data.selectedDriver.first_name + $scope.data.selectedDriver.last_name)
     .then(function () {
       $scope.processInProgress = true;
       var data = {
-        driver_id: $scope.selectedDriver.id,
+        driver_id: $scope.data.selectedDriver.id,
         request_id: $scope.request.id,
       };
 
@@ -144,41 +141,6 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
   }
 
   ///////////////// HELPER FUNCTIONS /////////////////
-  function querySearch(query) {
-    var results = query ? $scope.drivers.filter(createFilterFor(query)) : $scope.drivers;
-    var deferred = $q.defer();
-    $timeout(function () {
-      deferred.resolve(results);
-    }, Math.random() * 1000, false);
-    return deferred.promise;
-  }
-
-  function loadAllDrivers() {
-    DriversService.getAllDrivers({ limit: 50, page: 1 })
-    .then(function (drivers) {
-      $scope.drivers =
-      drivers.data.data.all_drivers.data.map(function (driver) {
-        return {
-          id: driver.id,
-          value: driver.first_name.toLowerCase() + ' ' + driver.last_name.toLowerCase(),
-          display: driver.first_name + ' ' + driver.last_name,
-        };
-      });
-    })
-    .catch(function () {
-      debugger;
-    });
-  }
-
-  loadAllDrivers();
-
-  function createFilterFor(query) {
-    var lowercaseQuery = angular.lowercase(query);
-
-    return function filterFn(driver) {
-      return (driver.value.indexOf(lowercaseQuery) === 0);
-    };
-  }
 
   $scope.showAssignRequestDialog = function (ev) {
     Dialog.showCustomDialog(ev, 'assign_request', $scope);
@@ -186,6 +148,16 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
 
   $scope.openStatusMenu = function ($mdMenu, ev) {
     $mdMenu.open(ev);
+  };
+
+  $scope.querySearch = function (query) {
+    return DriversService.searchDrivers({ search_key: query, limit: 10, page: 1 })
+    .then(function (driverResults) {
+      return driverResults.data.data.search_results.data;
+    })
+    .catch(function (error) {
+      debugger;
+    });
   };
 
   function reloadRequest() {

@@ -16,6 +16,7 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
     addDriver: addDriver,
     updateDriver: updateDriver,
     approveUnapproveDriver: approveUnapproveDriver,
+    searchDrivers: searchDrivers,
   };
 
   return service;
@@ -50,6 +51,19 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
 
   function approveUnapproveDriver(id, action) {
     return $http.post(apiBaseURL + '/' + action + '/driver?driver_id=' + id + '&' + authDataString);
+  }
+
+  function searchDrivers(params) {
+    var queryOptions = $.param(params);
+    var cache = 'drivers?' + queryOptions;
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.post(apiBaseURL + '/search/drivers?' + authDataString + '&' + queryOptions, {
+      cache: CacheFactory.get(cache),
+    });
   }
 
 }

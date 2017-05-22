@@ -60,8 +60,8 @@
 </div>
 
 <div class="view-main-container" ng-if="requestLoaded">
-  <h3 class="view-main-title" ng-if="request.request_type == 'offline_delivery'">Offline Request</h3>
-  <h3 class="view-main-title" ng-if="request.request_type == 'online_purchase_delivery'">Online Purchase Request</h3>
+  <h3 class="view-main-title" ng-if="request.request_type == 'offline_delivery'">Local Pickup</h3>
+  <h3 class="view-main-title" ng-if="request.request_type == 'online_purchase_delivery'">Foreign Purchase</h3>
   <h3 class="view-main-title" ng-if="request.request_type == 'equipment_request'">Equipment Request</h3>
 
   <md-card ng-if="request.request_type == 'equipment_request'">
