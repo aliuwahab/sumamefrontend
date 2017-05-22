@@ -10,35 +10,43 @@
     </div>
 
     <div layout="row">
-      <md-card flex="25" class="dashboard-statistic-container" ng-click="gotoMetricPage('requests_pending')">
+      <md-card flex="20" class="dashboard-statistic-container pending" ng-click="gotoMetricPage('requests_pending')">
         <md-card-content>
-          <img src="../assets/icons/delivery-truck.png" alt="" class="dashboard-stat-icon">
           <h2 class="dashboard-stat-number">{{statistics.pending_request}}</h2>
           <p class="dashboard-stat-name">Pending Requets</p>
+          <i class="material-icons">vertical_align_bottom</i>
         </md-card-content>
       </md-card>
 
-      <md-card flex="25" class="dashboard-statistic-container" ng-click="gotoMetricPage('requests_inprogress')">
+      <md-card flex="20" class="dashboard-statistic-container in-progress" ng-click="gotoMetricPage('requests_inprogress')">
         <md-card-content>
-          <img src="../assets/icons/car-driver.png" alt="" class="dashboard-stat-icon">
           <h2 class="dashboard-stat-number">{{statistics.request_in_delivery}}</h2>
           <p class="dashboard-stat-name">In Progress</p>
+          <i class="material-icons">flight_takeoff</i>
         </md-card-content>
       </md-card>
 
-      <md-card flex="25" class="dashboard-statistic-container" ng-click="gotoMetricPage('drivers')">
+      <md-card flex="20" class="dashboard-statistic-container drivers" ng-click="gotoMetricPage('drivers')">
         <md-card-content>
-          <img src="../assets/icons/car-driver.png" alt="" class="dashboard-stat-icon">
           <h2 class="dashboard-stat-number">{{statistics.number_of_valid_drivers}}</h2>
           <p class="dashboard-stat-name">Drivers</p>
+          <i class="material-icons">group</i>
         </md-card-content>
       </md-card>
 
-      <md-card flex="25" class="dashboard-statistic-container" ng-click="gotoMetricPage('vehicles')">
+      <md-card flex="20" class="dashboard-statistic-container vehicles" ng-click="gotoMetricPage('vehicles')">
         <md-card-content>
-          <img src="../assets/icons/car.png" alt="" class="dashboard-stat-icon">
           <h2 class="dashboard-stat-number">{{statistics.number_of_vehicles}}</h2>
-          <p class="dashboard-stat-name">Registered Vehicles</p>
+          <p class="dashboard-stat-name">Rgtd Vehicles</p>
+          <i class="material-icons">drive_eta</i>
+        </md-card-content>
+      </md-card>
+
+      <md-card flex="20" class="dashboard-statistic-container equipment" ng-click="gotoMetricPage('vehicles')">
+        <md-card-content>
+          <h2 class="dashboard-stat-number">{{statistics.number_of_vehicles}}</h2>
+          <p class="dashboard-stat-name">Rgtd Equipment</p>
+          <i class="material-icons">local_shipping</i>
         </md-card-content>
       </md-card>
     </div>

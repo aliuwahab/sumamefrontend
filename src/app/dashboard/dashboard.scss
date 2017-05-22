@@ -6,6 +6,24 @@
 .dashboard-statistic-container:hover {
   border: 3px solid #019AD6;
 }
+.dashboard-statistic-container.pending {
+  color: #4CAF50;
+}
+.dashboard-statistic-container.in-progress {
+  color: #019ad6;
+}
+.dashboard-statistic-container.drivers {
+  color: #E53935;
+}
+.dashboard-statistic-container.vehicles {
+  color: #FB8C00;
+}
+.dashboard-statistic-container.equipment {
+  color: #651FFF;
+}
+.dashboard-statistic-container i {
+  font-size: 45px;
+}
 .dashboard-graphs-card {
   min-height: 430px;
 }
@@ -24,12 +42,11 @@
   margin-top: 25px;
 }
 .dashboard-stat-number {
-  font-size: 60px;
+  font-size: 45px;
   margin: 20px;
 }
 .dashboard-stat-name {
   font-size: 20px;
-  color: #ff5d55;
   font-weight: 600;
   margin-bottom: 25px !important;
 }
