@@ -38,6 +38,7 @@
       'twilio',
       'mgo-angular-wizard',
       'ngAudio',
+      'ui.tinymce',
     ]);
 
 })();
