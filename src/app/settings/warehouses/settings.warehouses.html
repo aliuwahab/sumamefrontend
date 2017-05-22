@@ -8,9 +8,9 @@
       <div class="front">
         <h1>{{warehouse.name}}</h1>
         <div class="sm-wh-address-container">
-          <p class="sm-wh-address-text">19 Banana Street,</p>
-          <p class="sm-wh-address-text">Ambassadorial Enclave - East Legon</p>
-          <p class="sm-wh-address-text">Accra, Ghana</p>
+          <p class="sm-wh-address-text">{{warehouse.address_line_one}}</p>
+          <p class="sm-wh-address-text">{{warehouse.address_line_two}}</p>
+          <p class="sm-wh-address-text">{{warehouse.state}} - {{warehouse.zip_postcode}}, {{warehouse.country}}</p>
         </div>
       </div>
       <div class="back">
