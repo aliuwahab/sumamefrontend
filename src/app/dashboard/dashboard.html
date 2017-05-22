@@ -1,13 +1,26 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" aria-label="Menu Button" hide-gt-md ng-click="onClickMenu();">
+      <md-icon
+        md-svg-icon="assets/icons/menu.svg" aria-label="Menu Icon">
+      </md-icon>
+    </md-button>
+
+    <span flex></span>
+
+  </div>
+</md-toolbar>
+
 <div class="view-main-container">
   <div ng-if="!dataLoaded" layout="row" layout-align="center center" style="min-height: 80vh;">
     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
   </div>
 
   <div class="" ng-if="dataLoaded">
-    <div class="">
+    <!-- <div class="">
       <h1 class="dasboard-welcome-text">Hello, {{authenticatedUser.first_name}}!</h1>
       <h4 class="dasboard-welcome-subtext">Here's a snapshot of Somame today!</h4>
-    </div>
+    </div> -->
 
     <div layout="row">
       <md-card flex="20" class="dashboard-statistic-container pending" ng-click="gotoMetricPage('requests_pending')">
