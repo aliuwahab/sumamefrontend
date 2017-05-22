@@ -11,6 +11,7 @@ body > div {
     flex-shrink: 0;
     z-index: 2;
     padding: 12px;
+    background-color: #2B303B !important;
 }
 .nav-header h1,
 .nav-header h4 {
@@ -32,7 +33,7 @@ body > div {
     margin: 0;
 }
 .menu > li {
-    border-bottom: 1px solid;
+    border-bottom: 1px solid rgba(158, 158, 158, 0.15) !important;
 }
 .menu > li:nth-child(1) {
     border-top: none;
@@ -61,6 +62,10 @@ body > div {
 .menu .md-button:hover {
   background-color: white !important;
   color: black !important;
+}
+.menu .md-button {
+  background-color: #2B303B !important;
+  color: white !important;
 }
 .menu span {
     margin-left: 20px;
@@ -129,7 +134,7 @@ body > div {
   margin: 0;
   border-radius: 0;
   padding: 10px 5px;
-  background-color: #FF7365;
+  background-color: #2B303B;
   text-align: center;
 }
 .sm-user-gravatar {
@@ -141,6 +146,7 @@ body > div {
 }
 .sm-user-display_name {
   margin-bottom: 0px;
+  margin-top: 10px;
   color: rgba(255, 255, 255, 0.74);
   cursor: pointer;
 }
@@ -157,4 +163,7 @@ md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-a
  min-width: 250px !important;
  width: 50vw !important;
  max-width: 250px !important;
+}
+.logout-container {
+  background-color: #2B303B !important;
 }

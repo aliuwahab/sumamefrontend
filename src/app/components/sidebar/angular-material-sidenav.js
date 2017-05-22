@@ -474,5 +474,5 @@ angular.module('sasrio.angular-material-sidenav', [])
         '    </li>' +
         '</ul>'
     );
-  },]);
+  }, ]);
 })(window, window.angular);
