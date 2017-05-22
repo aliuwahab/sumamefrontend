@@ -420,9 +420,9 @@ angular.module('sasrio.angular-material-sidenav', [])
 .run(['$templateCache', function ($templateCache) {
     $templateCache.put('views/ss/menu-link.tmpl.html',
         '<md-button\n' +
-        '   ss-style-color="{\'background-color\': (isSelected(section.state) || $state.includes(section.state)) ? \'accent.default\': \'primary.default\'}"' +
         '   class="md-raised md-primary"' +
         '   ui-sref="{{section.state}}"\n' +
+        '   ui-sref-active="sidebar-active"' +
         '   ng-click="focusSection(section)">\n' +
         '       <span ng-if="section.icon"><i class="material-icons">{{section.icon}}</i>&nbsp;&nbsp;</span>{{section.name}}\n' +
         '   <span class="md-visually-hidden"\n' +
@@ -459,8 +459,8 @@ angular.module('sasrio.angular-material-sidenav', [])
 
     $templateCache.put('views/ss/menu-sidenav.tmpl.html',
         '<ul class="menu">' +
-        '    <li ss-style-color="{\'border-bottom-color\': \'primary.600\'}" ng-repeat="section in menu.sections" ng-if="!section.hidden">' +
-        '        <h2 ss-style-color="{\'color\': \'accent.A100\'}" class="menu-heading md-subhead" ng-if="section.type === \'heading\'">' +
+        '    <li ng-repeat="section in menu.sections" ng-if="!section.hidden">' +
+        '        <h2 class="menu-heading md-subhead" ng-if="section.type === \'heading\'">' +
         '            <span ng-if="section.icon"><i class="material-icons">{{section.icon}}</i>&nbsp;&nbsp;</span>{{section.name}}\n' +
         '        </h2>' +
         '        <menu-link section="section" ng-if="section.type === \'link\'"></menu-link>' +
@@ -474,5 +474,6 @@ angular.module('sasrio.angular-material-sidenav', [])
         '    </li>' +
         '</ul>'
     );
-  }, ]);
+  },
+]);
 })(window, window.angular);
