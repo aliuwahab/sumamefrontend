@@ -6,8 +6,6 @@
       </md-icon>
     </md-button>
 
-    <!-- <h3 class="view-main-title">Requests</h3> -->
-
     <span flex></span>
 
     <md-menu>
@@ -58,43 +56,41 @@
 </div>
 
 <div class="view-main-container">
-
   <div class="" layout="row">
-    <md-card class="sm-st-item-card" ng-style="viewName =='pending' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.pending')">
+    <md-card class="sm-st-item-card pending" ng-style="viewName =='pending' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.pending')">
       <md-card-content>
-        <img src="../assets/icons/staff.png" alt="" class="sm-st-item-icon">
+        <i class="material-icons">vertical_align_bottom</i>
         <h2 class="sm-st-item-title">Pending</h2>
       </md-card-content>
     </md-card>
-    <md-card class="sm-st-item-card" ng-style="viewName =='assigned' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.assigned')">
+    <md-card class="sm-st-item-card assigned" ng-style="viewName =='assigned' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.assigned')">
       <md-card-content>
-        <img src="../assets/icons/staff.png" alt="" class="sm-st-item-icon">
+        <i class="material-icons">cached</i>
         <h2 class="sm-st-item-title">Assigned</h2>
       </md-card-content>
     </md-card>
-    <md-card class="sm-st-item-card" ng-style="viewName == 'delivery-in-progress' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.delivery-in-progress')">
+    <md-card class="sm-st-item-card in-progress" ng-style="viewName == 'delivery-in-progress' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.delivery-in-progress')">
       <md-card-content>
-        <img src="../assets/icons/warehouse.png" alt="" class="sm-st-item-icon">
+        <i class="material-icons">flight_takeoff</i>
         <h2 class="sm-st-item-title">In Progress</h2>
       </md-card-content>
     </md-card>
-    <md-card class="sm-st-item-card" ng-style="viewName =='declined' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.declined')">
+    <md-card class="sm-st-item-card declined" ng-style="viewName =='declined' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.declined')">
       <md-card-content>
-        <img src="../assets/icons/price-tag.png" alt="" class="sm-st-item-icon">
+        <i class="material-icons">sync_problem</i>
         <h2 class="sm-st-item-title">Declined</h2>
       </md-card-content>
     </md-card>
-    <md-card class="sm-st-item-card" ng-style="viewName =='completed' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.completed')">
+    <md-card class="sm-st-item-card completed" ng-style="viewName =='completed' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.completed')">
       <md-card-content>
-        <img src="../assets/icons/price-tag.png" alt="" class="sm-st-item-icon">
+        <i class="material-icons">done_all</i>
         <h2 class="sm-st-item-title">Completed</h2>
       </md-card-content>
     </md-card>
   </div>
 
   <md-card>
-    <md-card-content ui-view>
-
-    </md-card-content>
+    <h3 class="view-main-title requests">{{viewName | capitalize:first}} Requests</h3>
+    <md-card-content ui-view></md-card-content>
   </md-card>
 </div>

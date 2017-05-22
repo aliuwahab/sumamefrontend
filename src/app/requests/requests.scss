@@ -196,3 +196,25 @@
 .sm-rq-cost-input {
   width: 100px;
 }
+.view-main-title.requests{
+  margin: 20px 10px 0px 20px !important;
+  font-size: 25px !important;
+}
+.sm-st-item-card.pending {
+  color: #4CAF50;
+}
+.sm-st-item-card.assigned {
+  color: #FF8F00;
+}
+.sm-st-item-card.declined {
+  color: #FF3D00;
+}
+.sm-st-item-card.in-progress {
+  color: #0277BD;
+}
+.sm-st-item-card.completed {
+  color: #4CAF50;
+}
+.sm-st-item-card i {
+  font-size: 45px;
+}
