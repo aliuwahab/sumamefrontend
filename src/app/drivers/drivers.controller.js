@@ -95,6 +95,36 @@ CachingService, UploadService) {
     });
   };
 
+  $scope.deleteDriver = function (driver) {
+    Dialog.confirmAction('Do you want to delete this driver?')
+    .then(function () {
+      $scope.processInProgress = true;
+
+      var data = {
+        user_id: driver.id,
+      };
+
+      DriversService.deleteDriver(data)
+      .then(function (response) {
+
+        if (response.data == 200) {
+          ToastsService.showToast('success', 'Driver successfully deleted!');
+        } else {
+          ToastsService.showToast('error', response.data.message);
+        }
+
+        $scope.processInProgress = false;
+        reloadDrivers();
+      })
+      .catch(function (error) {
+        $scope.processInProgress = false;
+        debugger;
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
+  };
+
   ///////////////////// HELPER FUNCTIONS ///////////////////////
 
   // SHOW ADD DRIVER DIALOG

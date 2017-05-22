@@ -14,6 +14,7 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
   var service = {
     getAllDrivers: getAllDrivers,
     addDriver: addDriver,
+    deleteDriver: deleteDriver,
     updateDriver: updateDriver,
     approveUnapproveDriver: approveUnapproveDriver,
     searchDrivers: searchDrivers,
@@ -37,6 +38,11 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
   function addDriver(data) {
     var params = $.param(data);
     return $http.post(apiBaseURL + '/create/driver?' + authDataString + '&' + params);
+  }
+
+  function deleteDriver(data) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/delete/user?' + authDataString + '&' + params);
   }
 
   function updateDriver(data) {
