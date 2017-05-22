@@ -2,12 +2,11 @@
   <table md-table md-progress="$parent.pendingRequestsPromise">
     <thead md-head md-order="query.order" md-on-reorder="getrequests">
       <tr md-row>
-        <!-- <th md-column><span>REQUEST ID</span></th> -->
         <th md-column><span>TIME REQUESTED</span></th>
         <th md-column><span>CUSTOMER NAME</span></th>
-        <!-- <th md-column>REQUEST TYPE</th> -->
+        <th md-column>PICKUP FROM</th>
         <th md-column>DELIVER TO</th>
-        <th md-column>REQUEST STATUS</th>
+        <!-- <th md-column>REQUEST STATUS</th> -->
         <th md-column></th>
       </tr>
     </thead>
@@ -16,9 +15,9 @@
         <!-- <td md-cell>{{request.id}}</td> -->
         <td md-cell>{{request.created_at | date:'medium'}}</td>
         <td md-cell>{{request.requester.first_name}} {{request.requester.last_name}}</td>
-        <!-- <td md-cell>{{request.request_type}}</td> -->
+        <td md-cell>{{request.pickup_location_name}}</td>
         <td md-cell>{{request.delivery_location_name}}</td>
-        <td md-cell>{{request.request_status}}</td>
+        <!-- <td md-cell>{{request.request_status}}</td> -->
         <td md-cell>
           <md-button class="md-raised md-primary" href="#request/{{request.id}}" aria-label="description" md-ripple-size="full">
             <i class="material-icons">remove_red_eye</i>

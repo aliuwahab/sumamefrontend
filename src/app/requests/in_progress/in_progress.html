@@ -5,20 +5,19 @@
         <!-- <th md-column><span>REQUEST ID</span></th> -->
         <th md-column><span>TIME REQUESTED</span></th>
         <th md-column><span>CUSTOMER NAME</span></th>
-        <!-- <th md-column>REQUEST TYPE</th> -->
-        <th md-column>DELIVER TO</th>
-        <th md-column>REQUEST STATUS</th>
+        <th md-column>PICKED UP FROM</th>
+        <th md-column>DELIVERING TO</th>
+        <th md-column>DRIVER</th>
         <th md-column></th>
       </tr>
     </thead>
     <tbody md-body>
       <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in $parent.delivery-in-progressRequests.data">
-        <!-- <td md-cell>{{request.id}}</td> -->
         <td md-cell>{{request.created_at | date:'medium'}}</td>
         <td md-cell>{{request.requester.first_name}} {{request.requester.last_name}}</td>
-        <!-- <td md-cell>{{request.request_type}}</td> -->
+        <td md-cell>{{request.pickup_location_name}}</td>
         <td md-cell>{{request.delivery_location_name}}</td>
-        <td md-cell>{{request.request_status}}</td>
+        <td md-cell>{{request.request_deliverer[0].first_name}} {{request.request_deliverer[0].last_name}}</td>
         <td md-cell>
           <md-button class="md-raised md-primary" href="#request/{{request.id}}" aria-label="description" md-ripple-size="full">
             <i class="material-icons">remove_red_eye</i>
