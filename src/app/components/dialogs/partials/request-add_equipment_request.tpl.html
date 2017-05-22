@@ -66,12 +66,29 @@
             </div>
           </wz-step>
           <wz-step wz-title="confirm">
-            <md-input-container class="sm-input-container sm-rq-rent-filters-input-container">
-              <place-autocomplete label="Where will you use the equipment" ng-model="mapping.deliveryLocation"></place-autocomplete>
+            <md-input-container class="sm-input-container" style="margin: 0;">
+              <md-autocomplete flex
+                  md-input-name="customersAutocomplete"
+                  md-input-minlength="2"
+                  md-input-maxlength="18"
+                  md-no-cache="$scope.noCache"
+                  md-selected-item="data.selectedCustomer"
+                  md-search-text="searchText"
+                  md-items="customer in querySearch(searchText)"
+                  md-item-text="customer.first_name"
+                  md-floating-label="Enter customer name">
+                <md-item-template>
+                  <span md-highlight-text="searchText">{{customer.first_name}} {{customer.last_name}}</span>
+                </md-item-template>
+              </md-autocomplete>
             </md-input-container>
 
             <md-input-container class="sm-input-container sm-rq-rent-filters-input-container">
-              <label>How many days will you take equipment for?</label>
+              <place-autocomplete label="Equipment destination" ng-model="mapping.deliveryLocation"></place-autocomplete>
+            </md-input-container>
+
+            <md-input-container class="sm-input-container sm-rq-rent-filters-input-container">
+              <label>Number of days rented for?</label>
               <input type="text" ng-model="data.numberOfDays" ng-change="calculateRequestCost()">
             </md-input-container>
 

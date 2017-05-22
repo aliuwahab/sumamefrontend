@@ -21,6 +21,23 @@
           <p>This is meant for shopping abroad when the online shop does not ship to Ghana. First, choose one of our warehouses below as an address which you'll use as your shipping address to make the purchase online. Once you've completed your purchase, fill the form below and expect your order at your doorstep in Ghana.</p>
         </div>
 
+        <md-input-container class="sm-input-container" style="margin: 0;">
+          <md-autocomplete flex
+              md-input-name="customersAutocomplete"
+              md-input-minlength="2"
+              md-input-maxlength="18"
+              md-no-cache="$scope.noCache"
+              md-selected-item="data.selectedCustomer"
+              md-search-text="searchText"
+              md-items="customer in querySearch(searchText)"
+              md-item-text="customer.first_name"
+              md-floating-label="Enter customer name">
+            <md-item-template>
+              <span md-highlight-text="searchText">{{customer.first_name}} {{customer.last_name}}</span>
+            </md-item-template>
+          </md-autocomplete>
+        </md-input-container>
+
         <md-input-container style="width:100%;">
           <label>Choose a warehouse location</label>
           <md-select ng-model="selectedWarehouse">
