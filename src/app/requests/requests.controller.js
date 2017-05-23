@@ -34,21 +34,6 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
 
     // Enable pusher logging - don't include this in production
     Pusher.logToConsole = true;
-
-    var pusher = new Pusher(ENV.pusherApiKey, {
-      cluster: 'eu',
-      encrypted: true,
-    });
-
-    var channel = pusher.subscribe('request');
-
-    channel.bind('request-made', function (data) {
-      if (!data.request.request_source || data.request.request_source != 'admin') {
-        $scope.newRequestSound.play();
-      }
-
-      reloadRequests(data.request.request_status);
-    });
   }
 
   // GET ALL REQUESTS
@@ -144,6 +129,21 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
       debugger;
     });
   }
+
+  //////////// PUSHER BINDINGS /////////////////
+
+  $rootScope.pusher.bind('request-made', function (data) {
+    if (!data.request.request_source || data.request.request_source != 'admin') {
+      $scope.newRequestSound.play();
+    }
+
+    reloadRequests(data.request.request_status);
+  });
+
+  $rootScope.pusher.bind('request-updated', function (data) {
+    debugger;
+    reloadRequests(data.request.request_status);
+  });
 
 }
 })();

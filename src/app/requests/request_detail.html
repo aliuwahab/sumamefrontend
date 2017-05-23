@@ -12,17 +12,29 @@
 
     <span flex></span>
     <md-button aria-label="Open phone interactions menu" class="md-raised" href="#/requests">
-      Back To All Requests
+      <i class="material-icons">arrow_back</i>
+      <md-tooltip md-direction="bottom">
+        Go back to all requests.
+      </md-tooltip>
     </md-button>
     <md-button ng-if="request.request_deliverer.length == 0" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAssignRequestDialog($event)">
-      Assign Request
+      <i class="material-icons">person_add</i>
+      <md-tooltip md-direction="bottom">
+        Assign request to driver.
+      </md-tooltip>
     </md-button>
     <md-button ng-if="request.request_deliverer.length > 0" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAssignRequestDialog($event)">
-      Change Driver
+      <i class="material-icons">person_add</i>
+      <md-tooltip md-direction="bottom">
+        Change driver.
+      </md-tooltip>
     </md-button>
     <md-menu>
-      <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="openStatusMenu($mdMenu, $event)">
-        Change Status
+      <md-button aria-label="Open phone interactions menu" class="md-raised md-primary" ng-click="openStatusMenu($mdMenu, $event)">
+        <i class="material-icons">assignment</i>
+        <md-tooltip md-direction="bottom">
+          Change request status.
+        </md-tooltip>
       </md-button>
       <md-menu-content width="4">
         <md-menu-item>
@@ -414,8 +426,15 @@
           <div class="" layout="row">
             <h2>Notes</h2>
             <span flex></span>
-            <md-button class="md-raised md-accent sm-rq-notes-btn-add-new" aria-label="add new note" md-no-ink="true" md-ripple-size="full" ng-click="showAddNewNoteDialog($event)">Add New Note</md-button>
+            <md-button class="md-raised md-accent sm-rq-notes-btn-add-new" aria-label="add new note" md-no-ink="true" md-ripple-size="full" ng-click="showAddNewNoteDialog($event)">
+              <i class="material-icons">add</i>
+              <md-tooltip md-direction="bottom">
+                Add new note.
+              </md-tooltip>
+            </md-button>
           </div>
+
+          <p ng-if="comments.length == 0">No notes on this request yet.</p>
 
           <div class="sm-rq-notes-container" layout="row" ng-repeat="note in comments track by $index">
             <div class="sm-rq-notes-img-container" flex="10">
@@ -426,11 +445,11 @@
             </div>
             <div class="" flex="90" layout="row">
               <div class="" flex="90">
-                <h4 class="sm-rq-notes-name">{{note.commentor}}</h4>
-                <p class="sm-rq-notes-time">{{note.date}}</p>
+                <h4 class="sm-rq-notes-name">{{note.commentor_name}}</h4>
+                <p class="sm-rq-notes-time">{{note.date | date: 'MMM d, y h:mm a'}}</p>
                 <div class="sm-rq-notes-text" ng-bind-html="note.note"></div>
               </div>
-              <div class="flex="10"">
+              <div class="flex="10"" ng-if="authenticatedUser.id == note.commentor_id">
                 <md-button class="md-raised md-warn delete-note-btn" aria-label="description" ng-click="deleteNote($index)"><i class="material-icons">delete_forever</i></md-button>
               </div>
             </div>

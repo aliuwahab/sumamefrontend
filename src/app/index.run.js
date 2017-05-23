@@ -58,6 +58,12 @@
         'seeCustomers',
         ],
       });
+
+      $rootScope.pusher = new Pusher(ENV.pusherApiKey, {
+        cluster: 'eu',
+        encrypted: true,
+      });
+      $rootScope.pusher.subscribe('request');
     }
 
     if ($rootScope.authenticatedUser && ($rootScope.authenticatedUser.admin_type == 'staff' ||

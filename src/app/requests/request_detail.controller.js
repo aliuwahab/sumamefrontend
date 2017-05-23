@@ -16,6 +16,11 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     getRequest();
   }
 
+  $rootScope.pusher.bind('request-updated', function (data) {
+    debugger;
+    reloadRequests(data.request.request_status);
+  });
+
   function getRequest() {
     RequestsService.getRequest($stateParams.requestId)
     .then(function (response) {
