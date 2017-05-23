@@ -14,8 +14,18 @@
       <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in $parent.assignedRequests.data">
         <td md-cell>{{request.created_at | date:'medium'}}</td>
         <td md-cell>{{request.requester.first_name}} {{request.requester.last_name}}</td>
-        <td md-cell>{{request.pickup_location_name}}</td>
-        <td md-cell>{{request.delivery_location_name}}</td>
+        <td md-cell>
+          {{request.pickup_location_name | characters:30}}
+          <md-tooltip md-direction="bottom">
+            {{request.pickup_location_name}}
+          </md-tooltip>
+        </td>
+        <td md-cell>
+          {{request.delivery_location_name | characters:30}}
+          <md-tooltip md-direction="bottom">
+            {{request.pickup_location_name}}
+          </md-tooltip>
+        </td>
         <td md-cell>{{request.request_deliverer[0].first_name}} {{request.request_deliverer[0].last_name}}</td>
         <td md-cell>
           <md-button class="md-raised md-primary" href="#request/{{request.id}}" aria-label="description" md-ripple-size="full">

@@ -15,9 +15,18 @@
         <!-- <td md-cell>{{request.id}}</td> -->
         <td md-cell>{{request.created_at | date:'medium'}}</td>
         <td md-cell>{{request.requester.first_name}} {{request.requester.last_name}}</td>
-        <td md-cell>{{request.pickup_location_name}}</td>
-        <td md-cell>{{request.delivery_location_name}}</td>
-        <!-- <td md-cell>{{request.request_status}}</td> -->
+        <td md-cell>
+          {{request.pickup_location_name | characters:30}}
+          <md-tooltip md-direction="bottom">
+            {{request.pickup_location_name}}
+          </md-tooltip>
+        </td>
+        <td md-cell>
+          {{request.delivery_location_name | characters:30}}
+          <md-tooltip md-direction="bottom">
+            {{request.pickup_location_name}}
+          </md-tooltip>
+        </td>
         <td md-cell>
           <md-button class="md-raised md-primary" href="#request/{{request.id}}" aria-label="description" md-ripple-size="full">
             <i class="material-icons">remove_red_eye</i>
