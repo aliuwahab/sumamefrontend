@@ -449,7 +449,7 @@
                 <p class="sm-rq-notes-time">{{note.date | date: 'MMM d, y h:mm a'}}</p>
                 <div class="sm-rq-notes-text" ng-bind-html="note.note"></div>
               </div>
-              <div class="flex="10"" ng-if="authenticatedUser.id == note.commentor_id">
+              <div class="" flex="10" ng-if="authenticatedUser.id == note.commentor_id">
                 <md-button class="md-raised md-warn delete-note-btn" aria-label="description" ng-click="deleteNote($index)"><i class="material-icons">delete_forever</i></md-button>
               </div>
             </div>
