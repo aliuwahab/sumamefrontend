@@ -218,3 +218,61 @@
 .sm-st-item-card i {
   font-size: 45px;
 }
+
+.sm-rq-notes {
+  border-top: 1px solid #ccc;
+  margin-top: 50px;
+}
+.sm-rq-notes-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+.sm-rq-notes-img-container {
+  // padding-top: 20px;
+}
+.sm-rq-notes-name {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+.sm-rq-notes-time {
+  font-size: 10px;
+  margin-top: 5px;
+  margin-bottom: 0px;
+}
+.sm-rq-notes-text {
+  font-size: 14px;
+  margin-top: 5px;
+}
+.sm-rq-notes-btn-add-new {
+  height: 35px;
+  margin-top: 20px;
+}
+.nearest-driver-item {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 10px;
+  padding-right: 20px;
+  margin-bottom: 15px;
+}
+.nearest-driver-name {
+  margin-top: 10px;
+  margin-bottom: 0px;
+}
+.nearest-driver-distance {
+  margin: 0;
+  font-size: 11px;
+}
+.nearest-driver-distance .number{
+  font-weight: bold;
+}
+.sm-user-gravatar.nearest-driver {
+  height: 40px;
+  width: 40px;
+  margin-top: 5px;
+  margin-right: 30px;
+}
+.delete-note-btn {
+  margin-top: 27px;
+}

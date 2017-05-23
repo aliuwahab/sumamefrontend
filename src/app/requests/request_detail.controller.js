@@ -22,6 +22,12 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
       $scope.request = response.data.data.request_details;
       $scope.requestLoaded = true;
       $scope.processInProgress = false;
+
+      if ($scope.request && $scope.request.comments) {
+        $scope.comments = JSON.parse($scope.request.comments);
+      }else {
+        $scope.comments = [];
+      }
     })
     .catch(function (error) {
       debugger;
@@ -30,7 +36,7 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
 
   $scope.assignRequest = function () {
     Dialog.confirmAction('Do you want to assign this request to ' +
-    $scope.data.selectedDriver.first_name + $scope.data.selectedDriver.last_name)
+    $scope.data.selectedDriver.full_name)
     .then(function () {
       $scope.processInProgress = true;
       var data = {
@@ -51,6 +57,11 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     }, function () {
       // Dialog has been canccelled
     });
+  };
+
+  $scope.assignNearbyDriver = function (driver) {
+    $scope.data.selectedDriver = driver;
+    $scope.assignRequest();
   };
 
   $scope.changeRequestStatus = function (status) {
@@ -123,6 +134,54 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     });
   };
 
+  $scope.addNote = function () {
+    if ($scope.note && $scope.note.newNote) {
+      $scope.comments.unshift({
+        id: $scope.comments.length + 1,
+        commentor_id: $rootScope.authenticatedUser.id,
+        commentor_name: $rootScope.authenticatedUser.first_name + ' ' +
+        $rootScope.authenticatedUser.last_name,
+        date: new Date(),
+        note: $scope.note.newNote,
+      });
+
+      updateNotes();
+      $rootScope.closeDialog();
+
+    }else {
+      ToastsService.showToast('error', 'There was no note created');
+    }
+  };
+
+  $scope.deleteNote = function (index) {
+    Dialog.confirmAction('Do you want to delete this note?')
+    .then(function () {
+      $scope.comments.splice(index, 1);
+      updateNotes();
+    }, function () {
+      // Dialog has been canccelled
+    });
+
+  };
+
+  function updateNotes() {
+    var stringifiedComments = JSON.stringify($scope.comments);
+
+    var data = {
+      request_id: $scope.request.id,
+      request_comments: stringifiedComments,
+    };
+
+    RequestsService.addNotes(data)
+    .then(function (response) {
+      // Note added successfully
+      reloadRequest();
+    })
+    .catch(function (error) {
+      ToastsService.showToast('error', 'There was an error adding your most recent note');
+    });
+  }
+
   // GET EQUIPMENT
   function getEquipment() {
     EquipmentService.getAllEquipment({
@@ -140,10 +199,33 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     });
   }
 
+  // SEARCH FOR NEARBY DRIVERS
+  function searchNearbyDrivers() {
+    $scope.loadingNearestDrivers = true;
+    RequestsService.searchNearbyDrivers({
+      latitude: $scope.request.pickup_location_latitude,
+      longitude: $scope.request.pickup_location_longitude,
+    })
+    .then(function (response) {
+      $scope.nearbyDrivers = response.data.data.nearest_drivers;
+      $scope.loadingNearestDrivers = false;
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      $scope.loadingNearestDrivers = false;
+      debugger;
+    });
+  }
+
   ///////////////// HELPER FUNCTIONS /////////////////
 
   $scope.showAssignRequestDialog = function (ev) {
     Dialog.showCustomDialog(ev, 'assign_request', $scope);
+    searchNearbyDrivers();
+  };
+
+  $scope.showAddNewNoteDialog = function (ev) {
+    Dialog.showCustomDialog(ev, 'add_note', $scope);
   };
 
   $scope.openStatusMenu = function ($mdMenu, ev) {

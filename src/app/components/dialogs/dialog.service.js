@@ -18,6 +18,7 @@
       add_online_request: 'app/components/dialogs/partials/request-add_online_request.tpl.html',
       add_equipment_request: 'app/components/dialogs/partials/request-add_equipment_request.tpl.html',
       assign_request: 'app/components/dialogs/partials/request-assign_request.tpl.html',
+      add_note: 'app/components/dialogs/partials/request-add-note.tpl.html',
 
       // DRIVER DIALOGS
       add_driver: 'app/components/dialogs/partials/drivers-add_driver.tpl.html',

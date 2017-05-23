@@ -15,7 +15,9 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
     getRequests: getRequests,
     getRequest: getRequest,
     assignRequestToDriver: assignRequestToDriver,
+    searchNearbyDrivers: searchNearbyDrivers,
     addRequest: addRequest,
+    addNotes: addNotes,
     cancelRequest: cancelRequest,
     changeRequestStatus: changeRequestStatus,
     changeRequestCost: changeRequestCost,
@@ -53,6 +55,11 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
     return $http.post(apiBaseURL + '/assign/request?' + authDataString + '&' + params);
   }
 
+  function searchNearbyDrivers(data) {
+    var params = $.param(data);
+    return $http.get(apiBaseURL + '/request/nearest/drivers?' + authDataString + '&' + params);
+  }
+
   function changeRequestStatus(data) {
     var params = $.param(data);
     return $http.post(apiBaseURL + '/change/request/status?' + authDataString + '&' + params);
@@ -66,6 +73,11 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
   function addRequest(data) {
     var params = $.param(data);
     return $http.post(apiBaseURL + '/make/request?' + authDataString + '&' + params);
+  }
+
+  function addNotes(data) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/add/request/comment?' + authDataString + '&' + params);
   }
 
   function cancelRequest(data) {
