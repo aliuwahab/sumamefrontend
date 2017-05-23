@@ -54,10 +54,11 @@
     });
 
     angular.extend(CacheFactoryProvider.defaults, {
-      maxAge: 300 * 60 * 1000, // Items added to the cache expire after 300 minutes
+      maxAge: 60 * 60 * 1000, // Items added to the cache expire after 60 minutes
       cacheFlushInterval: 60 * 60 * 1000, // Cache will clear itself every hour
       deleteOnExpire: 'aggressive', // Items will be deleted from cache when they expire
       storageMode: 'localStorage',
+      storagePrefix: 'kl-',
     });
 
     // Toastr Configs
