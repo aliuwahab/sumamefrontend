@@ -24,22 +24,22 @@
         <table md-table md-progress="requestsPromise">
           <thead md-head md-order="query.order" md-on-reorder="getrequests">
             <tr md-row>
+              <th md-column>ACCOUNT NUMBER</th>
               <th md-column><span>CUSTOMER NAME</span></th>
               <th md-column>CUSTOMER TYPE</th>
               <th md-column>PHONE NUMBER</th>
-              <th md-column>LOCATION</th>
               <th md-column></th>
             </tr>
           </thead>
           <tbody md-body>
             <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in customers.data">
+              <td md-cell>{{customer.id}}</td>
               <td md-cell>{{customer.first_name}} {{customer.last_name}}</td>
               <td md-cell>
                 <span ng-if="customer.consumer_type == 'business'">Business</span>
                 <span ng-if="customer.consumer_type == 'individual'">Individual</span>
               </td>
               <td md-cell>{{customer.phone_number}}</td>
-              <td md-cell>{{customer.location}}</td>
               <td md-cell>
                 <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">
                   <md-tooltip md-direction="top">
