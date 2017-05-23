@@ -2,6 +2,11 @@
   text-align: center;
   border: 3px solid #fff;
   cursor: pointer;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+.dashboard-statistic-container:last-child{
+  margin-right: 8px;
 }
 .dashboard-statistic-container:hover {
   border: 3px solid #019AD6;
