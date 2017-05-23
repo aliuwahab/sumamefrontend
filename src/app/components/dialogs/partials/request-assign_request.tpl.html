@@ -29,15 +29,46 @@
               md-selected-item="data.selectedDriver"
               md-search-text="searchText"
               md-items="driver in querySearch(searchText)"
-              md-item-text="driver.first_name"
+              md-item-text="driver.full_name"
               md-require-match
               md-floating-label="Enter Driver Name to Search">
             <md-item-template>
-              <span md-highlight-text="searchText">{{driver.first_name}} {{driver.last_name}}</span>
+              <span md-highlight-text="searchText">{{driver.full_name}}</span>
             </md-item-template>
           </md-autocomplete>
         </md-input-container>
 
+      </div>
+
+      <h2>Nearest Drivers</h2>
+
+      <div ng-if="loadingNearestDrivers" layout="column" layout-align="center center" style="min-height: 10vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="20"></md-progress-circular>
+        <h4>Searching for nearby drivers...</h4>
+      </div>
+
+      <div class="nearest-drivers" ng-if="!loadingNearestDrivers">
+        <div class="" ng-if="nearbyDrivers.length > 0">
+          <div class="nearest-driver-item" layout="row" ng-repeat="driver in nearbyDrivers">
+            <div class="" flex=90 layout="row">
+              <div class="md-media-sm card-media">
+                <img ng-if="!driver.user_profile_image_url" class="sm-user-gravatar nearest-driver" gravatar-src="'driver.email'" gravatar-size="200"/>
+                <img ng-if="driver.user_profile_image_url" class="sm-user-gravatar nearest-driver" ng-src="{{driver.user_profile_image_url}}"/>
+              </div>
+              <div class="" layout="column">
+                <h3 class="nearest-driver-name">{{driver.first_name}} {{driver.last_name}}</h3>
+                <p class="nearest-driver-distance"> <span class="number">{{driver.distance | number: 2 }}km</span> away from pickup point</p>
+              </div>
+            </div>
+            <div class="" flex="10">
+              <md-button class="md-raised" aria-label="description" md-no-ink="true" md-ripple-size="full" ng-click="assignNearbyDriver(driver)">Assign</md-button>
+            </div>
+          </div>
+        </div>
+
+        <div class="" layout="column" layout-align="center center" ng-if="nearbyDrivers.length < 1">
+          <p>There are no drivers nearby :(</p>
+        </div>
       </div>
 
     </md-dialog-content>
