@@ -79,17 +79,9 @@ html {
 }
 .view-main-container {
   padding: 20px;
-
-  // background: linear-gradient(
-  //   rgba(255, 255, 255, 0.9),
-  //   rgba(255, 255, 255, 0.9)),
-  //   url(../assets/images/skyline2.png);
-  background-position: 0 -150px;
-  background-size: cover;
-  background-repeat: no-repeat;
   overflow-y: scroll;
   height: 100vh;
-  background-color: #F8F8F8;
+  background-image: url('../assets/patterns/brickwall.png');
 }
 .view-main-title {
   font-size: 35px !important;
