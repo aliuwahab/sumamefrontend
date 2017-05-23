@@ -10,6 +10,8 @@
     ssSideNav, localStorageService, Rollbar, segment, ActivityMonitor, logOutAfterSeconds,
     NgMap, ENV) {
 
+    $rootScope.viewBackgroundImage = '../assets/patterns/brickwall.png';
+
     if (localStorageService.get('profile')) {
 
       $rootScope.authenticatedUser = localStorageService.get('profile');

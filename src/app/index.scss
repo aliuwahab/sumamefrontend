@@ -81,6 +81,7 @@ html {
   padding: 20px;
   overflow-y: scroll;
   height: 100vh;
+  background-size: inherit !important;
   background-image: url('../assets/patterns/brickwall.png');
 }
 .view-main-title {

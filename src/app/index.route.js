@@ -358,6 +358,24 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.settings.customization', {
+      parent: 'app.settings',
+      url: '/customization',
+      templateUrl: 'app/settings/customizations/settings.customizations.html',
+      controller: 'CustomizationsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
 
     // AUTH
     .state('auth', {
