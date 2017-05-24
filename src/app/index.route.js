@@ -78,8 +78,26 @@
         loginRequired: loginRequired,
       },
     })
-    .state('app.requests.pending', {
+    .state('app.requests.all', {
       parent: 'app.requests',
+      url: '/all',
+      templateUrl: 'app/requests/all/requests_all.html',
+      controller: 'AllRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.all.pending', {
+      parent: 'app.requests.all',
       url: '/pending',
       templateUrl: 'app/requests/pending/pending.html',
       controller: 'PendingRequestsController',
@@ -96,8 +114,8 @@
         loginRequired: loginRequired,
       },
     })
-    .state('app.requests.assigned', {
-      parent: 'app.requests',
+    .state('app.requests.all.assigned', {
+      parent: 'app.requests.all',
       url: '/assigned',
       templateUrl: 'app/requests/assigned/assigned.html',
       controller: 'AssignedRequestsController',
@@ -114,8 +132,8 @@
         loginRequired: loginRequired,
       },
     })
-    .state('app.requests.delivery-in-progress', {
-      parent: 'app.requests',
+    .state('app.requests.all.delivery-in-progress', {
+      parent: 'app.requests.all',
       url: '/in-progress',
       templateUrl: 'app/requests/in_progress/in_progress.html',
       controller: 'InProgressRequestsController',
@@ -132,8 +150,8 @@
         loginRequired: loginRequired,
       },
     })
-    .state('app.requests.declined', {
-      parent: 'app.requests',
+    .state('app.requests.all.declined', {
+      parent: 'app.requests.all',
       url: '/declined',
       templateUrl: 'app/requests/declined/declined.html',
       controller: 'DeclinedRequestsController',
@@ -150,8 +168,8 @@
         loginRequired: loginRequired,
       },
     })
-    .state('app.requests.completed', {
-      parent: 'app.requests',
+    .state('app.requests.all.completed', {
+      parent: 'app.requests.all',
       url: '/completed',
       templateUrl: 'app/requests/completed/completed.html',
       controller: 'CompletedRequestsController',
@@ -168,9 +186,10 @@
         loginRequired: loginRequired,
       },
     })
-    .state('app.request', {
-      url: '/request/:requestId',
-      templateUrl: 'app/requests/request_detail.html',
+    .state('app.requests.details', {
+      parent: 'app.requests',
+      url: '/:requestId',
+      templateUrl: 'app/requests/request_detail/request_detail.html',
       controller: 'RequestDetailController',
       data: {
         permissions: {

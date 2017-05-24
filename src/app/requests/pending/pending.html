@@ -12,7 +12,6 @@
     </thead>
     <tbody md-body>
       <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in $parent.pendingRequests.data">
-        <!-- <td md-cell>{{request.id}}</td> -->
         <td md-cell>{{request.created_at | date:'medium'}}</td>
         <td md-cell>{{request.requester.first_name}} {{request.requester.last_name}}</td>
         <td md-cell>
@@ -28,7 +27,7 @@
           </md-tooltip>
         </td>
         <td md-cell>
-          <md-button class="md-raised md-primary" href="#request/{{request.id}}" aria-label="description" md-ripple-size="full">
+          <md-button class="md-raised md-primary" href="#requests/{{request.id}}" aria-label="description" md-ripple-size="full">
             <i class="material-icons">remove_red_eye</i>
           </md-button>
           <md-button class="md-raised md-warn" aria-label="description" md-ripple-size="full" ng-click="cancelRequest(request)">
