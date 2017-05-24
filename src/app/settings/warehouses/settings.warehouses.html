@@ -3,7 +3,7 @@
 </div>
 
 <div class="flex-grid" ng-if="!loadingWarehouses">
-  <div class="warehouse-col flip-container" ontouchstart="this.classList.toggle('hover');" ng-repeat="warehouse in warehouses.data">
+  <div class="warehouse-col flip-container" ontouchstart="this.classList.toggle('hover');" ng-repeat="warehouse in warehouses.data track by $index">
     <div class="flipper">
       <div class="front">
         <h1>{{warehouse.name}}</h1>
@@ -28,7 +28,7 @@
               Edit Warehouse Details
             </md-tooltip>
           </md-button>
-          <md-button class="md-raised md-warn" aria-label="description" md-ripple-size="full">
+          <md-button class="md-raised md-warn" aria-label="description" ng-click="deleteWarehouse(warehouse, $index)">
             <i class="material-icons">delete_forever</i>
             <md-tooltip md-direction="top">
               Delete Warehouse

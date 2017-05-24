@@ -16,6 +16,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     getAllWarehouses: getAllWarehouses,
     addWarehouse: addWarehouse,
     updateWarehouse: updateWarehouse,
+    deleteWarehouse: deleteWarehouse,
     getAllStaff: getAllStaff,
     addStaff: addStaff,
     deleteStaff: deleteStaff,
@@ -77,6 +78,11 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     var params = $.param(cleanedData);
 
     return $http.post(apiBaseURL + '/update/sumame/address?' + authDataString + '&' + params);
+  }
+
+  function deleteWarehouse(addressId) {
+    return $http.post(apiBaseURL + '/delete/address?' + authDataString +
+    '&address_id=' + addressId);
   }
 
   function deleteStaff(data) {

@@ -18,10 +18,16 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
     };
 
     getAllWarehouses();
+    $scope.loadingWarehouses = true;
   }
 
+  $rootScope.pusher.subscribe('address');
+
+  $rootScope.pusher.bind('new-address-created', function (data) {
+    updateAfterWarehouseOperation();
+  });
+
   function getAllWarehouses() {
-    $scope.loadingWarehouses = true;
     SettingsService.getAllWarehouses($scope.filterParams)
     .then(function (response) {
       $scope.warehouses = response.data.data.all_requested_addresses;
@@ -37,13 +43,14 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
   $scope.addWarehouse = function () {
     $scope.newWarehouse.location_latitude = $scope.warehouseLocation.latitude;
     $scope.newWarehouse.location_longitude = $scope.warehouseLocation.longitude;
-    $scope.addingWarehouse = true;
+
+    $scope.warehouses.data.unshift($scope.newWarehouse);
+    ToastsService.showToast('success', 'Warehouse successfully added');
+    $rootScope.closeDialog();
 
     SettingsService.addWarehouse($scope.newWarehouse)
     .then(function (response) {
-      $scope.addingWarehouse = false;
-      ToastsService.showToast('success', 'Warehouse successfully added');
-      updateAfterWarehouseOperation();
+      // Warehouse Successfully added
     })
     .catch(function (error) {
       $scope.addingWarehouse = false;
@@ -78,6 +85,27 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
     });
   };
 
+  $scope.deleteWarehouse = function (warehouse, index) {
+    Dialog.confirmAction('Do you want to delete this warehouse?')
+    .then(function () {
+
+      $scope.warehouses.data.splice(index, 1);
+      ToastsService.showToast('success', 'Warehouse successfully deleted!');
+
+      SettingsService.deleteWarehouse(warehouse.id)
+      .then(function (response) {
+        updateAfterWarehouseOperation();
+      })
+      .catch(function (error) {
+        ToastsService.showToast('error',
+        'There was an error deleting the warehouse, please try again.');
+        debugger;
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
+  };
+
   ///////////////////// HELPER FUNCTIONS ///////////////////////
 
   // SHOW ADD DIALOG
@@ -102,7 +130,6 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
     var cache = 'warehouses?page=' +
     $scope.filterParams.page + 'limit=' + $scope.filterParams.limit;
     CachingService.destroyOnCreateOperation(cache);
-    $rootScope.closeDialog();
     getAllWarehouses();
   }
 
