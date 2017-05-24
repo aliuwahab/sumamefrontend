@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function LoginController($scope, $rootScope, $state, $auth, localStorageService,
   ToastsService, ssSideNav, PermPermissionStore, PermRoleStore, UserService,
-  segment, ActivityMonitor, logOutAfterSeconds) {
+  segment, ActivityMonitor, logOutAfterSeconds, ENV) {
 
   $scope.user = {};
   $scope.resetShowing = false;
@@ -62,6 +62,7 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
               time: new Date(),
             });
 
+            subscribeToPusherChannels();
             subscribeToActivityMonitor();
 
           }else {
@@ -97,6 +98,14 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
         ActivityMonitor.off('inactive');
       }
     });
+  }
+
+  function subscribeToPusherChannels() {
+    $rootScope.pusher = new Pusher(ENV.pusherApiKey, {
+      cluster: 'eu',
+      encrypted: true,
+    });
+    $rootScope.pusher.subscribe('request');
   }
 
   function resetUserState() {
