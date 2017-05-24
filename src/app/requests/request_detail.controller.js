@@ -17,8 +17,7 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
   }
 
   $rootScope.pusher.bind('request-updated', function (data) {
-    debugger;
-    reloadRequests(data.request.request_status);
+    reloadRequest();
   });
 
   function getRequest() {
@@ -104,7 +103,7 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
       .then(function (response) {
         ToastsService.showToast('success', 'Request cost successfully changed!');
         $scope.showInput = false;
-        reloadRequest();
+        // reloadRequest();
       })
       .catch(function (error) {
         ToastsService.showToast('success', 'Request cost successfully changed!');
