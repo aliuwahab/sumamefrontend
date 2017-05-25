@@ -19,17 +19,12 @@
   </div>
 
   <div class="" ng-if="dataLoaded">
-    <!-- <div class="">
-      <h1 class="dasboard-welcome-text">Hello, {{authenticatedUser.first_name}}!</h1>
-      <h4 class="dasboard-welcome-subtext">Here's a snapshot of Somame today!</h4>
-    </div> -->
-
     <div layout="row">
       <md-card flex="20" class="dashboard-statistic-container pending" ng-click="gotoMetricPage('requests_pending')">
         <md-card-content>
           <h2 class="dashboard-stat-number">{{statistics.pending_request}}</h2>
           <p class="dashboard-stat-name">Pending Requets</p>
-          <i class="material-icons">vertical_align_bottom</i>
+          <i class="material-icons">alarm_on</i>
         </md-card-content>
       </md-card>
 
@@ -52,7 +47,7 @@
       <md-card flex="20" class="dashboard-statistic-container vehicles" ng-click="gotoMetricPage('vehicles')">
         <md-card-content>
           <h2 class="dashboard-stat-number">{{statistics.number_of_vehicles}}</h2>
-          <p class="dashboard-stat-name">Rgtd Vehicles</p>
+          <p class="dashboard-stat-name">Vehicles</p>
           <i class="material-icons">drive_eta</i>
         </md-card-content>
       </md-card>
@@ -60,7 +55,7 @@
       <md-card flex="20" class="dashboard-statistic-container equipment" ng-click="gotoMetricPage('vehicles')">
         <md-card-content>
           <h2 class="dashboard-stat-number">{{statistics.number_of_vehicles}}</h2>
-          <p class="dashboard-stat-name">Rgtd Equipment</p>
+          <p class="dashboard-stat-name">Equipment</p>
           <i class="material-icons">local_shipping</i>
         </md-card-content>
       </md-card>

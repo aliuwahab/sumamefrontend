@@ -6,9 +6,8 @@
     .controller('AppController', AppController);
 
   /** @ngInject */
-  function AppController($scope, $mdSidenav, $mdDialog, $timeout, $rootScope, $state,
-    Dialog, ssSideNav, UserService, UploadService, ToastsService, SettingsService,
-    localStorageService, ValidationService) {
+  function AppController($scope, $mdSidenav, $rootScope, Dialog, ssSideNav, UserService,
+    UploadService, ToastsService, localStorageService, ValidationService) {
 
     $scope.onClickMenu = function () {
       $mdSidenav('left').toggle();
@@ -51,7 +50,7 @@
 
     // UPDATE USRE DETAILS
     $scope.updateUserDetails = function () {
-      ValidationService.validate($scope.user, 'consultant')
+      ValidationService.validate($scope.user, 'user')
       .then(function (result) {
         $scope.updatingUser = true;
         UserService.updateUser($scope.user)
@@ -61,7 +60,7 @@
           $rootScope.authenticatedUser = updatedUser;
           $scope.updatingUser = false;
           ToastsService.showToast('success', 'Updated was successful');
-          $mdDialog.hide();
+          $rootScope.closeDialog();
         })
         .catch(function (error) {
           $scope.updatingUser = false;
@@ -72,12 +71,5 @@
         ToastsService.showToast('error', error.message);
       });
     };
-
-    // SPLIT PROFILE IMAGE URLS
-    $scope.splitDisplayPicUrl = function (string) {
-      var urls = string.split(',');
-      return urls[0];
-    };
-
   }
 })();
