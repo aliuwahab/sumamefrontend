@@ -11,7 +11,8 @@
     <h3 class="view-main-title" ng-if="request.request_type == 'equipment_request'">Equipment Request</h3>
 
     <span flex></span>
-    <md-button aria-label="Open phone interactions menu" class="md-raised" href="#/requests/all">
+
+    <md-button aria-label="Open phone interactions menu" class="md-raised" ng-click="$parent.changeRequestsTab($parent.currentView)">
       <i class="material-icons">arrow_back</i>
       <md-tooltip md-direction="bottom">
         Go back to all requests.
@@ -71,18 +72,13 @@
   <md-progress-linear md-mode="indeterminate"></md-progress-linear>
 </div>
 
-<div ng-if="!requestLoaded" layout="row" layout-align="center center" style="min-height: 70vh;">
-  <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
-</div>
+<div class="view-main-container">
+  <div ng-if="!requestLoaded" layout="row" layout-align="center center" style="min-height: 70vh;">
+    <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+  </div>
 
-<div class="view-main-container" ng-if="requestLoaded">
-
-  <md-card>
+  <md-card ng-if="requestLoaded">
     <md-card-content>
-      <div ng-if="!requestLoaded" layout="row" layout-align="center center" style="min-height: 40vh;">
-        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
-      </div>
-
       <div ng-if="requestLoaded">
         <div class="">
           <div class="" layout="row" ng-if="request.request_type == 'equipment_request'">
