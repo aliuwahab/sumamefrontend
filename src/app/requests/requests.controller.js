@@ -16,9 +16,8 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
 
     $scope.currentView = localStorageService.get('selectedRequestsView') || 'app.requests.pending';
     $scope.viewName = getStateName($scope.currentView);
-    $state.transitionTo($scope.currentView);
 
-    $scope.state = $state;
+    $state.current.name != 'app.requests.details' ? $state.transitionTo($scope.currentView) : false;
 
     $scope.filterParams = {
       limit: 20,
