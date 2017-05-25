@@ -60,12 +60,12 @@
                     </div>
                     <div class="rq-eqm-info" flex="60">
                       <h2 class="rq-eqm-title">{{equipment.equipment_name}}</h2>
-                      <div class="" ng-bind-html="equipment.equipment_description">
+                      <div class="" ng-bind-html="equipment.equipment_description | words: 30">
                       </div>
                       <div class="">
                         <span flex></span>
                         <div class="rq-eqm-info-btn-container">
-                          <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full" ng-click="selectEquipment(equipment)">Read terms</md-button>
+                          <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full" ng-click="toggleTermsNav(equipment, 'right')">See full description & terms</md-button>
                           <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full" ng-click="selectEquipment(equipment)">Select</md-button>
                         </div>
                       </div>
@@ -112,8 +112,20 @@
             </md-input-container>
           </wz-step>
         </wizard>
-      </div>
 
+        <md-sidenav class="md-sidenav-right md-whiteframe-4dp eqm-sidenav" md-component-id="right">
+          <md-toolbar class="md-theme-light">
+            <h1 class="md-toolbar-tools">{{equipmentDetails.equipment_name}}</h1>
+          </md-toolbar>
+          <md-content layout-padding>
+            <h2>Description</h2>
+            <div class="" ng-bind-html="equipmentDetails.equipment_description || 'No description available.'"></div>
+
+            <h2>Terms & Conditions</h2>
+            <div class="" ng-bind-html="equipmentDetails.terms_and_conditions || 'No terms and conditions for this equipment.'"></div>
+          </md-content>
+        </md-sidenav>
+      </div>
     </md-dialog-content>
 
     <md-dialog-actions layout="row">

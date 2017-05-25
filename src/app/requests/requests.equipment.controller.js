@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
-  ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
+  $mdSidenav, ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
   SettingsService, EquipmentService, CustomersService) {
 
   activate();
@@ -166,6 +166,13 @@ function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stat
         break;
       default:
     }
+  };
+
+  $scope.toggleTermsNav = function (equipment, navID) {
+    $scope.equipmentDetails = equipment;
+
+    $mdSidenav(navID)
+    .toggle();
   };
 
   /// SEARCH FUNCTION
