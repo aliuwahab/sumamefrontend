@@ -20,6 +20,12 @@ CachingService, UploadService) {
     getAllDrivers();
   }
 
+  $rootScope.pusher.subscribe('driver');
+
+  $rootScope.pusher.bind('driver-updated', function (data) {
+    reloadDrivers();
+  });
+
   function getAllDrivers() {
     $scope.requestsPromise = DriversService.getAllDrivers($scope.filterParams)
     .then(function (response) {
@@ -37,11 +43,10 @@ CachingService, UploadService) {
 
     DriversService.addDriver($scope.newDriver)
     .then(function (response) {
-      debugger;
       ToastsService.showToast('success', 'Driver successfully added!');
       $scope.addingDriver = false;
       $rootScope.closeDialog();
-      reloadDrivers();
+      // reloadDrivers();
     })
     .catch(function (error) {
       $scope.addingDriver = false;
@@ -59,7 +64,7 @@ CachingService, UploadService) {
       ToastsService.showToast('success', 'Driver successfully added!');
       $scope.addingDriver = false;
       $rootScope.closeDialog();
-      reloadDrivers();
+      // reloadDrivers();
     })
     .catch(function (error) {
       $scope.addingDriver = false;
@@ -84,7 +89,7 @@ CachingService, UploadService) {
         ToastsService.showToast('success', driver.first_name + ' '
         + driver.last_name + ' is now ' + action + 'd!');
         $scope.activateTopProgress = false;
-        reloadDrivers();
+        // reloadDrivers();
       })
       .catch(function (error) {
         $scope.activateTopProgress = false;
@@ -114,7 +119,7 @@ CachingService, UploadService) {
         }
 
         $scope.processInProgress = false;
-        reloadDrivers();
+        // reloadDrivers();
       })
       .catch(function (error) {
         $scope.processInProgress = false;
@@ -145,8 +150,7 @@ CachingService, UploadService) {
   };
 
   function reloadDrivers() {
-    var cache = 'drivers?page=' + $scope.filterParams.page +
-    'limit=' + $scope.filterParams.limit;
+    var cache = 'drivers?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
     getAllDrivers();
   }

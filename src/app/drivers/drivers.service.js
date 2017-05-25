@@ -24,7 +24,7 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
 
   function getAllDrivers(params) {
     var queryOptions = $.param(params);
-    var cache = 'drivers?page=' + params.page + 'limit=' + params.limit;
+    var cache = 'drivers?' + queryOptions;
 
     if (!CacheFactory.get(cache)) {
       CacheFactory(cache);

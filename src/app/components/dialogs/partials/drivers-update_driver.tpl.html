@@ -37,16 +37,6 @@
           <input type="text" ng-model="selectedDriver.phone_number">
         </md-input-container>
 
-        <md-input-container class="sm-input-container">
-          <label>Password</label>
-          <input type="password" ng-model="selectedDriver.password">
-        </md-input-container>
-
-        <!-- <md-input-container class="sm-input-container">
-          <label>Assign Vehicle</label>
-          <input type="text" ng-model="selectedDriver.vehicle_registration_number">
-        </md-input-container> -->
-
         <h4 class="sm-custom-input-label">Driver Image</h4>
         <div class="sm-dropzone" ngf-select="uploadImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
           <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
@@ -64,8 +54,8 @@
           </div>
         </div>
 
+        <h4 class="sm-custom-input-label">Driver Profile Description</h4>
         <md-input-container class="md-block">
-          <label>Driver Profile</label>
           <textarea ui-tinymce ng-model="selectedDriver.user_profile_description" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
         </md-input-container>
       </div>
