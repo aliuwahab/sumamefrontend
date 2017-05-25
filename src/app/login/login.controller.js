@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function LoginController($scope, $rootScope, $state, $auth, localStorageService,
   ToastsService, ssSideNav, PermPermissionStore, PermRoleStore, UserService,
-  segment, ActivityMonitor, logOutAfterSeconds, ENV) {
+  ActivityMonitor, logOutAfterSeconds, ENV) {
 
   $scope.user = {};
   $scope.resetShowing = false;
@@ -49,18 +49,6 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
             redefineRoles();
             $scope.enableProgressBar = false;
             $state.go('app.dashboard');
-
-            segment.identify($rootScope.authenticatedUser.id, {
-              email: $rootScope.authenticatedUser.email,
-              username: $rootScope.authenticatedUser.first_name + ' ' +
-               $rootScope.authenticatedUser.last_name,
-            });
-
-            segment.track(segment.events.login, {
-              name: $rootScope.authenticatedUser.first_name + ' ' +
-              $rootScope.authenticatedUser.last_name,
-              time: new Date(),
-            });
 
             subscribeToPusherChannels();
             subscribeToActivityMonitor();

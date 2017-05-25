@@ -9,13 +9,7 @@
   function config($logProvider, $compileProvider, $httpProvider, $authProvider, toastrConfig, $momentProvider,
     ssSideNavSectionsProvider, $mdThemingProvider, $mdIconProvider, momentPickerProvider, $provide,
     gravatarServiceProvider, localStorageServiceProvider, RollbarProvider, CacheFactoryProvider,
-    segmentProvider, segmentEvents, ChartJsProvider, TwilioProvider, ENV) {
-
-    segmentProvider.setKey(ENV.segmentWriteKey);
-    segmentProvider.setEvents(segmentEvents);
-    segmentProvider.setCondition(function () {
-      return ENV.stage == 'production';
-    });
+    ChartJsProvider, TwilioProvider, ENV) {
 
     // Enable log
     $logProvider.debugEnabled(ENV.debug);

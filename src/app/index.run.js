@@ -7,7 +7,7 @@
 
   /** @ngInject */
   function runBlock($log, $rootScope, $state, $http, $mdDialog, PermPermissionStore, PermRoleStore,
-    ssSideNav, localStorageService, Rollbar, segment, ActivityMonitor, logOutAfterSeconds,
+    ssSideNav, localStorageService, Rollbar, ActivityMonitor, logOutAfterSeconds,
     NgMap, ENV) {
 
     $rootScope.viewBackgroundImage = '../assets/patterns/brickwall.png';
@@ -24,12 +24,6 @@
           },
           environment: ENV.stage,
         },
-      });
-
-      segment.identify($rootScope.authenticatedUser.id, {
-        email: $rootScope.authenticatedUser.email,
-        username: $rootScope.authenticatedUser.first_name + ' ' +
-        $rootScope.authenticatedUser.last_name,
       });
 
       PermPermissionStore
@@ -72,7 +66,6 @@
     }
 
     $rootScope.$on('$stateChangeSuccess', function (event, to, toParams, from, fromParams) {
-      segment.page();
       $rootScope.previousState = from;
     });
 

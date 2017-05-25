@@ -40,7 +40,6 @@
     "angular-cache": "^4.6.0",
     "angularPrint": "angular-print#^0.3.8",
     "angular-qrcode": "monospaced/angular-qrcode#^6.2.1",
-    "angular-segment-analytics": "^1.2.0",
     "angular-activity-monitor": "^1.1.0",
     "angular-chart.js": "^1.1.1",
     "ngmap": "^1.18.4",

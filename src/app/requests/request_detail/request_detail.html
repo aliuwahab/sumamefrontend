@@ -329,11 +329,8 @@
                     <i class="material-icons">today</i> <span class="bold-span">Date Created: </span> {{request.created_at}}
                   </div>
                   <div class="sm-rq-pkg-details-container">
-                    <i class="material-icons">payment</i> <span class="bold-span">Total Value of Item: </span> GHS {{request.request_item_value | number:2}}
-                  </div>
-                  <div class="sm-rq-pkg-details-container">
-                    <i class="material-icons">payment</i> <span class="bold-span">Total Cost: </span>
-                    <span ng-if="!showInput">GHS {{request.request_cost | number:2}}</span>
+                    <i class="material-icons">payment</i> <span class="bold-span">Delivery Cost: </span>
+                    <span ng-if="!showInput">{{request.item_cost_currency}} {{request.request_cost | number:2}}</span>
                     <span>
                       <span ng-if="showInput"> <input class="sm-rq-cost-input" type="text" ng-model="newRequestData.new_request_cost"> </span>
                       <span ng-if="authenticatedUser.admin_type == 'super'">

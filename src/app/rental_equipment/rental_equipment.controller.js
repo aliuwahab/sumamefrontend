@@ -13,12 +13,18 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
 
   function activate() {
     $scope.filterParams = {
-      limit: 50,
+      limit: 30,
       page: 1,
     };
 
     getAllEquipment();
   }
+
+  $rootScope.pusher.subscribe('equipment');
+
+  $rootScope.pusher.bind('equipment-created', function (data) {
+    reloadEquipment();
+  });
 
   function getAllEquipment() {
     $scope.requestsPromise = EquipmentService.getAllEquipment($scope.filterParams)
@@ -134,8 +140,7 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
   };
 
   function reloadEquipment() {
-    var cache = 'equipment?page=' + $scope.filterParams.page + 'limit=' +
-    $scope.filterParams.limit;
+    var cache = 'equipment?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
     getAllEquipment();
   }

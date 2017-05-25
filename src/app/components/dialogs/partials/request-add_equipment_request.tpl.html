@@ -10,7 +10,7 @@
       </div>
     </md-toolbar>
 
-    <md-dialog-content class="sm-modal-content" style="width:900px;">
+    <md-dialog-content class="sm-modal-content" style="width:700px;">
       <div ng-if="loadingRequiredEquimentRequestData || addingRequest" layout="row" layout-align="center center" style="min-height: 40vh;">
         <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
       </div>
@@ -21,8 +21,10 @@
         on-finish="submitEquipmentRequest()"
         hide-indicators="true">
           <wz-step wz-title="choose_equipment">
-            <div class="">
-              <div class="" flex="20" style="position:fixed;">
+
+
+            <div class="" layout="row">
+              <div class="" flex="50">
                 <md-input-container class="sm-input-container">
                   <label>Choose Category</label>
                   <md-select ng-model="equipmentFilterParams.equipment_category" ng-change="filterEquipment('category')">
@@ -34,34 +36,46 @@
                     <md-option value="others">Others</md-option>
                   </md-select>
                 </md-input-container>
-
+              </div>
+              <div class="" flex="50">
                 <md-input-container class="sm-input-container">
                   <label>Search equipment</label>
                   <input type="text" ng-model="equipmentSearchTerm" ng-change="filterEquipment('search')">
                 </md-input-container>
               </div>
+            </div>
 
-              <div class="sm-equipment-list" flex="67" flex-offset="30">
-                <div ng-if="filteringEquipment" layout="row" layout-align="center center" style="min-height: 40vh; min-width: 720px;">
-                  <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
-                </div>
-                <div class="" ng-if="!filteringEquipment" style="min-width: 650px;">
-                  <div class="sm-eq-item-container" ng-repeat="equipment in equipment.data" ng-style="selectedEquipment == equipment && {'border':'3px solid #019AD6'}">
-                    <h3>{{equipment.equipment_name}}</h3>
-                    <p>
-                      GHS {{equipment.equipment_price_per_day | number:2}} / Day
-                    </p>
-                    <img class="sm-equipment-img" ng-src="{{equipment.equipment_image}}">
-                    <div class="">
-                      <span flex></span>
-                      <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full" ng-click="selectEquipment(equipment)">Select</md-button>
+            <div class="sm-equipment-list">
+              <div ng-if="filteringEquipment" layout="row" layout-align="center center" style="min-height: 40vh; min-width: 720px;">
+                <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+              </div>
+              <div class="" ng-if="!filteringEquipment">
+                <div class="sm-eq-item-container" ng-repeat="equipment in equipment.data" ng-style="selectedEquipment == equipment && {'border':'3px solid #019AD6'}">
+                  <div class="" layout="row">
+                    <div class="rq-eqm-image-container" flex="40">
+                      <div class="rq-eqm-price">
+                        GHS {{equipment.equipment_price_per_day | number:2}} / Day
+                      </div>
+                      <img class="sm-equipment-img" ng-src="{{equipment.equipment_image}}">
+                    </div>
+                    <div class="rq-eqm-info" flex="60">
+                      <h2 class="rq-eqm-title">{{equipment.equipment_name}}</h2>
+                      <div class="" ng-bind-html="equipment.equipment_description">
+                      </div>
+                      <div class="">
+                        <span flex></span>
+                        <div class="rq-eqm-info-btn-container">
+                          <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full" ng-click="selectEquipment(equipment)">Read terms</md-button>
+                          <md-button class="md-raised" aria-label="select equipment" md-ripple-size="full" ng-click="selectEquipment(equipment)">Select</md-button>
+                        </div>
+                      </div>
                     </div>
                   </div>
-
-                  <section ng-if="equipment.data.length != '0' && equipment.total > equipmentFilterParams.limit" layout="row" layout-align="center end" layout-padding="">
-                    <cl-paging flex cl-pages="equipment.last_page" , cl-steps="6" , cl-page-changed="loadMoreEquipment()" , cl-align="center center" , cl-current-page="equipmentFilterParams.page"></cl-paging>
-                  </section>
                 </div>
+
+                <section ng-if="equipment.data.length != '0' && equipment.total > equipmentFilterParams.limit" layout="row" layout-align="center end" layout-padding="">
+                  <cl-paging flex cl-pages="equipment.last_page" , cl-steps="6" , cl-page-changed="loadMoreEquipment()" , cl-align="center center" , cl-current-page="equipmentFilterParams.page"></cl-paging>
+                </section>
               </div>
             </div>
           </wz-step>

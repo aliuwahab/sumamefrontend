@@ -52,6 +52,7 @@
 
       // CUSTOMERS DIALOGS
       view_customer: 'app/components/dialogs/partials/customers-view_customer.tpl.html',
+      add_customer: 'app/components/dialogs/partials/customers-add_customer.tpl.html',
     };
 
     // CUSTOMIZE DEFAULT CONFIRM BUTTONS

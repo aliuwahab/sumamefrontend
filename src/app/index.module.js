@@ -30,7 +30,6 @@
       'angular-cache',
       'AngularPrint',
       'monospaced.qrcode',
-      'ngSegment',
       'ActivityMonitor',
       'chart.js',
       'uiGmapgoogle-maps',
