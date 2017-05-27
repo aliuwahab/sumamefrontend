@@ -18,6 +18,7 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
   $rootScope.pusher.subscribe('equipment-category');
 
   $rootScope.pusher.bind('price-category-created', function (data) {
+    debugger;
     reloadPriceCategories();
   });
 
@@ -101,7 +102,6 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
     $scope.categories.push($scope.newCategory);
     ToastsService.showToast('success', 'New category successfully created!');
     $rootScope.closeDialog();
-    debugger;
 
     SettingsService.addPriceCategory($scope.newCategory)
     .then(function (response) {

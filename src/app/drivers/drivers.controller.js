@@ -21,8 +21,13 @@ CachingService, UploadService, NgMap) {
   }
 
   $rootScope.pusher.subscribe('driver');
+  $rootScope.pusher.subscribe('user');
 
   $rootScope.pusher.bind('driver-updated', function (data) {
+    reloadDrivers();
+  });
+
+  $rootScope.pusher.bind('user-deleted', function (data) {
     reloadDrivers();
   });
 
