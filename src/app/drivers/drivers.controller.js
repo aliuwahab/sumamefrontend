@@ -100,7 +100,7 @@ CachingService, UploadService, NgMap) {
     });
   };
 
-  $scope.deleteDriver = function (driver) {
+  $scope.deleteDriver = function (ev, driver) {
     Dialog.confirmAction('Do you want to delete this driver?')
     .then(function () {
       $scope.processInProgress = true;
@@ -119,7 +119,7 @@ CachingService, UploadService, NgMap) {
         }
 
         $scope.processInProgress = false;
-        // reloadDrivers();
+        reloadDrivers();
       })
       .catch(function (error) {
         $scope.processInProgress = false;
