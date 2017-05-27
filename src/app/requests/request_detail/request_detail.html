@@ -168,7 +168,12 @@
                     <i class="material-icons">location_on</i> <span class="bold-span">To: </span> {{request.delivery_location_name}}
                   </div>
                 </div>
-                <ng-map zoom="13" center="" style="height:50vh" >
+                <ng-map
+                  zoom="13"
+                  center="{{request.pickup_location_latitude}},{{request.pickup_location_longitude}}"
+                  style="height:50vh"
+                  scrollwheel="false"
+                  >
                   <directions
                     draggable="true"
                     travel-mode="DRIVING"

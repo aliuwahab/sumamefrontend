@@ -24,13 +24,36 @@
           <p ng-if="selectedDriver.phone_number" class="sm-cs-info-contact"><i class="material-icons">phone_android</i>  {{selectedDriver.phone_number}}</p>
         </div>
       </div>
-      <div class="sm-driver-profile-container">
+      <div class="sm-driver-profile-container" ng-if="selectedDriver.user_profile_description">
         <h3>Profile Description</h3>
         <div ng-bind-html="selectedDriver.user_profile_description"></div>
       </div>
-      <div class="sm-driver-info" layout="row">
-        <p ng-if="selectedDriver.created_at" class="sm-cs-info-contact"><i class="material-icons">schedule</i>Added: {{selectedDriver.created_at | date:"MMMM d, y 'at ' h:mma"}}</p>
+      <div class="driver-view-map-container">
+        <ng-map
+          id="driverLocationMap"
+          default-style="true" center="{{selectedDriver.user_current_latitude}},{{selectedDriver.user_current_longitude}}"
+          zoom="14"
+          scrollwheel="false"
+          style="height:80vh"
+          >
+          <marker id="currentPosition"
+            position="{{selectedDriver.user_current_latitude}},{{selectedDriver.user_current_longitude}}"
+            on-click="map.showInfoWindow('positionInfo')">
+          </marker>
+          <info-window id="positionInfo" visible-on-marker="currentPosition">
+            <div ng-non-bindable>
+              <div id="siteNotice"></div>
+              <h1 id="firstHeading" class="firstHeading">{{selectedDriver.first_name}} {{selectedDriver.last_name}}</h1>
+              <div id="bodyContent">
+                <p>Current location is {{selectedDriver.current_location_name}}</p>
+              </div>
+            </div>
+          </info-window>
+        </ng-map>
       </div>
+      <!-- <div class="sm-driver-info" layout="row">
+        <p ng-if="selectedDriver.created_at" class="sm-cs-info-contact"><i class="material-icons">schedule</i>Added: {{selectedDriver.created_at | date:"MMMM d, y 'at ' h:mma"}}</p>
+      </div> -->
     </md-dialog-content>
 
     <md-dialog-actions layout="row">

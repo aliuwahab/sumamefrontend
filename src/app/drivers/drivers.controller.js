@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function DriversController($scope, $rootScope, $state, Dialog, DriversService, ToastsService,
-CachingService, UploadService) {
+CachingService, UploadService, NgMap) {
 
   activate();
 
@@ -146,6 +146,12 @@ CachingService, UploadService) {
   // SHOW DRIVER DIALOG
   $scope.showDriverDialog = function (ev, driver, dialog) {
     $scope.selectedDriver = driver;
+
+    NgMap.getMap().then(function (map) {
+      google.maps.event.trigger(map, 'resize');
+      map.setCenter({ lat: $scope.selectedDriver.user_current_latitude, lng: $scope.selectedDriver.user_current_longitude });
+    });
+
     Dialog.showCustomDialog(ev, dialog, $scope);
   };
 
