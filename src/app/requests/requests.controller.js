@@ -35,10 +35,16 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
   }
 
   // GET ALL REQUESTS
-  $scope.getAllRequests = function (status) {
-    status ? $scope.filterParams.request_status = status : false;
-    var requestsName = status + 'Requests';
-    var promiseName = status + 'RequestsPromise';
+  $scope.getAllRequests = function (param, value) {
+    param == 'request_type' && $scope.filterParams.request_status ?
+    delete $scope.filterParams.request_status : false;
+
+    param == 'request_status' && $scope.filterParams.request_type ?
+    delete $scope.filterParams.request_type : false;
+
+    value ? $scope.filterParams[param] = value : false;
+    var requestsName = value + 'Requests';
+    var promiseName = value + 'RequestsPromise';
 
     $scope[promiseName] = RequestsService.getRequests($scope.filterParams)
     .then(function (response) {

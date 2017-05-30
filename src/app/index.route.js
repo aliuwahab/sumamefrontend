@@ -168,6 +168,60 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.requests.local', {
+      parent: 'app.requests',
+      url: '/local',
+      templateUrl: 'app/requests/local/local.html',
+      controller: 'LocalRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.foreign', {
+      parent: 'app.requests',
+      url: '/foreign',
+      templateUrl: 'app/requests/foreign/foreign.html',
+      controller: 'ForeignRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.equipment', {
+      parent: 'app.requests',
+      url: '/equipment',
+      templateUrl: 'app/requests/equipment/equipment.html',
+      controller: 'EquipmentRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
     .state('app.requests.details', {
       parent: 'app.requests',
       url: '/:requestId',

@@ -11,7 +11,7 @@ function CompletedRequestsController($scope, $timeout) {
   activate();
 
   function activate() {
-    $scope.$parent.getAllRequests('completed');
+    $scope.$parent.getAllRequests('request_status', 'completed');
   }
 
 }

@@ -11,7 +11,7 @@ function DeclinedRequestsController($scope, $timeout) {
   activate();
 
   function activate() {
-    $scope.$parent.getAllRequests('declined');
+    $scope.$parent.getAllRequests('request_status', 'declined');
   }
 
 }

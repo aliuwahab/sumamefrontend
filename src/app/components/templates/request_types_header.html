@@ -2,35 +2,53 @@
   <md-progress-linear md-mode="indeterminate"></md-progress-linear>
 </div>
 
-<div class="" layout="row">
-  <md-card class="sm-st-item-card pending" ng-style="viewName =='pending' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.pending')">
+<div class="sm-req-filters-container" layout="row" layout-wrap>
+  <md-card class="sm-rq-filter-item-card pending" ng-style="viewName =='pending' && {'border':'3px solid #019AD6'}" flex="10" ng-click="changeRequestsTab('app.requests.pending')">
     <md-card-content>
       <i class="material-icons">vertical_align_bottom</i>
-      <h2 class="sm-st-item-title">Pending</h2>
+      <h2 class="sm-rq-filter-item-title">Pending</h2>
     </md-card-content>
   </md-card>
-  <md-card class="sm-st-item-card assigned" ng-style="viewName =='assigned' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.assigned')">
+  <md-card class="sm-rq-filter-item-card assigned" ng-style="viewName =='assigned' && {'border':'3px solid #019AD6'}" flex="10" ng-click="changeRequestsTab('app.requests.assigned')">
     <md-card-content>
       <i class="material-icons">cached</i>
-      <h2 class="sm-st-item-title">Assigned</h2>
+      <h2 class="sm-rq-filter-item-title">Assigned</h2>
     </md-card-content>
   </md-card>
-  <md-card class="sm-st-item-card in-progress" ng-style="viewName == 'delivery-in-progress' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.delivery-in-progress')">
+  <md-card class="sm-rq-filter-item-card in-progress" ng-style="viewName == 'delivery-in-progress' && {'border':'3px solid #019AD6'}" flex="10" ng-click="changeRequestsTab('app.requests.delivery-in-progress')">
     <md-card-content>
       <i class="material-icons">flight_takeoff</i>
-      <h2 class="sm-st-item-title">In Progress</h2>
+      <h2 class="sm-rq-filter-item-title">In Progress</h2>
     </md-card-content>
   </md-card>
-  <md-card class="sm-st-item-card declined" ng-style="viewName =='declined' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.declined')">
+  <md-card class="sm-rq-filter-item-card declined" ng-style="viewName =='declined' && {'border':'3px solid #019AD6'}" flex="10" ng-click="changeRequestsTab('app.requests.declined')">
     <md-card-content>
       <i class="material-icons">sync_problem</i>
-      <h2 class="sm-st-item-title">Declined</h2>
+      <h2 class="sm-rq-filter-item-title">Declined</h2>
     </md-card-content>
   </md-card>
-  <md-card class="sm-st-item-card completed" ng-style="viewName =='completed' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeRequestsTab('app.requests.completed')">
+  <md-card class="sm-rq-filter-item-card completed" ng-style="viewName =='completed' && {'border':'3px solid #019AD6'}" flex="10" ng-click="changeRequestsTab('app.requests.completed')">
     <md-card-content>
       <i class="material-icons">done_all</i>
-      <h2 class="sm-st-item-title">Completed</h2>
+      <h2 class="sm-rq-filter-item-title">Completed</h2>
+    </md-card-content>
+  </md-card>
+  <md-card class="sm-rq-filter-item-card local" ng-style="viewName =='local' && {'border':'3px solid #019AD6'}" flex="10" ng-click="changeRequestsTab('app.requests.local')">
+    <md-card-content>
+      <i class="material-icons">done_all</i>
+      <h2 class="sm-rq-filter-item-title">Local</h2>
+    </md-card-content>
+  </md-card>
+  <md-card class="sm-rq-filter-item-card foreign" ng-style="viewName =='foreign' && {'border':'3px solid #019AD6'}" flex="10" ng-click="changeRequestsTab('app.requests.foreign')">
+    <md-card-content>
+      <i class="material-icons">done_all</i>
+      <h2 class="sm-rq-filter-item-title">Foreign</h2>
+    </md-card-content>
+  </md-card>
+  <md-card class="sm-rq-filter-item-card equipment" ng-style="viewName =='equipment' && {'border':'3px solid #019AD6'}" flex="10" ng-click="changeRequestsTab('app.requests.equipment')">
+    <md-card-content>
+      <i class="material-icons">done_all</i>
+      <h2 class="sm-rq-filter-item-title">Equipment</h2>
     </md-card-content>
   </md-card>
 </div>

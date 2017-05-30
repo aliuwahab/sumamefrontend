@@ -11,7 +11,7 @@ function InProgressRequestsController($scope, $timeout) {
   activate();
 
   function activate() {
-    $scope.$parent.getAllRequests('delivery-in-progress');
+    $scope.$parent.getAllRequests('request_status', 'delivery-in-progress');
   }
 
 }

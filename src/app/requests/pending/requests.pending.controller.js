@@ -11,7 +11,7 @@ function PendingRequestsController($scope, $timeout) {
   activate();
 
   function activate() {
-    $scope.$parent.getAllRequests('pending');
+    $scope.$parent.getAllRequests('request_status', 'pending');
   }
 
 }

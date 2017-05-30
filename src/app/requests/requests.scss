@@ -236,25 +236,35 @@ div[name="equipmentRequestWizard"] {
   margin: 20px 10px 0px 20px !important;
   font-size: 25px !important;
 }
-.sm-st-item-card {
+.sm-rq-filter-item-card {
   margin-bottom: 20px;
 }
-.sm-st-item-card.pending {
+.sm-rq-filter-item-card.pending {
   color: #4CAF50;
 }
-.sm-st-item-card.assigned {
+.sm-rq-filter-item-card.assigned {
   color: #FF8F00;
 }
-.sm-st-item-card.declined {
+.sm-rq-filter-item-card.declined {
   color: #FF3D00;
 }
-.sm-st-item-card.in-progress {
+.sm-rq-filter-item-card.in-progress {
   color: #0277BD;
 }
-.sm-st-item-card.completed {
+.sm-rq-filter-item-card.completed {
   color: #4CAF50;
+  // margin-right: 12px;
 }
-.sm-st-item-card i {
+.sm-rq-filter-item-card.local {
+  color: #002a4d;
+}
+.sm-rq-filter-item-card.foreign {
+  color: #9c27b0;
+}
+.sm-rq-filter-item-card.equipment {
+  color: #3f51b5;
+}
+.sm-rq-filter-item-card i {
   font-size: 45px;
 }
 
@@ -314,4 +324,28 @@ div[name="equipmentRequestWizard"] {
 }
 .delete-note-btn {
   margin-top: 27px;
+}
+
+/** Request cards **/
+.sm-rq-filter-item-card {
+  text-align: center;
+  width: 150px;
+  height: 120px;
+  cursor: pointer;
+  border: 3px solid #fff;
+  outline: none;
+  margin-right: 20px;
+}
+.sm-rq-filter-item-title {
+  font-size: 14px !important;
+}
+.sm-rq-filter-item-card:hover {
+  border: 3px solid #019AD6;
+}
+.sm-rq-filter-item-btn {
+  padding: 0;
+  margin: 0;
+}
+.sm-rq-filter-item-icon {
+  height: 50px;
 }

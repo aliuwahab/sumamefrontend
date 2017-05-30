@@ -11,7 +11,7 @@ function AssignedRequestsController($scope, $timeout) {
   activate();
 
   function activate() {
-    $scope.$parent.getAllRequests('assigned');
+    $scope.$parent.getAllRequests('request_status', 'assigned');
   }
 
 }
