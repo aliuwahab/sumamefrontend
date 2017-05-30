@@ -20,7 +20,7 @@
 
   <div class="" ng-if="dataLoaded">
     <div layout="row">
-      <md-card flex="20" class="dashboard-statistic-container pending" ng-click="gotoMetricPage('requests_pending')">
+      <md-card class="dashboard-statistic-container pending" ng-click="gotoMetricPage('requests_pending')">
         <md-card-content>
           <h2 class="dashboard-stat-number">{{statistics.pending_request}}</h2>
           <p class="dashboard-stat-name">Pending Requets</p>
@@ -28,7 +28,7 @@
         </md-card-content>
       </md-card>
 
-      <md-card flex="20" class="dashboard-statistic-container in-progress" ng-click="gotoMetricPage('requests_inprogress')">
+      <md-card class="dashboard-statistic-container in-progress" ng-click="gotoMetricPage('requests_inprogress')">
         <md-card-content>
           <h2 class="dashboard-stat-number">{{statistics.request_in_delivery}}</h2>
           <p class="dashboard-stat-name">In Progress</p>
@@ -36,7 +36,7 @@
         </md-card-content>
       </md-card>
 
-      <md-card flex="20" class="dashboard-statistic-container drivers" ng-click="gotoMetricPage('drivers')">
+      <md-card class="dashboard-statistic-container drivers" ng-click="gotoMetricPage('drivers')">
         <md-card-content>
           <h2 class="dashboard-stat-number">{{statistics.number_of_valid_drivers}}</h2>
           <p class="dashboard-stat-name">Drivers</p>
@@ -44,19 +44,45 @@
         </md-card-content>
       </md-card>
 
-      <md-card flex="20" class="dashboard-statistic-container vehicles" ng-click="gotoMetricPage('vehicles')">
+      <md-card class="dashboard-statistic-container vehicles" ng-click="gotoMetricPage('vehicles')">
         <md-card-content>
           <h2 class="dashboard-stat-number">{{statistics.number_of_vehicles}}</h2>
           <p class="dashboard-stat-name">Vehicles</p>
           <i class="material-icons">drive_eta</i>
         </md-card-content>
       </md-card>
+    </div>
 
-      <md-card flex="20" class="dashboard-statistic-container equipment" ng-click="gotoMetricPage('vehicles')">
+    <div class="" layout="row">
+      <md-card class="dashboard-statistic-container equipment" ng-click="gotoMetricPage('vehicles')">
         <md-card-content>
           <h2 class="dashboard-stat-number">{{statistics.number_of_vehicles}}</h2>
           <p class="dashboard-stat-name">Equipment</p>
           <i class="material-icons">local_shipping</i>
+        </md-card-content>
+      </md-card>
+
+      <md-card class="dashboard-statistic-container customers" ng-click="gotoMetricPage('vehicles')">
+        <md-card-content>
+          <h2 class="dashboard-stat-number">{{statistics.number_of_vehicles}}</h2>
+          <p class="dashboard-stat-name">Customers</p>
+          <i class="material-icons">group</i>
+        </md-card-content>
+      </md-card>
+
+      <md-card ng-if="authenticatedUser.admin_type == 'super'" class="dashboard-statistic-container this-month" ng-click="gotoMetricPage('vehicles')">
+        <md-card-content>
+          <h2 class="dashboard-stat-number">GHS {{statistics.number_of_vehicles | currency:2}}</h2>
+          <p class="dashboard-stat-name">This Month</p>
+          <i class="material-icons">attach_money</i>
+        </md-card-content>
+      </md-card>
+
+      <md-card ng-if="authenticatedUser.admin_type == 'super'" class="dashboard-statistic-container all-time" ng-click="gotoMetricPage('vehicles')">
+        <md-card-content>
+          <h2 class="dashboard-stat-number">GHS {{statistics.number_of_vehicles | currency:2}}</h2>
+          <p class="dashboard-stat-name">All Time</p>
+          <i class="material-icons">insert_chart</i>
         </md-card-content>
       </md-card>
     </div>

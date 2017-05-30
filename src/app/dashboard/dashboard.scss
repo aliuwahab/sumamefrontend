@@ -3,6 +3,7 @@
   border: 3px solid #fff;
   cursor: pointer;
   margin-right: 20px;
+  width: 25%;
   margin-bottom: 20px;
 }
 .dashboard-statistic-container:last-child{
@@ -26,6 +27,15 @@
 .dashboard-statistic-container.equipment {
   color: #651FFF;
 }
+.dashboard-statistic-container.customers {
+  color: #002a4d;
+}
+.dashboard-statistic-container.this-month {
+  color: #9c27b0;
+}
+.dashboard-statistic-container.all-time {
+  color: #3f51b5;
+}
 .dashboard-statistic-container i {
   font-size: 45px;
 }
@@ -47,7 +57,7 @@
   margin-top: 25px;
 }
 .dashboard-stat-number {
-  font-size: 45px;
+  font-size: 25px;
   margin: 20px;
   margin-top: 0px;
 }
