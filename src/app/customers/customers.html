@@ -22,6 +22,21 @@
 
 <div class="view-main-container">
 
+  <div class="" layout="row">
+    <md-card class="sm-rq-filter-item-card pending" ng-style="filterParams.consumer_type =='business' && {'border':'3px solid #019AD6'}" flex="10" ng-click="changeConsumersTab('business')">
+      <md-card-content>
+        <i class="material-icons">business_center</i>
+        <h2 class="sm-rq-filter-item-title">Businesses</h2>
+      </md-card-content>
+    </md-card>
+    <md-card class="sm-rq-filter-item-card assigned" ng-style="filterParams.consumer_type =='individual' && {'border':'3px solid #019AD6'}" flex="10" ng-click="changeConsumersTab('individual')">
+      <md-card-content>
+        <i class="material-icons">person</i>
+        <h2 class="sm-rq-filter-item-title">Individuals</h2>
+      </md-card-content>
+    </md-card>
+  </div>
+
   <md-card>
     <md-card-content>
       <md-table-container>
@@ -30,7 +45,7 @@
             <tr md-row>
               <th md-column>ACCOUNT NUMBER</th>
               <th md-column><span>CUSTOMER NAME</span></th>
-              <th md-column>CUSTOMER TYPE</th>
+              <!-- <th md-column>CUSTOMER TYPE</th> -->
               <th md-column>PHONE NUMBER</th>
               <th md-column></th>
             </tr>
@@ -39,10 +54,10 @@
             <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in customers.data">
               <td md-cell>{{customer.id}}</td>
               <td md-cell>{{customer.first_name}} {{customer.last_name}}</td>
-              <td md-cell>
+              <!-- <td md-cell>
                 <span ng-if="customer.consumer_type == 'business'">Business</span>
                 <span ng-if="customer.consumer_type == 'individual'">Individual</span>
-              </td>
+              </td> -->
               <td md-cell>{{customer.phone_number}}</td>
               <td md-cell>
                 <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">

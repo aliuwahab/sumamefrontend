@@ -15,6 +15,7 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     $scope.filterParams = {
       limit: 50,
       page: 1,
+      consumer_type: 'business',
     };
 
     getAllCustomers();
@@ -77,6 +78,13 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
       user_created_by: $rootScope.authenticatedUser.id,
     };
     Dialog.showCustomDialog(ev, 'add_customer', $scope);
+  };
+
+  $scope.changeConsumersTab = function (consumerType) {
+    if ($scope.filterParams.consumer_type != consumerType) {
+      $scope.filterParams.consumer_type = consumerType;
+      getAllCustomers();
+    }
   };
 
   function reloadCustomers() {
