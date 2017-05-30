@@ -65,6 +65,13 @@
         </md-menu-item>
       </md-menu-content>
     </md-menu>
+
+    <md-button aria-label="print request printout" class="md-raised md-warn" ng-click="showDialog($event, 'print_request')">
+      <i class="material-icons">print</i>
+      <md-tooltip md-direction="bottom">
+        Print request sticker.
+      </md-tooltip>
+    </md-button>
   </div>
 </md-toolbar>
 
@@ -424,7 +431,7 @@
           <div class="" layout="row">
             <h2>Notes</h2>
             <span flex></span>
-            <md-button class="md-raised md-accent sm-rq-notes-btn-add-new" aria-label="add new note" md-no-ink="true" md-ripple-size="full" ng-click="showAddNewNoteDialog($event)">
+            <md-button class="md-raised md-accent sm-rq-notes-btn-add-new" aria-label="add new note" md-no-ink="true" md-ripple-size="full" ng-click="showDialog($event, 'add_note')">
               <i class="material-icons">add</i>
               <md-tooltip md-direction="bottom">
                 Add new note.

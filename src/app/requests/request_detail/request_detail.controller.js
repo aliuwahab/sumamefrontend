@@ -103,6 +103,7 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
       .then(function (response) {
         ToastsService.showToast('success', 'Request cost successfully changed!');
         $scope.showInput = false;
+
         // reloadRequest();
       })
       .catch(function (error) {
@@ -228,8 +229,8 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     searchNearbyDrivers();
   };
 
-  $scope.showAddNewNoteDialog = function (ev) {
-    Dialog.showCustomDialog(ev, 'add_note', $scope);
+  $scope.showDialog = function (ev, dialog) {
+    Dialog.showCustomDialog(ev, dialog, $scope);
   };
 
   $scope.openStatusMenu = function ($mdMenu, ev) {
