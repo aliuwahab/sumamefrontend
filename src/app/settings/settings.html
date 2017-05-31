@@ -40,28 +40,28 @@
 <div class="view-main-container" background-img="{{viewBackgroundImage}}">
 
   <div class="" layout="row">
-    <md-card class="sm-st-item-card completed" ng-style="viewName =='staff' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeSettingsTab('app.settings.staff')">
+    <md-card class="sm-rq-filter-item-card pending" ng-style="viewName =='staff' && {'border':'3px solid white'}" flex="10" ng-click="changeSettingsTab('app.settings.staff')">
       <md-card-content>
         <i class="material-icons">group</i>
-        <h2 class="sm-st-item-title">Staff</h2>
+        <h2 class="sm-rq-filter-item-title">Staff</h2>
       </md-card-content>
     </md-card>
-    <md-card class="sm-st-item-card assigned" ng-style="viewName =='warehouses' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeSettingsTab('app.settings.warehouses')">
+    <md-card class="sm-rq-filter-item-card assigned" ng-style="viewName =='warehouses' && {'border':'3px solid white'}" flex="10" ng-click="changeSettingsTab('app.settings.warehouses')">
       <md-card-content>
         <i class="material-icons">home</i>
-        <h2 class="sm-st-item-title">Warehouses</h2>
+        <h2 class="sm-rq-filter-item-title">warehouses</h2>
       </md-card-content>
     </md-card>
-    <md-card class="sm-st-item-card in-progress" ng-style="viewName =='pricing' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeSettingsTab('app.settings.pricing')">
+    <md-card class="sm-rq-filter-item-card in-progress" ng-style="viewName =='pricing' && {'border':'3px solid white'}" flex="10" ng-click="changeSettingsTab('app.settings.pricing')">
       <md-card-content>
         <i class="material-icons">attach_money</i>
-        <h2 class="sm-st-item-title">Pricing</h2>
+        <h2 class="sm-rq-filter-item-title">Pricing</h2>
       </md-card-content>
     </md-card>
-    <md-card class="sm-st-item-card declined" ng-style="viewName =='customization' && {'border':'3px solid #019AD6'}" flex="15" ng-click="changeSettingsTab('app.settings.customization')">
+    <md-card class="sm-rq-filter-item-card foreign" ng-style="viewName =='customization' && {'border':'3px solid white'}" flex="10" ng-click="changeSettingsTab('app.settings.customization')">
       <md-card-content>
         <i class="material-icons">build</i>
-        <h2 class="sm-st-item-title">Customization</h2>
+        <h2 class="sm-rq-filter-item-title">Customize</h2>
       </md-card-content>
     </md-card>
   </div>

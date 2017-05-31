@@ -1,33 +1,59 @@
 <md-dialog aria-label="Add driver">
   <form>
-    <md-toolbar>
+    <!-- <md-toolbar>
       <div class="md-toolbar-tools">
         <span flex></span>
         <md-button class="md-icon-button" ng-click="closeDialog()">
           <i class="material-icons">close</i>
         </md-button>
       </div>
-    </md-toolbar>
+    </md-toolbar> -->
 
-    <md-dialog-content class="sm-modal-content" style="width:700px; padding:0px;">
-      <div class="sm-driver-header" layout="column" layout-align="center center">
-        <div class="sm-driver-dp" ng-if="selectedDriver.user_profile_image_url" background-img="{{selectedDriver.user_profile_image_url}}"></div>
-        <img class="sm-driver-dp" ng-if="!selectedDriver.user_profile_image_url" gravatar-src="'selectedDriver.email'" gravatar-size="200"/>
-        <h1 class="sm-driver-name">{{selectedDriver.first_name}} {{selectedDriver.last_name}}</h1>
-        <h4 class="sm-driver-school">Driver</h4>
-      </div>
-      <div class="sm-driver-info" layout="row">
-        <div class="sm-driver-info-column left">
-          <p ng-if="selectedDriver.email" class="sm-cs-info-contact"><i class="material-icons">mail_outline</i>  {{selectedDriver.email}}</p>
+    <md-dialog-content class="sm-modal-content" style="width:1000px; padding:0px;">
+      <div class="driver-info-section" layout="row">
+        <div class="sm-driver-info-column left" flex="50">
+          <div class="sm-driver-header" layout="column" layout-align="center center" background-img="{{selectedDriver.user_profile_image_url}}">
+            <div class="sm-driver-dp" ng-if="selectedDriver.user_profile_image_url" background-img="{{selectedDriver.user_profile_image_url}}"></div>
+            <img class="sm-driver-dp" ng-if="!selectedDriver.user_profile_image_url" gravatar-src="'selectedDriver.email'" gravatar-size="200"/>
+            <h1 class="sm-driver-name">{{selectedDriver.first_name}} {{selectedDriver.last_name}}</h1>
+            <!-- <h4 class="sm-driver-school">Driver</h4> -->
+          </div>
+
+          <h3>Contact Info</h3>
+          <p class="sm-cs-info-contact"><i class="material-icons">phone_android</i>  {{selectedDriver.phone_number || 'No phone number'}}</p>
+
+          <p class="sm-cs-info-contact"><i class="material-icons">mail_outline</i>  {{selectedDriver.email || 'No email address'}}</p>
+
+          <h3>Profile Description</h3>
+          <div class="driver-profile-description" ng-bind-html="selectedDriver.user_profile_description"></div>
+          <p ng-if="!selectedDriver.user_profile_description">No profile description available</p>
         </div>
-        <div class="sm-driver-info-column right">
-          <p ng-if="selectedDriver.phone_number" class="sm-cs-info-contact"><i class="material-icons">phone_android</i>  {{selectedDriver.phone_number}}</p>
+
+        <div class="sm-driver-info-column right" flex="50">
+          <h3>Documents</h3>
+          <div class="" layout="row">
+            <div class="driver-document-icon" layout="column" layout-align="center center">
+              <i class="material-icons">description</i>
+              Insurance
+            </div>
+
+            <div class="driver-document-icon" layout="column" layout-align="center center">
+              <i class="material-icons">description</i>
+              Registration
+            </div>
+          </div>
+          <div class="driver-license">
+            <img src="" alt="">
+          </div>
+          <div class="driver-doc">
+
+          </div>
         </div>
       </div>
-      <div class="sm-driver-profile-container" ng-if="selectedDriver.user_profile_description">
+      <!-- <div class="sm-driver-profile-container" ng-if="selectedDriver.user_profile_description">
         <h3>Profile Description</h3>
         <div ng-bind-html="selectedDriver.user_profile_description"></div>
-      </div>
+      </div> -->
       <div class="driver-view-map-container">
         <ng-map
           id="driverLocationMap"
@@ -43,17 +69,14 @@
           <info-window id="positionInfo" visible-on-marker="currentPosition">
             <div ng-non-bindable>
               <div id="siteNotice"></div>
-              <h1 id="firstHeading" class="firstHeading">{{selectedDriver.first_name}} {{selectedDriver.last_name}}</h1>
               <div id="bodyContent">
-                <p>Current location is {{selectedDriver.current_location_name}}</p>
+                <p>{{selectedDriver.first_name}} {{selectedDriver.last_name}}'s current location:</p>
               </div>
+              <h1 id="firstHeading" class="driver-location-name">{{selectedDriver.current_location_name}}</h1>
             </div>
           </info-window>
         </ng-map>
       </div>
-      <!-- <div class="sm-driver-info" layout="row">
-        <p ng-if="selectedDriver.created_at" class="sm-cs-info-contact"><i class="material-icons">schedule</i>Added: {{selectedDriver.created_at | date:"MMMM d, y 'at ' h:mma"}}</p>
-      </div> -->
     </md-dialog-content>
 
     <md-dialog-actions layout="row">

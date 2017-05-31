@@ -167,25 +167,27 @@ CachingService, UploadService, NgMap) {
   }
 
   // UPLOAD IMAGE
-  $scope.uploadImage = function (file) {
+  $scope.uploadItem = function (file, field, category, type, editing) {
     $scope.s3Uploader = UploadService;
+    var uploadProgress = field + '_progress';
+    var uploadToggle = 'uploading_' + field;
 
     if (file) {
-      $scope.uploadingImage = true;
+      $scope[uploadToggle] = true;
 
       $scope.$watch('s3Uploader.getUploadProgress()', function (newVal) {
         console.log('Progress', newVal);
-        $scope.uploadProgress = newVal;
+        $scope[uploadProgress] = newVal;
       });
 
-      UploadService.uploadFileToS3(file, 'request', 'image')
+      UploadService.uploadFileToS3(file, '', 'image')
       .then(function (url) {
-        $scope.newDriver.user_profile_image_url = url;
-        $scope.uploadingImage = false;
-        $scope.uploadProgress = 0;
+        editing ? $scope.selectedDriver[field] = url : $scope.newDriver[field] = url;
+        $scope[uploadToggle] = false;
+        $scope[uploadProgress] = 0;
       })
       .catch(function (error) {
-        $scope.uploadingImage = false;
+        $scope[uploadToggle] = false;
       });
     }else {
       ToastsService.showToast('error', 'Please select a valid file');
