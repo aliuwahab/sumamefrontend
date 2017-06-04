@@ -24,15 +24,17 @@
         <div class="sm-driver-info-column right" flex="50">
           <h3>Documents</h3>
           <div class="" layout="row">
-            <div class="driver-document-icon" layout="column" layout-align="center center">
+            <div ng-if="selectedEquipment.equipment_insurance_docs" class="driver-document-icon" layout="column" layout-align="center center" ng-click="openEquipmentDoc(selectedEquipment.equipment_insurance_docs)">
               <i class="material-icons">description</i>
               Insurance
             </div>
 
-            <div class="driver-document-icon" layout="column" layout-align="center center">
+            <div ng-if="selectedEquipment.equipment_registration_docs" class="driver-document-icon" layout="column" layout-align="center center" ng-click="openEquipmentDoc(selectedEquipment.equipment_registration_docs)">
               <i class="material-icons">description</i>
               Registration
             </div>
+
+            <p ng-if="!selectedEquipment.equipment_registration_docs && !selectedEquipment.equipment_insurance_docs">No documents attached</p>
           </div>
 
           <h3>Terms and Conditions</h3>

@@ -23,17 +23,19 @@
         <div class="sm-driver-info-column right" flex="50">
           <h3>Documents</h3>
           <div class="" layout="row">
-            <div class="driver-document-icon" layout="column" layout-align="center center" ng-click="openDriverDoc(selectedDriver.drivers_insurance)">
+            <div ng-if="selectedDriver.drivers_insurance" class="driver-document-icon" layout="column" layout-align="center center" ng-click="openDriverDoc(selectedDriver.drivers_insurance)">
               <i class="material-icons">description</i>
               Insurance
             </div>
 
-            <div class="driver-document-icon" layout="column" layout-align="center center" ng-click="openDriverDoc(selectedDriver.drivers_vehicle_registration)">
+            <div ng-if="selectedDriver.drivers_vehicle_registration" class="driver-document-icon" layout="column" layout-align="center center" ng-click="openDriverDoc(selectedDriver.drivers_vehicle_registration)">
               <i class="material-icons">description</i>
               Registration
             </div>
+
+            <p ng-if="!selectedDriver.drivers_insurance && !selectedDriver.drivers_vehicle_registration && !selectedDriver.drivers_licence">No documents attached</p>
           </div>
-          <div class="driver-license">
+          <div ng-if="selectedDriver.drivers_licence" class="driver-license">
             <img ng-if="authenticatedUser.admin_type == 'super'" class="driver-license-img" ng-src="{{selectedDriver.drivers_licence}}" alt="License">
             <p ng-if="authenticatedUser.admin_type != 'super'">You do not have permission to view this document</p>
           </div>
