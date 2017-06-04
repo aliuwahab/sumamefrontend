@@ -43,7 +43,7 @@
         </md-input-container>
 
         <h4 class="sm-custom-input-label">Driver Image</h4>
-        <div class="sm-dropzone" ngf-select="uploadItem($file, 'user_profile_image_url', 'profile', 'image')" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+        <div class="sm-dropzone" ngf-select="uploadItem($file, 'user_profile_image_url', 'profile', 'image', true)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
           <div ng-if="uploading_user_profile_image_url" layout="column" layout-align="center center" style="min-height: 100px;">
             <md-progress-circular md-mode="determinate" value="{{user_profile_image_url_progress}}"></md-progress-circular>
             <p>Uploading Image: {{user_profile_image_url_progress}}% complete</p>
@@ -67,7 +67,7 @@
         <h2>Documents</h2>
 
         <h4 class="sm-custom-input-label">Driver's License</h4>
-        <div class="sm-dropzone" ngf-select="uploadItem($file, 'drivers_licence', 'license', 'document')" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+        <div class="sm-dropzone" ngf-select="uploadItem($file, 'drivers_licence', 'license', 'document', true)" name="file" ngf-max-size="20MB">
           <div ng-if="uploading_drivers_licence" layout="column" layout-align="center center" style="min-height: 100px;">
             <md-progress-circular md-mode="determinate" value="{{drivers_licence_progress}}"></md-progress-circular>
             <p>Uploading License: {{drivers_licence_progress}}% complete</p>
@@ -78,13 +78,13 @@
             <p ng-if="newDriver.drivers_licence">Click here to change image</p>
 
             <div class="" ng-if="newDriver.drivers_licence" style="max-width:700px">
-              <img style="width: 400px; height: auto;" ng-src="{{newDriver.drivers_licence}}" alt="Answer Image Preview">
+              <p>Driver's license attached.</p>
             </div>
           </div>
         </div>
 
         <h4 class="sm-custom-input-label">Driver's Insurance</h4>
-        <div class="sm-dropzone" ngf-select="uploadItem($file, 'drivers_insurance', 'insurance', 'document')" name="file" ngf-pattern="'.pdf, .docx, .doc, image/*'" ngf-accept="'.pdf, .docx, .doc, image/*'" ngf-max-size="20MB">
+        <div class="sm-dropzone" ngf-select="uploadItem($file, 'drivers_insurance', 'insurance', 'document', true)" name="file" ngf-max-size="20MB">
           <div ng-if="uploading_drivers_insurance" layout="column" layout-align="center center" style="min-height: 100px;">
             <md-progress-circular md-mode="determinate" value="{{drivers_insurance_progress}}"></md-progress-circular>
             <p>Uploading Insurance: {{drivers_insurance_progress}}% complete</p>
@@ -95,13 +95,13 @@
             <p ng-if="newDriver.drivers_insurance">Click here to change image</p>
 
             <div class="" ng-if="newDriver.drivers_insurance" style="max-width:700px">
-              <img style="width: 400px; height: auto;" ng-src="{{newDriver.drivers_insurance}}" alt="Answer Image Preview">
+              <p>Driver's insurance attached</p>
             </div>
           </div>
         </div>
 
         <h4 class="sm-custom-input-label">Driver's Vehicle Photo</h4>
-        <div class="sm-dropzone" ngf-select="uploadItem($file, 'drivers_vehicle_photo', 'vehicle', 'image')" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+        <div class="sm-dropzone" ngf-select="uploadItem($file, 'drivers_vehicle_photo', 'vehicle', 'image', true)" name="file" ngf-max-size="20MB">
           <div ng-if="uploading_drivers_vehicle_photo" layout="column" layout-align="center center" style="min-height: 100px;">
             <md-progress-circular md-mode="determinate" value="{{drivers_vehicle_photo_progress}}"></md-progress-circular>
             <p>Uploading Vehicle Photo: {{drivers_vehicle_photo_progress}}% complete</p>
@@ -118,7 +118,7 @@
         </div>
 
         <h4 class="sm-custom-input-label">Vehicle Registration Documents</h4>
-        <div class="sm-dropzone" ngf-select="uploadItem($file, 'drivers_vehicle_registration', 'registration', 'document')" name="file" ngf-pattern="'.pdf, .docx, .doc, image/*'" ngf-accept="'.pdf, .docx, .doc, image/*'" ngf-max-size="20MB">
+        <div class="sm-dropzone" ngf-select="uploadItem($file, 'drivers_vehicle_registration', 'registration', 'document', true)" name="file" ngf-max-size="20MB">
           <div ng-if="uploading_drivers_vehicle_registration" layout="column" layout-align="center center" style="min-height: 100px;">
             <md-progress-circular md-mode="determinate" value="{{drivers_vehicle_registration_progress}}"></md-progress-circular>
             <p>Uploading Document: {{drivers_vehicle_registration_progress}}% complete</p>
@@ -129,7 +129,7 @@
             <p ng-if="newDriver.drivers_vehicle_registration">Click here to change image</p>
 
             <div class="" ng-if="newDriver.drivers_vehicle_registration" style="max-width:700px">
-              <img style="width: 400px; height: auto;" ng-src="{{newDriver.drivers_vehicle_registration}}" alt="Answer Image Preview">
+              Registration documents are attached.
             </div>
           </div>
         </div>

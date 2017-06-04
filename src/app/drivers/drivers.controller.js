@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function DriversController($scope, $rootScope, $state, Dialog, DriversService, ToastsService,
-CachingService, UploadService, NgMap) {
+CachingService, UploadService, NgMap, $window) {
 
   activate();
 
@@ -63,12 +63,13 @@ CachingService, UploadService, NgMap) {
 
     $scope.addingDriver = true;
     $scope.selectedDriver.driver_id = $scope.selectedDriver.id;
-
+    debugger;
     DriversService.updateDriver($scope.selectedDriver)
     .then(function (response) {
       ToastsService.showToast('success', 'Driver successfully added!');
       $scope.addingDriver = false;
       $rootScope.closeDialog();
+      debugger;
       // reloadDrivers();
     })
     .catch(function (error) {
@@ -158,6 +159,15 @@ CachingService, UploadService, NgMap) {
     });
 
     Dialog.showCustomDialog(ev, dialog, $scope);
+  };
+
+  $scope.openDriverDoc = function (url) {
+    if ($rootScope.authenticatedUser.admin_type == 'super') {
+      $window.open(url, '_blank');
+    }else {
+      ToastsService.showToast('error', 'You do not have permission to view this file');
+    }
+
   };
 
   function reloadDrivers() {
