@@ -14,45 +14,44 @@
 angular.module('sasrio.angular-material-sidenav', [])
 
 .provider('ssSideNavSections', function SSSideNavSectionsProvider() {
-    var _sections = [],
-        _theme,
-        _palettes;
+    var _sections = [];
+    var _theme;
+    var _palettes;
 
     this.initWithSections = function (value) {
-        _sections = value ? value : [];
-      };
+      _sections = value ? value : [];
+    };
 
     this.initWithTheme = function (value) {
-        _theme = value.theme();
-        _palettes = value._PALETTES;
-      };
+      _theme = value.theme();
+      _palettes = value._PALETTES;
+    };
 
     this.$get = [function ssSideNavSectionsFactory() {
         var SSSideNavSections = function () {
-            this.sections = _sections;
-            this.theme = _theme;
-            this.palettes = _palettes;
-          };
+          this.sections = _sections;
+          this.theme = _theme;
+          this.palettes = _palettes;
+        };
 
         return new SSSideNavSections();
-      }, ];
+      },
+    ];
   })
 
-.factory('ssSideNavSharedService', [
-    '$rootScope',
-    function ($rootScope) {
-        var _sharedService = {};
+.factory('ssSideNavSharedService', ['$rootScope', function ($rootScope) {
+    var _sharedService = {};
 
-        _sharedService.broadcast = function (eventName, eventData) {
-            $rootScope.$broadcast(eventName, eventData);
-          };
+    _sharedService.broadcast = function (eventName, eventData) {
+        $rootScope.$broadcast(eventName, eventData);
+      };
 
-        _sharedService.emit = function (eventName, eventData) {
-            $rootScope.$emit(eventName, eventData);
-          };
+    _sharedService.emit = function (eventName, eventData) {
+        $rootScope.$emit(eventName, eventData);
+      };
 
-        return _sharedService;
-      },
+    return _sharedService;
+  },
 ])
 
 .factory('ssSideNav', [
@@ -70,134 +69,134 @@ angular.module('sasrio.angular-material-sidenav', [])
         ssSideNavSections,
         ssSideNavSharedService) {
 
-        var self,
-            sections = ssSideNavSections.sections;
+        var self;
+        var sections = ssSideNavSections.sections;
 
         var matchPage = function (section, page, newState) {
-            var toState = newState ? newState.toState : null;
+          var toState = newState ? newState.toState : null;
 
-            if (!toState) {
-              return console.warn('ss-sidenav: `toState` key not found');
-            }
+          if (!toState) {
+            return console.warn('ss-sidenav: `toState` key not found');
+          }
 
-            if (toState.name !== page.state) {
-              return;
-            }
+          if (toState.name !== page.state) {
+            return;
+          }
 
-            if (!self) {
-              console.warn('ss-sidenav: strange `self` is undef');
-              return;
-            }
+          if (!self) {
+            console.warn('ss-sidenav: strange `self` is undef');
+            return;
+          }
 
-            self.selectSection(section);
-            self.selectPage(section, page);
-          };
+          self.selectSection(section);
+          self.selectPage(section, page);
+        };
 
         var onStateChangeStart = function (event, toState, toParams) {
-            var newState = {
-                toState: toState,
-                toParams: toParams,
-              };
-
-            sections.forEach(function (section) {
-                if (section.children) {
-                  section.children.forEach(function (child) {
-                      if (child.pages) {
-                        child.pages.forEach(function (page) {
-                            matchPage(child, page, newState);
-                          });
-                      } else if (child.type === 'link') {
-                        matchPage(child, child, newState);
-                      }
-                    });
-                } else if (section.pages) {
-                  section.pages.forEach(function (page) {
-                      matchPage(section, page, newState);
-                    });
-                } else if (section.type === 'link') {
-                  matchPage(section, section, newState);
-                }
-              });
+          var newState = {
+            toState: toState,
+            toParams: toParams,
           };
+
+          sections.forEach(function (section) {
+            if (section.children) {
+              section.children.forEach(function (child) {
+                  if (child.pages) {
+                    child.pages.forEach(function (page) {
+                        matchPage(child, page, newState);
+                      });
+                  } else if (child.type === 'link') {
+                    matchPage(child, child, newState);
+                  }
+                });
+            } else if (section.pages) {
+              section.pages.forEach(function (page) {
+                  matchPage(section, page, newState);
+                });
+            } else if (section.type === 'link') {
+              matchPage(section, section, newState);
+            }
+          });
+        };
 
         self = {
-            sections: sections,
-            forceSelectionWithId: function (id) {
-                ssSideNavSharedService.broadcast('SS_SIDENAV_FORCE_SELECTED_ITEM', id);
-              },
+          sections: sections,
+          forceSelectionWithId: function (id) {
+              ssSideNavSharedService.broadcast('SS_SIDENAV_FORCE_SELECTED_ITEM', id);
+            },
 
-            selectSection: function (section) {
-                self.openedSection = section;
-              },
+          selectSection: function (section) {
+              self.openedSection = section;
+            },
 
-            toggleSelectSection: function (section) {
-                self.openedSection = (self.openedSection === section) ? null : section;
-              },
+          toggleSelectSection: function (section) {
+              self.openedSection = (self.openedSection === section) ? null : section;
+            },
 
-            isSectionSelected: function (section) {
-                return self.openedSection === section;
-              },
+          isSectionSelected: function (section) {
+              return self.openedSection === section;
+            },
 
-            selectPage: function (section, page) {
-                self.currentSection = section;
-                self.currentPage = page;
-              },
+          selectPage: function (section, page) {
+              self.currentSection = section;
+              self.currentPage = page;
+            },
 
-            isPageSelected: function (page) {
-                return self.currentPage ? self.currentPage.state === page : false;
-              },
+          isPageSelected: function (page) {
+              return self.currentPage ? self.currentPage.state === page : false;
+            },
 
-            setVisible: function (id, value) {
-                if (!Array.prototype.every) {
-                  // TODO prototyp for every,
-                  // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every;
-                  return console.error('every funct not implemented');
-                }
+          setVisible: function (id, value) {
+              if (!Array.prototype.every) {
+                // TODO prototyp for every,
+                // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every;
+                return console.error('every funct not implemented');
+              }
 
-                self.sections.every(function (section) {
-                    if (section.id === id) {
-                      section.hidden = !value;
-                      return false;
-                    }
+              self.sections.every(function (section) {
+                  if (section.id === id) {
+                    section.hidden = !value;
+                    return false;
+                  }
 
-                    if (section.children) {
-                      section.children.every(function (child) {
-                          if (child.id === id) {
-                            child.hidden = !value;
-                            return false;
-                          };
+                  if (section.children) {
+                    section.children.every(function (child) {
+                        if (child.id === id) {
+                          child.hidden = !value;
+                          return false;
+                        };
 
-                          if (child.pages) {
-                            child.pages.every(function (page) {
-                                if (page.id === id) {
-                                  page.hidden = !value;
-                                  return false;
-                                }
+                        if (child.pages) {
+                          child.pages.every(function (page) {
+                              if (page.id === id) {
+                                page.hidden = !value;
+                                return false;
+                              }
 
-                                return true;
-                              });
-                          }
+                              return true;
+                            });
+                        }
 
-                          return true;
-                        });
-                    }
+                        return true;
+                      });
+                  }
 
-                    return true;
-                  });
-              },
+                  return true;
+                });
+            },
 
-            setVisibleFor: function (ids) {
-                if (!Array.prototype.every) {
-                  // TODO prototyp for every,
-                  // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every;
-                  return console.error('every funct not implemented');
-                }
+          setVisibleFor: function (ids) {
+            if (!Array.prototype.every) {
+              // TODO prototyp for every,
+              // see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every;
+              return console.error('every funct not implemented');
+            }
 
-                ids.forEach(function (id) {
-                    self.setVisible(id.id, id.value);
-                  });
-              },
-          };
+            ids.forEach(function (id) {
+                self.setVisible(id.id, id.value);
+              });
+          },
+        };
 
         $rootScope.$on('$stateChangeStart', onStateChangeStart);
 
@@ -227,17 +226,17 @@ angular.module('sasrio.angular-material-sidenav', [])
         this.isOpen = $scope.isOpen;
 
         $scope.$on('SS_SIDENAV_FORCE_SELECTED_ITEM', function (event, args) {
-            if ($scope.section && $scope.section.pages) {
-              for (var i = $scope.section.pages.length - 1; i >= 0; i--) {
-                var _e = $scope.section.pages[i];
+          if ($scope.section && $scope.section.pages) {
+            for (var i = $scope.section.pages.length - 1; i >= 0; i--) {
+              var _e = $scope.section.pages[i];
 
-                if (args === _e.id) {
-                  $scope.toggle($scope.section);
-                  $state.go(_e.state);
-                }
-              };
-            }
-          });
+              if (args === _e.id) {
+                $scope.toggle($scope.section);
+                $state.go(_e.state);
+              }
+            };
+          }
+        });
       },
 ])
 
@@ -247,36 +246,37 @@ angular.module('sasrio.angular-material-sidenav', [])
     '$mdSidenav',
     'ssSideNav',
     'ssSideNavSharedService',
+    '$stateParams',
     function (
-        $scope,
-        $state,
-        $mdSidenav,
-        ssSideNav,
-        ssSideNavSharedService) {
+      $scope,
+      $state,
+      $mdSidenav,
+      ssSideNav,
+      ssSideNavSharedService) {
 
-        $scope.isSelected = function (page) {
-            return ssSideNav.isPageSelected(page);
-          };
+      $scope.isSelected = function (page) {
+        return ssSideNav.isPageSelected(page);
+      };
 
-        $scope.focusSection = function (item) {
-            $mdSidenav('left').close();
-            ssSideNavSharedService.broadcast('SS_SIDENAV_CLICK_ITEM', item);
-          };
+      $scope.focusSection = function (item) {
+        $mdSidenav('left').close();
+        ssSideNavSharedService.broadcast('SS_SIDENAV_CLICK_ITEM', item);
+      };
 
-        $scope.$state = $state;
-      },
+      $scope.$state = $state;
+    },
 ])
 
 .directive('menuLink', [
     function () {
-        return {
-            scope: {
-                section: '=',
-              },
-            templateUrl: 'views/ss/menu-link.tmpl.html',
-            controller: 'menuLinkCtrl',
-          };
-      },
+      return {
+        scope: {
+            section: '=',
+          },
+        templateUrl: 'views/ss/menu-link.tmpl.html',
+        controller: 'menuLinkCtrl',
+      };
+    },
 ])
 
 .directive('menuToggle', [

@@ -79,6 +79,33 @@
       });
     }
 
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+      switch (toState.name) {
+        case 'app.requests':
+          var currentState = localStorageService.get('selectedRequestsView') ||
+          'app.requests.pending';
+          event.preventDefault();
+          $state.go(currentState);
+          break;
+        case 'app.drivers':
+          var currentState = localStorageService.get('selectedDriversView') ||
+          'app.drivers.approved';
+          event.preventDefault();
+          $state.go(currentState);
+          break;
+        case 'app.settings':
+          var currentState = localStorageService.get('selectedSettingsView') ||
+          'app.settings.staff';
+          event.preventDefault();
+          $state.go(currentState);
+          break;
+        default:
+
+          // Do default
+      }
+
+    });
+
     NgMap.getMap().then(function (map) {
       $rootScope.map = map;
     });
