@@ -7,34 +7,52 @@ angular
 
 /** @ngInject */
 function DriversController($scope, $rootScope, $state, Dialog, DriversService, ToastsService,
-CachingService, UploadService, NgMap, $window) {
+CachingService, UploadService, NgMap, localStorageService, $window) {
 
   activate();
 
   function activate() {
+    $scope.currentView = localStorageService.get('selectedDriversView') || 'app.drivers.approved';
+    $state.transitionTo($scope.currentView);
+
     $scope.filterParams = {
       limit: 50,
       page: 1,
     };
-
-    getAllDrivers();
   }
 
   $rootScope.pusher.subscribe('driver');
   $rootScope.pusher.subscribe('user');
 
   $rootScope.pusher.bind('driver-updated', function (data) {
-    reloadDrivers();
+    data.driver && data.driver.driver_approved ? reloadDrivers(1) : reloadDrivers(0);
   });
 
   $rootScope.pusher.bind('user-deleted', function (data) {
-    reloadDrivers();
+    reloadDrivers(1);
   });
 
-  function getAllDrivers() {
+  $scope.getAllDrivers = function (approvalStatus) {
+    $scope.filterParams.driver_approved = approvalStatus;
+    var scopeVarName = 'drivers' + approvalStatus;
+
     $scope.requestsPromise = DriversService.getAllDrivers($scope.filterParams)
     .then(function (response) {
-      $scope.drivers = response.data.data.all_drivers;
+      $scope[scopeVarName] = response.data.data.all_drivers;
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      debugger;
+    });
+  };
+
+  function refreshAllDrivers(approvalStatus) {
+    $scope.filterParams.driver_approved = approvalStatus;
+    var scopeVarName = 'drivers' + approvalStatus;
+
+    DriversService.getAllDrivers($scope.filterParams)
+    .then(function (response) {
+      $scope[scopeVarName] = response.data.data.all_drivers;
     })
     .catch(function (error) {
       $scope.error = error.message;
@@ -51,6 +69,7 @@ CachingService, UploadService, NgMap, $window) {
       ToastsService.showToast('success', 'Driver successfully added!');
       $scope.addingDriver = false;
       $rootScope.closeDialog();
+
       // reloadDrivers();
     })
     .catch(function (error) {
@@ -60,17 +79,14 @@ CachingService, UploadService, NgMap, $window) {
   };
 
   $scope.updateDriver = function () {
-
     $scope.addingDriver = true;
     $scope.selectedDriver.driver_id = $scope.selectedDriver.id;
-    debugger;
+
     DriversService.updateDriver($scope.selectedDriver)
     .then(function (response) {
       ToastsService.showToast('success', 'Driver successfully added!');
       $scope.addingDriver = false;
       $rootScope.closeDialog();
-      debugger;
-      // reloadDrivers();
     })
     .catch(function (error) {
       $scope.addingDriver = false;
@@ -95,7 +111,6 @@ CachingService, UploadService, NgMap, $window) {
         ToastsService.showToast('success', driver.first_name + ' '
         + driver.last_name + ' is now ' + action + 'd!');
         $scope.activateTopProgress = false;
-        // reloadDrivers();
       })
       .catch(function (error) {
         $scope.activateTopProgress = false;
@@ -155,10 +170,17 @@ CachingService, UploadService, NgMap, $window) {
 
     NgMap.getMap().then(function (map) {
       google.maps.event.trigger(map, 'resize');
-      map.setCenter({ lat: $scope.selectedDriver.user_current_latitude, lng: $scope.selectedDriver.user_current_longitude });
+      map.setCenter({ lat: $scope.selectedDriver.user_current_latitude,
+        lng: $scope.selectedDriver.user_current_longitude, });
     });
 
     Dialog.showCustomDialog(ev, dialog, $scope);
+  };
+
+  $scope.changeDriversTab = function (stateName) {
+    $scope.currentView = stateName;
+    localStorageService.set('selectedDriversView', stateName);
+    $state.go(stateName);
   };
 
   $scope.openDriverDoc = function (url) {
@@ -167,13 +189,12 @@ CachingService, UploadService, NgMap, $window) {
     }else {
       ToastsService.showToast('error', 'You do not have permission to view this file');
     }
-
   };
 
-  function reloadDrivers() {
+  function reloadDrivers(approvalStatus) {
     var cache = 'drivers?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
-    getAllDrivers();
+    refreshAllDrivers(approvalStatus);
   }
 
   // UPLOAD IMAGE

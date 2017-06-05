@@ -257,6 +257,42 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.drivers.approved', {
+      parent: 'app.drivers',
+      url: '/approved',
+      templateUrl: 'app/drivers/approved/approved.html',
+      controller: 'ApprovedDriversController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.drivers.unapproved', {
+      parent: 'app.drivers',
+      url: '/unapproved',
+      templateUrl: 'app/drivers/unapproved/unapproved.html',
+      controller: 'UnapprovedDriversController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
     .state('app.vehicles', {
       url: '/vehicles',
       templateUrl: 'app/vehicles/vehicles.html',
