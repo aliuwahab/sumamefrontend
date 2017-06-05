@@ -52,7 +52,7 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
   /////// WAREHOUSE FUNCTIONS ////////////
   function getAllWarehouses(params) {
     var queryOptions = $.param(params);
-    var cache = 'warehouses?page=' + params.page + 'limit=' + params.limit;
+    var cache = 'warehouses?' + queryOptions;
 
     if (!CacheFactory.get(cache)) {
       CacheFactory(cache);

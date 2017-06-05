@@ -76,6 +76,7 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
     SettingsService.updateWarehouse($scope.selectedWarehouse)
     .then(function (response) {
       $scope.addingWarehouse = false;
+      $rootScope.closeDialog();
       ToastsService.showToast('success', 'Warehouse successfully updated');
       updateAfterWarehouseOperation();
     })
@@ -127,8 +128,7 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
   };
 
   function updateAfterWarehouseOperation() {
-    var cache = 'warehouses?page=' +
-    $scope.filterParams.page + 'limit=' + $scope.filterParams.limit;
+    var cache = 'warehouses?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
     getAllWarehouses();
   }
