@@ -8,12 +8,14 @@
 }
 .login-page-right {
   padding: 5%;
+  overflow: scroll;
 }
 .login-page-left {
   background-color: #F4511E;
   color: white;
   padding: 5%;
   height: 50vh;
+  overflow: scroll;
 }
 .login-page-left-small-text {
   font-size: 12px;
