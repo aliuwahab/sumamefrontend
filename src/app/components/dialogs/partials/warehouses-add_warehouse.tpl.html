@@ -35,8 +35,13 @@
         </md-input-container>
 
         <md-input-container class="sm-input-container">
-          <label>State</label>
+          <label>State/Province</label>
           <input type="text" ng-model="newWarehouse.state">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Zipcode/Postcode</label>
+          <input type="text" ng-model="newWarehouse.zip_postcode">
         </md-input-container>
 
         <md-input-container class="sm-input-container">
@@ -45,7 +50,6 @@
         </md-input-container>
 
         <md-input-container class="md-block">
-          <label>Warehouse Description</label>
           <textarea ui-tinymce ng-model="newWarehouse.description" aria-label="warehouse description" md-select-on-focus rows="3"></textarea>
         </md-input-container>
       </div>

@@ -6,19 +6,14 @@
     .config(config);
 
   /** @ngInject */
-  function config($logProvider, $httpProvider, $authProvider, toastrConfig, $momentProvider,
+  function config($logProvider, $compileProvider, $httpProvider, $authProvider, toastrConfig, $momentProvider,
     ssSideNavSectionsProvider, $mdThemingProvider, $mdIconProvider, momentPickerProvider, $provide,
     gravatarServiceProvider, localStorageServiceProvider, RollbarProvider, CacheFactoryProvider,
-    segmentProvider, segmentEvents, ChartJsProvider, TwilioProvider, ENV) {
-
-    segmentProvider.setKey(ENV.segmentWriteKey);
-    segmentProvider.setEvents(segmentEvents);
-    segmentProvider.setCondition(function () {
-      return ENV.stage == 'production';
-    });
+    ChartJsProvider, TwilioProvider, ENV) {
 
     // Enable log
-    $logProvider.debugEnabled(true);
+    $logProvider.debugEnabled(ENV.debug);
+    $compileProvider.debugInfoEnabled(ENV.debug);
 
     RollbarProvider.init({
       accessToken: ENV.rollbarAccessToken,
@@ -53,9 +48,11 @@
     });
 
     angular.extend(CacheFactoryProvider.defaults, {
-      maxAge: 15 * 60 * 1000, // Items added to the cache expire after 15 minutes
+      maxAge: 30 * 60 * 1000, // Items added to the cache expire after 30 minutes
       cacheFlushInterval: 60 * 60 * 1000, // Cache will clear itself every hour
       deleteOnExpire: 'aggressive', // Items will be deleted from cache when they expire
+      // storageMode: 'localStorage',
+      storagePrefix: 'kl-',
     });
 
     // Toastr Configs

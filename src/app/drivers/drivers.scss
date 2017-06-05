@@ -34,12 +34,13 @@
 
 
 .sm-driver-header {
-  background-color: #2196F3;
   padding-bottom: 30px;
+  background-color: rgba(38, 41, 47, 0.69);
+  background-blend-mode: multiply;
 }
 .sm-driver-dp {
-  width: 200px;
-  height: 200px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
   margin: 10px 0px 10px 0px;
 }
@@ -47,6 +48,9 @@
   margin-top: 0px;
   color: white;
   margin-bottom: 0px;
+}
+.driver-info-section {
+  padding: 20px;
 }
 .sm-driver-info {
   background-color: #FAFAFA;
@@ -69,7 +73,39 @@
 }
 .sm-driver-info-column.left {
   border-right: 1px solid rgba(0, 0, 0, 0.25);
+  padding-right: 30px;
 }
 .sm-driver-info-column.right {
   padding-left: 30px;
+}
+.driver-document-icon {
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  padding: 15px;
+  font-size: 10px;
+  width: 80px;
+  margin-right: 20px;
+  cursor: pointer;
+  outline: none;
+}
+.driver-document-icon:hover {
+  background-color: #ccc;
+}
+.driver-document-icon i {
+  font-size: 30px;
+}
+.driver-license {
+  width: 100%;
+  height: 250px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
+}
+.driver-license-img {
+  width: 100%;
+}
+.driver-location-name {
+  font-size: 16px;
+}
+.driver-profile-description {
+  font-size: 15px;
 }

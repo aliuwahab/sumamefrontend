@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function VehiclesController($scope, $q, $timeout, $rootScope, $state, Dialog, VehiclesService,
-  SettingsService, UploadService, ToastsService, CachingService, DriversService) {
+  SettingsService, UploadService, ToastsService, CachingService, DriversService, $window) {
 
   activate();
 
@@ -38,15 +38,12 @@ function VehiclesController($scope, $q, $timeout, $rootScope, $state, Dialog, Ve
     $scope.addingVehicle = true;
     VehiclesService.addVehicle($scope.newVehicle)
     .then(function (response) {
-      debugger;
       ToastsService.showToast('success', response.data.message);
       doAfterVehicleOperation();
     })
     .catch(function (error) {
-      debugger;
       $scope.addingVehicle = false;
       ToastsService.showToast('error', error.data.message);
-      debugger;
     });
   };
 
@@ -121,6 +118,14 @@ function VehiclesController($scope, $q, $timeout, $rootScope, $state, Dialog, Ve
     Dialog.showCustomDialog(ev, 'assign_vehicle', $scope);
   };
 
+  $scope.openEquipmentDoc = function (url) {
+    if ($rootScope.authenticatedUser.admin_type == 'super') {
+      $window.open(url, '_blank');
+    }else {
+      ToastsService.showToast('error', 'You do not have permission to view this file');
+    }
+  };
+
   // LOAD VEHICLE CATEGORIES
   function loadAllVehicleCategories() {
     $scope.loadingRequiredData = true;
@@ -136,26 +141,28 @@ function VehiclesController($scope, $q, $timeout, $rootScope, $state, Dialog, Ve
     });
   }
 
-  // UPLOAD IMAGE
-  $scope.uploadImage = function (file) {
+  // UPLOAD ITEM
+  $scope.uploadItem = function (file, field, category, type, editing) {
     $scope.s3Uploader = UploadService;
+    var uploadProgress = field + '_progress';
+    var uploadToggle = 'uploading_' + field;
 
     if (file) {
-      $scope.uploadingImage = true;
+      $scope[uploadToggle] = true;
 
       $scope.$watch('s3Uploader.getUploadProgress()', function (newVal) {
         console.log('Progress', newVal);
-        $scope.uploadProgress = newVal;
+        $scope[uploadProgress] = newVal;
       });
 
-      UploadService.uploadFileToS3(file, 'request', 'image')
+      UploadService.uploadFileToS3(file, '', 'image')
       .then(function (url) {
-        $scope.newVehicle.vehicle_image = url;
-        $scope.uploadingImage = false;
-        $scope.uploadProgress = 0;
+        editing ? $scope.selectedVehicle[field] = url : $scope.newVehicle[field] = url;
+        $scope[uploadToggle] = false;
+        $scope[uploadProgress] = 0;
       })
       .catch(function (error) {
-        $scope.uploadingImage = false;
+        $scope[uploadToggle] = false;
       });
     }else {
       ToastsService.showToast('error', 'Please select a valid file');

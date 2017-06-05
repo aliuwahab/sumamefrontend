@@ -41,6 +41,7 @@
   cursor: pointer;
   border: 3px solid #fff;
   outline: none;
+  margin-right: 23px;
 }
 .sm-st-item-title {
   font-size: 20px;
@@ -211,4 +212,18 @@
   text-align: center;
   width: 100%;
   color: #9E9E9E;
+}
+.pattern-container {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+.pattern-name {
+  margin-top: 8px;
+  margin-bottom: 0px;
+  font-size: 25px;
+}
+.pattern-btn {
+  height: 40px !important;
 }

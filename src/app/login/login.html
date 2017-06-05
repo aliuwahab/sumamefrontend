@@ -1,74 +1,65 @@
-<div layout="row">
-  <div class="login-left-side" flex="65">
-    <h1 class="login-text-logo">KLLOYDS</h1>
-
-    <h3 class="login-welcome-title">Welcome to the Klloyds back office!</h3>
-
-    <p class="login-welcome-text">Login to the portal with your credentials. Ensure your credentials are kept safe for as security is really important to the success of our customers.</p>
-  </div>
-  <div class="login-right-side" flex="35">
-    <div class="login-container" ng-if="resetShowing == false">
-      <div layout="column" layout-align="center center">
-        <img src="../assets/icons/login-square-arrow.png" alt="" class="login-icon">
+<div class="login-page" layout="column" layout-align="center center">
+  <md-card class="login-page-card">
+    <div class="" layout="row">
+      <div class="login-page-left" flex="50" flex-sm="100">
+        <h1>Klloyds</h1>
+        <h2>Admin Back Office Login!</h2>
+        <p>Welcome to Klloyd's admin back office.</p>
+        <p class="login-page-left-small-text">Don't have an account? This is a private system, if you're a staff member, contact the administrator to create an account for you.</p>
       </div>
+      <div class="login-page-right" flex="50" flex-sm="100">
+        <form ng-if="resetShowing == false" name="loginForm" class="sm-signup-form" ng-submit="loginUser(loginForm.$valid)" novalidate>
 
-      <form name="loginForm" class="sm-signup-form" ng-submit="loginUser(loginForm.$valid)" novalidate>
+          <md-progress-linear class="login-progressbar" md-mode="indeterminate" ng-disabled="!enableProgressBar"></md-progress-linear>
 
-        <md-progress-linear class="login-progressbar" md-mode="indeterminate" ng-disabled="!enableProgressBar"></md-progress-linear>
+          <div layout="row">
+            <md-input-container style="width:450px;">
+              <label>Email address</label>
+              <input type="email" ng-model="user.email" required>
+            </md-input-container>
+          </div>
+          <div layout="row">
+            <md-input-container style="width:450px;">
+              <label>Password</label>
+              <input type="password" ng-model="user.password" required>
+            </md-input-container>
+          </div>
 
-        <div layout="row">
-          <md-input-container style="width:450px;">
-            <label>Email address</label>
-            <input type="email" ng-model="user.email" required>
-          </md-input-container>
-        </div>
-        <div layout="row">
-          <md-input-container style="width:450px;">
-            <label>Password</label>
-            <input type="password" ng-model="user.password" required>
-          </md-input-container>
-        </div>
+          <div layout="column" layout-align="center center">
+            <md-button type="submit" class="md-raised md-accent" aria-label="Login" ng-disabled="loginForm.$invalid" md-ripple-size="full">
+              Login
+              <i class="material-icons">arrow_forward</i>
+            </md-button>
+          </div>
 
-        <div layout="column" layout-align="center center">
-          <md-button type="submit" class="md-raised md-accent" aria-label="Login" ng-disabled="loginForm.$invalid" md-ripple-size="full">
-            Login
-            <i class="material-icons">arrow_forward</i>
-          </md-button>
-        </div>
+          <div layout="row" layout-align="center center">
+            <h4 class="login-reset-password" ng-click="flipForm()">Forgot password? Reset!</h4>
+          </div>
+        </form>
 
-        <div layout="row" layout-align="center center">
-          <h4 class="login-reset-password" ng-click="flipForm()">Forgot password? Reset!</h4>
-        </div>
-      </form>
-    </div>
+        <form ng-if="resetShowing == true" name="resetPasswordForm" class="sm-signup-form" ng-submit="restPassword(resetPasswordForm.$valid)" novalidate>
+          <md-progress-linear class="login-progressbar" md-mode="indeterminate" ng-disabled="!enableProgressBar"></md-progress-linear>
 
-    <div class="password-reset-container" ng-if="resetShowing == true" ng-controller="ResetPasswordController">
-      <div layout="column" layout-align="center center">
-        <img src="../assets/icons/reset.png" alt="" class="login-icon">
+          <div layout="row">
+            <md-input-container style="width:450px;">
+              <label>Enter your email address to reset</label>
+              <input type="email" ng-model="user.email" required>
+            </md-input-container>
+          </div>
+
+          <div layout="column" layout-align="center center">
+            <md-button type="submit" class="md-raised md-accent" aria-label="Login" ng-disabled="resetPasswordForm.$invalid" md-ripple-size="full">
+              Reset Password
+              <i class="material-icons">arrow_forward</i>
+            </md-button>
+          </div>
+
+          <div layout="row" layout-align="center center">
+            <h4 class="login-reset-password" ng-click="flipForm()">Already have an account? Login!</h4>
+          </div>
+
+        </form>
       </div>
-
-      <form name="resetPasswordForm" class="sm-signup-form" ng-submit="restPassword(resetPasswordForm.$valid)" novalidate>
-        <md-progress-linear class="login-progressbar" md-mode="indeterminate" ng-disabled="!enableProgressBar"></md-progress-linear>
-
-        <div layout="row">
-          <md-input-container style="width:450px;">
-            <label>Enter your email address to reset</label>
-            <input type="email" ng-model="user.email" required>
-          </md-input-container>
-        </div>
-
-        <div layout="column" layout-align="center center">
-          <md-button type="submit" class="md-raised md-accent" aria-label="Login" ng-disabled="resetPasswordForm.$invalid" md-ripple-size="full">
-            Reset Password
-            <i class="material-icons">arrow_forward</i>
-          </md-button>
-        </div>
-
-        <div layout="row" layout-align="center center">
-          <h4 class="login-reset-password" ng-click="flipForm()">Already have an account? Login!</h4>
-        </div>
-
-      </form>
     </div>
-  </div>
+  </md-card>
 </div>

@@ -6,6 +6,8 @@
       </md-icon>
     </md-button>
 
+    <h3 class="view-main-title">Courier Vehicles</h3>
+
     <span flex></span>
 
     <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddVehicleDialog($event)">
@@ -19,7 +21,6 @@
 </div>
 
 <div class="view-main-container">
-  <h3 class="view-main-title">Courier Vehicles</h3>
 
   <md-card>
     <md-card-content>
@@ -76,7 +77,7 @@
         </table>
       </md-table-container>
 
-      <md-table-pagination md-limit="queryParams.limit" md-limit-options="[50, 100, 200]" md-page="queryParams.page" md-total="{{requests.total}}" md-on-paginate="getrequests" md-page-select></md-table-pagination>
+      <md-table-pagination md-limit="filterParams.limit" md-limit-options="[50, 100, 200]" md-page="filterParams.page" md-total="{{vehicles.total}}" md-on-paginate="" md-page-select></md-table-pagination>
     </md-card-content>
   </md-card>
 </div>

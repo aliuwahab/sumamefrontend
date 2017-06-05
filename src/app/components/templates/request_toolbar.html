@@ -1,0 +1,53 @@
+<md-toolbar>
+  <div class="md-toolbar-tools">
+    <md-button class="md-icon-button" aria-label="Menu Button" hide-gt-md ng-click="onClickMenu();">
+      <md-icon
+        md-svg-icon="assets/icons/menu.svg" aria-label="Menu Icon">
+      </md-icon>
+    </md-button>
+
+    <span flex></span>
+
+    <md-menu>
+      <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="openMenu($mdMenu, $event)">
+        Add New Request
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-click="showAddRequestDialog($event, 'add_offline_request')">
+            Local Pickup
+            <md-button aria-label="description">
+              <i class="material-icons">info_outline</i>
+              <md-tooltip md-direction="left">
+                Get anything delivered locally. We'll pickup and deliver.
+              </md-tooltip>
+            </md-button>
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="showAddRequestDialog($event, 'add_online_request')">
+            Foreign Purchase
+            <md-button aria-label="description">
+              <i class="material-icons">info_outline</i>
+              <md-tooltip md-direction="left">
+                Purchase from any online shop to any of our warehouses. We'll deliver to your doorstep.
+              </md-tooltip>
+            </md-button>
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-click="showAddRequestDialog($event, 'add_equipment_request')">
+            Equipment Rental
+            <md-button aria-label="description">
+              <i class="material-icons">info_outline</i>
+              <md-tooltip md-direction="left">
+                Rent all kinds of industrial and domestic equipment.
+              </md-tooltip>
+            </md-button>
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+
+  </div>
+</md-toolbar>

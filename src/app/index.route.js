@@ -78,9 +78,154 @@
         loginRequired: loginRequired,
       },
     })
-    .state('app.request', {
-      url: '/request/:requestId',
-      templateUrl: 'app/requests/request_detail.html',
+    .state('app.requests.pending', {
+      parent: 'app.requests',
+      url: '/pending',
+      templateUrl: 'app/requests/pending/pending.html',
+      controller: 'PendingRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.assigned', {
+      parent: 'app.requests',
+      url: '/assigned',
+      templateUrl: 'app/requests/assigned/assigned.html',
+      controller: 'AssignedRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.delivery-in-progress', {
+      parent: 'app.requests',
+      url: '/in-progress',
+      templateUrl: 'app/requests/in_progress/in_progress.html',
+      controller: 'InProgressRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.declined', {
+      parent: 'app.requests',
+      url: '/declined',
+      templateUrl: 'app/requests/declined/declined.html',
+      controller: 'DeclinedRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.completed', {
+      parent: 'app.requests',
+      url: '/completed',
+      templateUrl: 'app/requests/completed/completed.html',
+      controller: 'CompletedRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.local', {
+      parent: 'app.requests',
+      url: '/local',
+      templateUrl: 'app/requests/local/local.html',
+      controller: 'LocalRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.foreign', {
+      parent: 'app.requests',
+      url: '/foreign',
+      templateUrl: 'app/requests/foreign/foreign.html',
+      controller: 'ForeignRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.equipment', {
+      parent: 'app.requests',
+      url: '/equipment',
+      templateUrl: 'app/requests/equipment/equipment.html',
+      controller: 'EquipmentRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.details', {
+      parent: 'app.requests',
+      url: '/:requestId',
+      templateUrl: 'app/requests/request_detail/request_detail.html',
       controller: 'RequestDetailController',
       data: {
         permissions: {
@@ -106,6 +251,42 @@
           },
 
           redirectTo: 'auth.login',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.drivers.approved', {
+      parent: 'app.drivers',
+      url: '/approved',
+      templateUrl: 'app/drivers/approved/approved.html',
+      controller: 'ApprovedDriversController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.drivers.unapproved', {
+      parent: 'app.drivers',
+      url: '/unapproved',
+      templateUrl: 'app/drivers/unapproved/unapproved.html',
+      controller: 'UnapprovedDriversController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
         },
       },
       resolve: {
@@ -255,6 +436,24 @@
       url: '/pricing',
       templateUrl: 'app/settings/pricing/settings.pricing.html',
       controller: 'PricingController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.settings.customization', {
+      parent: 'app.settings',
+      url: '/customization',
+      templateUrl: 'app/settings/customizations/settings.customizations.html',
+      controller: 'CustomizationsController',
       data: {
         permissions: {
           only: function () {

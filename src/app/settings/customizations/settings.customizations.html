@@ -1,0 +1,8 @@
+<div class="" layout="column">
+  <div class="pattern-container" layout="row" ng-repeat="pattern in backgroundPatterns">
+    <h4 class="pattern-name">{{pattern.name}}</h4>
+    <span flex></span>
+    <md-button class="md-raised md-primary pattern-btn" aria-label="description" ng-click="previewPattern(pattern)">Preview</md-button>
+    <md-button class="md-raised md-accent pattern-btn" aria-label="description" ng-click="activatePattern(pattern)">Activate</md-button>
+  </div>
+</div>

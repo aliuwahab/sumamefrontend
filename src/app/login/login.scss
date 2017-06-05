@@ -1,57 +1,28 @@
-.sm-loginform-content {
-  position: relative;
-  padding: 80px;
-
-  .md-button {
-    position: absolute;
-    top: 40%;
-    right: -35px;
-  }
-}
-.login-right-side {
-  background-color: #f7f6f6;
+.login-page {
   height: 100vh;
-  padding: 50px;
+  background-image: url('../assets/patterns/brickwall.png');
 }
-.login-icon {
-  height: 40px;
-  margin-top: 30%;
-  margin-bottom: 10%;
+.login-page-card {
+  width: 60%;
+  height: 50vh;
 }
-.login-left-side {
-  // background-color: white;
-  height: 100vh;
-  padding: 20px;
-
-  background: linear-gradient(
-    rgba(255, 255, 255, 0.9),
-    rgba(255, 255, 255, 0.9)),
-    url(../assets/images/skyline2.png);
-  background-position: 0 165px;
-  background-size: cover;
-  background-repeat: no-repeat;
-  overflow-y: scroll;
+.login-page-right {
+  padding: 5%;
+  overflow: scroll;
 }
-.login-text-logo {
-  color: #ff5d55;
+.login-page-left {
+  background-color: #F4511E;
+  color: white;
+  padding: 5%;
+  height: 50vh;
+  overflow: scroll;
 }
-.login-welcome-title {
-  font-size: 25px;
-}
-.login-welcome-text {
-  font-size: 18px;
+.login-page-left-small-text {
+  font-size: 12px;
 }
 .login-reset-password {
-  font-size: 14px;
-  font-weight: normal;
-  margin-top: 20vh;
-  color: #019ad6;
   cursor: pointer;
 }
 .login-reset-password:hover {
-  color: #ff5d55;
-}
-.login-progressbar {
-  margin-bottom: 30px !important;
-  height: 1px !important;
+  color: #019AD6;
 }

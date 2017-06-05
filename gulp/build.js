@@ -100,9 +100,9 @@ gulp.task('tinymceskins', function () {
   .pipe(gulp.dest(path.join(conf.paths.dist, '/scripts/skins/')));
 });
 
-gulp.task('equationeditor', function () {
-  return gulp.src('src/app/components/equation_editor/*')
-  .pipe(gulp.dest(path.join(conf.paths.dist, '/app/components/equation_editor/')));
+gulp.task('ngincludes', function () {
+  return gulp.src('src/app/components/templates/*')
+  .pipe(gulp.dest(path.join(conf.paths.dist, '/app/components/templates/')));
 });
 
 gulp.task('other', function () {
@@ -122,4 +122,4 @@ gulp.task('clean', function () {
   return $.del([path.join(conf.paths.dist, '/'), path.join(conf.paths.tmp, '/')]);
 });
 
-gulp.task('build', ['ng-config', 'html', 'fonts', 'tinymcethemes', 'tinymceplugins', 'tinymceskins', 'equationeditor', 'other']);
+gulp.task('build', ['ng-config', 'html', 'fonts', 'tinymcethemes', 'tinymceplugins', 'tinymceskins', 'ngincludes', 'other']);

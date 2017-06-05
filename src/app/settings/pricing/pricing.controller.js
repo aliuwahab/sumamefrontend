@@ -15,6 +15,13 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
     getAllVehicleCategories();
   }
 
+  $rootScope.pusher.subscribe('equipment-category');
+
+  $rootScope.pusher.bind('price-category-created', function (data) {
+    debugger;
+    reloadPriceCategories();
+  });
+
   function getAllVehicleCategories() {
     $scope.loadingCategories = SettingsService.getAllVehicleCategories()
     .then(function (response) {
@@ -91,14 +98,14 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
   $scope.addPriceCategory = function () {
     var stringifiedCategoryPricing = JSON.stringify($scope.categoryPricing);
     $scope.newCategory.category_pricing = stringifiedCategoryPricing;
-    $scope.addingPriceCategory = true;
+
+    $scope.categories.push($scope.newCategory);
+    ToastsService.showToast('success', 'New category successfully created!');
+    $rootScope.closeDialog();
 
     SettingsService.addPriceCategory($scope.newCategory)
     .then(function (response) {
       $scope.addingPriceCategory = false;
-      ToastsService.showToast('success', 'New category successfully created!');
-      $rootScope.closeDialog();
-      reloadPriceCategories();
     })
     .catch(function (error) {
       $scope.addingPriceCategory = false;
@@ -129,23 +136,24 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
     });
   };
 
-  $scope.deletePriceCategory = function (ev, category) {
+  $scope.deletePriceCategory = function (ev, category, index) {
     Dialog.confirmAction('Do you want to delete this category?')
     .then(function () {
-      $scope.processInProgress = true;
 
       var data = {
         vehicle_category_id: category.id,
       };
 
+      $scope.categories.splice(index, 1);
+      ToastsService.showToast('success', 'Price category has been successfully deleted!');
+
       SettingsService.deletePriceCategory(data)
       .then(function (response) {
-        ToastsService.showToast('success', 'Price category has been successfully deleted!');
-        $scope.processInProgress = false;
         reloadPriceCategories();
       })
       .catch(function (error) {
         $scope.processInProgress = false;
+        reloadPriceCategories();
         ToastsService.showToast('error', error.data.message);
       });
     }, function () {

@@ -6,7 +6,9 @@
     .factory('CachingService', CachingService);
 
   /** @ngInject */
-  function CachingService(CacheFactory) {
+  function CachingService(CacheFactory, $timeout) {
+
+    var timesTriggered = 0;
 
     var service = {
       destroy: destroy,
@@ -16,14 +18,19 @@
     return service;
 
     function destroy(cacheName) {
-      if (CacheFactory.get(cacheName)) {
+      if (timesTriggered == 0 && CacheFactory.get(cacheName)) {
         cacheName = CacheFactory.get(cacheName);
         cacheName.destroy();
+        timesTriggered += 1;
       }
+
+      $timeout(function () {
+        timesTriggered = 0;
+      }, 2000);
     }
 
     function destroyOnCreateOperation(cacheName) {
-      CacheFactory.destroy(cacheName);
+      destroy(cacheName);
     }
 
   }

@@ -13,12 +13,18 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
 
   function activate() {
     $scope.filterParams = {
-      limit: 50,
+      limit: 30,
       page: 1,
     };
 
     getAllEquipment();
   }
+
+  $rootScope.pusher.subscribe('equipment');
+
+  $rootScope.pusher.bind('equipment-created', function (data) {
+    reloadEquipment();
+  });
 
   function getAllEquipment() {
     $scope.requestsPromise = EquipmentService.getAllEquipment($scope.filterParams)
@@ -107,26 +113,36 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
     Dialog.showCustomDialog(ev, 'view_equipment', $scope);
   };
 
-  // UPLOAD IMAGE
-  $scope.uploadImage = function (file) {
+  $scope.openEquipmentDoc = function (url) {
+    if ($rootScope.authenticatedUser.admin_type == 'super') {
+      $window.open(url, '_blank');
+    }else {
+      ToastsService.showToast('error', 'You do not have permission to view this file');
+    }
+  };
+
+  // UPLOAD ITEM
+  $scope.uploadItem = function (file, field, category, type, editing) {
     $scope.s3Uploader = UploadService;
+    var uploadProgress = field + '_progress';
+    var uploadToggle = 'uploading_' + field;
 
     if (file) {
-      $scope.uploadingImage = true;
+      $scope[uploadToggle] = true;
 
       $scope.$watch('s3Uploader.getUploadProgress()', function (newVal) {
         console.log('Progress', newVal);
-        $scope.uploadProgress = newVal;
+        $scope[uploadProgress] = newVal;
       });
 
-      UploadService.uploadFileToS3(file, 'equipment', 'image')
+      UploadService.uploadFileToS3(file, '', 'image')
       .then(function (url) {
-        $scope.newEquipment.equipment_image = url;
-        $scope.uploadingImage = false;
-        $scope.uploadProgress = 0;
+        editing ? $scope.selectedEquipment[field] = url : $scope.newEquipment[field] = url;
+        $scope[uploadToggle] = false;
+        $scope[uploadProgress] = 0;
       })
       .catch(function (error) {
-        $scope.uploadingImage = false;
+        $scope[uploadToggle] = false;
       });
     }else {
       ToastsService.showToast('error', 'Please select a valid file');
@@ -134,8 +150,7 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
   };
 
   function reloadEquipment() {
-    var cache = 'equipment?page=' + $scope.filterParams.page + 'limit=' +
-    $scope.filterParams.limit;
+    var cache = 'equipment?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
     getAllEquipment();
   }

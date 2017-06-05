@@ -43,12 +43,12 @@
         </md-input-container>
 
         <h4 class="sm-custom-input-label">Equipment Image</h4>
-        <div class="sm-dropzone" ngf-select="uploadImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
-          <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
-            <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
-            <p>Uploading Image: {{uploadProgress}}% complete</p>
+        <div class="sm-dropzone" ngf-select="uploadItem($file, 'equipment_image', 'equipment_image', 'image', true)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+          <div ng-if="uploading_equipment_image" layout="column" layout-align="center center" style="min-height: 100px;">
+            <md-progress-circular md-mode="determinate" value="{{equipment_image_progress}}"></md-progress-circular>
+            <p>Uploading Image: {{equipment_image_progress}}% complete</p>
           </div>
-          <div ng-if="!uploadingImage" layout="column" layout-align="center center">
+          <div ng-if="!uploading_equipment_image" layout="column" layout-align="center center">
             <i class="material-icons md-24">backup</i>
             <p ng-if="!selectedEquipment.equipment_image">Click here to select an image</p>
             <p ng-if="selectedEquipment.equipment_image">Click here to change image</p>
@@ -59,10 +59,49 @@
           </div>
         </div>
 
+        <h4 class="sm-custom-input-label">Equipment Description</h4>
         <md-input-container class="md-block">
-          <label>Equipment Description</label>
           <textarea ui-tinymce ng-model="selectedEquipment.equipment_description" aria-label="equipment description" md-select-on-focus rows="3"></textarea>
         </md-input-container>
+
+        <h4 class="sm-custom-input-label">Terms and Conditions</h4>
+        <md-input-container class="md-block">
+          <textarea ui-tinymce ng-model="selectedEquipment.terms_and_conditions" aria-label="equipment description" md-select-on-focus rows="3"></textarea>
+        </md-input-container>
+
+        <h4 class="sm-custom-input-label">Equipment Insurance</h4>
+        <div class="sm-dropzone" ngf-select="uploadItem($file, 'equipment_insurance_docs', 'insurance', 'document', true)" name="file" ngf-max-size="20MB">
+          <div ng-if="uploading_equipment_insurance_docs" layout="column" layout-align="center center" style="min-height: 100px;">
+            <md-progress-circular md-mode="determinate" value="{{equipment_insurance_docs_progress}}"></md-progress-circular>
+            <p>Uploading Insurance: {{equipment_insurance_docs_progress}}% complete</p>
+          </div>
+          <div ng-if="!uploading_equipment_insurance_docs" layout="column" layout-align="center center">
+            <i class="material-icons md-24">backup</i>
+            <p ng-if="!selectedEquipment.equipment_insurance_docs">Click here to select an image</p>
+            <p ng-if="selectedEquipment.equipment_insurance_docs">Click here to change image</p>
+
+            <div class="" ng-if="selectedEquipment.equipment_insurance_docs" style="max-width:700px">
+              <p>Equipment insurance attached</p>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="sm-custom-input-label">Equipment Registration Documents</h4>
+        <div class="sm-dropzone" ngf-select="uploadItem($file, 'equipment_registration_docs', 'registration', 'document', true)" name="file" ngf-max-size="20MB">
+          <div ng-if="uploading_equipment_registration_docs" layout="column" layout-align="center center" style="min-height: 100px;">
+            <md-progress-circular md-mode="determinate" value="{{equipment_registration_docs_progress}}"></md-progress-circular>
+            <p>Uploading Document: {{equipment_registration_docs_progress}}% complete</p>
+          </div>
+          <div ng-if="!uploading_equipment_registration_docs" layout="column" layout-align="center center">
+            <i class="material-icons md-24">backup</i>
+            <p ng-if="!selectedEquipment.equipment_registration_docs">Click here to select an image</p>
+            <p ng-if="selectedEquipment.equipment_registration_docs">Click here to change image</p>
+
+            <div class="" ng-if="selectedEquipment.equipment_registration_docs" style="max-width:700px">
+              Registration documents are attached.
+            </div>
+          </div>
+        </div>
       </div>
 
     </md-dialog-content>

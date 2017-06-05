@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function ResetPasswordController($scope, $rootScope, $state, $auth, localStorageService,
-  ToastsService, ssSideNav, UserService, segment) {
+  ToastsService, ssSideNav, UserService) {
 
   $scope.user = {};
 

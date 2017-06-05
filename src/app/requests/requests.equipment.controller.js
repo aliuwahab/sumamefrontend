@@ -7,8 +7,8 @@ angular
 
 /** @ngInject */
 function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
-  ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
-  SettingsService, EquipmentService) {
+  $mdSidenav, ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
+  SettingsService, EquipmentService, CustomersService) {
 
   activate();
 
@@ -21,8 +21,8 @@ function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stat
 
     $scope.newRequest = {
       request_type: 'equipment_request',
-      requester_id: $rootScope.authenticatedUser.id,
       request_status: 'pending',
+      request_source: 'admin',
     };
 
     $scope.equipmentFilterParams = {
@@ -115,6 +115,7 @@ function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stat
     $scope.newRequest.pickup_location_longitude =
     $scope.selectedEquipment.equipment_location_longitude;
     $scope.newRequest.equipment_id = $scope.selectedEquipment.id;
+    $scope.newRequest.requester_id = $scope.data.selectedCustomer.id;
   }
 
   // LOAD EQUIPMENT
@@ -165,6 +166,24 @@ function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stat
         break;
       default:
     }
+  };
+
+  $scope.toggleTermsNav = function (equipment, navID) {
+    $scope.equipmentDetails = equipment;
+
+    $mdSidenav(navID)
+    .toggle();
+  };
+
+  /// SEARCH FUNCTION
+  $scope.querySearch = function (query) {
+    return CustomersService.searchCustomers({ search_key: query, limit: 10, page: 1 })
+    .then(function (customersResults) {
+      return customersResults.data.data.search_results.data;
+    })
+    .catch(function (error) {
+      debugger;
+    });
   };
 
 }

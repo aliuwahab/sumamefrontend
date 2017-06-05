@@ -6,7 +6,13 @@
       </md-icon>
     </md-button>
 
+    <h3 class="view-main-title">Customers</h3>
+
     <span flex></span>
+
+    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddCustomerDialog($event)">
+      Add New Customer
+    </md-button>
   </div>
 </md-toolbar>
 
@@ -15,7 +21,21 @@
 </div>
 
 <div class="view-main-container">
-  <h3 class="view-main-title">Customers</h3>
+
+  <div class="" layout="row">
+    <md-card class="sm-rq-filter-item-card pending" ng-style="filterParams.consumer_type =='business' && {'border':'3px solid white'}" flex="10" ng-click="changeConsumersTab('business')">
+      <md-card-content>
+        <i class="material-icons">business_center</i>
+        <h2 class="sm-rq-filter-item-title">Businesses</h2>
+      </md-card-content>
+    </md-card>
+    <md-card class="sm-rq-filter-item-card assigned" ng-style="filterParams.consumer_type =='individual' && {'border':'3px solid white'}" flex="10" ng-click="changeConsumersTab('individual')">
+      <md-card-content>
+        <i class="material-icons">person</i>
+        <h2 class="sm-rq-filter-item-title">Individuals</h2>
+      </md-card-content>
+    </md-card>
+  </div>
 
   <md-card>
     <md-card-content>
@@ -23,22 +43,22 @@
         <table md-table md-progress="requestsPromise">
           <thead md-head md-order="query.order" md-on-reorder="getrequests">
             <tr md-row>
+              <th md-column>ACCOUNT NUMBER</th>
               <th md-column><span>CUSTOMER NAME</span></th>
-              <th md-column>CUSTOMER TYPE</th>
+              <!-- <th md-column>CUSTOMER TYPE</th> -->
               <th md-column>PHONE NUMBER</th>
-              <th md-column>LOCATION</th>
               <th md-column></th>
             </tr>
           </thead>
           <tbody md-body>
             <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in customers.data">
+              <td md-cell>{{customer.id}}</td>
               <td md-cell>{{customer.first_name}} {{customer.last_name}}</td>
-              <td md-cell>
+              <!-- <td md-cell>
                 <span ng-if="customer.consumer_type == 'business'">Business</span>
                 <span ng-if="customer.consumer_type == 'individual'">Individual</span>
-              </td>
+              </td> -->
               <td md-cell>{{customer.phone_number}}</td>
-              <td md-cell>{{customer.location}}</td>
               <td md-cell>
                 <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">
                   <md-tooltip md-direction="top">
@@ -64,7 +84,7 @@
         </table>
       </md-table-container>
 
-      <md-table-pagination md-limit="queryParams.limit" md-limit-options="[50, 100, 200]" md-page="queryParams.page" md-total="{{requests.total}}" md-on-paginate="getrequests" md-page-select></md-table-pagination>
+      <md-table-pagination md-limit="filterParams.limit" md-limit-options="[50, 100, 200]" md-page="filterParams.page" md-total="{{customers.total}}" md-on-paginate="" md-page-select></md-table-pagination>
     </md-card-content>
   </md-card>
 </div>

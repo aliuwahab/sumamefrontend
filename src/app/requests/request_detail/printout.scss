@@ -1,0 +1,77 @@
+.printout-card {
+  width: 6in;
+  height: 4in;
+}
+.printout-card-content {
+  padding: 0;
+}
+.printout-info-container {
+  border-right: 1px solid #ccc;
+  height: 4in;
+}
+.printout-request-info {
+  border-bottom: 1px solid #ccc;
+  padding: 5mm;
+}
+.printout-from-info {
+  margin-bottom: 10mm;
+}
+.printout-to-info {
+  margin-bottom: 10mm;
+}
+.printout-to {
+  font-size: 10pt;
+  margin: 0;
+}
+.printout-customer-name {
+  margin: 0;
+}
+.printout-destination {
+  font-size: 8pt;
+}
+.printout-from {
+  font-size: 10pt;
+  margin: 0;
+}
+.printout-from-name {
+  font-size: 16pt;
+  margin: 0;
+}
+.printout-warehouse-name {
+  font-size: 8pt;
+  margin: 0;
+}
+.printout-company-info {
+  padding: 5mm;
+}
+.printout-company-info h1{
+  font-size: 20px;
+}
+.printout-company-contact {
+  font-size: 8pt;
+}
+.printout-company-contact .space-out {
+  margin-left: 5mm;
+}
+.printout-qr-container {
+  padding: 5mm;
+}
+.printout-qr-container p {
+  font-size: 8pt;
+}
+.printout-qr-container h4 {
+  margin-top: 0;
+  font-size: 10pt;
+}
+
+@media print {
+  @page {
+    size: landscape;
+  }
+  .4by6 {
+    // margin-left: 0mm !important;
+    // margin-right: 10mm !important;
+    float: none !important;
+    overflow: visible !important;
+  }
+}

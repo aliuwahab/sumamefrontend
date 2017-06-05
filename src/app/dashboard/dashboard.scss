@@ -2,9 +2,48 @@
   text-align: center;
   border: 3px solid #fff;
   cursor: pointer;
+  margin-right: 20px;
+  width: 25%;
+  margin-bottom: 20px;
+  color: white;
+}
+.dashboard-statistic-container:last-child{
+  margin-right: 8px;
 }
 .dashboard-statistic-container:hover {
   border: 3px solid #019AD6;
+}
+.dashboard-statistic-container.pending {
+  background-color: #4CAF50;
+  border: #4CAF50;
+}
+.dashboard-statistic-container.in-progress {
+  background-color: #019ad6;
+  border: #019ad6;
+}
+.dashboard-statistic-container.drivers {
+  background-color: #E53935;
+  border: #E53935;
+}
+.dashboard-statistic-container.vehicles {
+  background-color: #FB8C00;
+  border: #FB8C00;
+}
+.dashboard-statistic-container.equipment {
+  background-color: #651FFF;
+  border: #651FFF;
+}
+.dashboard-statistic-container.customers {
+  background-color: #002a4d;
+  border: #002a4d;
+}
+.dashboard-statistic-container.this-month {
+  background-color: #9c27b0;
+  border: #9c27b0;
+}
+.dashboard-statistic-container.all-time {
+  background-color: #3f51b5;
+  border: #3f51b5;
 }
 .dashboard-graphs-card {
   min-height: 430px;
@@ -23,15 +62,32 @@
   height: 60px;
   margin-top: 25px;
 }
+.dashboard-card-content {
+  position: relative;
+}
+.dashboard-stat-info {
+  text-align: right;
+}
+.dashboard-icon-container {
+
+}
+.dashboard-icon-container i {
+  font-size: 102px;
+  color: rgba(255, 255, 255, 0.19);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
 .dashboard-stat-number {
-  font-size: 60px;
-  margin: 20px;
+  font-size: 35px;
+  margin: 0;
+  // margin-top: 0px;
 }
 .dashboard-stat-name {
-  font-size: 20px;
-  color: #ff5d55;
+  font-size: 16px;
   font-weight: 600;
-  margin-bottom: 25px !important;
+  // margin-bottom: 25px !important;
+  margin: 0;
 }
 .md-open-menu-container.md-active {
   height: auto;

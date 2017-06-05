@@ -30,13 +30,14 @@
       'angular-cache',
       'AngularPrint',
       'monospaced.qrcode',
-      'ngSegment',
       'ActivityMonitor',
       'chart.js',
       'uiGmapgoogle-maps',
       'ngMap',
       'twilio',
       'mgo-angular-wizard',
+      'ngAudio',
+      'ui.tinymce',
     ]);
 
 })();

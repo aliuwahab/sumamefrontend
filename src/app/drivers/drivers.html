@@ -6,6 +6,8 @@
       </md-icon>
     </md-button>
 
+    <h3 class="view-main-title">Drivers</h3>
+
     <span flex></span>
 
     <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddDriverDialog($event)">
@@ -14,74 +16,26 @@
   </div>
 </md-toolbar>
 
-<div ng-if="activateTopProgress" class="top-progress-bar" layout="row">
+<div ng-if="processInProgress" class="top-progress-bar" layout="row">
   <md-progress-linear md-mode="indeterminate"></md-progress-linear>
 </div>
 
 <div class="view-main-container">
-  <h3 class="view-main-title">Drivers</h3>
 
-  <md-card>
-    <md-card-content>
-      <md-table-container>
-        <table md-table md-progress="requestsPromise">
-          <thead md-head md-order="query.order" md-on-reorder="getrequests">
-            <tr md-row>
-              <th md-column><span>DRIVER NAME</span></th>
-              <th md-column>PHONE NUMBER</th>
-              <th md-column>ASSIGNED DELIVERIES</th>
-              <th md-column>STATUS</th>
-              <th md-column></th>
-            </tr>
-          </thead>
-          <tbody md-body>
-            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="driver in drivers.data">
-              <td md-cell>{{driver.first_name}} {{driver.last_name}}</td>
-              <td md-cell>{{driver.phone_number}}</td>
-              <td md-cell>{{driver.assigned_deliveries.length}}</td>
-              <td md-cell>
-                <p ng-if="driver.driver_approved == true">APPROVED</p>
-                <p ng-if="driver.driver_approved == false">NOT APPROVED</p>
-              </td>
-              <td md-cell>
-                <button class="md-button md-raised md-primary" ng-click="showDriverDialog($event, driver, 'view_driver')">
-                  <md-tooltip md-direction="top">
-                    View Driver Details
-                  </md-tooltip>
-                  <i class="material-icons">remove_red_eye</i>
-                </button>
-                <button class="md-button md-raised md-accent" ng-click="showDriverDialog($event, driver, 'update_driver')">
-                  <md-tooltip md-direction="top">
-                    Edit Driver Details
-                  </md-tooltip>
-                  <i class="material-icons">edit</i>
-                </button>
-                <button ng-if="!driver.driver_approved" class="md-button md-raised md-accent" ng-click="approveUnapproveDriver(driver, 'approve')">
-                  <md-tooltip md-direction="top">
-                    Approve Driver
-                  </md-tooltip>
-                  <i class="material-icons">spellcheck</i>
-                </button>
-                <button ng-if="driver.driver_approved" class="md-button md-raised md-warn" ng-click="approveUnapproveDriver(driver, 'unapprove')">
-                  <md-tooltip md-direction="top">
-                    Unapprove Driver
-                  </md-tooltip>
-                  <i class="material-icons">clear</i>
-                </button>
+  <div class="" layout="row">
+    <md-card class="sm-rq-filter-item-card pending" ng-style="currentView == 'app.drivers.approved' && {'border':'3px solid white'}" flex="10" ng-click="changeDriversTab('app.drivers.approved')">
+      <md-card-content>
+        <i class="material-icons">assignment_turned_in</i>
+        <h2 class="sm-rq-filter-item-title">Approved</h2>
+      </md-card-content>
+    </md-card>
+    <md-card class="sm-rq-filter-item-card assigned" ng-style="currentView == 'app.drivers.unapproved' && {'border':'3px solid white'}" flex="10" ng-click="changeDriversTab('app.drivers.unapproved')">
+      <md-card-content>
+        <i class="material-icons">assignment_late</i>
+        <h2 class="sm-rq-filter-item-title">Unapproved</h2>
+      </md-card-content>
+    </md-card>
+  </div>
 
-                <button class="md-button md-raised md-warn" ng-click="deleteDriver($event, driver)">
-                  <md-tooltip md-direction="top">
-                    Delete Driver
-                  </md-tooltip>
-                  <i class="material-icons">delete_forever</i>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </md-table-container>
-
-      <md-table-pagination md-limit="queryParams.limit" md-limit-options="[50, 100, 200]" md-page="queryParams.page" md-total="{{requests.total}}" md-on-paginate="getrequests" md-page-select></md-table-pagination>
-    </md-card-content>
-  </md-card>
+  <div class="" ui-view></div>
 </div>

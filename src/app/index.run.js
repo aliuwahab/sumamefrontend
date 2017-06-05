@@ -7,8 +7,10 @@
 
   /** @ngInject */
   function runBlock($log, $rootScope, $state, $http, $mdDialog, PermPermissionStore, PermRoleStore,
-    ssSideNav, localStorageService, Rollbar, segment, ActivityMonitor, logOutAfterSeconds,
+    ssSideNav, localStorageService, Rollbar, ActivityMonitor, logOutAfterSeconds,
     NgMap, ENV) {
+
+    $rootScope.viewBackgroundImage = '../assets/patterns/brickwall.png';
 
     if (localStorageService.get('profile')) {
 
@@ -22,12 +24,6 @@
           },
           environment: ENV.stage,
         },
-      });
-
-      segment.identify($rootScope.authenticatedUser.id, {
-        email: $rootScope.authenticatedUser.email,
-        username: $rootScope.authenticatedUser.first_name + ' ' +
-        $rootScope.authenticatedUser.last_name,
       });
 
       PermPermissionStore
@@ -56,6 +52,12 @@
         'seeCustomers',
         ],
       });
+
+      $rootScope.pusher = new Pusher(ENV.pusherApiKey, {
+        cluster: 'eu',
+        encrypted: true,
+      });
+      $rootScope.pusher.subscribe('request');
     }
 
     if ($rootScope.authenticatedUser && ($rootScope.authenticatedUser.admin_type == 'staff' ||
@@ -64,7 +66,6 @@
     }
 
     $rootScope.$on('$stateChangeSuccess', function (event, to, toParams, from, fromParams) {
-      segment.page();
       $rootScope.previousState = from;
     });
 
@@ -77,6 +78,33 @@
         ActivityMonitor.off('inactive');
       });
     }
+
+    $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
+      switch (toState.name) {
+        case 'app.requests':
+          var currentState = localStorageService.get('selectedRequestsView') ||
+          'app.requests.pending';
+          event.preventDefault();
+          $state.go(currentState);
+          break;
+        case 'app.drivers':
+          var currentState = localStorageService.get('selectedDriversView') ||
+          'app.drivers.approved';
+          event.preventDefault();
+          $state.go(currentState);
+          break;
+        case 'app.settings':
+          var currentState = localStorageService.get('selectedSettingsView') ||
+          'app.settings.staff';
+          event.preventDefault();
+          $state.go(currentState);
+          break;
+        default:
+
+          // Do default
+      }
+
+    });
 
     NgMap.getMap().then(function (map) {
       $rootScope.map = map;

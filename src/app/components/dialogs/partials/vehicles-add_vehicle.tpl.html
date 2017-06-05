@@ -34,12 +34,12 @@
         </md-input-container>
 
         <h4 class="sm-custom-input-label">Vehicle Image</h4>
-        <div class="sm-dropzone" ngf-select="uploadImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
-          <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
-            <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
-            <p>Uploading Image: {{uploadProgress}}% complete</p>
+        <div class="sm-dropzone" ngf-select="uploadItem($file, 'vehicle_image', 'vehicle_image', 'image')" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+          <div ng-if="uploading_vehicle_image" layout="column" layout-align="center center" style="min-height: 100px;">
+            <md-progress-circular md-mode="determinate" value="{{vehicle_image_progress}}"></md-progress-circular>
+            <p>Uploading Image: {{vehicle_image_progress}}% complete</p>
           </div>
-          <div ng-if="!uploadingImage" layout="column" layout-align="center center">
+          <div ng-if="!uploading_vehicle_image" layout="column" layout-align="center center">
             <i class="material-icons md-24">backup</i>
             <p ng-if="!newVehicle.vehicle_image">Click here to select an image</p>
             <p ng-if="newVehicle.vehicle_image">Click here to change image</p>
@@ -50,10 +50,44 @@
           </div>
         </div>
 
+        <h4 class="sm-custom-input-label">Vehicle Description</h4>
         <md-input-container class="md-block">
-          <label>Vehicle Description</label>
           <textarea ui-tinymce ng-model="newVehicle.vehicle_description" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
         </md-input-container>
+
+        <h4 class="sm-custom-input-label">Vehicle Insurance</h4>
+        <div class="sm-dropzone" ngf-select="uploadItem($file, 'vehicle_insurance_docs', 'insurance', 'document')" name="file" ngf-max-size="20MB">
+          <div ng-if="uploading_vehicle_insurance_docs" layout="column" layout-align="center center" style="min-height: 100px;">
+            <md-progress-circular md-mode="determinate" value="{{vehicle_insurance_docs_progress}}"></md-progress-circular>
+            <p>Uploading Insurance: {{vehicle_insurance_docs_progress}}% complete</p>
+          </div>
+          <div ng-if="!uploading_vehicle_insurance_docs" layout="column" layout-align="center center">
+            <i class="material-icons md-24">backup</i>
+            <p ng-if="!newVehicle.vehicle_insurance_docs">Click here to select an document (pdf or word document)</p>
+            <p ng-if="newVehicle.vehicle_insurance_docs">Click here to change document (pdf or word document)</p>
+
+            <div class="" ng-if="newVehicle.vehicle_insurance_docs" style="max-width:700px">
+              <p>Vehicle insurance attached</p>
+            </div>
+          </div>
+        </div>
+
+        <h4 class="sm-custom-input-label">Vehicle Registration Documents</h4>
+        <div class="sm-dropzone" ngf-select="uploadItem($file, 'vehicle_registration_docs', 'registration', 'document')" name="file" ngf-max-size="20MB">
+          <div ng-if="uploading_vehicle_registration_docs" layout="column" layout-align="center center" style="min-height: 100px;">
+            <md-progress-circular md-mode="determinate" value="{{vehicle_registration_docs_progress}}"></md-progress-circular>
+            <p>Uploading Document: {{vehicle_registration_docs_progress}}% complete</p>
+          </div>
+          <div ng-if="!uploading_vehicle_registration_docs" layout="column" layout-align="center center">
+            <i class="material-icons md-24">backup</i>
+            <p ng-if="!newVehicle.vehicle_registration_docs">Click here to select document (pdf or word document)</p>
+            <p ng-if="newVehicle.vehicle_registration_docs">Click here to change document (pdf or word document)</p>
+
+            <div class="" ng-if="newVehicle.vehicle_registration_docs" style="max-width:700px">
+              Registration documents are attached.
+            </div>
+          </div>
+        </div>
       </div>
 
     </md-dialog-content>

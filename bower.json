@@ -40,13 +40,15 @@
     "angular-cache": "^4.6.0",
     "angularPrint": "angular-print#^0.3.8",
     "angular-qrcode": "monospaced/angular-qrcode#^6.2.1",
-    "angular-segment-analytics": "^1.2.0",
     "angular-activity-monitor": "^1.1.0",
     "angular-chart.js": "^1.1.1",
     "ngmap": "^1.18.4",
     "angular-wizard": "^0.10.0",
     "md-steppers": "^0.3.4",
-    "angular-google-maps": "^2.4.1"
+    "angular-google-maps": "^2.4.1",
+    "pusher-angular": "^0.1.9",
+    "pusher-js": "pusher#^4.1.0",
+    "angular-audio": "^1.7.3"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3"

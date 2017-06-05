@@ -18,6 +18,8 @@
       add_online_request: 'app/components/dialogs/partials/request-add_online_request.tpl.html',
       add_equipment_request: 'app/components/dialogs/partials/request-add_equipment_request.tpl.html',
       assign_request: 'app/components/dialogs/partials/request-assign_request.tpl.html',
+      add_note: 'app/components/dialogs/partials/request-add-note.tpl.html',
+      print_request: 'app/components/dialogs/partials/request-print.tpl.html',
 
       // DRIVER DIALOGS
       add_driver: 'app/components/dialogs/partials/drivers-add_driver.tpl.html',
@@ -51,6 +53,7 @@
 
       // CUSTOMERS DIALOGS
       view_customer: 'app/components/dialogs/partials/customers-view_customer.tpl.html',
+      add_customer: 'app/components/dialogs/partials/customers-add_customer.tpl.html',
     };
 
     // CUSTOMIZE DEFAULT CONFIRM BUTTONS

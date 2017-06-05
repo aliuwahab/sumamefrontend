@@ -1,0 +1,58 @@
+<md-dialog aria-label="add new driver">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add New Customer</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="width:700px;">
+      <div ng-if="loadingRequiredData || addingCustomer" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+      </div>
+
+      <div ng-show="!loadingRequiredData && !addingCustomer">
+        <div class="" layout="row">
+          <md-input-container class="sm-input-container">
+            <label>First Name</label>
+            <input type="text" ng-model="newCustomer.first_name">
+          </md-input-container>
+
+          <md-input-container class="sm-input-container">
+            <label>Last Name</label>
+            <input type="text" ng-model="newCustomer.last_name">
+          </md-input-container>
+        </div>
+
+        <md-input-container class="sm-input-container">
+          <label>Username</label>
+          <input type="text" ng-model="newCustomer.username">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Phone Number</label>
+          <input type="text" ng-model="newCustomer.phone_number">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Password</label>
+          <input type="password" ng-model="newCustomer.password">
+        </md-input-container>
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="addCustomer()" class="md-raised md-accent">
+        Add Customer
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function LoginController($scope, $rootScope, $state, $auth, localStorageService,
   ToastsService, ssSideNav, PermPermissionStore, PermRoleStore, UserService,
-  segment, ActivityMonitor, logOutAfterSeconds) {
+  ActivityMonitor, logOutAfterSeconds, ENV) {
 
   $scope.user = {};
   $scope.resetShowing = false;
@@ -50,18 +50,7 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
             $scope.enableProgressBar = false;
             $state.go('app.dashboard');
 
-            segment.identify($rootScope.authenticatedUser.id, {
-              email: $rootScope.authenticatedUser.email,
-              username: $rootScope.authenticatedUser.first_name + ' ' +
-               $rootScope.authenticatedUser.last_name,
-            });
-
-            segment.track(segment.events.login, {
-              name: $rootScope.authenticatedUser.first_name + ' ' +
-              $rootScope.authenticatedUser.last_name,
-              time: new Date(),
-            });
-
+            subscribeToPusherChannels();
             subscribeToActivityMonitor();
 
           }else {
@@ -97,6 +86,14 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
         ActivityMonitor.off('inactive');
       }
     });
+  }
+
+  function subscribeToPusherChannels() {
+    $rootScope.pusher = new Pusher(ENV.pusherApiKey, {
+      cluster: 'eu',
+      encrypted: true,
+    });
+    $rootScope.pusher.subscribe('request');
   }
 
   function resetUserState() {

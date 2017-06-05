@@ -21,6 +21,23 @@
           <p>This is meant for shopping abroad when the online shop does not ship to Ghana. First, choose one of our warehouses below as an address which you'll use as your shipping address to make the purchase online. Once you've completed your purchase, fill the form below and expect your order at your doorstep in Ghana.</p>
         </div>
 
+        <md-input-container class="sm-input-container" style="margin: 0;">
+          <md-autocomplete flex
+              md-input-name="customersAutocomplete"
+              md-input-minlength="2"
+              md-input-maxlength="18"
+              md-no-cache="$scope.noCache"
+              md-selected-item="data.selectedCustomer"
+              md-search-text="searchText"
+              md-items="customer in querySearch(searchText)"
+              md-item-text="customer.full_name"
+              md-floating-label="Enter customer name">
+            <md-item-template>
+              <span md-highlight-text="searchText">{{customer.full_name}} ({{customer.phone_number}})</span>
+            </md-item-template>
+          </md-autocomplete>
+        </md-input-container>
+
         <md-input-container style="width:100%;">
           <label>Choose a warehouse location</label>
           <md-select ng-model="selectedWarehouse">
@@ -37,18 +54,44 @@
         </div>
 
         <md-input-container class="sm-input-container">
+          <label>Which online store are you buying from?</label>
+          <md-select ng-model="newRequest.online_store">
+            <md-option value="amazon">Amazon</md-option>
+            <md-option value="alibaba">Alibaba</md-option>
+            <md-option value="ebay">Ebay</md-option>
+            <md-option value="other">Other</md-option>
+          </md-select>
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
           <label>Enter order number</label>
           <input type="text" ng-model="newRequest.online_order_number">
         </md-input-container>
 
-        <md-input-container class="sm-input-container">
-          <label>Enter item value</label>
-          <input type="text" ng-model="itemValue" ng-change="calculateRequestCost()">
-        </md-input-container>
+        <div class="" layout="row">
+          <md-input-container class="sm-input-container">
+            <label>Item Cost Currency</label>
+            <md-select ng-model="newRequest.item_cost_currency">
+              <md-option value="usd">United States Dollar (USD)</md-option>
+              <md-option value="eur">Euro (EUR)</md-option>
+              <md-option value="gbp">British Pound (GBP)</md-option>
+              <md-option value="ghs">Ghanaian Cedi (GHS)</md-option>
+              <md-option value="aud">Australian Dollar (AUD)</md-option>
+              <md-option value="zar">South African Rand (ZAR)</md-option>
+              <md-option value="cny">Chinese Yuang (CNY)</md-option>
+              <md-option value="aed">UAE Dirham (AED)</md-option>
+            </md-select>
+          </md-input-container>
+
+          <md-input-container class="sm-input-container">
+            <label>Item Cost</label>
+            <input type="text" ng-model="itemValue" ng-change="calculateRequestCost()">
+          </md-input-container>
+        </div>
 
         <div class="sm-dropzone sm-rq-fare-container" ng-if="newRequest.request_cost">
           <h6>The delivery fare for this item will be:</h6>
-          <h2 class="sm-req-online-info-title">GHS {{newRequest.request_cost | number: 2}}</h2>
+          <h2 class="sm-req-online-info-title">{{newRequest.item_cost_currency | uppercase}} {{newRequest.request_cost | number: 2}}</h2>
         </div>
 
         <md-input-container class="sm-input-container">

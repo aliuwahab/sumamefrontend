@@ -15,6 +15,7 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     $scope.filterParams = {
       limit: 50,
       page: 1,
+      consumer_type: 'business',
     };
 
     getAllCustomers();
@@ -30,6 +31,25 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     });
   }
 
+  $scope.addCustomer = function () {
+
+    $scope.processInProgress = true;
+    $scope.newCustomer.password_confirmation = $scope.newCustomer.password;
+    debugger;
+    CustomersService.addCustomer($scope.newCustomer)
+    .then(function (response) {
+      debugger;
+      ToastsService.showToast('success', 'Customer successfully blocked');
+      $scope.processInProgress = false;
+      reloadCustomers();
+    })
+    .catch(function (error) {
+      debugger;
+      $scope.processInProgress = false;
+      ToastsService.showToast('error', error.data.error);
+    });
+  };
+
   $scope.changeCustomerStatus = function (customer, action) {
     $scope.processInProgress = true;
     CustomersService.changeCustomerStatus({
@@ -38,10 +58,7 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     .then(function (response) {
       ToastsService.showToast('success', 'Customer successfully blocked');
       $scope.processInProgress = false;
-      var cache = 'customers?page=' + $scope.filterParams.page +
-      'limit=' + $scope.filterParams.limit;
-      CachingService.destroyOnCreateOperation(cache);
-      getAllCustomers();
+      reloadCustomers();
     })
     .catch(function (error) {
       $scope.processInProgress = false;
@@ -54,6 +71,27 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     $scope.selectedCustomer = customer;
     Dialog.showCustomDialog(ev, dialog, $scope);
   };
+
+  $scope.showAddCustomerDialog = function (ev) {
+    $scope.newCustomer = {
+      account_confirm: 1,
+      user_created_by: $rootScope.authenticatedUser.id,
+    };
+    Dialog.showCustomDialog(ev, 'add_customer', $scope);
+  };
+
+  $scope.changeConsumersTab = function (consumerType) {
+    if ($scope.filterParams.consumer_type != consumerType) {
+      $scope.filterParams.consumer_type = consumerType;
+      getAllCustomers();
+    }
+  };
+
+  function reloadCustomers() {
+    var cache = 'customers?' + $.param($scope.filterParams);
+    CachingService.destroyOnCreateOperation(cache);
+    getAllCustomers();
+  }
 
 }
 })();
