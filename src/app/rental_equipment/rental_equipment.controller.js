@@ -80,17 +80,24 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
 
     $scope.selectedEquipment.equipment_id = $scope.selectedEquipment.id;
 
-    $scope.addingEquipment = true;
-    EquipmentService.updateEquipment($scope.selectedEquipment)
-    .then(function (response) {
-      $scope.addingEquipment = false;
-      ToastsService.showToast('success', 'Equipment successfully updated');
-      reloadEquipment();
+    ValidationService.validate($scope.selectedEquipment, 'equipment')
+    .then(function (result) {
+      $scope.addingEquipment = true;
       $rootScope.closeDialog();
+
+      EquipmentService.updateEquipment($scope.selectedEquipment)
+      .then(function (response) {
+        $scope.addingEquipment = false;
+        ToastsService.showToast('success', 'Equipment successfully updated');
+        reloadEquipment();
+      })
+      .catch(function (error) {
+        $scope.addingEquipment = false;
+        ToastsService.showToast('error', error.data.message);
+      });
     })
     .catch(function (error) {
-      $scope.addingEquipment = false;
-      ToastsService.showToast('error', error.data.message);
+      ToastsService.showToast('error', error.message);
     });
   };
 
