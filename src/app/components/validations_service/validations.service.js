@@ -14,6 +14,11 @@
       offlineRequest: [
         { field: 'answer_video_url', friendlyName: 'Answer Video', },
       ],
+      vehicle: [
+        { field: 'vehicle_registration_number', friendlyName: 'Vehicle Registration Number' },
+        { field: 'vehicle_category_id', friendlyName: 'Vehicle Category' },
+        { field: 'vehicle_name', friendlyName: 'Vehicle Name' },
+      ],
       equipment: [
         { field: 'terms_and_conditions', friendlyName: 'Equipment Terms and Conditions' },
         { field: 'equipment_description', friendlyName: 'Equipment Description' },
