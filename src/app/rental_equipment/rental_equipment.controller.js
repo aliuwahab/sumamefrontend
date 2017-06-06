@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentService, UploadService,
-  CachingService, ToastsService) {
+  CachingService, ToastsService, ValidationService) {
 
   activate();
 
@@ -42,17 +42,25 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
     $scope.newEquipment.equipment_location_latitude = $scope.equipmentLocation.latitude;
     $scope.newEquipment.equipment_location_longitude = $scope.equipmentLocation.longitude;
 
-    $scope.addingEquipment = true;
-    EquipmentService.addEquipment($scope.newEquipment)
-    .then(function (response) {
-      $scope.addingEquipment = false;
-      ToastsService.showToast('success', 'Equipment successfully added');
-      reloadEquipment();
+    ValidationService.validate($scope.newEquipment, 'equipment')
+    .then(function (result) {
+      $scope.equipment.data.unshift($scope.newEquipment);
       $rootScope.closeDialog();
+
+      $scope.addingEquipment = true;
+      EquipmentService.addEquipment($scope.newEquipment)
+      .then(function (response) {
+        $scope.addingEquipment = false;
+        ToastsService.showToast('success', 'Equipment successfully added');
+        reloadEquipment();
+      })
+      .catch(function (error) {
+        $scope.addingEquipment = false;
+        ToastsService.showToast('error', error.data.message);
+      });
     })
     .catch(function (error) {
-      $scope.addingEquipment = false;
-      ToastsService.showToast('error', error.data.message);
+      ToastsService.showToast('error', error.message);
     });
   };
 

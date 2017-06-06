@@ -14,9 +14,16 @@
       offlineRequest: [
         { field: 'answer_video_url', friendlyName: 'Answer Video', },
       ],
-      consultant: [
-        { field: 'subject_id', friendlyName: 'Assigned Subject' },
-        { field: 'user_subtitle', friendlyName: 'Subtitle' },
+      equipment: [
+        { field: 'terms_and_conditions', friendlyName: 'Equipment Terms and Conditions' },
+        { field: 'equipment_description', friendlyName: 'Equipment Description' },
+        { field: 'equipment_image', friendlyName: 'Equipment Image' },
+        { field: 'equipment_price_per_day', friendlyName: 'Equipment Price Per Day' },
+        { field: 'equipment_location_name', friendlyName: 'Equipment Location' },
+        { field: 'equipment_location_latitude', friendlyName: 'Equipment Location' },
+        { field: 'equipment_location_longitude', friendlyName: 'Equipment Location' },
+        { field: 'equipment_category', friendlyName: 'Equipment Category' },
+        { field: 'equipment_name', friendlyName: 'Equipment Name' },
       ],
       pricePoint: [
         { field: 'fare', friendlyName: 'Fare' },
