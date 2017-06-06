@@ -77,6 +77,12 @@
         { field: 'upper_bound', friendlyName: 'Upper Bound' },
         { field: 'lower_bound', friendlyName: 'Lower Bound' },
       ],
+      price_category: [
+        { field: 'category_pricing', friendlyName: 'Category Pricing' },
+        { field: 'category_image', friendlyName: 'Category Image' },
+        { field: 'category_base_fare', friendlyName: 'Base Fare' },
+        { field: 'category_name', friendlyName: 'Category Name' },
+      ],
     };
 
     var service = {

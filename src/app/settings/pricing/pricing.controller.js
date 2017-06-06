@@ -18,7 +18,6 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
   $rootScope.pusher.subscribe('equipment-category');
 
   $rootScope.pusher.bind('price-category-created', function (data) {
-    debugger;
     reloadPriceCategories();
   });
 
@@ -99,19 +98,29 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
     var stringifiedCategoryPricing = JSON.stringify($scope.categoryPricing);
     $scope.newCategory.category_pricing = stringifiedCategoryPricing;
 
-    $scope.categories.push($scope.newCategory);
-    ToastsService.showToast('success', 'New category successfully created!');
-    $rootScope.closeDialog();
+    ValidationService.validate($scope.newCategory, 'price_category')
+    .then(function (result) {
+      if ($scope.categoryPricing.length == 0) {
+        ToastsService.showToast('error', 'Please add at least one price range');
+      }else {
+        $scope.categories.push($scope.newCategory);
+        ToastsService.showToast('success', 'New category successfully created!');
+        $rootScope.closeDialog();
 
-    SettingsService.addPriceCategory($scope.newCategory)
-    .then(function (response) {
-      $scope.addingPriceCategory = false;
+        SettingsService.addPriceCategory($scope.newCategory)
+        .then(function (response) {
+          $scope.addingPriceCategory = false;
+        })
+        .catch(function (error) {
+          $scope.addingPriceCategory = false;
+          ToastsService.showToast('error', error.data.message);
+          $rootScope.closeDialog();
+          debugger;
+        });
+      }
     })
     .catch(function (error) {
-      $scope.addingPriceCategory = false;
-      ToastsService.showToast('error', error.data.message);
-      $rootScope.closeDialog();
-      debugger;
+      ToastsService.showToast('error', error.message);
     });
   };
 
@@ -119,20 +128,31 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
     var stringifiedCategoryPricing = JSON.stringify($scope.categoryPricing);
     $scope.selectedCategory.category_pricing = stringifiedCategoryPricing;
     $scope.selectedCategory.category_id = $scope.selectedCategory.id;
-    $scope.addingPriceCategory = true;
 
-    SettingsService.updatePriceCategory($scope.selectedCategory)
-    .then(function (response) {
-      $scope.addingPriceCategory = false;
-      ToastsService.showToast('success', 'Category successfully updated!');
-      $rootScope.closeDialog();
-      reloadPriceCategories();
+    ValidationService.validate($scope.selectedCategory, 'price_category')
+    .then(function (result) {
+      if ($scope.categoryPricing.length == 0) {
+        ToastsService.showToast('error', 'Please add at least one price range');
+      }else {
+        $scope.addingPriceCategory = true;
+
+        SettingsService.updatePriceCategory($scope.selectedCategory)
+        .then(function (response) {
+          $scope.addingPriceCategory = false;
+          ToastsService.showToast('success', 'Category successfully updated!');
+          $rootScope.closeDialog();
+          reloadPriceCategories();
+        })
+        .catch(function (error) {
+          $scope.addingPriceCategory = false;
+          ToastsService.showToast('error', error.data.message);
+          $rootScope.closeDialog();
+          debugger;
+        });
+      }
     })
     .catch(function (error) {
-      $scope.addingPriceCategory = false;
-      ToastsService.showToast('error', error.data.message);
-      $rootScope.closeDialog();
-      debugger;
+      ToastsService.showToast('error', error.message);
     });
   };
 
@@ -149,7 +169,7 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
 
       SettingsService.deletePriceCategory(data)
       .then(function (response) {
-        reloadPriceCategories();
+        // reloadPriceCategories();
       })
       .catch(function (error) {
         $scope.processInProgress = false;
