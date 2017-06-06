@@ -14,6 +14,12 @@
       offlineRequest: [
         { field: 'answer_video_url', friendlyName: 'Answer Video', },
       ],
+      driver: [
+        { field: 'phone_number', friendlyName: 'Phone Number' },
+        { field: 'username', friendlyName: 'Username' },
+        { field: 'last_name', friendlyName: 'Last Name' },
+        { field: 'first_name', friendlyName: 'First Name' },
+      ],
       vehicle: [
         { field: 'vehicle_registration_number', friendlyName: 'Vehicle Registration Number' },
         { field: 'vehicle_category_id', friendlyName: 'Vehicle Category' },
