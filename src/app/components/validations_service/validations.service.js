@@ -11,8 +11,29 @@
     var _ = lodash;
 
     var requiredFields = {
-      offlineRequest: [
-        { field: 'answer_video_url', friendlyName: 'Answer Video', },
+      foreignPurchaseRequest: [
+        { field: 'delivery_location_longitude', friendlyName: 'Delivery Location' },
+        { field: 'delivery_location_latitude', friendlyName: 'Delivery Location' },
+        { field: 'delivery_location_name', friendlyName: 'Delivery Location' },
+        { field: 'online_tracking_number', friendlyName: 'Tracking Number' },
+        { field: 'request_cost', friendlyName: 'Request Cost' },
+        { field: 'item_cost_currency', friendlyName: 'Item Cost Currency' },
+        { field: 'online_order_number', friendlyName: 'Order Number' },
+        { field: 'online_store', friendlyName: 'Online Store Selection' },
+        { field: 'pickup_location_longitude', friendlyName: 'Warehouse Selection' },
+        { field: 'pickup_location_latitude', friendlyName: 'Warehouse Selection' },
+        { field: 'pickup_location_name', friendlyName: 'Warehouse Selection' },
+        { field: 'requester_id', friendlyName: 'Customer Name' },
+      ],
+      otherRequest: [
+        { field: 'delivery_location_longitude', friendlyName: 'Delivery Location' },
+        { field: 'delivery_location_latitude', friendlyName: 'Delivery Location' },
+        { field: 'delivery_location_name', friendlyName: 'Delivery Location' },
+        { field: 'request_cost', friendlyName: 'Request Cost' },
+        { field: 'pickup_location_longitude', friendlyName: 'Warehouse Selection' },
+        { field: 'pickup_location_latitude', friendlyName: 'Warehouse Selection' },
+        { field: 'pickup_location_name', friendlyName: 'Warehouse Selection' },
+        { field: 'requester_id', friendlyName: 'Customer Name' },
       ],
       driver: [
         { field: 'phone_number', friendlyName: 'Phone Number' },

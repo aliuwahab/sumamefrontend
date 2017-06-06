@@ -22,7 +22,6 @@
         hide-indicators="true">
           <wz-step wz-title="choose_equipment">
 
-
             <div class="" layout="row">
               <div class="" flex="50">
                 <md-input-container class="sm-input-container">
@@ -80,6 +79,11 @@
             </div>
           </wz-step>
           <wz-step wz-title="confirm">
+            <md-input-container class="sm-input-container">
+              <label>Number of days rented for?</label>
+              <input type="text" ng-model="data.numberOfDays" ng-change="calculateRequestCost()" required>
+            </md-input-container>
+
             <md-input-container class="sm-input-container" style="margin: 0;">
               <md-autocomplete flex
                   md-input-name="customersAutocomplete"
@@ -97,18 +101,13 @@
               </md-autocomplete>
             </md-input-container>
 
-            <md-input-container class="sm-input-container sm-rq-rent-filters-input-container">
+            <md-input-container class="sm-input-container">
               <place-autocomplete label="Equipment destination" ng-model="mapping.deliveryLocation"></place-autocomplete>
             </md-input-container>
 
-            <md-input-container class="sm-input-container sm-rq-rent-filters-input-container">
-              <label>Number of days rented for?</label>
-              <input type="text" ng-model="data.numberOfDays" ng-change="calculateRequestCost()">
-            </md-input-container>
-
-            <md-input-container class="md-block sm-rq-rent-filters-input-container">
-              <label>Any additional instructions?</label>
-              <textarea ng-model="newRequest.request_additional_description" aria-label="any additional instructions?" md-select-on-focus rows="3"></textarea>
+            <h4 class="sm-custom-input-label">Any additional instructions?</h4>
+            <md-input-container class="md-block ">
+              <textarea ui-tinymce ng-model="newRequest.request_additional_description" aria-label="any additional instructions?" md-select-on-focus rows="3"></textarea>
             </md-input-container>
           </wz-step>
         </wizard>

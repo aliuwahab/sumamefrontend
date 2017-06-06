@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
   ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
-  SettingsService, UploadService, CustomersService) {
+  SettingsService, UploadService, CustomersService, ValidationService) {
 
   activate();
 
@@ -27,18 +27,26 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
 
   $scope.addOfflineRequest = function () {
     populateNewOfflineRequestData();
-    $scope.addingRequest = true;
 
-    RequestsService.addRequest($scope.newRequest)
-    .then(function (response) {
-      $scope.addingRequest = false;
-      $rootScope.$broadcast('newRequestAdded');
+    ValidationService.validate($scope.newRequest, 'otherRequest')
+    .then(function (result) {
+      $scope.addingRequest = true;
+
+      RequestsService.addRequest($scope.newRequest)
+      .then(function (response) {
+        $scope.addingRequest = false;
+        $rootScope.$broadcast('newRequestAdded');
+      })
+      .catch(function (error) {
+        $scope.addingRequest = false;
+        ToastsService.showToast('error', error.data.message);
+        debugger;
+      });
     })
     .catch(function (error) {
-      $scope.addingRequest = false;
-      ToastsService.showToast('error', error.data.message);
-      debugger;
+      ToastsService.showToast('error', error.message);
     });
+
   };
 
   $scope.offlineRequestNextStep = function () {
@@ -112,17 +120,23 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
   };
 
   function populateNewOfflineRequestData() {
-    $scope.newRequest.pickup_location_name = $scope.mapping.pickupLocation.name;
-    $scope.newRequest.pickup_location_latitude = $scope.mapping.pickupLocation.latitude;
-    $scope.newRequest.pickup_location_longitude = $scope.mapping.pickupLocation.longitude;
+    if ($scope.mapping) {
+      $scope.newRequest.pickup_location_name = $scope.mapping.pickupLocation.name;
+      $scope.newRequest.pickup_location_latitude = $scope.mapping.pickupLocation.latitude;
+      $scope.newRequest.pickup_location_longitude = $scope.mapping.pickupLocation.longitude;
+    }
 
-    $scope.newRequest.delivery_location_name = $scope.mapping.deliveryLocation.name;
-    $scope.newRequest.delivery_location_latitude = $scope.mapping.deliveryLocation.latitude;
-    $scope.newRequest.delivery_location_longitude = $scope.mapping.deliveryLocation.longitude;
+    if ($scope.mapping) {
+      $scope.newRequest.delivery_location_name = $scope.mapping.deliveryLocation.name;
+      $scope.newRequest.delivery_location_latitude = $scope.mapping.deliveryLocation.latitude;
+      $scope.newRequest.delivery_location_longitude = $scope.mapping.deliveryLocation.longitude;
+    }
 
-    $scope.newRequest.estimated_delivery_distance = $scope.deliveryDistance;
-    $scope.newRequest.request_cost = $scope.calculatedFare.totalFare;
-    $scope.newRequest.requester_id = $scope.data.selectedCustomer.id;
+    if ($scope.deliveryDistance && $scope.calculatedFare && $scope.data.selectedCustomer) {
+      $scope.newRequest.estimated_delivery_distance = $scope.deliveryDistance;
+      $scope.newRequest.request_cost = $scope.calculatedFare.totalFare;
+      $scope.newRequest.requester_id = $scope.data.selectedCustomer.id;
+    }
   }
 
   function loadAllVehicleCategories() {
