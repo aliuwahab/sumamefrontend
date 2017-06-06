@@ -57,6 +57,14 @@
         { field: 'equipment_category', friendlyName: 'Equipment Category' },
         { field: 'equipment_name', friendlyName: 'Equipment Name' },
       ],
+      staff: [
+        { field: 'phone_number', friendlyName: 'Phone Number' },
+        { field: 'email', friendlyName: 'Email Address' },
+        { field: 'username', friendlyName: 'Username' },
+        { field: 'last_name', friendlyName: 'Last Name' },
+        { field: 'first_name', friendlyName: 'First Name' },
+        { field: 'admin_type', friendlyName: 'Permission Level' },
+      ],
       pricePoint: [
         { field: 'fare', friendlyName: 'Fare' },
         { field: 'upper_bound', friendlyName: 'Upper Bound' },

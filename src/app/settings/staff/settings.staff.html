@@ -11,7 +11,7 @@
     <h2>Add your first staff. You don't have any yet!</h2>
     <p>Click on the Add New Staff Member button to add staff to your organization.</p>
   </div>
-  <div class="staff-col flip-container" ontouchstart="this.classList.toggle('hover');" ng-repeat="staffmember in staff" ng-if="staffmember.id != authenticatedUser.id">
+  <div class="staff-col flip-container" ontouchstart="this.classList.toggle('hover');" ng-repeat="staffmember in staff track by $index" ng-if="staffmember.id != authenticatedUser.id">
     <div class="flipper">
       <div class="front">
         <div class="sm-staff-img div" ng-if="staffmember.user_profile_image_url" background-img="{{staffmember.user_profile_image_url}}"></div>

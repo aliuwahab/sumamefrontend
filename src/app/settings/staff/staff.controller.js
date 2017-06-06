@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, ToastsService,
-  SettingsService, CachingService) {
+  SettingsService, CachingService, ValidationService) {
 
   activate();
 
@@ -30,19 +30,27 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
   }
 
   $scope.addStaff = function () {
-    $scope.addingStaff = true;
-    SettingsService.addStaff($scope.newStaffMember)
-    .then(function (response) {
-      $scope.addingStaff = false;
+    ValidationService.validate($scope.newStaffMember, 'staff')
+    .then(function (result) {
+      $scope.addingStaff = true;
+      $scope.staff.push($scope.newStaffMember);
       $rootScope.closeDialog();
-      ToastsService.showToast('success', 'Staff member successfully added!');
-      CachingService.destroyOnCreateOperation('staff');
-      getAllStaff();
+
+      SettingsService.addStaff($scope.newStaffMember)
+      .then(function (response) {
+        $scope.addingStaff = false;
+        ToastsService.showToast('success', 'Staff member successfully added!');
+        CachingService.destroyOnCreateOperation('staff');
+        getAllStaff();
+      })
+      .catch(function (error) {
+        $scope.addingStaff = false;
+        ToastsService.showToast('error', error.data.message);
+        debugger;
+      });
     })
     .catch(function (error) {
-      $scope.addingStaff = false;
-      ToastsService.showToast('error', error.data.message);
-      debugger;
+      ToastsService.showToast('error', error.message);
     });
   };
 
