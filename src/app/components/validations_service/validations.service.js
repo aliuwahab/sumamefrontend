@@ -65,6 +65,13 @@
         { field: 'first_name', friendlyName: 'First Name' },
         { field: 'admin_type', friendlyName: 'Permission Level' },
       ],
+      warehouse: [
+        { field: 'country', friendlyName: 'Country' },
+        { field: 'address_line_one', friendlyName: 'Address Line 1' },
+        { field: 'location_longitude', friendlyName: 'Warehouse Location' },
+        { field: 'location_latitude', friendlyName: 'Warehouse Location' },
+        { field: 'name', friendlyName: 'Warehouse Name' },
+      ],
       pricePoint: [
         { field: 'fare', friendlyName: 'Fare' },
         { field: 'upper_bound', friendlyName: 'Upper Bound' },
