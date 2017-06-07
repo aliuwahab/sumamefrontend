@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function DriversController($scope, $rootScope, $state, Dialog, DriversService, ToastsService,
-CachingService, UploadService, NgMap, localStorageService, $window) {
+CachingService, UploadService, NgMap, localStorageService, $window, ValidationService) {
 
   activate();
 
@@ -62,34 +62,50 @@ CachingService, UploadService, NgMap, localStorageService, $window) {
 
   $scope.addDriver = function () {
     $scope.newDriver.password_confirmation = $scope.newDriver.password;
-    $scope.addingDriver = true;
 
-    DriversService.addDriver($scope.newDriver)
-    .then(function (response) {
-      ToastsService.showToast('success', 'Driver successfully added!');
-      $scope.addingDriver = false;
+    ValidationService.validate($scope.newDriver, 'driver')
+    .then(function (result) {
+      $scope.drivers1.data.unshift($scope.newDriver);
       $rootScope.closeDialog();
+      $scope.addingDriver = true;
 
-      // reloadDrivers();
+      DriversService.addDriver($scope.newDriver)
+      .then(function (response) {
+        ToastsService.showToast('success', 'Driver successfully added!');
+        $scope.addingDriver = false;
+        $rootScope.closeDialog();
+      })
+      .catch(function (error) {
+        $scope.addingDriver = false;
+        debugger;
+      });
     })
     .catch(function (error) {
-      $scope.addingDriver = false;
-      debugger;
+      ToastsService.showToast('error', error.message);
     });
   };
 
   $scope.updateDriver = function () {
-    $scope.addingDriver = true;
     $scope.selectedDriver.driver_id = $scope.selectedDriver.id;
+    $scope.selectedDriver.driver_approved ? $scope.selectedDriver.driver_approved = 1 :
+    $scope.selectedDriver.driver_approved = 0;
 
-    DriversService.updateDriver($scope.selectedDriver)
-    .then(function (response) {
-      ToastsService.showToast('success', 'Driver successfully added!');
-      $scope.addingDriver = false;
+    ValidationService.validate($scope.selectedDriver, 'driver')
+    .then(function (result) {
+      $scope.addingDriver = true;
       $rootScope.closeDialog();
+
+      DriversService.updateDriver($scope.selectedDriver)
+      .then(function (response) {
+        ToastsService.showToast('success', 'Driver successfully added!');
+        $scope.addingDriver = false;
+      })
+      .catch(function (error) {
+        $scope.addingDriver = false;
+      });
     })
     .catch(function (error) {
-      $scope.addingDriver = false;
+      ToastsService.showToast('error', error.message);
     });
   };
 
@@ -158,7 +174,7 @@ CachingService, UploadService, NgMap, localStorageService, $window) {
     $scope.newDriver = {
       user_created_by: $rootScope.authenticatedUser.id,
       user_type: 'driver',
-      driver_approved: true,
+      driver_approved: 1,
     };
 
     Dialog.showCustomDialog(ev, 'add_driver', $scope);
@@ -166,7 +182,7 @@ CachingService, UploadService, NgMap, localStorageService, $window) {
 
   // SHOW DRIVER DIALOG
   $scope.showDriverDialog = function (ev, driver, dialog) {
-    $scope.selectedDriver = driver;
+    $scope.selectedDriver = angular.copy(driver);
 
     NgMap.getMap().then(function (map) {
       google.maps.event.trigger(map, 'resize');

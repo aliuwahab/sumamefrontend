@@ -26,8 +26,9 @@
           <input type="text" ng-model="newCategory.category_base_fare">
         </md-input-container>
 
+        <h4 class="sm-custom-input-label">Category Description (Optional)</h4>
         <md-input-container class="md-block">
-          <textarea ng-model="newCategory.category_description" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
+          <textarea ui-tinymce ng-model="newCategory.category_description" aria-label="Consultant Profile" md-select-on-focus rows="3"></textarea>
         </md-input-container>
 
         <h4 class="sm-custom-input-label">Category Image</h4>

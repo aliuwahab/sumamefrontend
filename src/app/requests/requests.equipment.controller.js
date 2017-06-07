@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
   $mdSidenav, ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
-  SettingsService, EquipmentService, CustomersService) {
+  SettingsService, EquipmentService, CustomersService, ValidationService) {
 
   activate();
 
@@ -41,17 +41,23 @@ function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stat
   // ADD EQUIPMENT
   function addEquipmentRequest() {
     populateEquipmentRequestData();
-    $scope.addingRequest = true;
 
-    RequestsService.addRequest($scope.newRequest)
-    .then(function (response) {
-      $scope.addingRequest = false;
-      $rootScope.$broadcast('newRequestAdded');
+    ValidationService.validate($scope.newRequest, 'otherRequest')
+    .then(function (result) {
+      $scope.addingRequest = true;
+
+      RequestsService.addRequest($scope.newRequest)
+      .then(function (response) {
+        $scope.addingRequest = false;
+        $rootScope.$broadcast('newRequestAdded');
+      })
+      .catch(function (error) {
+        $scope.addingRequest = false;
+        ToastsService.showToast('error', error.data.message);
+      });
     })
     .catch(function (error) {
-      $scope.addingRequest = false;
-      ToastsService.showToast('error', error.data.message);
-      debugger;
+      ToastsService.showToast('error', error.message);
     });
   };
 
@@ -61,11 +67,10 @@ function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stat
       var proceed = $scope.selectedEquipment ? executeNextStep() :
       ToastsService.showToast('error', 'Please select a vehicle before proceeding.');
     } else if ($scope.equipmentWizardCurrentStep == 1) {
-      if ($scope.newRequest.request_cost && $scope.mapping.deliveryLocation.latitude) {
+      if ($scope.data.numberOfDays) {
         addEquipmentRequest();
-      } else {
-        ToastsService.showToast('error',
-        'Please enter both number of days and where you\'ll use the equipment');
+      }else {
+        ToastsService.showToast('error', 'Number of Days is required');
       }
     }
 
@@ -106,16 +111,24 @@ function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stat
   ////////////////////// HELPER FUNCTIONS ///////////////////////////
 
   function populateEquipmentRequestData() {
-    $scope.newRequest.delivery_location_name = $scope.mapping.deliveryLocation.name;
-    $scope.newRequest.delivery_location_latitude = $scope.mapping.deliveryLocation.latitude;
-    $scope.newRequest.delivery_location_longitude = $scope.mapping.deliveryLocation.longitude;
-    $scope.newRequest.pickup_location_name = $scope.selectedEquipment.equipment_location_name;
-    $scope.newRequest.pickup_location_latitude =
-    $scope.selectedEquipment.equipment_location_latitude;
-    $scope.newRequest.pickup_location_longitude =
-    $scope.selectedEquipment.equipment_location_longitude;
-    $scope.newRequest.equipment_id = $scope.selectedEquipment.id;
-    $scope.newRequest.requester_id = $scope.data.selectedCustomer.id;
+    if ($scope.mapping) {
+      $scope.newRequest.delivery_location_name = $scope.mapping.deliveryLocation.name;
+      $scope.newRequest.delivery_location_latitude = $scope.mapping.deliveryLocation.latitude;
+      $scope.newRequest.delivery_location_longitude = $scope.mapping.deliveryLocation.longitude;
+    }
+
+    if ($scope.selectedEquipment) {
+      $scope.newRequest.pickup_location_name = $scope.selectedEquipment.equipment_location_name;
+      $scope.newRequest.pickup_location_latitude =
+      $scope.selectedEquipment.equipment_location_latitude;
+      $scope.newRequest.pickup_location_longitude =
+      $scope.selectedEquipment.equipment_location_longitude;
+      $scope.newRequest.equipment_id = $scope.selectedEquipment.id;
+    }
+
+    if ($scope.data.selectedCustomer) {
+      $scope.newRequest.requester_id = $scope.data.selectedCustomer.id;
+    }
   }
 
   // LOAD EQUIPMENT

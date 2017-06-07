@@ -44,7 +44,6 @@ function EquipmentService($http, AuthService, CacheFactory, ENV) {
       'updated_at',
       '$$hashKey',
     ]);
-    debugger;
     var params = $.param(cleanedData);
 
     return $http.post(apiBaseURL + '/update/rental/equipment?' + authDataString + '&' + params);

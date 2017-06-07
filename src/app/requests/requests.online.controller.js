@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function OnlineRequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
   ToastsService, RequestsService, PriceCalculator, CachingService, UploadService,
-  SettingsService, CustomersService) {
+  SettingsService, CustomersService, ValidationService) {
 
   activate();
 
@@ -28,17 +28,24 @@ function OnlineRequestsController($scope, $rootScope, $state, $timeout, $statePa
 
     populateNewOnlineRequestData();
 
-    $scope.addingRequest = true;
-    RequestsService.addRequest($scope.newRequest)
-    .then(function (response) {
-      $scope.addingRequest = false;
-      $rootScope.$broadcast('newRequestAdded');
+    ValidationService.validate($scope.newRequest, 'foreignPurchaseRequest')
+    .then(function (result) {
+      $scope.addingRequest = true;
+      RequestsService.addRequest($scope.newRequest)
+      .then(function (response) {
+        $scope.addingRequest = false;
+        $rootScope.$broadcast('newRequestAdded');
+      })
+      .catch(function (error) {
+        $scope.addingRequest = false;
+        ToastsService.showToast('error', error.data.message);
+        debugger;
+      });
     })
     .catch(function (error) {
-      $scope.addingRequest = false;
-      ToastsService.showToast('error', error.data.message);
-      debugger;
+      ToastsService.showToast('error', error.message);
     });
+
   };
 
   $scope.calculateRequestCost = function () {
@@ -53,15 +60,21 @@ function OnlineRequestsController($scope, $rootScope, $state, $timeout, $statePa
   ////////////////////// HELPER FUNCTIONS ///////////////////////////
 
   function populateNewOnlineRequestData() {
-    $scope.newRequest.pickup_location_name = $scope.selectedWarehouse.name;
-    $scope.newRequest.pickup_location_latitude = $scope.selectedWarehouse.location_latitude;
-    $scope.newRequest.pickup_location_longitude = $scope.selectedWarehouse.location_longitude;
+    if ($scope.selectedWarehouse) {
+      $scope.newRequest.pickup_location_name = $scope.selectedWarehouse.name;
+      $scope.newRequest.pickup_location_latitude = $scope.selectedWarehouse.location_latitude;
+      $scope.newRequest.pickup_location_longitude = $scope.selectedWarehouse.location_longitude;
+    }
 
-    $scope.newRequest.delivery_location_name = $scope.mapping.deliveryLocation.name;
-    $scope.newRequest.delivery_location_latitude = $scope.mapping.deliveryLocation.latitude;
-    $scope.newRequest.delivery_location_longitude = $scope.mapping.deliveryLocation.longitude;
+    if ($scope.mapping) {
+      $scope.newRequest.delivery_location_name = $scope.mapping.deliveryLocation.name;
+      $scope.newRequest.delivery_location_latitude = $scope.mapping.deliveryLocation.latitude;
+      $scope.newRequest.delivery_location_longitude = $scope.mapping.deliveryLocation.longitude;
+    }
 
-    $scope.newRequest.requester_id = $scope.data.selectedCustomer.id;
+    if ($scope.data.selectedCustomer) {
+      $scope.newRequest.requester_id = $scope.data.selectedCustomer.id;
+    }
   }
 
   function loadAllWarehouses() {

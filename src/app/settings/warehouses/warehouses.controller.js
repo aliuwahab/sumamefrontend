@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dialog,
-  SettingsService, ToastsService, CachingService) {
+  SettingsService, ToastsService, CachingService, ValidationService) {
 
   activate();
 
@@ -44,18 +44,24 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
     $scope.newWarehouse.location_latitude = $scope.warehouseLocation.latitude;
     $scope.newWarehouse.location_longitude = $scope.warehouseLocation.longitude;
 
-    $scope.warehouses.data.unshift($scope.newWarehouse);
-    ToastsService.showToast('success', 'Warehouse successfully added');
-    $rootScope.closeDialog();
+    ValidationService.validate($scope.newWarehouse, 'warehouse')
+    .then(function (result) {
+      $scope.warehouses.data.unshift($scope.newWarehouse);
+      ToastsService.showToast('success', 'Warehouse successfully added');
+      $rootScope.closeDialog();
 
-    SettingsService.addWarehouse($scope.newWarehouse)
-    .then(function (response) {
-      // Warehouse Successfully added
+      SettingsService.addWarehouse($scope.newWarehouse)
+      .then(function (response) {
+        // Warehouse Successfully added
+      })
+      .catch(function (error) {
+        $scope.addingWarehouse = false;
+        ToastsService.showToast('error', error.data.message);
+        debugger;
+      });
     })
     .catch(function (error) {
-      $scope.addingWarehouse = false;
-      ToastsService.showToast('error', error.data.message);
-      debugger;
+      ToastsService.showToast('error', error.message);
     });
   };
 
@@ -71,19 +77,27 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
 
     $scope.selectedWarehouse.created_by = $scope.selectedWarehouse.created_by.id;
     $scope.selectedWarehouse.address_id = $scope.selectedWarehouse.id;
-    $scope.addingWarehouse = true;
 
-    SettingsService.updateWarehouse($scope.selectedWarehouse)
-    .then(function (response) {
-      $scope.addingWarehouse = false;
-      $rootScope.closeDialog();
-      ToastsService.showToast('success', 'Warehouse successfully updated');
-      updateAfterWarehouseOperation();
+    ValidationService.validate($scope.selectedWarehouse, 'warehouse')
+    .then(function (result) {
+      $scope.addingWarehouse = true;
+
+      SettingsService.updateWarehouse($scope.selectedWarehouse)
+      .then(function (response) {
+        $scope.addingWarehouse = false;
+        $rootScope.closeDialog();
+        ToastsService.showToast('success', 'Warehouse successfully updated');
+        updateAfterWarehouseOperation();
+      })
+      .catch(function (error) {
+        $scope.addingWarehouse = false;
+        ToastsService.showToast('error', error.data.message);
+      });
     })
     .catch(function (error) {
-      $scope.addingWarehouse = false;
-      ToastsService.showToast('error', error.data.message);
+      ToastsService.showToast('error', error.message);
     });
+
   };
 
   $scope.deleteWarehouse = function (warehouse, index) {

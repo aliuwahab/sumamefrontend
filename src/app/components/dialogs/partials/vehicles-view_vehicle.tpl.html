@@ -7,7 +7,7 @@
             <h1 class="sm-driver-name">{{selectedVehicle.vehicle_name}}</h1>
           </div>
 
-          <img class="sm-view-equipment-image" ng-src="{{selectedVehicle.vehicle_image}}" alt="equipment image">
+          <img ng-if="selectedVehicle.vehicle_image" class="sm-view-equipment-image" ng-src="{{selectedVehicle.vehicle_image}}" alt="vehicle image">
 
           <h3>Vehicle Description</h3>
           <div class="driver-profile-description" ng-bind-html="selectedVehicle.vehicle_description"></div>
