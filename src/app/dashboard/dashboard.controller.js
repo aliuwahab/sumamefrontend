@@ -29,31 +29,7 @@ function DashboardController($scope, $rootScope, $state, $location, DashboardSer
   }
 
   $scope.gotoMetricPage = function (metricPage) {
-    switch (metricPage) {
-      case 'requests_pending':
-        $state.go('app.requests', {
-          requestStatus: 'pending',
-          viewName: 'Requests Pending',
-          referer: 'dashboard',
-        });
-        break;
-      case 'requests_inprogress':
-        $state.go('app.requests', {
-          requestStatus: 'delivery-in-progress',
-          viewName: 'Requests In Progress',
-          referer: 'dashboard',
-        });
-        break;
-      case 'drivers':
-        $state.go('app.drivers');
-        break;
-      case 'vehicles':
-        $state.go('app.vehicles');
-        break;
-      default:
-
-        // Default
-    }
+    $state.transitionTo(metricPage);
   };
 
   $scope.labels = ['December', 'January', 'February', 'March', 'April', 'May'];

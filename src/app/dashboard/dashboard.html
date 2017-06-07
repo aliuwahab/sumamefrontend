@@ -1,16 +1,3 @@
-<md-toolbar>
-  <div class="md-toolbar-tools">
-    <md-button class="md-icon-button" aria-label="Menu Button" hide-gt-md ng-click="onClickMenu();">
-      <md-icon
-        md-svg-icon="assets/icons/menu.svg" aria-label="Menu Icon">
-      </md-icon>
-    </md-button>
-
-    <span flex></span>
-
-  </div>
-</md-toolbar>
-
 <div class="view-main-container">
   <div ng-if="!dataLoaded" layout="row" layout-align="center center" style="min-height: 80vh;">
     <md-progress-circular md-mode="indeterminate"></md-progress-circular>
@@ -18,7 +5,7 @@
 
   <div class="" ng-if="dataLoaded">
     <div layout="row">
-      <md-card class="dashboard-statistic-container pending" ng-click="gotoMetricPage('requests_pending')">
+      <md-card class="dashboard-statistic-container pending" ng-click="gotoMetricPage('app.requests')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <i class="material-icons">alarm_on</i>
@@ -30,7 +17,7 @@
         </md-card-content>
       </md-card>
 
-      <md-card class="dashboard-statistic-container in-progress" ng-click="gotoMetricPage('requests_pending')">
+      <md-card class="dashboard-statistic-container in-progress" ng-click="gotoMetricPage('app.requests')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <i class="material-icons">flight_takeoff</i>
@@ -42,7 +29,7 @@
         </md-card-content>
       </md-card>
 
-      <md-card class="dashboard-statistic-container drivers" ng-click="gotoMetricPage('drivers')">
+      <md-card class="dashboard-statistic-container drivers" ng-click="gotoMetricPage('app.drivers')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <i class="material-icons">group</i>
@@ -54,7 +41,7 @@
         </md-card-content>
       </md-card>
 
-      <md-card class="dashboard-statistic-container vehicles" ng-click="gotoMetricPage('vehicles')">
+      <md-card class="dashboard-statistic-container vehicles" ng-click="gotoMetricPage('app.vehicles')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <i class="material-icons">drive_eta</i>
@@ -68,7 +55,7 @@
     </div>
 
     <div layout="row">
-      <md-card class="dashboard-statistic-container equipment" ng-click="gotoMetricPage('equipment')">
+      <md-card class="dashboard-statistic-container equipment" ng-click="gotoMetricPage('app.equipment')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <i class="material-icons">local_shipping</i>
@@ -80,7 +67,7 @@
         </md-card-content>
       </md-card>
 
-      <md-card class="dashboard-statistic-container customers" ng-click="gotoMetricPage('customers')">
+      <md-card class="dashboard-statistic-container customers" ng-click="gotoMetricPage('app.customers')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <i class="material-icons">group</i>
@@ -92,7 +79,7 @@
         </md-card-content>
       </md-card>
 
-      <md-card class="dashboard-statistic-container this-month" ng-click="gotoMetricPage('#')">
+      <md-card class="dashboard-statistic-container this-month">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <i class="material-icons">attach_money</i>
@@ -104,7 +91,7 @@
         </md-card-content>
       </md-card>
 
-      <md-card class="dashboard-statistic-container all-time" ng-click="gotoMetricPage('#')">
+      <md-card class="dashboard-statistic-container all-time">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <i class="material-icons">insert_chart</i>
