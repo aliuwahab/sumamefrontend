@@ -36,15 +36,17 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
   };
 
   $scope.searchCustomers = function () {
-    $scope.searching = true;
-    $scope.requestsPromise =
-    CustomersService.searchCustomers({ search_key: $scope.searchText, limit: 20, page: 1 })
-    .then(function (results) {
-      $scope.customerResults = results.data.data.search_results;
-    })
-    .catch(function (error) {
-      debugger;
-    });
+    if ($scope.searchText && $scope.searchText.length > 0) {
+      $scope.searching = true;
+      $scope.requestsPromise =
+      CustomersService.searchCustomers({ search_key: $scope.searchText, limit: 20, page: 1 })
+      .then(function (results) {
+        $scope.customerResults = results.data.data.search_results;
+      })
+      .catch(function (error) {
+        debugger;
+      });
+    }
   };
 
   $scope.addCustomer = function () {
