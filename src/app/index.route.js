@@ -344,6 +344,42 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.customers.businesses', {
+      parent: 'app.customers',
+      url: '/businesses',
+      templateUrl: 'app/customers/businesses/businesses.html',
+      controller: 'BusinessCustomersController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.customers.individuals', {
+      parent: 'app.customers',
+      url: '/individuals',
+      templateUrl: 'app/customers/individuals/individuals.html',
+      controller: 'IndividualCustomersController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
     .state('app.invoices', {
       url: '/invoices',
       templateUrl: 'app/invoices/invoices.html',
