@@ -1,0 +1,46 @@
+<md-card ng-if="!searching">
+  <h3 class="view-main-title requests">Individual Customers</h3>
+  <md-card-content>
+    <md-table-container>
+      <table md-table md-progress="requestsPromise">
+        <thead md-head md-order="query.order" md-on-reorder="getrequests">
+          <tr md-row>
+            <th md-column>ACCOUNT NUMBER</th>
+            <th md-column><span>CUSTOMER NAME</span></th>
+            <th md-column>PHONE NUMBER</th>
+            <th md-column></th>
+          </tr>
+        </thead>
+        <tbody md-body>
+          <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in customersindividual.data">
+            <td md-cell>{{customer.id}}</td>
+            <td md-cell>{{customer.first_name}} {{customer.last_name}}</td>
+            <td md-cell>{{customer.phone_number}}</td>
+            <td md-cell>
+              <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">
+                <md-tooltip md-direction="top">
+                  View Customer Details
+                </md-tooltip>
+                <i class="material-icons">remove_red_eye</i>
+              </button>
+              <button class="md-button md-raised md-warn" ng-if="customer.user_block_status == 'unblocked'" ng-click="changeCustomerStatus(customer, 'block')">
+                <md-tooltip md-direction="top">
+                  Block Customer
+                </md-tooltip>
+                <i class="material-icons">block</i>
+              </button>
+              <button class="md-button md-raised md-accent" ng-if="customer.user_block_status == 'blocked'" ng-click="changeCustomerStatus(customer, 'unblock')">
+                <md-tooltip md-direction="top">
+                  Unblock Customer
+                </md-tooltip>
+                <i class="material-icons">done_all</i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </md-table-container>
+
+    <md-table-pagination md-limit="filterParams.limit" md-limit-options="[50, 100, 200]" md-page="filterParams.page" md-total="{{customers.total}}" md-on-paginate="" md-page-select></md-table-pagination>
+  </md-card-content>
+</md-card>

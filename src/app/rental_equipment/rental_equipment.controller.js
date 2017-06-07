@@ -37,6 +37,20 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
     });
   }
 
+  $scope.searchEquipment = function () {
+    if ($scope.searchText && $scope.searchText.length > 0) {
+      $scope.searching = true;
+      $scope.requestsPromise =
+      EquipmentService.searchEquipment({ search_key: $scope.searchText, limit: 20, page: 1 })
+      .then(function (results) {
+        $scope.equipmentResults = results.data.data.search_results;
+      })
+      .catch(function (error) {
+        debugger;
+      });
+    }
+  };
+
   $scope.addEquipment = function () {
     $scope.newEquipment.equipment_location_name = $scope.equipmentLocation.name;
     $scope.newEquipment.equipment_location_latitude = $scope.equipmentLocation.latitude;

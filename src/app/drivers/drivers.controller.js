@@ -46,6 +46,20 @@ CachingService, UploadService, NgMap, localStorageService, $window, ValidationSe
     });
   };
 
+  $scope.searchDrivers = function () {
+    if ($scope.searchText && $scope.searchText.length > 0) {
+      $scope.searching = true;
+      $scope.requestsPromise =
+      DriversService.searchDrivers({ search_key: $scope.searchText, limit: 20, page: 1 })
+      .then(function (results) {
+        $scope.driverResults = results.data.data.search_results;
+      })
+      .catch(function (error) {
+        debugger;
+      });
+    }
+  };
+
   function refreshAllDrivers(approvalStatus) {
     $scope.filterParams.driver_approved = approvalStatus;
     var scopeVarName = 'drivers' + approvalStatus;

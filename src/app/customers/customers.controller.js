@@ -7,29 +7,47 @@ angular
 
 /** @ngInject */
 function CustomersController($scope, $rootScope, $state, CustomersService, Dialog, ToastsService,
-  CachingService) {
+  CachingService, localStorageService) {
 
   activate();
 
   function activate() {
+    $scope.currentView =
+    localStorageService.get('selectedCustomersView') || 'app.customers.businesses';
+    $state.transitionTo($scope.currentView);
+
     $scope.filterParams = {
       limit: 50,
       page: 1,
-      consumer_type: 'business',
     };
-
-    getAllCustomers();
   }
 
-  function getAllCustomers() {
+  $scope.getAllCustomers = function (customerType) {
+    $scope.filterParams.consumer_type = customerType;
+    var scopeVarName = 'customers' + customerType;
+
     $scope.requestsPromise = CustomersService.getAllCustomers($scope.filterParams)
     .then(function (response) {
-      $scope.customers = response.data.data.all_consumers;
+      $scope[scopeVarName] = response.data.data.all_consumers;
     })
     .catch(function (error) {
       ToastsService.showToast('error', error.data.error);
     });
-  }
+  };
+
+  $scope.searchCustomers = function () {
+    if ($scope.searchText && $scope.searchText.length > 0) {
+      $scope.searching = true;
+      $scope.requestsPromise =
+      CustomersService.searchCustomers({ search_key: $scope.searchText, limit: 20, page: 1 })
+      .then(function (results) {
+        $scope.customerResults = results.data.data.search_results;
+      })
+      .catch(function (error) {
+        debugger;
+      });
+    }
+  };
 
   $scope.addCustomer = function () {
 
@@ -80,11 +98,10 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     Dialog.showCustomDialog(ev, 'add_customer', $scope);
   };
 
-  $scope.changeConsumersTab = function (consumerType) {
-    if ($scope.filterParams.consumer_type != consumerType) {
-      $scope.filterParams.consumer_type = consumerType;
-      getAllCustomers();
-    }
+  $scope.changeCustomersTab = function (stateName) {
+    $scope.currentView = stateName;
+    localStorageService.set('selectedCustomersView', stateName);
+    $state.go(stateName);
   };
 
   function reloadCustomers() {

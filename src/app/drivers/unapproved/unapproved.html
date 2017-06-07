@@ -1,4 +1,5 @@
-<md-card>
+<md-card ng-if="!searching">
+  <h3 class="view-main-title requests">Unapproved Drivers</h3>
   <md-card-content>
     <md-table-container>
       <table md-table md-progress="requestsPromise">
