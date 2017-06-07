@@ -15,6 +15,7 @@ function EquipmentService($http, AuthService, CacheFactory, ENV) {
     getAllEquipment: getAllEquipment,
     addEquipment: addEquipment,
     updateEquipment: updateEquipment,
+    searchEquipment: searchEquipment,
   };
 
   return service;
@@ -47,6 +48,19 @@ function EquipmentService($http, AuthService, CacheFactory, ENV) {
     var params = $.param(cleanedData);
 
     return $http.post(apiBaseURL + '/update/rental/equipment?' + authDataString + '&' + params);
+  }
+
+  function searchEquipment(params) {
+    var queryOptions = $.param(params);
+    var cache = 'equipment?' + queryOptions;
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.post(apiBaseURL + '/search/equipment?' + authDataString + '&' + queryOptions, {
+      cache: CacheFactory.get(cache),
+    });
   }
 }
 })();

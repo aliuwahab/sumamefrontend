@@ -6,9 +6,9 @@
       </md-icon>
     </md-button>
 
-    <h3 class="view-main-title">Rental Equipment</h3>
-
     <span flex></span>
+
+    <i class="material-icons toolbar-search-icon" ng-click="slide=!slide">search</i>
 
     <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddEquipmentDialog($event)">
       Add New Equipment
@@ -16,9 +16,19 @@
   </div>
 </md-toolbar>
 
+<div class="search-bar animate-slide" layout="row" ng-show="slide">
+  <h3 flex="15">Search Equipment</h3>
+  <md-input-container md-no-float class="search-input" flex="60">
+    <input type="text" ng-model="searchText" placeholder="Enter search term" ng-enter="searchEquipment()">
+  </md-input-container>
+  <i class="material-icons search-close-icon" ng-click="searchEquipment()">search</i>
+  <i class="material-icons search-close-icon" ng-click="slide=!slide; searching=false">close</i>
+</div>
+
 <div class="view-main-container">
 
-  <md-card>
+  <md-card ng-if="!searching">
+    <h3 class="view-main-title requests">Rental Equipment</h3>
     <md-card-content>
       <md-table-container>
         <table md-table md-progress="requestsPromise">
@@ -33,6 +43,55 @@
           </thead>
           <tbody md-body>
             <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="equipment in equipment.data track by $index">
+              <td md-cell>{{equipment.equipment_name}}</td>
+              <td md-cell>{{equipment.equipment_category}}</td>
+              <td md-cell>{{equipment.equipment_location_name}}</td>
+              <td md-cell>{{equipment.equipment_hired}}</td>
+              <td md-cell>
+                <button class="md-button md-raised md-primary" ng-click="showViewEquipmentDialog($event, equipment)">
+                  <md-tooltip md-direction="top">
+                    View Equipment Details
+                  </md-tooltip>
+                  <i class="material-icons">remove_red_eye</i>
+                </button>
+                <button class="md-button md-raised md-accent" ng-click="showUpdateEquipmentDialog($event, equipment)">
+                  <md-tooltip md-direction="top">
+                    Edit Equipment
+                  </md-tooltip>
+                  <i class="material-icons">edit</i>
+                </button>
+                <button class="md-button md-raised md-warn" ng-click="changeAccountStatus($event, request)">
+                  <md-tooltip md-direction="top">
+                    Delete Equipment
+                  </md-tooltip>
+                  <i class="material-icons">delete_forever</i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </md-table-container>
+
+      <md-table-pagination md-limit="filterParams.limit" md-limit-options="[50, 100, 200]" md-page="filterParams.page" md-total="{{equipment.total}}" md-on-paginate="" md-page-select></md-table-pagination>
+    </md-card-content>
+  </md-card>
+
+  <md-card ng-if="searching">
+    <h3 class="view-main-title requests">Search Results</h3>
+    <md-card-content>
+      <md-table-container>
+        <table md-table md-progress="requestsPromise">
+          <thead md-head md-order="query.order" md-on-reorder="getrequests">
+            <tr md-row>
+              <th md-column><span>EQUIPMENT NAME</span></th>
+              <th md-column>CATEGORY</th>
+              <th md-column>LOCATION</th>
+              <th md-column>RENTED OUT?</th>
+              <th md-column></th>
+            </tr>
+          </thead>
+          <tbody md-body>
+            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="equipment in equipmentResults.data track by $index">
               <td md-cell>{{equipment.equipment_name}}</td>
               <td md-cell>{{equipment.equipment_category}}</td>
               <td md-cell>{{equipment.equipment_location_name}}</td>
