@@ -99,6 +99,12 @@
           event.preventDefault();
           $state.go(currentState);
           break;
+        case 'app.customers':
+          var currentState = localStorageService.get('selectedCustomersView') ||
+          'app.customers.businesses';
+          event.preventDefault();
+          $state.go(currentState);
+          break;
         default:
 
           // Do default
