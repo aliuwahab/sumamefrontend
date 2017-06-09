@@ -23,7 +23,7 @@
                 </md-tooltip>
                 <i class="material-icons">remove_red_eye</i>
               </button>
-              <button class="md-button md-raised md-warn" ng-if="customer.user_block_status == 'unblocked'" ng-click="changeCustomerStatus(customer, 'block')">
+              <button class="md-button md-raised md-danger" ng-if="customer.user_block_status == 'unblocked'" ng-click="changeCustomerStatus(customer, 'block')">
                 <md-tooltip md-direction="top">
                   Block Customer
                 </md-tooltip>

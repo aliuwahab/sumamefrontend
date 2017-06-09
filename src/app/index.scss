@@ -19,6 +19,80 @@
        url(../../bower_components/material-design-iconfont/iconfont/MaterialIcons-Regular.ttf) format('truetype');
 }
 
+// Color definitions
+$primary-color: #045478;
+$accent-color: #5ba23e;
+$warn-color: #f3751b;
+$danger-color: #d13541;
+
+// Other color shades
+$bg-color-shade-1: #5ba23e;
+$bg-color-shade-2: #f3751b;
+$bg-color-shade-3: #045478;
+$bg-color-shade-4: #d13541;
+$bg-color-shade-5: #5ba23e;
+$bg-color-shade-6: #f3751b;
+$bg-color-shade-7: #045478;
+$bg-color-shade-8: #d13541;
+
+// Background color classes
+.md-primary {
+  background-color: $primary-color !important;
+}
+.md-accent {
+  background-color: $accent-color !important;
+}
+.md-warn {
+  background-color: $warn-color !important;
+}
+.md-danger {
+  background-color: $danger-color !important;
+  color: white !important;
+}
+
+// Text color classes
+.text-white {
+  color: white !important;
+}
+.text-primary {
+  color: $primary-color !important;
+}
+.text-accent {
+  color: $accent-color !important;
+}
+.text-warn {
+  color: $warn-color !important;
+}
+.text-danger {
+  color: $danger-color !important;
+}
+
+// Background color shades
+.bg-color-shade-1 {
+  background-color: $bg-color-shade-1 !important;
+}
+.bg-color-shade-2 {
+  background-color: $bg-color-shade-2 !important;
+}
+.bg-color-shade-3 {
+  background-color: $bg-color-shade-3 !important;
+}
+.bg-color-shade-4 {
+  background-color: $bg-color-shade-4 !important;
+}
+.bg-color-shade-5 {
+  background-color: $bg-color-shade-5 !important;
+}
+.bg-color-shade-6 {
+  background-color: $bg-color-shade-6 !important;
+}
+.bg-color-shade-7 {
+  background-color: $bg-color-shade-7 !important;
+}
+.bg-color-shade-8 {
+  background-color: $bg-color-shade-8 !important;
+}
+
 body {
   font-family: 'Open Sans', sans-serif;
 }
@@ -86,7 +160,7 @@ html {
 }
 .view-main-title {
   font-size: 35px !important;
-  color: #019ad6;
+  color: $primary-color;
   margin-left: -12px !important;
   margin-top: 5px !important;
   margin-bottom: 20px;
@@ -95,13 +169,16 @@ md-toolbar.md-default-theme {
   background-color: black;
 }
 md-toolbar.md-default-theme:not(.md-menu-toolbar) md-icon, md-toolbar:not(.md-menu-toolbar) md-icon {
-  fill: #f44336;
+  fill: $primary-color;
 }
 md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolbar){
   background-color: white;
   border-bottom: 1px solid #d6d6d6;
-  color: #019ad6;
+  color: $primary-color;
   padding: 0px 20px;
+}
+md-progress-circular svg path {
+  stroke: $primary-color;
 }
 .sm-main-container{
   padding: 20px;
@@ -234,7 +311,7 @@ md-toast.md-info-toast-theme {
 }
 
 .search-bar {
-  background-color: #f4511e;
+  background-color: $warn-color;
   color: white;
   height: 63px;
   position: absolute;

@@ -6,12 +6,12 @@
   width: 60%;
   height: 50vh;
 }
-.login-page-right {
+.login-page-right-inner {
   padding: 5%;
   overflow: scroll;
 }
 .login-page-left {
-  background-color: #F4511E;
+  background-color: $primary-color;
   color: white;
   padding: 5%;
   height: 50vh;
@@ -24,5 +24,5 @@
   cursor: pointer;
 }
 .login-reset-password:hover {
-  color: #019AD6;
+  color: $primary-color;
 }

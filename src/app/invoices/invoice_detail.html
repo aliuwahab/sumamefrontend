@@ -8,14 +8,29 @@
 
     <span flex></span>
 
+    <md-button aria-label="Open phone interactions menu" class="md-raised" href="#invoices/all">
+      <i class="material-icons">arrow_back</i>
+      <md-tooltip md-direction="bottom">
+        Go back to all requests.
+      </md-tooltip>
+    </md-button>
     <md-button ng-if="!invoice.invoice_paid" aria-label="mark invoice as paid" class="md-raised md-accent" ng-click="changeInvoiceStatus(1)">
-      Mark As Paid
+      <md-tooltip md-direction="top">
+        Mark As Paid
+      </md-tooltip>
+      <i class="material-icons">check</i>
     </md-button>
     <md-button ng-if="invoice.invoice_paid" aria-label="mark invoice as unpaid" class="md-raised md-warn" ng-click="changeInvoiceStatus(0)">
-      Mark As Unpaid
+      <md-tooltip md-direction="top">
+        Mark As Unpaid
+      </md-tooltip>
+      <i class="material-icons">check</i>
     </md-button>
-    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="printInvoice($event)">
-      Print Invoice
+    <md-button aria-label="Open phone interactions menu" class="md-raised md-warn" ng-click="printInvoice($event)">
+      <md-tooltip md-direction="top">
+        Print Invoice
+      </md-tooltip>
+      <i class="material-icons">print</i>
     </md-button>
   </div>
 </md-toolbar>
@@ -34,7 +49,7 @@
     <div class="a4-page" size="A4" print-section>
       <div class="invoice-page">
         <div class="invoice-logo-container">
-          <h1>KLLOYDS</h1>
+          <img src="../assets/images/logo_small.png" alt="Klloyds" height="30" width="auto">
         </div>
 
         <md-card class="invoice-card invoice-title-container">
