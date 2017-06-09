@@ -397,14 +397,33 @@
         loginRequired: loginRequired,
       },
     })
-    .state('app.invoice', {
-      url: '/invoice/:invoiceId',
+    .state('app.invoices.all', {
+      parent: 'app.invoices',
+      url: '/all',
+      templateUrl: 'app/invoices/invoices_all.html',
+      controller: 'InvoicesController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.invoices.details', {
+      parent: 'app.invoices',
+      url: '/:invoiceId',
       templateUrl: 'app/invoices/invoice_detail.html',
       controller: 'InvoiceDetailController',
       data: {
         permissions: {
           only: function () {
-            return ['super', 'normal', 'staff'] || false;
+            return ['super', 'normal'] || false;
           },
 
           redirectTo: 'app.dashboard',

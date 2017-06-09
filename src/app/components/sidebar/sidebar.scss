@@ -11,13 +11,13 @@ body > div {
   margin-left: 25px;
 }
 .sidebar-active {
-  background-color: #f4511e !important;
+  background-color: $accent-color !important;
 }
 .nav-header {
   flex-shrink: 0;
   z-index: 2;
   padding: 12px;
-  background-color: #045478 !important;
+  background-color: $primary-color !important;
 }
 .nav-header h1,
 .nav-header h4 {
@@ -66,11 +66,11 @@ body > div {
   font-weight: 500;
 }
 .menu .md-button:hover {
-  background-color: white !important;
-  color: black !important;
+  background-color: $accent-color !important;
+  color: white !important;
 }
 .menu .md-button.md-primary.md-raised {
-  background-color: #045478;
+  background-color: $primary-color;
   color: white;
 }
 .menu span {
@@ -140,7 +140,7 @@ body > div {
   margin: 0;
   border-radius: 0;
   padding: 10px 5px;
-  background-color: #045478;
+  background-color: $primary-color;
   text-align: center;
 }
 .sm-user-gravatar {
@@ -171,5 +171,5 @@ md-sidenav, md-sidenav.md-locked-open, md-sidenav.md-closed.md-locked-open-add-a
   max-width: 250px !important;
 }
 .logout-container {
-  background-color: #045478 !important;
+  background-color: $primary-color !important;
 }

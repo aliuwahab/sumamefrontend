@@ -112,10 +112,11 @@
   text-align: center;
   border-bottom: 1px solid #ccc;
   margin: 0px 25px 15px 25px;
+  padding: 40px;
 }
 .invoice-title-container {
   color: white;
-  background-color: #019AD6;
+  background-color: $primary-color;
   text-align: center;
   padding: 5px;
   margin: 25px;
@@ -141,7 +142,7 @@
 .invoice-company-name {
   font-size: 20px;
   margin: 0px;
-  color: #019AD6;
+  color: $primary-color;
 }
 .invoice-items-container {
   margin-left: 25px;
@@ -179,7 +180,7 @@
   padding-bottom: 10px;
   text-transform: uppercase;
   font-size: 10pt;
-  color: #019AD6;
+  color: $primary-color;
 }
 .invoice-item-div {
 
@@ -231,7 +232,7 @@
 .invoice-total-container {
   padding: 16px;
   color: white;
-  background-color: #019AD6;
+  background-color: $primary-color;
   border-top-right-radius: 2px;
   border-bottom-right-radius: 2px;
 }
@@ -254,7 +255,7 @@
   margin-top: 0px;
   margin-right: 25px;
   margin-bottom: 25px;
-  background-color: #019AD6;
+  background-color: $primary-color;
   color: white;
 }
 .invoice-total-inner {
