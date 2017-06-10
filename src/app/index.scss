@@ -249,17 +249,17 @@ md-progress-circular svg path {
 }
 md-toast.md-success-toast-theme {
   .md-toast-content {
-    background-color: #00C853;
+    background-color: $accent-color;
   }
 }
 md-toast.md-error-toast-theme {
   .md-toast-content {
-    background-color: #F4511E;
+    background-color: $danger-color;
   }
 }
 md-toast.md-info-toast-theme {
   .md-toast-content {
-    background-color: #2196F3;
+    background-color: $primary-color;
   }
 }
 .top-progress-bar {
@@ -300,7 +300,7 @@ md-toast.md-info-toast-theme {
   outline: none;
 }
 .toolbar-search-icon:hover {
-  color: #F4511E;
+  color: $accent-color;
 }
 
 @mixin translate3d($x, $y, $z) {
@@ -332,7 +332,7 @@ md-toast.md-info-toast-theme {
   outline: none;
 }
 .search-close-icon:hover {
-  color: #2196F3;
+  color: $primary-color;
 }
 
 .animate-slide.ng-hide-remove.ng-hide-remove-active {
