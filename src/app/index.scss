@@ -154,7 +154,7 @@ html {
 .view-main-container {
   padding: 20px;
   overflow-y: scroll;
-  height: 87vh;
+  height: calc(95vh - 64px);
   background-size: inherit !important;
   background-image: url('../assets/patterns/brickwall.png');
 }
