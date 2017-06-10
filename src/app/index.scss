@@ -180,6 +180,9 @@ md-toolbar.md-default-theme:not(.md-menu-toolbar), md-toolbar:not(.md-menu-toolb
 md-progress-circular svg path {
   stroke: $primary-color;
 }
+md-progress-linear .md-bar {
+  background-color: $primary-color;
+}
 .sm-main-container{
   padding: 20px;
   overflow-y: scroll;
