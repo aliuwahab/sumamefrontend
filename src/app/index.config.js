@@ -63,21 +63,18 @@
     toastrConfig.progressBar = true;
 
     // Theming Configs
-    $mdThemingProvider
-    .theme('default')
-    .primaryPalette('red', {
-      default: '400',
-    })
-    .accentPalette('blue', {
-      default: '500',
-    });
+    // $mdThemingProvider
+    // .theme('default')
+    // .primaryPalette('red', {
+    //   default: '400',
+    // })
+    // .accentPalette('blue', {
+    //   default: '500',
+    // });
 
     $mdThemingProvider.theme('success-toast');
     $mdThemingProvider.theme('error-toast');
     $mdThemingProvider.theme('info-toast');
-
-    $mdIconProvider
-    .defaultIconSet('../assets/icons/mdi.svg');
 
     // Gravatar Configs
     gravatarServiceProvider.defaults = {

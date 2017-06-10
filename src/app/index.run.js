@@ -105,6 +105,12 @@
           event.preventDefault();
           $state.go(currentState);
           break;
+        case 'app.invoices':
+          var currentState = localStorageService.get('selectedInvoicesView') ||
+          'app.invoices.all';
+          event.preventDefault();
+          $state.go(currentState);
+          break;
         default:
 
           // Do default

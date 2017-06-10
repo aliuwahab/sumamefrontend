@@ -239,41 +239,10 @@ div[name="equipmentRequestWizard"] {
 .sm-rq-filter-item-card {
   margin-bottom: 20px;
   color: white;
+  border: inherit;
 }
 .sm-rq-filter-item-card:hover {
   // border: 3px solid white;
-}
-.sm-rq-filter-item-card.pending {
-  background-color: #4CAF50;
-  border: #4CAF50;
-}
-.sm-rq-filter-item-card.assigned {
-  background-color: #FF8F00;
-  border: #FF8F00;
-}
-.sm-rq-filter-item-card.declined {
-  background-color: #FF3D00;
-  border: #FF3D00;
-}
-.sm-rq-filter-item-card.in-progress {
-  background-color: #0277BD;
-  border: #0277BD;
-}
-.sm-rq-filter-item-card.completed {
-  background-color: #4CAF50;
-  border: #4CAF50;
-}
-.sm-rq-filter-item-card.local {
-  background-color: #002a4d;
-  border: #002a4d;
-}
-.sm-rq-filter-item-card.foreign {
-  background-color: #9c27b0;
-  border: #9c27b0;
-}
-.sm-rq-filter-item-card.equipment {
-  background-color: #3f51b5;
-  border: #3f51b5;
 }
 .sm-rq-filter-item-card i {
   font-size: 45px;
@@ -343,7 +312,6 @@ div[name="equipmentRequestWizard"] {
   width: 150px;
   height: 120px;
   cursor: pointer;
-  border: 3px solid #fff;
   outline: none;
   margin-right: 20px;
 }

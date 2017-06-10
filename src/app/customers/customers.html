@@ -32,13 +32,13 @@
 <div class="view-main-container">
 
   <div class="" layout="row">
-    <md-card class="sm-rq-filter-item-card pending" ng-style="filterParams.consumer_type =='business' && {'border':'3px solid white'}" flex="10" ng-click="changeCustomersTab('app.customers.businesses')">
+    <md-card class="sm-rq-filter-item-card bg-color-shade-1" ng-style="filterParams.consumer_type =='business' && {'border':'3px solid white'}" flex="10" ng-click="changeCustomersTab('app.customers.businesses')">
       <md-card-content>
         <i class="material-icons">business_center</i>
         <h2 class="sm-rq-filter-item-title">Businesses</h2>
       </md-card-content>
     </md-card>
-    <md-card class="sm-rq-filter-item-card assigned" ng-style="filterParams.consumer_type =='individual' && {'border':'3px solid white'}" flex="10" ng-click="changeCustomersTab('app.customers.individuals')">
+    <md-card class="sm-rq-filter-item-card bg-color-shade-2" ng-style="filterParams.consumer_type =='individual' && {'border':'3px solid white'}" flex="10" ng-click="changeCustomersTab('app.customers.individuals')">
       <md-card-content>
         <i class="material-icons">person</i>
         <h2 class="sm-rq-filter-item-title">Individuals</h2>
@@ -78,7 +78,7 @@
                   </md-tooltip>
                   <i class="material-icons">remove_red_eye</i>
                 </button>
-                <button class="md-button md-raised md-warn" ng-if="customer.user_block_status == 'unblocked'" ng-click="changeCustomerStatus(customer, 'block')">
+                <button class="md-button md-raised md-danger" ng-if="customer.user_block_status == 'unblocked'" ng-click="changeCustomerStatus(customer, 'block')">
                   <md-tooltip md-direction="top">
                     Block Customer
                   </md-tooltip>
