@@ -6,10 +6,6 @@
       </md-icon>
     </md-button>
 
-    <h3 class="view-main-title" ng-if="request.request_type == 'offline_delivery'">Local Pickup</h3>
-    <h3 class="view-main-title" ng-if="request.request_type == 'online_purchase_delivery'">Foreign Purchase</h3>
-    <h3 class="view-main-title" ng-if="request.request_type == 'equipment_request'">Equipment Request</h3>
-
     <span flex></span>
 
     <md-button aria-label="Open phone interactions menu" class="md-raised" ng-click="$parent.changeRequestsTab($parent.currentView)">
@@ -81,7 +77,7 @@
 
 <div class="view-main-container" style="height: 86vh;">
   <div ng-if="!requestLoaded" layout="row" layout-align="center center" style="min-height: 70vh;">
-    <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+    <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
   </div>
 
   <md-card ng-if="requestLoaded">
@@ -113,7 +109,7 @@
 
               <div class="sm-rq-other-details-container">
 
-                <h3 class="sm-rq-inner-title">Request Details</h3>
+                <h3 class="sm-rq-inner-title">Equipment Request Details</h3>
                 <div class="" layout="row">
                   <div class="" flex="50">
                     <div class="sm-rq-pkg-details-container">
@@ -223,7 +219,7 @@
                 </div>
               </div>
 
-              <h3 class="sm-rq-inner-title">Request Details</h3>
+              <h3 class="sm-rq-inner-title">Local Pickup Details</h3>
               <div class="" layout="row">
                 <div class="" flex="50">
                   <div class="sm-rq-pkg-details-container">
@@ -330,7 +326,7 @@
                 </div>
               </div>
 
-              <h3 class="sm-rq-inner-title">Request Details</h3>
+              <h3 class="sm-rq-inner-title">Foreign Purchase Details</h3>
               <div class="" layout="row">
                 <div class="" flex="50">
                   <div class="sm-rq-pkg-details-container">
@@ -375,11 +371,11 @@
                 <h3 class="sm-rq-inner-title">Package Information</h3>
                 <div class="sm-rq-pkg-details-container" layout="row">
                   <div class="request_package_details_icon_container" ng-if="request.request_is_hazardous">
-                    <img class="request_package_details_icons" src="../assets/icons/hazard.png" alt="Request Is Harzadous">
+                    <span class="lnr lnr-warning request_package_details_icons red"></span>
                     <p class="request_package_hazard_icon-label">Hazardous!</p>
                   </div>
                   <div class="request_package_details_icon_container" ng-if="request.request_needs_fast_tracking">
-                    <img class="request_package_details_icons" src="../assets/icons/airfreight.png" alt="Request Is Harzadous">
+                    <span class="lnr lnr-location request_package_details_icons green"></span>
                     <p class="request_package_airfreight_icon-label">Air Freight</p>
                   </div>
 

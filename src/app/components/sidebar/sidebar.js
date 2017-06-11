@@ -424,7 +424,7 @@ angular.module('sasrio.angular-material-sidenav', [])
         '   ui-sref="{{section.state}}"\n' +
         '   ui-sref-active="sidebar-active"' +
         '   ng-click="focusSection(section)">\n' +
-        '       <span ng-if="section.icon"><i class="material-icons">{{section.icon}}</i>&nbsp;&nbsp;</span>{{section.name}}\n' +
+        '       <span ng-if="section.icon"><span class="lnr {{section.icon}}"></span>&nbsp;&nbsp;</span>{{section.name}}\n' +
         '   <span class="md-visually-hidden"\n' +
         '       ng-if="isSelected(section.state)">\n' +
         '       current page\n' +
