@@ -183,6 +183,9 @@ md-progress-circular svg path {
 md-progress-linear .md-bar {
   background-color: $primary-color;
 }
+md-checkbox.md-checked.primary .md-icon {
+ background-color: $primary-color;
+}
 .sm-main-container{
   padding: 20px;
   overflow-y: scroll;
