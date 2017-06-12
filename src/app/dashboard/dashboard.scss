@@ -6,6 +6,7 @@
   width: 25%;
   margin-bottom: 20px;
   color: white;
+  outline: none;
 }
 .dashboard-statistic-container:last-child{
   margin-right: 8px;
@@ -14,8 +15,8 @@
   border: 3px solid #019AD6;
 }
 .dashboard-statistic-container.pending {
-  background-color: #4CAF50;
-  border: #4CAF50;
+  background-color: #5BA23E;
+  border: #5BA23E;
 }
 .dashboard-statistic-container.in-progress {
   background-color: #019ad6;
@@ -34,8 +35,8 @@
   border: #651FFF;
 }
 .dashboard-statistic-container.customers {
-  background-color: #002a4d;
-  border: #002a4d;
+  background-color: #045478;
+  border: #045478;
 }
 .dashboard-statistic-container.this-month {
   background-color: #9c27b0;
@@ -71,9 +72,9 @@
 .dashboard-icon-container {
 
 }
-.dashboard-icon-container i {
-  font-size: 102px;
-  color: rgba(255, 255, 255, 0.19);
+.dashboard-icon-container span {
+  font-size: 50px;
+  color: rgba(255, 255, 255, 0.13);
   position: absolute;
   bottom: 0;
   left: 0;
@@ -81,7 +82,7 @@
 .dashboard-stat-number {
   font-size: 35px;
   margin: 0;
-  // margin-top: 0px;
+  font-weight: 500;
 }
 .dashboard-stat-name {
   font-size: 16px;

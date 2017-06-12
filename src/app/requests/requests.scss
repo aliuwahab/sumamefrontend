@@ -219,15 +219,22 @@ div[name="equipmentRequestWizard"] {
   margin-right: 20px;
 }
 .request_package_hazard_icon-label {
-  margin-top: 0;
-  color: #d60a2a;
+  margin-top: 10px;
+  color: $danger-color;
 }
 .request_package_airfreight_icon-label {
-  margin-top: 0;
-  color: #2bb035;
+  margin-top: 10px;
+  color: $accent-color;
 }
 .request_package_details_icons {
-  height: 32px;
+  font-size: 30px;
+  font-weight: bold;
+}
+.request_package_details_icons.red {
+  color: $danger-color
+}
+.request_package_details_icons.green {
+  color: $accent-color
 }
 .sm-rq-cost-input {
   width: 100px;
@@ -240,12 +247,13 @@ div[name="equipmentRequestWizard"] {
   margin-bottom: 20px;
   color: white;
   border: inherit;
+  // padding-top: 10px;
 }
 .sm-rq-filter-item-card:hover {
   // border: 3px solid white;
 }
-.sm-rq-filter-item-card i {
-  font-size: 45px;
+.sm-rq-filter-item-card span {
+  font-size: 30px;
 }
 
 .sm-rq-notes {
@@ -310,7 +318,7 @@ div[name="equipmentRequestWizard"] {
 .sm-rq-filter-item-card {
   text-align: center;
   width: 150px;
-  height: 120px;
+  height: 100px;
   cursor: pointer;
   outline: none;
   margin-right: 20px;

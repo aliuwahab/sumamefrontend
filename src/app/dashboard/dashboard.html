@@ -1,6 +1,6 @@
 <div class="view-main-container" style="height:100vh;">
   <div ng-if="!dataLoaded" layout="row" layout-align="center center" style="min-height: 80vh;">
-    <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+    <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
   </div>
 
   <div class="" ng-if="dataLoaded">
@@ -8,7 +8,7 @@
       <md-card class="dashboard-statistic-container pending" ng-click="gotoMetricPage('app.requests')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
-            <i class="material-icons">alarm_on</i>
+            <span class="lnr lnr-clock"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
             <h2 class="dashboard-stat-number">{{statistics.pending_request}}</h2>
@@ -20,7 +20,7 @@
       <md-card class="dashboard-statistic-container in-progress" ng-click="gotoMetricPage('app.requests')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
-            <i class="material-icons">flight_takeoff</i>
+            <span class="lnr lnr-hourglass"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
             <h2 class="dashboard-stat-number">{{statistics.request_in_delivery}}</h2>
@@ -32,7 +32,7 @@
       <md-card class="dashboard-statistic-container drivers" ng-click="gotoMetricPage('app.drivers')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
-            <i class="material-icons">group</i>
+            <span class="lnr lnr-users"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
             <h2 class="dashboard-stat-number">{{statistics.number_of_valid_drivers}}</h2>
@@ -44,7 +44,7 @@
       <md-card class="dashboard-statistic-container vehicles" ng-click="gotoMetricPage('app.vehicles')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
-            <i class="material-icons">drive_eta</i>
+            <span class="lnr lnr-car"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
             <h2 class="dashboard-stat-number">{{statistics.number_of_vehicles}}</h2>
@@ -58,7 +58,7 @@
       <md-card class="dashboard-statistic-container equipment" ng-click="gotoMetricPage('app.equipment')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
-            <i class="material-icons">local_shipping</i>
+            <span class="lnr lnr-train"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
             <h2 class="dashboard-stat-number">{{statistics.number_of_valid_equipment || 0}}</h2>
@@ -70,7 +70,7 @@
       <md-card class="dashboard-statistic-container customers" ng-click="gotoMetricPage('app.customers')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
-            <i class="material-icons">group</i>
+            <span class="lnr lnr-users"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
             <h2 class="dashboard-stat-number">{{statistics.number_of_valid_customers || 0}}</h2>
@@ -82,7 +82,7 @@
       <md-card class="dashboard-statistic-container this-month">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
-            <i class="material-icons">attach_money</i>
+            <span class="lnr lnr-cart"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
             <h2 class="dashboard-stat-number">GHS {{statistics.number_of_valid_drivers | currency:2}}</h2>
@@ -94,7 +94,7 @@
       <md-card class="dashboard-statistic-container all-time">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
-            <i class="material-icons">insert_chart</i>
+            <span class="lnr lnr-cart"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
             <h2 class="dashboard-stat-number">GHS {{statistics.number_of_vehicles | currency:2}}</h2>

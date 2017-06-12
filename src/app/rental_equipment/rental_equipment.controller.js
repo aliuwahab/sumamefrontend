@@ -115,6 +115,36 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
     });
   };
 
+  $scope.deleteEquipment = function (ev, equipment) {
+    Dialog.confirmAction('Do you want to delete this equipment?')
+    .then(function () {
+      $scope.processInProgress = true;
+
+      var data = {
+        equipment_id: equipment.id,
+      };
+
+      EquipmentService.deleteEquipment(data)
+      .then(function (response) {
+
+        if (response.data == 200) {
+          ToastsService.showToast('success', 'Equipment successfully deleted!');
+        } else {
+          ToastsService.showToast('error', response.data.message);
+        }
+
+        $scope.processInProgress = false;
+        reloadEquipment();
+      })
+      .catch(function (error) {
+        $scope.processInProgress = false;
+        debugger;
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
+  };
+
   ///////////////////// HELPER FUNCTIONS ///////////////////////
 
   // SHOW ADD VEHICLE DIALOG

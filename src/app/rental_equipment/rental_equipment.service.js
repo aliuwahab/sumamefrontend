@@ -15,6 +15,7 @@ function EquipmentService($http, AuthService, CacheFactory, ENV) {
     getAllEquipment: getAllEquipment,
     addEquipment: addEquipment,
     updateEquipment: updateEquipment,
+    deleteEquipment: deleteEquipment,
     searchEquipment: searchEquipment,
   };
 
@@ -48,6 +49,11 @@ function EquipmentService($http, AuthService, CacheFactory, ENV) {
     var params = $.param(cleanedData);
 
     return $http.post(apiBaseURL + '/update/rental/equipment?' + authDataString + '&' + params);
+  }
+
+  function deleteEquipment(data) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/delete/equipment?' + authDataString + '&' + params);
   }
 
   function searchEquipment(params) {

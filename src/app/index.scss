@@ -154,7 +154,7 @@ html {
 .view-main-container {
   padding: 20px;
   overflow-y: scroll;
-  height: 87vh;
+  height: calc(95vh - 64px);
   background-size: inherit !important;
   background-image: url('../assets/patterns/brickwall.png');
 }
@@ -182,6 +182,9 @@ md-progress-circular svg path {
 }
 md-progress-linear .md-bar {
   background-color: $primary-color;
+}
+md-checkbox.md-checked.primary .md-icon {
+ background-color: $primary-color;
 }
 .sm-main-container{
   padding: 20px;

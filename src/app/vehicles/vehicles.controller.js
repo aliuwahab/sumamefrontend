@@ -80,6 +80,36 @@ function VehiclesController($scope, $q, $timeout, $rootScope, $state, Dialog, Ve
     });
   };
 
+  $scope.deleteVehicle = function (ev, vehicle) {
+    Dialog.confirmAction('Do you want to delete this vehicle?')
+    .then(function () {
+      $scope.processInProgress = true;
+
+      var data = {
+        vehicle_id: vehicle.id,
+      };
+
+      VehiclesService.deleteVehicle(data)
+      .then(function (response) {
+
+        if (response.data == 200) {
+          ToastsService.showToast('success', 'Vehicle successfully deleted!');
+        } else {
+          ToastsService.showToast('error', response.data.message);
+        }
+
+        $scope.processInProgress = false;
+        reloadVehicles();
+      })
+      .catch(function (error) {
+        $scope.processInProgress = false;
+        debugger;
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
+  };
+
   $scope.assignVehicle = function () {
     $scope.processInProgress = true;
     var data = {

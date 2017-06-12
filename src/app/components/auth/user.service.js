@@ -30,22 +30,20 @@
         'first_name',
         'last_name',
         'email',
-        'user_title',
-        'user_subtitle',
-        'display_pictures_urls',
-        'user_profile',
+        'user_profile_title',
+        'user_profile_image_url',
+        'user_profile_description',
         'phone_number',
         'user_type',
-        'type_of_consultant',
       ];
 
       if (user.user_type == 'admin') {
-        params.push('type_of_admin', 'created_by');
+        params.push('admin_type', 'created_by');
         user.created_by = user.created_by || 1;
       }
 
       cleanedData = _.pick(user, params);
-
+      debugger;
       var dataString = $.param(cleanedData);
       var authDataString = $.param(AuthService.getAuthData());
       debugger;

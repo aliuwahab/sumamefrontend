@@ -26,7 +26,7 @@
 </div>
 
 <div ng-if="processInProgress" class="top-progress-bar" layout="row">
-  <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+  <md-progress-linear md-mode="indeterminate" md-diameter="30"></md-progress-linear>
 </div>
 
 <div class="view-main-container">
@@ -34,13 +34,13 @@
   <div class="" layout="row">
     <md-card class="sm-rq-filter-item-card bg-color-shade-1" ng-style="filterParams.consumer_type =='business' && {'border':'3px solid white'}" flex="10" ng-click="changeCustomersTab('app.customers.businesses')">
       <md-card-content>
-        <i class="material-icons">business_center</i>
+        <span class="lnr lnr-apartment"></span>
         <h2 class="sm-rq-filter-item-title">Businesses</h2>
       </md-card-content>
     </md-card>
     <md-card class="sm-rq-filter-item-card bg-color-shade-2" ng-style="filterParams.consumer_type =='individual' && {'border':'3px solid white'}" flex="10" ng-click="changeCustomersTab('app.customers.individuals')">
       <md-card-content>
-        <i class="material-icons">person</i>
+        <span class="lnr lnr-users"></span>
         <h2 class="sm-rq-filter-item-title">Individuals</h2>
       </md-card-content>
     </md-card>

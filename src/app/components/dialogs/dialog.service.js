@@ -63,7 +63,8 @@
       var $actionsSection = $dialog.find('md-dialog-actions');
       var $cancelButton = $actionsSection.children()[0];
       var $confirmButton = $actionsSection.children()[1];
-      angular.element($confirmButton).addClass('md-raised md-warn');
+      angular.element($confirmButton).addClass('md-raised md-danger');
+      angular.element($cancelButton).addClass('text-white');
       return foundCancelButton;
     };
 
@@ -112,7 +113,6 @@
       })
       .title(title)
       .targetEvent(ev)
-      .theme('default')
       .ok('Delete')
       .cancel('Cancel');
 

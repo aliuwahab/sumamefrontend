@@ -11,7 +11,7 @@
     </md-toolbar>
     <md-dialog-content class="sm-modal-content" style="width:700px;">
       <div ng-if="updatingUser" layout="row" layout-align="center center" style="min-height: 40vh;">
-        <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+        <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
       </div>
 
       <div ng-show="!updatingUser">
@@ -40,7 +40,7 @@
 
         <md-input-container class="sm-input-container">
           <label>Title</label>
-          <input type="text" ng-model="user.user_title">
+          <input type="text" ng-model="user.user_profile_title">
         </md-input-container>
 
         <h4 class="sm-custom-input-label">Profile Picture</h4>
@@ -51,20 +51,19 @@
           </div>
           <div ng-if="!uploadingImage" layout="column" layout-align="center center">
             <i class="material-icons md-24">backup</i>
-            <p ng-if="!user.display_pictures_urls">Click here to select an image</p>
-            <p ng-if="user.display_pictures_urls">Click here to change image</p>
+            <p ng-if="!user.user_profile_image_url">Click here to select an image</p>
+            <p ng-if="user.user_profile_image_url">Click here to change image</p>
 
-            <div class="" ng-if="user.display_pictures_urls" style="max-width:700px">
-              <img style="width: 400px; height: auto;" ng-src="{{user.display_pictures_urls}}" alt="Answer Image Preview">
+            <div class="" ng-if="user.user_profile_image_url" style="max-width:700px">
+              <img style="width: 400px; height: auto;" ng-src="{{user.user_profile_image_url}}" alt="Answer Image Preview">
             </div>
           </div>
         </div>
 
         <h4 class="sm-custom-input-label">User Profile Description</h4>
         <md-input-container class="md-block">
-          <textarea ui-tinymce ng-model="user.user_profile" aria-label="Consultant Profile" rows="3" md-select-on-focus></textarea>
+          <textarea ui-tinymce ng-model="user.user_profile_description" aria-label="User Profile" rows="3" md-select-on-focus></textarea>
         </md-input-container>
-
       </div>
 
     </md-dialog-content>
