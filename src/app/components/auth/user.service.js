@@ -24,9 +24,10 @@
     }
 
     function updateUser(user) {
+      user.user_id = user.id;
       var cleanedData;
       var params = [
-        'id',
+        'user_id',
         'first_name',
         'last_name',
         'email',
@@ -35,21 +36,16 @@
         'user_profile_description',
         'phone_number',
         'user_type',
+        'username',
       ];
 
-      if (user.user_type == 'admin') {
-        params.push('admin_type', 'created_by');
-        user.created_by = user.created_by || 1;
-      }
-
       cleanedData = _.pick(user, params);
-      debugger;
       var dataString = $.param(cleanedData);
       var authDataString = $.param(AuthService.getAuthData());
-      debugger;
+
       return $http({
         method: 'POST',
-        url: apiBaseURL + '/update/user?' + authDataString + '&' + dataString,
+        url: apiBaseURL + '/update/admin/user?' + authDataString + '&' + dataString,
       });
     }
 
