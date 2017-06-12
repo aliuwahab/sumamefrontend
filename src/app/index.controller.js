@@ -35,7 +35,7 @@
 
         UploadService.uploadFileToS3(file, 'profile', 'image')
         .then(function (url) {
-          $scope.user.display_pictures_urls = url;
+          $scope.user.user_profile_image_url = url;
           $scope.uploadingImage = false;
           $scope.uploadProgress = 0;
         })
@@ -50,7 +50,7 @@
 
     // UPDATE USRE DETAILS
     $scope.updateUserDetails = function () {
-      ValidationService.validate($scope.user, 'user')
+      ValidationService.validate($scope.user, 'staff')
       .then(function (result) {
         $scope.updatingUser = true;
         UserService.updateUser($scope.user)
