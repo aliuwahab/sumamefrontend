@@ -75,6 +75,7 @@ CachingService, UploadService, NgMap, localStorageService, $window, ValidationSe
   }
 
   $scope.addDriver = function () {
+    $scope.newDriver.username = $scope.newDriver.phone_number;
     $scope.newDriver.password_confirmation = $scope.newDriver.password;
 
     ValidationService.validate($scope.newDriver, 'driver')

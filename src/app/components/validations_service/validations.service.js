@@ -65,6 +65,12 @@
         { field: 'first_name', friendlyName: 'First Name' },
         { field: 'admin_type', friendlyName: 'Permission Level' },
       ],
+      customer: [
+        { field: 'password', friendlyName: 'Temporary Password' },
+        { field: 'phone_number', friendlyName: 'Phone Number' },
+        { field: 'last_name', friendlyName: 'Last Name' },
+        { field: 'first_name', friendlyName: 'First Name' },
+      ],
       warehouse: [
         { field: 'country', friendlyName: 'Country' },
         { field: 'address_line_one', friendlyName: 'Address Line 1' },
