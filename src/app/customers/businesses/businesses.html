@@ -6,7 +6,7 @@
         <thead md-head md-order="query.order" md-on-reorder="getrequests">
           <tr md-row>
             <th md-column>ACCOUNT NUMBER</th>
-            <th md-column><span>CUSTOMER NAME</span></th>
+            <th md-column><span>BUSINESS NAME</span></th>
             <th md-column>PHONE NUMBER</th>
             <th md-column></th>
           </tr>
@@ -14,7 +14,7 @@
         <tbody md-body>
           <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in customersbusiness.data">
             <td md-cell>{{customer.id}}</td>
-            <td md-cell>{{customer.first_name}} {{customer.last_name}}</td>
+            <td md-cell>{{customer.business_name}}</td>
             <td md-cell>{{customer.phone_number}}</td>
             <td md-cell>
               <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">

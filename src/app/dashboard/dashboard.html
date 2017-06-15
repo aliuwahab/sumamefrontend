@@ -73,7 +73,7 @@
             <span class="lnr lnr-users"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
-            <h2 class="dashboard-stat-number">{{statistics.number_of_valid_customers || 0}}</h2>
+            <h2 class="dashboard-stat-number">{{statistics.number_of_valid_consumers || 0}}</h2>
             <p class="dashboard-stat-name">Customers</p>
           </div>
         </md-card-content>
@@ -85,7 +85,7 @@
             <span class="lnr lnr-cart"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
-            <h2 class="dashboard-stat-number">GHS {{statistics.number_of_valid_drivers | currency:2}}</h2>
+            <h2 class="dashboard-stat-number">GHS {{statistics.current_month_payment | currency:2}}</h2>
             <p class="dashboard-stat-name">Income This Month</p>
           </div>
         </md-card-content>
