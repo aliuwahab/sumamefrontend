@@ -12,7 +12,7 @@
       <md-card-content>
         <div class="md-media-sm card-media" layout>
           <img ng-if="!authenticatedUser.user_profile_image_url" class="sm-user-gravatar" gravatar-src="'authenticatedUser.email'" gravatar-size="200"/>
-          <img ng-if="authenticatedUser.user_profile_image_url" class="sm-user-gravatar" ng-src="{{authenticatedUser.display_pictures_urls}}"/>
+          <img ng-if="authenticatedUser.user_profile_image_url" class="sm-user-gravatar" ng-src="{{authenticatedUser.user_profile_image_url}}"/>
         </div>
         <h2 class="sm-user-display_name" ng-click="showUserEditDialog($event)" style="outline: none;">{{authenticatedUser.first_name}} {{authenticatedUser.last_name}}</h2>
         <p class="sm-user-role" ng-if="authenticatedUser.user_type == 'admin'">Administrator</p>
