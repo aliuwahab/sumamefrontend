@@ -28,17 +28,11 @@
         </div>
 
         <md-input-container class="sm-input-container">
-          <label>Username</label>
-          <input type="text" ng-model="newCustomer.username">
+          <input ng-intl-tel-input type="text" ng-model="newCustomer.phone_number" aria-label="customer phone number">
         </md-input-container>
 
         <md-input-container class="sm-input-container">
-          <label>Phone Number</label>
-          <input type="text" ng-model="newCustomer.phone_number">
-        </md-input-container>
-
-        <md-input-container class="sm-input-container">
-          <label>Password</label>
+          <label>Temporary Password</label>
           <input type="password" ng-model="newCustomer.password">
         </md-input-container>
       </div>

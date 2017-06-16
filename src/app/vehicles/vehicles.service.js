@@ -23,7 +23,7 @@ function VehiclesService($http, AuthService, CacheFactory, ENV) {
 
   function getAllVehicles(params) {
     var queryOptions = $.param(params);
-    var cache = 'vehicles?page=' + params.page + 'limit=' + params.limit;
+    var cache = 'vehicles?' + queryOptions;
 
     if (!CacheFactory.get(cache)) {
       CacheFactory(cache);

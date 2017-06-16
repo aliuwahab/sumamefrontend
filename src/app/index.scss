@@ -183,6 +183,12 @@ md-progress-circular svg path {
 md-progress-linear .md-bar {
   background-color: $primary-color;
 }
+md-progress-linear .md-container .md-bar {
+  height: 3px !important;
+}
+md-progress-linear .md-container {
+  height: 3px !important;
+}
 md-checkbox.md-checked.primary .md-icon {
  background-color: $primary-color;
 }
@@ -270,7 +276,7 @@ md-toast.md-info-toast-theme {
 }
 .top-progress-bar {
   position: fixed;
-  top: 59px;
+  top: 62px;
   z-index: 10002;
   height: 4px;
   width: 100%;
@@ -290,6 +296,21 @@ md-toast.md-info-toast-theme {
 }
 .offline-ui.offline-ui-up {
   height: 50px !important;
+}
+.intl-tel-input {
+  width: 100%;
+}
+.intl-tel-input .selected-flag {
+  height: 55%;
+}
+.iti-flag {
+  background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/img/flags.png");
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2 / 1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+  .iti-flag {
+    background-image: url("https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/img/flags@2x.png");
+  }
 }
 .sm-map-container {
 

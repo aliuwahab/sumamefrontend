@@ -126,8 +126,7 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
 
       EquipmentService.deleteEquipment(data)
       .then(function (response) {
-
-        if (response.data == 200) {
+        if (response.data.code == 200) {
           ToastsService.showToast('success', 'Equipment successfully deleted!');
         } else {
           ToastsService.showToast('error', response.data.message);

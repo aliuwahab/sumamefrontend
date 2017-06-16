@@ -14,7 +14,7 @@
         <tbody md-body>
           <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in customersbusiness.data">
             <td md-cell>{{customer.id}}</td>
-            <td md-cell>{{customer.business_name}}</td>
+            <td md-cell>{{customer.business_name || "Unknown Business"}}</td>
             <td md-cell>{{customer.phone_number}}</td>
             <td md-cell>
               <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">

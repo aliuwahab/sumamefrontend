@@ -9,7 +9,7 @@
   function config($logProvider, $compileProvider, $httpProvider, $authProvider, toastrConfig, $momentProvider,
     ssSideNavSectionsProvider, $mdThemingProvider, $mdIconProvider, momentPickerProvider, $provide,
     gravatarServiceProvider, localStorageServiceProvider, RollbarProvider, CacheFactoryProvider,
-    ChartJsProvider, TwilioProvider, ENV) {
+    ChartJsProvider, TwilioProvider, ngIntlTelInputProvider, ENV) {
 
     // Enable log
     $logProvider.debugEnabled(ENV.debug);
@@ -62,16 +62,6 @@
     toastrConfig.preventDuplicates = true;
     toastrConfig.progressBar = true;
 
-    // Theming Configs
-    // $mdThemingProvider
-    // .theme('default')
-    // .primaryPalette('red', {
-    //   default: '400',
-    // })
-    // .accentPalette('blue', {
-    //   default: '500',
-    // });
-
     $mdThemingProvider.theme('success-toast');
     $mdThemingProvider.theme('error-toast');
     $mdThemingProvider.theme('info-toast');
@@ -107,6 +97,17 @@
     });
 
     $momentProvider.asyncLoading(false);
+
+    ngIntlTelInputProvider.set({
+      initialCountry: 'gh',
+      preferredCountries: ['gh', 'us', 'gb'],
+      nationalMode: true,
+      customPlaceholder: function (selectedCountryPlaceholder, selectedCountryData) {
+        return 'Phone Number (e.g. ' + selectedCountryPlaceholder + ')';
+      },
+
+      utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/11.0.14/js/utils.js',
+    });
 
     // Workaround fix for md-select-menu jumping to top of page
     $provide.decorator('$mdSelect', ['$delegate', '$timeout', '$interval',

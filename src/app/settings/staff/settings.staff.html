@@ -9,7 +9,7 @@
 </div>
 
 <div class="flex-grid" layout="row" ng-if="!loadingStaff">
-  <div class="staff-no-staff-container" layout-align="center center" ng-show="staff.length <= 1">
+  <div class="staff-no-staff-container" layout-align="center center" ng-show="!staff || staff.length <= 1">
     <h2>Add your first staff. You don't have any yet!</h2>
     <p>Click on the Add New Staff Member button to add staff to your organization.</p>
   </div>

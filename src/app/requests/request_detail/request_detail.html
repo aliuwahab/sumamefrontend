@@ -270,7 +270,7 @@
             <div class="sm-request-detail-right" flex="50">
               <div class="">
                 <h3 class="sm-rq-inner-title">Additional Instructions</h3>
-                <p ng-if="request.request_additional_description">{{request.request_additional_description}}</p>
+                <p ng-bind-html="request.request_additional_description"></p>
                 <p ng-if="!request.request_additional_description">No additional instructions added to this request.</p>
               </div>
               <div class="sm-rq-map-container">
@@ -283,7 +283,7 @@
                     <i class="material-icons">location_on</i> <span class="bold-span">To: </span> {{request.delivery_location_name}}
                   </div>
                 </div>
-                <ng-map zoom="13" center="" style="height:50vh" >
+                <ng-map zoom="13" center="{{request.pickup_location_latitude}},{{request.pickup_location_longitude}}" style="height:50vh" >
                   <directions
                     draggable="true"
                     travel-mode="DRIVING"
@@ -403,7 +403,7 @@
                     <i class="material-icons">location_on</i> <span class="bold-span">To: </span> {{request.delivery_location_name}}
                   </div>
                 </div>
-                <ng-map zoom="13" center="" style="height:50vh" >
+                <ng-map zoom="13" center="{{request.pickup_location_latitude}},{{request.pickup_location_longitude}}" style="height:50vh" >
                   <directions
                     draggable="true"
                     travel-mode="DRIVING"

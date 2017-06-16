@@ -28,13 +28,7 @@
         </div>
 
         <md-input-container class="sm-input-container">
-          <label>Username</label>
-          <input type="text" ng-model="selectedDriver.username">
-        </md-input-container>
-
-        <md-input-container class="sm-input-container">
-          <label>Phone Number</label>
-          <input type="text" ng-model="selectedDriver.phone_number">
+          <input type="text" ng-intl-tel-input ng-model="selectedDriver.phone_number">
         </md-input-container>
 
         <h4 class="sm-custom-input-label">Driver Image</h4>

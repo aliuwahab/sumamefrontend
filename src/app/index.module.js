@@ -38,6 +38,7 @@
       'mgo-angular-wizard',
       'ngAudio',
       'ui.tinymce',
+      'ngIntlTelInput',
     ]);
 
 })();

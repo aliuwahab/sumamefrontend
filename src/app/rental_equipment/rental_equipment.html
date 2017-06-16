@@ -16,6 +16,10 @@
   </div>
 </md-toolbar>
 
+<div ng-if="processInProgress" class="top-progress-bar" layout="row">
+  <md-progress-linear md-mode="indeterminate"></md-progress-linear>
+</div>
+
 <div class="search-bar animate-slide" layout="row" ng-show="slide">
   <h3 flex="15">Search Equipment</h3>
   <md-input-container md-no-float class="search-input" flex="60">

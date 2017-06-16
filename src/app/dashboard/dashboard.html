@@ -11,7 +11,7 @@
             <span class="lnr lnr-clock"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
-            <h2 class="dashboard-stat-number">{{statistics.pending_request}}</h2>
+            <h2 class="dashboard-stat-number">{{statistics.pending_request || 0}}</h2>
             <p class="dashboard-stat-name">Pending Requests</p>
           </div>
         </md-card-content>
@@ -23,7 +23,7 @@
             <span class="lnr lnr-hourglass"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
-            <h2 class="dashboard-stat-number">{{statistics.request_in_delivery}}</h2>
+            <h2 class="dashboard-stat-number">{{statistics.request_in_delivery || 0}}</h2>
             <p class="dashboard-stat-name">In Progress</p>
           </div>
         </md-card-content>
@@ -35,7 +35,7 @@
             <span class="lnr lnr-users"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
-            <h2 class="dashboard-stat-number">{{statistics.number_of_valid_drivers}}</h2>
+            <h2 class="dashboard-stat-number">{{statistics.number_of_valid_drivers || 0}}</h2>
             <p class="dashboard-stat-name">Drivers</p>
           </div>
         </md-card-content>
@@ -47,7 +47,7 @@
             <span class="lnr lnr-car"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
-            <h2 class="dashboard-stat-number">{{statistics.number_of_vehicles}}</h2>
+            <h2 class="dashboard-stat-number">{{statistics.number_of_vehicles || 0}}</h2>
             <p class="dashboard-stat-name">Vehicles</p>
           </div>
         </md-card-content>
@@ -61,7 +61,7 @@
             <span class="lnr lnr-train"></span>
           </div>
           <div class="dashboard-stat-info" flex="80">
-            <h2 class="dashboard-stat-number">{{statistics.number_of_valid_equipment || 0}}</h2>
+            <h2 class="dashboard-stat-number">{{statistics.number_of_equipment || 0}}</h2>
             <p class="dashboard-stat-name">Equipment</p>
           </div>
         </md-card-content>

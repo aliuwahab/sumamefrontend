@@ -38,18 +38,12 @@
         </div>
 
         <md-input-container class="sm-input-container">
-          <label>Username</label>
-          <input type="text" ng-model="newStaffMember.username">
-        </md-input-container>
-
-        <md-input-container class="sm-input-container">
           <label>Email Address</label>
           <input type="text" ng-model="newStaffMember.email">
         </md-input-container>
 
         <md-input-container class="sm-input-container">
-          <label>Phone Number</label>
-          <input type="text" ng-model="newStaffMember.phone_number">
+          <input type="text" ng-intl-tel-input ng-model="newStaffMember.phone_number" aria-label="staff phone number">
         </md-input-container>
 
         <md-input-container class="sm-input-container">

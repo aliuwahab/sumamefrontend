@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function CustomersController($scope, $rootScope, $state, CustomersService, Dialog, ToastsService,
-  CachingService, localStorageService) {
+  CachingService, localStorageService, ValidationService) {
 
   activate();
 
@@ -50,22 +50,31 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
   };
 
   $scope.addCustomer = function () {
-
-    $scope.processInProgress = true;
+    $scope.newCustomer.username = $scope.newCustomer.phone_number;
     $scope.newCustomer.password_confirmation = $scope.newCustomer.password;
-    debugger;
-    CustomersService.addCustomer($scope.newCustomer)
-    .then(function (response) {
+
+    ValidationService.validate($scope.newCustomer, 'customer')
+    .then(function (result) {
       debugger;
-      ToastsService.showToast('success', 'Customer successfully blocked');
-      $scope.processInProgress = false;
-      reloadCustomers();
+      $scope.addingCustomer = true;
+      CustomersService.addCustomer($scope.newCustomer)
+      .then(function (response) {
+        debugger;
+        ToastsService.showToast('success', 'Customer successfully added');
+        $scope.addingCustomer = false;
+        reloadCustomers();
+        $rootScope.closeDialog();
+      })
+      .catch(function (error) {
+        debugger;
+        $scope.addingCustomer = false;
+        ToastsService.showToast('error', error.data.error);
+      });
     })
     .catch(function (error) {
-      debugger;
-      $scope.processInProgress = false;
-      ToastsService.showToast('error', error.data.error);
+      ToastsService.showToast('error', error.message);
     });
+
   };
 
   $scope.changeCustomerStatus = function (customer, action) {
@@ -107,7 +116,7 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
   function reloadCustomers() {
     var cache = 'customers?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
-    getAllCustomers();
+    $scope.getAllCustomers();
   }
 
 }

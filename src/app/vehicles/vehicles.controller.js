@@ -92,17 +92,18 @@ function VehiclesController($scope, $q, $timeout, $rootScope, $state, Dialog, Ve
       VehiclesService.deleteVehicle(data)
       .then(function (response) {
 
-        if (response.data == 200) {
+        if (response.data.code == 200) {
           ToastsService.showToast('success', 'Vehicle successfully deleted!');
         } else {
           ToastsService.showToast('error', response.data.message);
         }
 
         $scope.processInProgress = false;
-        reloadVehicles();
+        doAfterVehicleOperation();
       })
       .catch(function (error) {
         $scope.processInProgress = false;
+        ToastsService.showToast('error', error.data.message);
         debugger;
       });
     }, function () {
@@ -126,6 +127,7 @@ function VehiclesController($scope, $q, $timeout, $rootScope, $state, Dialog, Ve
     })
     .catch(function (error) {
       $scope.processInProgress = false;
+      ToastsService.showToast('error', error.data.message);
       debugger;
     });
   };
@@ -212,8 +214,7 @@ function VehiclesController($scope, $q, $timeout, $rootScope, $state, Dialog, Ve
   // RELOAD VEHICLES
   function doAfterVehicleOperation() {
     $scope.addingVehicle = false;
-    var cache = 'vehicles?page=' + $scope.filterParams.page +
-    'limit=' + $scope.filterParams.limit;
+    var cache = 'vehicles?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
     getAllVehicles();
   }
