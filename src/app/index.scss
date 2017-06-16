@@ -183,6 +183,12 @@ md-progress-circular svg path {
 md-progress-linear .md-bar {
   background-color: $primary-color;
 }
+md-progress-linear .md-container .md-bar {
+  height: 3px !important;
+}
+md-progress-linear .md-container {
+  height: 3px !important;
+}
 md-checkbox.md-checked.primary .md-icon {
  background-color: $primary-color;
 }
@@ -270,7 +276,7 @@ md-toast.md-info-toast-theme {
 }
 .top-progress-bar {
   position: fixed;
-  top: 59px;
+  top: 62px;
   z-index: 10002;
   height: 4px;
   width: 100%;

@@ -55,7 +55,6 @@
         $scope.updatingUser = true;
         UserService.updateUser($scope.user)
         .then(function (response) {
-          debugger;
           var updatedUser = response.data.data.user;
           localStorageService.set('profile', updatedUser);
           $rootScope.authenticatedUser = updatedUser;
