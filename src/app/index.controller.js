@@ -53,14 +53,20 @@
       ValidationService.validate($scope.user, 'staff')
       .then(function (result) {
         $scope.updatingUser = true;
+        $scope.updatedUser = $scope.user;
+
         UserService.updateUser($scope.user)
         .then(function (response) {
-          var updatedUser = response.data.data.user;
-          localStorageService.set('profile', updatedUser);
-          $rootScope.authenticatedUser = updatedUser;
-          $scope.updatingUser = false;
-          ToastsService.showToast('success', 'Updated was successful');
-          $rootScope.closeDialog();
+          if (response.data.code == 200) {
+            localStorageService.set('profile', $scope.updatedUser);
+            $rootScope.authenticatedUser = $scope.updatedUser;
+            $scope.updatingUser = false;
+            ToastsService.showToast('success', 'Updated was successful');
+            $rootScope.closeDialog();
+          }else {
+            ToastsService.showToast('error', 'There was a problem updating your details');
+            $rootScope.closeDialog();
+          }
         })
         .catch(function (error) {
           $scope.updatingUser = false;
