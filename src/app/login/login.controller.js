@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function LoginController($scope, $rootScope, $state, $auth, localStorageService,
   ToastsService, ssSideNav, PermPermissionStore, PermRoleStore, UserService,
-  ActivityMonitor, logOutAfterSeconds, ENV) {
+  ActivityMonitor, logOutAfterSeconds, ngAudio, ENV) {
 
   $scope.user = {};
   $scope.resetShowing = false;
@@ -94,6 +94,15 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
       encrypted: true,
     });
     $rootScope.pusher.subscribe('request');
+
+    var newRequestSound = ngAudio.load('../assets/sounds/bbm.mp3');
+
+    $rootScope.pusher.bind('request-made', function (data) {
+      if ($rootScope.authenticatedUser &&
+        (!data.request.request_source || data.request.request_source != 'admin')) {
+        newRequestSound.play();
+      }
+    });
   }
 
   function resetUserState() {

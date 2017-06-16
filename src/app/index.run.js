@@ -8,7 +8,7 @@
   /** @ngInject */
   function runBlock($log, $rootScope, $state, $http, $mdDialog, PermPermissionStore, PermRoleStore,
     ssSideNav, localStorageService, Rollbar, ActivityMonitor, logOutAfterSeconds,
-    NgMap, ENV) {
+    NgMap, ngAudio, ENV) {
 
     $rootScope.viewBackgroundImage = '../assets/patterns/brickwall.png';
 
@@ -58,6 +58,15 @@
         encrypted: true,
       });
       $rootScope.pusher.subscribe('request');
+
+      var newRequestSound = ngAudio.load('../assets/sounds/bbm.mp3');
+
+      $rootScope.pusher.bind('request-made', function (data) {
+        if ($rootScope.authenticatedUser &&
+          (!data.request.request_source || data.request.request_source != 'admin')) {
+          newRequestSound.play();
+        }
+      });
     }
 
     if ($rootScope.authenticatedUser && ($rootScope.authenticatedUser.admin_type == 'staff' ||
