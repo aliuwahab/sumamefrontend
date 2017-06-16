@@ -80,24 +80,24 @@
       </md-card>
 
       <md-card class="dashboard-statistic-container this-month">
-        <md-card-content class="dashboard-card-content" layout="row">
-          <div class="dashboard-icon-container" flex="20">
+        <md-card-content class="dashboard-card-content">
+          <div class="dashboard-icon-container">
             <span class="lnr lnr-cart"></span>
           </div>
-          <div class="dashboard-stat-info" flex="80">
-            <h2 class="dashboard-stat-number">GHS {{statistics.current_month_payment | currency:2}}</h2>
+          <div class="dashboard-stat-info">
+            <h2 class="dashboard-stat-number">{{statistics.current_month_payment.total_month_payment | currency:"GHS ":2}}</h2>
             <p class="dashboard-stat-name">Income This Month</p>
           </div>
         </md-card-content>
       </md-card>
 
       <md-card class="dashboard-statistic-container all-time">
-        <md-card-content class="dashboard-card-content" layout="row">
-          <div class="dashboard-icon-container" flex="20">
+        <md-card-content class="dashboard-card-content">
+          <div class="dashboard-icon-container">
             <span class="lnr lnr-cart"></span>
           </div>
-          <div class="dashboard-stat-info" flex="80">
-            <h2 class="dashboard-stat-number">GHS {{statistics.number_of_vehicles | currency:2}}</h2>
+          <div class="dashboard-stat-info">
+            <h2 class="dashboard-stat-number">GHS {{statistics.current_month_payment.total_month_payment | currency:"GHS ":2}}</h2>
             <p class="dashboard-stat-name">Income All Time</p>
           </div>
         </md-card-content>
