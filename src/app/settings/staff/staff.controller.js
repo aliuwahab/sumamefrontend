@@ -35,7 +35,7 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
     ValidationService.validate($scope.newStaffMember, 'staff')
     .then(function (result) {
       $scope.addingStaff = true;
-      $scope.staff.push($scope.newStaffMember);
+      $scope.staff ? $scope.staff.push($scope.newStaffMember) : false;
       $rootScope.closeDialog();
 
       SettingsService.addStaff($scope.newStaffMember)
