@@ -30,7 +30,7 @@
     "angular-local-storage": "^0.5.2",
     "angular-permission": "^5.1.0",
     "ng-rollbar": "^1.9.2",
-    "aws-sdk": "aws-sdk-js#^2.7.17",
+    "aws-sdk": "aws-sdk-js#2.7.17",
     "angular-ui-tinymce": "^0.0.18",
     "angular-moment-picker": "moment-picker#^0.9.1",
     "angular-momentjs": "^0.2.2",
