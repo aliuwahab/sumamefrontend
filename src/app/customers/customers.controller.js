@@ -55,15 +55,17 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
 
     ValidationService.validate($scope.newCustomer, 'customer')
     .then(function (result) {
-      debugger;
       $scope.addingCustomer = true;
       CustomersService.addCustomer($scope.newCustomer)
       .then(function (response) {
-        debugger;
-        ToastsService.showToast('success', 'Customer successfully added');
         $scope.addingCustomer = false;
-        reloadCustomers();
-        $rootScope.closeDialog();
+        if (response.data.code == 200) {
+          ToastsService.showToast('success', 'Customer successfully added');
+          reloadCustomers();
+          $rootScope.closeDialog();
+        }else {
+          ToastsService.showToast('error', response.data.message);
+        }
       })
       .catch(function (error) {
         debugger;
