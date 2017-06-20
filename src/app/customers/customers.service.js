@@ -12,7 +12,8 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
   var authDataString = $.param(AuthService.getAuthData());
 
   var service = {
-    getAllCustomers: getAllCustomers,
+    getAllIndividualCustomers: getAllIndividualCustomers,
+    getAllBusinessCustomers: getAllBusinessCustomers,
     addCustomer: addCustomer,
     changeCustomerStatus: changeCustomerStatus,
     searchCustomers: searchCustomers,
@@ -20,15 +21,28 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
 
   return service;
 
-  function getAllCustomers(params) {
+  function getAllIndividualCustomers(params) {
     var queryOptions = $.param(params);
-    var cache = 'customers?' + queryOptions;
+    var cache = 'individualCustomers?' + queryOptions;
 
     if (!CacheFactory.get(cache)) {
       CacheFactory(cache);
     };
 
-    return $http.get(apiBaseURL + '/all/consumers?' + authDataString + '&' + queryOptions, {
+    return $http.get(apiBaseURL + '/all/consumers?consumer_type=individual&' + authDataString + '&' + queryOptions, {
+      cache: CacheFactory.get(cache),
+    });
+  }
+
+  function getAllBusinessCustomers(params) {
+    var queryOptions = $.param(params);
+    var cache = 'businessCustomers?' + queryOptions;
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.get(apiBaseURL + '/all/business/consumers?' + authDataString + '&' + queryOptions, {
       cache: CacheFactory.get(cache),
     });
   }

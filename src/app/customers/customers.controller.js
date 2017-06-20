@@ -22,13 +22,20 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     };
   }
 
-  $scope.getAllCustomers = function (customerType) {
-    $scope.filterParams.consumer_type = customerType;
-    var scopeVarName = 'customers' + customerType;
-
-    $scope.requestsPromise = CustomersService.getAllCustomers($scope.filterParams)
+  $scope.getAllIndividualCustomers = function () {
+    $scope.requestsPromise = CustomersService.getAllIndividualCustomers($scope.filterParams)
     .then(function (response) {
-      $scope[scopeVarName] = response.data.data.all_consumers;
+      $scope.individualCustomers = response.data.data.all_consumers;
+    })
+    .catch(function (error) {
+      ToastsService.showToast('error', error.data.error);
+    });
+  };
+
+  $scope.getAllBusinessCustomers = function () {
+    $scope.requestsPromise = CustomersService.getAllBusinessCustomers($scope.filterParams)
+    .then(function (response) {
+      $scope.businessCustomers = response.data.data.business_consumers;
     })
     .catch(function (error) {
       ToastsService.showToast('error', error.data.error);
