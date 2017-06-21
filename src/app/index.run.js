@@ -120,6 +120,13 @@
           event.preventDefault();
           $state.go(currentState);
           break;
+        case 'auth.login':
+          if (localStorageService.get('token')) {
+            event.preventDefault();
+            return $state.go('app.dashboard');
+          }
+
+          break;
 
         default:
 
