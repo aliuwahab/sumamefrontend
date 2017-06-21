@@ -97,6 +97,7 @@
 
                 <div class="" flex="70">
                   <h1 class="sm-rq-user-name">{{request.requester.first_name}} {{request.requester.last_name}}</h1>
+                  <p class="sm-rq-user-phone" ng-if="request.requester.consumer_type != 'individual'">{{request.requester.business_name}}</p>
                   <p class="sm-rq-user-phone">{{request.requester.phone_number}}</p>
                   <md-button class="sm-rq-sms-button" aria-label="description" ng-click="showMessageDialog()">
                     <i class="material-icons sm-rq-message-icon">message</i>
@@ -209,6 +210,7 @@
 
                 <div class="" flex="70">
                   <h1 class="sm-rq-user-name">{{request.requester.first_name}} {{request.requester.last_name}}</h1>
+                  <p class="sm-rq-user-phone" ng-if="request.requester.consumer_type != 'individual'">{{request.requester.business_name}}</p>
                   <p class="sm-rq-user-phone">{{request.requester.phone_number}}</p>
                   <md-button class="sm-rq-sms-button" aria-label="description" ng-click="showMessageDialog()">
                     <i class="material-icons sm-rq-message-icon">message</i>
@@ -316,6 +318,7 @@
 
                 <div class="" flex="70">
                   <h1 class="sm-rq-user-name">{{request.requester.first_name}} {{request.requester.last_name}}</h1>
+                  <p class="sm-rq-user-phone" ng-if="request.requester.consumer_type != 'individual'">{{request.requester.business_name}}</p>
                   <p class="sm-rq-user-phone">{{request.requester.phone_number}}</p>
                   <md-button class="sm-rq-sms-button" aria-label="description" ng-click="showMessageDialog()">
                     <i class="material-icons sm-rq-message-icon">message</i>
