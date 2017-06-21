@@ -19,7 +19,6 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     deleteWarehouse: deleteWarehouse,
     getAllStaff: getAllStaff,
     addStaff: addStaff,
-    updateStaff: updateStaff,
     deleteStaff: deleteStaff,
     getPricingDetails: getPricingDetails,
     getAllVehicleCategories: getAllVehicleCategories,
@@ -48,28 +47,6 @@ function SettingsService($http, localStorageService, AuthService, CacheFactory,
     var params = $.param(data);
 
     return $http.post(apiBaseURL + '/create/admin/user?' + authDataString + '&' + params);
-  }
-
-  function updateStaff(user) {
-    user.user_id = user.id;
-    var cleanedData;
-    var params = [
-      'user_id',
-      'first_name',
-      'last_name',
-      'email',
-      'user_profile_title',
-      'user_profile_image_url',
-      'user_profile_description',
-      'phone_number',
-      'user_type',
-      'username',
-    ];
-
-    cleanedData = _.pick(user, params);
-    var dataString = $.param(cleanedData);
-
-    return $http.post(apiBaseURL + '/update/admin/user?' + authDataString + '&' + dataString);
   }
 
   /////// WAREHOUSE FUNCTIONS ////////////

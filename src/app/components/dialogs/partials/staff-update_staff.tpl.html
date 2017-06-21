@@ -52,7 +52,7 @@
         </md-input-container>
 
         <h4 class="sm-custom-input-label">Staff Profile Image</h4>
-        <div class="sm-dropzone" ngf-select="uploadProfileImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+        <div class="sm-dropzone" ngf-select="uploadProfileImage($file, 'selectedStaffMember')" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
           <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
             <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
             <p>Uploading Image: {{uploadProgress}}% complete</p>

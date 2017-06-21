@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function SettingsController($scope, $rootScope, $state, $mdDialog, lodash, localStorageService,
-  Dialog) {
+  Dialog, UploadService) {
 
   var currentView = localStorageService.get('selectedSettingsView') || 'app.settings.staff';
   $scope.viewName = getStateName(currentView);

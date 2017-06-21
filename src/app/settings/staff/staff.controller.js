@@ -7,7 +7,7 @@ angular
 
 /** @ngInject */
 function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, ToastsService,
-  SettingsService, CachingService, ValidationService) {
+  SettingsService, CachingService, ValidationService, UserService, UploadService) {
 
   activate();
 
@@ -59,7 +59,7 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
     ValidationService.validate($scope.selectedStaffMember, 'staff')
     .then(function (result) {
       $scope.addingStaff = true;
-      SettingsService.updateStaff($scope.selectedStaffMember)
+      UserService.updateUser($scope.selectedStaffMember)
       .then(function (response) {
         $scope.addingStaff = false;
         ToastsService.showToast('success', 'Staff member successfully updated!');
@@ -104,6 +104,33 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
   };
 
   ///////////////////// HELPER FUNCTIONS ///////////////////////
+
+  // UPLOAD  IMAGE
+  $scope.uploadProfileImage = function (file, variable) {
+    $scope.s3Uploader = UploadService;
+
+    if (file) {
+      $scope.uploadingImage = true;
+
+      $scope.$watch('s3Uploader.getUploadProgress()', function (newVal) {
+        console.log('Progress', newVal);
+        $scope.uploadProgress = newVal;
+      });
+
+      UploadService.uploadFileToS3(file, 'profile', 'image')
+      .then(function (url) {
+        $scope[variable].user_profile_image_url = url;
+        $scope.uploadingImage = false;
+        $scope.uploadProgress = 0;
+      })
+      .catch(function (error) {
+        $scope.uploadingImage = false;
+        debugger;
+      });
+    }else {
+      ToastsService.showToast('error', 'Please select a valid file');
+    }
+  };
 
   // SHOW ADD DIALOG
   $scope.showAddStaffDialog = function (ev) {
