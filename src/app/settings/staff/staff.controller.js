@@ -31,7 +31,6 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
 
   $scope.addStaff = function () {
     $scope.newStaffMember.username = $scope.newStaffMember.phone_number;
-
     ValidationService.validate($scope.newStaffMember, 'staff')
     .then(function (result) {
       $scope.addingStaff = true;
@@ -42,8 +41,30 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
       .then(function (response) {
         $scope.addingStaff = false;
         ToastsService.showToast('success', 'Staff member successfully added!');
-        CachingService.destroyOnCreateOperation('staff');
-        getAllStaff();
+        reloadStaff();
+        $rootScope.closeDialog();
+      })
+      .catch(function (error) {
+        $scope.addingStaff = false;
+        ToastsService.showToast('error', error.data.message);
+        debugger;
+      });
+    })
+    .catch(function (error) {
+      ToastsService.showToast('error', error.message);
+    });
+  };
+
+  $scope.updateStaff = function () {
+    ValidationService.validate($scope.selectedStaffMember, 'staff')
+    .then(function (result) {
+      $scope.addingStaff = true;
+      SettingsService.updateStaff($scope.selectedStaffMember)
+      .then(function (response) {
+        $scope.addingStaff = false;
+        ToastsService.showToast('success', 'Staff member successfully updated!');
+        reloadStaff();
+        $rootScope.closeDialog();
       })
       .catch(function (error) {
         $scope.addingStaff = false;
@@ -92,11 +113,16 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
     Dialog.showCustomDialog(ev, 'add_staff', $scope);
   };
 
+  // SHOW UPDATE DIALOG
+  $scope.showUpdateStaffDialog = function (ev, staffMember) {
+    $scope.selectedStaffMember = angular.copy(staffMember);
+    Dialog.showCustomDialog(ev, 'update_staff', $scope);
+  };
+
   function reloadStaff() {
     var cache = 'staff';
     CachingService.destroyOnCreateOperation(cache);
     getAllStaff();
   }
-
 }
 })();

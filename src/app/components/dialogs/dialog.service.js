@@ -43,6 +43,7 @@
 
       // STAFF DIALOGS
       add_staff: 'app/components/dialogs/partials/staff-add_staff.tpl.html',
+      update_staff: 'app/components/dialogs/partials/staff-update_staff.tpl.html',
 
       // PRICING DIALOGS
       add_service_category: 'app/components/dialogs/partials/pricing-add_service_category.tpl.html',

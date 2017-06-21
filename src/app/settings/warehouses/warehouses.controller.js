@@ -24,7 +24,7 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
   $rootScope.pusher.subscribe('address');
 
   $rootScope.pusher.bind('new-address-created', function (data) {
-    updateAfterWarehouseOperation();
+    reloadWarehouses();
   });
 
   function getAllWarehouses() {
@@ -52,6 +52,8 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
 
       SettingsService.addWarehouse($scope.newWarehouse)
       .then(function (response) {
+        reloadWarehouses();
+
         // Warehouse Successfully added
       })
       .catch(function (error) {
@@ -85,9 +87,10 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
       SettingsService.updateWarehouse($scope.selectedWarehouse)
       .then(function (response) {
         $scope.addingWarehouse = false;
+        reloadWarehouses();
         $rootScope.closeDialog();
         ToastsService.showToast('success', 'Warehouse successfully updated');
-        updateAfterWarehouseOperation();
+        reloadWarehouses();
       })
       .catch(function (error) {
         $scope.addingWarehouse = false;
@@ -109,7 +112,7 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
 
       SettingsService.deleteWarehouse(warehouse.id)
       .then(function (response) {
-        updateAfterWarehouseOperation();
+        reloadWarehouses();
       })
       .catch(function (error) {
         ToastsService.showToast('error',
@@ -141,7 +144,7 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
     Dialog.showCustomDialog(ev, 'update_warehouse', $scope);
   };
 
-  function updateAfterWarehouseOperation() {
+  function reloadWarehouses() {
     var cache = 'warehouses?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
     getAllWarehouses();

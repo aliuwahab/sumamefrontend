@@ -1,0 +1,89 @@
+<md-dialog aria-label="Add Consultant">
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Update Staff Member</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="closeDialog()">
+          <i class="material-icons">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="sm-modal-content" style="width:700px;">
+      <div ng-if="addingStaff" layout="row" layout-align="center center" style="min-height: 40vh;">
+        <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
+      </div>
+
+      <div ng-show="!addingStaff">
+
+        <md-input-container class="sm-input-container">
+          <label>Staff Permission Level</label>
+          <md-select ng-model="selectedStaffMember.admin_type">
+            <md-option value="super">Administrator Access</md-option>
+            <md-option value="normal">Service Access</md-option>
+            <md-option value="staff">View Access</md-option>
+          </md-select>
+        </md-input-container>
+
+        <div class="" layout="row">
+          <md-input-container class="sm-input-container">
+            <label>First Name</label>
+            <input type="text" ng-model="selectedStaffMember.first_name">
+          </md-input-container>
+
+          <md-input-container class="sm-input-container">
+            <label>Last Name</label>
+            <input type="text" ng-model="selectedStaffMember.last_name">
+          </md-input-container>
+        </div>
+
+        <md-input-container class="sm-input-container">
+          <label>Email Address</label>
+          <input type="text" ng-model="selectedStaffMember.email">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <input type="text" ng-intl-tel-input ng-model="selectedStaffMember.phone_number" aria-label="staff phone number">
+        </md-input-container>
+
+        <md-input-container class="sm-input-container">
+          <label>Title</label>
+          <input type="text" ng-model="selectedStaffMember.user_profile_title">
+        </md-input-container>
+
+        <h4 class="sm-custom-input-label">Staff Profile Image</h4>
+        <div class="sm-dropzone" ngf-select="uploadProfileImage($file)" name="file" ngf-pattern="'image/*'" ngf-accept="'image/*'" ngf-max-size="20MB">
+          <div ng-if="uploadingImage" layout="column" layout-align="center center" style="min-height: 100px;">
+            <md-progress-circular md-mode="determinate" value="{{uploadProgress}}"></md-progress-circular>
+            <p>Uploading Image: {{uploadProgress}}% complete</p>
+          </div>
+          <div ng-if="!uploadingImage" layout="column" layout-align="center center">
+            <i class="material-icons md-24">backup</i>
+            <p ng-if="!selectedStaffMember.user_profile_image_url">Click here to select an image</p>
+            <p ng-if="selectedStaffMember.user_profile_image_url">Click here to change image</p>
+
+            <div class="" ng-if="selectedStaffMember.user_profile_image_url" style="max-width:700px">
+              <img style="width: 400px; height: auto;" ng-src="{{selectedStaffMember.user_profile_image_url}}" alt="Answer Image Preview">
+            </div>
+          </div>
+        </div>
+
+        <h4 class="sm-custom-input-label">Staff Profile Summary</h4>
+        <md-input-container class="md-block">
+          <textarea ui-tinymce ng-model="selectedStaffMember.user_profile_description" aria-label="Staff Profile" md-select-on-focus rows="3"></textarea>
+        </md-input-container>
+      </div>
+
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="closeDialog()" class="md-raised md-warn">
+        Cancel
+      </md-button>
+      <md-button ng-click="updateStaff()" class="md-raised md-accent">
+        Update Staff
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

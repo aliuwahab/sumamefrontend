@@ -12,17 +12,17 @@
           </tr>
         </thead>
         <tbody md-body>
-          <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in customersbusiness.data">
+          <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in businessCustomers.data">
             <td md-cell>{{customer.id}}</td>
             <td md-cell>{{customer.business_name || "Unknown Business"}}</td>
             <td md-cell>{{customer.phone_number}}</td>
             <td md-cell>
-              <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">
+              <!-- <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">
                 <md-tooltip md-direction="top">
                   View Customer Details
                 </md-tooltip>
                 <i class="material-icons">remove_red_eye</i>
-              </button>
+              </button> -->
               <button class="md-button md-raised md-danger" ng-if="customer.user_block_status == 'unblocked'" ng-click="changeCustomerStatus(customer, 'block')">
                 <md-tooltip md-direction="top">
                   Block Customer

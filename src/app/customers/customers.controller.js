@@ -22,13 +22,20 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     };
   }
 
-  $scope.getAllCustomers = function (customerType) {
-    $scope.filterParams.consumer_type = customerType;
-    var scopeVarName = 'customers' + customerType;
-
-    $scope.requestsPromise = CustomersService.getAllCustomers($scope.filterParams)
+  $scope.getAllIndividualCustomers = function () {
+    $scope.requestsPromise = CustomersService.getAllIndividualCustomers($scope.filterParams)
     .then(function (response) {
-      $scope[scopeVarName] = response.data.data.all_consumers;
+      $scope.individualCustomers = response.data.data.all_consumers;
+    })
+    .catch(function (error) {
+      ToastsService.showToast('error', error.data.error);
+    });
+  };
+
+  $scope.getAllBusinessCustomers = function () {
+    $scope.requestsPromise = CustomersService.getAllBusinessCustomers($scope.filterParams)
+    .then(function (response) {
+      $scope.businessCustomers = response.data.data.business_consumers;
     })
     .catch(function (error) {
       ToastsService.showToast('error', error.data.error);
@@ -55,15 +62,17 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
 
     ValidationService.validate($scope.newCustomer, 'customer')
     .then(function (result) {
-      debugger;
       $scope.addingCustomer = true;
       CustomersService.addCustomer($scope.newCustomer)
       .then(function (response) {
-        debugger;
-        ToastsService.showToast('success', 'Customer successfully added');
         $scope.addingCustomer = false;
-        reloadCustomers();
-        $rootScope.closeDialog();
+        if (response.data.code == 200) {
+          ToastsService.showToast('success', 'Customer successfully added');
+          reloadCustomers();
+          $rootScope.closeDialog();
+        }else {
+          ToastsService.showToast('error', response.data.message);
+        }
       })
       .catch(function (error) {
         debugger;
