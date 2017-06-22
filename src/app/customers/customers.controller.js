@@ -68,7 +68,7 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
         $scope.addingCustomer = false;
         if (response.data.code == 200) {
           ToastsService.showToast('success', 'Customer successfully added');
-          reloadCustomers();
+          reloadIndividualCustomers();
           $rootScope.closeDialog();
         }else {
           ToastsService.showToast('error', response.data.message);
@@ -94,7 +94,7 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     .then(function (response) {
       ToastsService.showToast('success', 'Customer successfully blocked');
       $scope.processInProgress = false;
-      reloadCustomers();
+      reloadIndividualCustomers();
     })
     .catch(function (error) {
       $scope.processInProgress = false;
@@ -122,10 +122,28 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     $state.go(stateName);
   };
 
-  function reloadCustomers() {
-    var cache = 'customers?' + $.param($scope.filterParams);
+  function reloadIndividualCustomers() {
+    var cache = 'individualCustomers?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
-    $scope.getAllCustomers();
+    CustomersService.getAllIndividualCustomers($scope.filterParams)
+    .then(function (response) {
+      $scope.individualCustomers = response.data.data.all_consumers;
+    })
+    .catch(function (error) {
+      ToastsService.showToast('error', error.data.error);
+    });
+  }
+
+  function reloadBusinessCustomers() {
+    var cache = 'businessCustomers?' + $.param($scope.filterParams);
+    CachingService.destroyOnCreateOperation(cache);
+    CustomersService.getAllBusinessCustomers($scope.filterParams)
+    .then(function (response) {
+      $scope.businessCustomers = response.data.data.all_consumers;
+    })
+    .catch(function (error) {
+      ToastsService.showToast('error', error.data.error);
+    });
   }
 
 }
