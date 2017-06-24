@@ -109,3 +109,10 @@
 .driver-profile-description {
   font-size: 15px;
 }
+.driver-invalid-coordinates {
+  margin: 30px;
+  background: $warn-color;
+  color: white;
+  padding: 15px;
+  border-radius: 3px;
+}

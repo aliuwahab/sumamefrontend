@@ -45,14 +45,27 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
     return $http.post(apiBaseURL + '/delete/user?' + authDataString + '&' + params);
   }
 
-  function updateDriver(data) {
-    var cleanedData = _.omit(data, [
-      'created_at',
-      'updated_at',
-      '$$hashKey',
-    ]);
-    var params = $.param(cleanedData);
-    return $http.post(apiBaseURL + '/update/driver/account?' + authDataString + '&' + params);
+  function updateDriver(driver) {
+    driver.driver_id = driver.id;
+    var cleanedData;
+    var params = [
+      'driver_id',
+      'first_name',
+      'last_name',
+      'username',
+      'phone_number',
+      'user_profile_image_url',
+      'user_profile_description',
+      'phone_number',
+      'drivers_licence',
+      'drivers_insurance',
+      'drivers_vehicle_photo',
+      'drivers_vehicle_registration',
+    ];
+
+    cleanedData = _.pick(driver, params);
+    var dataString = $.param(cleanedData);
+    return $http.post(apiBaseURL + '/update/driver/account?' + authDataString + '&' + dataString);
   }
 
   function approveUnapproveDriver(id, action) {

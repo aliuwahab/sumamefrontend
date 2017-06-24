@@ -61,8 +61,8 @@ CachingService, UploadService, NgMap, localStorageService, $window, ValidationSe
   };
 
   function refreshAllDrivers(approvalStatus) {
-    $scope.filterParams.driver_approved = approvalStatus;
-    var scopeVarName = 'drivers' + approvalStatus;
+    approvalStatus ? $scope.filterParams.driver_approved = approvalStatus : false;
+    var scopeVarName = 'drivers' + $scope.filterParams.driver_approved;
 
     DriversService.getAllDrivers($scope.filterParams)
     .then(function (response) {
@@ -80,14 +80,13 @@ CachingService, UploadService, NgMap, localStorageService, $window, ValidationSe
 
     ValidationService.validate($scope.newDriver, 'driver')
     .then(function (result) {
-      $scope.drivers1.data.unshift($scope.newDriver);
-      $rootScope.closeDialog();
       $scope.addingDriver = true;
 
       DriversService.addDriver($scope.newDriver)
       .then(function (response) {
         ToastsService.showToast('success', 'Driver successfully added!');
         $scope.addingDriver = false;
+        reloadDrivers();
         $rootScope.closeDialog();
       })
       .catch(function (error) {
@@ -108,15 +107,25 @@ CachingService, UploadService, NgMap, localStorageService, $window, ValidationSe
     ValidationService.validate($scope.selectedDriver, 'driver')
     .then(function (result) {
       $scope.addingDriver = true;
-      $rootScope.closeDialog();
 
       DriversService.updateDriver($scope.selectedDriver)
       .then(function (response) {
-        ToastsService.showToast('success', 'Driver successfully added!');
         $scope.addingDriver = false;
+        if (response.data.code == 200) {
+          $rootScope.closeDialog();
+          ToastsService.showToast('success', 'Driver successfully updated!');
+          reloadDrivers();
+        } else {
+          ToastsService.showToast('error', response.data.message);
+        }
       })
       .catch(function (error) {
         $scope.addingDriver = false;
+        if (error.data) {
+          ToastsService.showToast('error', error.data[Object.keys(error.data)[0]][0]);
+        }else {
+          ToastsService.showToast('error', 'There was an issue updating driver. Try again.');
+        }
       });
     })
     .catch(function (error) {
@@ -199,11 +208,18 @@ CachingService, UploadService, NgMap, localStorageService, $window, ValidationSe
   $scope.showDriverDialog = function (ev, driver, dialog) {
     $scope.selectedDriver = angular.copy(driver);
 
-    NgMap.getMap().then(function (map) {
-      google.maps.event.trigger(map, 'resize');
-      map.setCenter({ lat: $scope.selectedDriver.user_current_latitude,
-        lng: $scope.selectedDriver.user_current_longitude, });
-    });
+    if ($scope.selectedDriver.user_current_latitude &&
+      $scope.selectedDriver.user_current_longitude) {
+      $scope.validCoordinates = true;
+
+      NgMap.getMap().then(function (map) {
+        google.maps.event.trigger(map, 'resize');
+        map.setCenter({ lat: $scope.selectedDriver.user_current_latitude,
+          lng: $scope.selectedDriver.user_current_longitude, });
+      });
+    } else {
+      $scope.validCoordinates = false;
+    }
 
     Dialog.showCustomDialog(ev, dialog, $scope);
   };
@@ -229,12 +245,14 @@ CachingService, UploadService, NgMap, localStorageService, $window, ValidationSe
   }
 
   // UPLOAD IMAGE
-  $scope.uploadItem = function (file, field, category, type, editing) {
-    $scope.s3Uploader = UploadService;
-    var uploadProgress = field + '_progress';
-    var uploadToggle = 'uploading_' + field;
+  $scope.uploadItem = function (file, field, category, type, MIMEtypes, editing) {
+    var fileType = (file.name.substring(file.name.lastIndexOf('.') + 1)).toLowerCase();
 
-    if (file) {
+    if (file && _.includes(MIMEtypes, fileType)) {
+      $scope.s3Uploader = UploadService;
+      var uploadProgress = field + '_progress';
+      var uploadToggle = 'uploading_' + field;
+
       $scope[uploadToggle] = true;
 
       $scope.$watch('s3Uploader.getUploadProgress()', function (newVal) {
