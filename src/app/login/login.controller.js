@@ -140,5 +140,25 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
       ],
     });
   }
+
+  $scope.resetPassword = function () {
+    if ($scope.user.email) {
+      UserService.resetPassword($scope.user.email)
+      .then(function (response) {
+        if (response.data.code == 200) {
+          $scope.resetShowing = false;
+          ToastsService.showToast('success',
+          'Reset successful, please check your email to complete the process.');
+        }else {
+          ToastsService.showToast('error', response.data.message);
+        }
+      })
+      .catch(function (error) {
+        ToastsService.showToast('error', error.data.message);
+      });
+    }else {
+      ToastsService.showToast('error', 'Please enter a valid email address.');
+    }
+  };
 }
 })();

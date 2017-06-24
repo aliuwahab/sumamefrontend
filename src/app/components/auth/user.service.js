@@ -9,6 +9,7 @@
   function UserService($http, lodash, AuthService, ENV) {
 
     var apiBaseURL = ENV.apiBaseURL;
+    var absoluteApiBaseURL = ENV.absoluteApiBaseURL;
     var _ = lodash;
 
     var service = {
@@ -52,7 +53,7 @@
     function resetPassword(email) {
       return $http({
         method: 'POST',
-        url: apiBaseURL + '/password/reset?email=' + email,
+        url: absoluteApiBaseURL + '/request/password/reset?email=' + email,
       });
     }
 
