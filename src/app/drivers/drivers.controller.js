@@ -84,10 +84,15 @@ CachingService, UploadService, NgMap, localStorageService, $window, ValidationSe
 
       DriversService.addDriver($scope.newDriver)
       .then(function (response) {
-        ToastsService.showToast('success', 'Driver successfully added!');
         $scope.addingDriver = false;
-        reloadDrivers();
-        $rootScope.closeDialog();
+
+        if (response.data.code == 200) {
+          ToastsService.showToast('success', 'Driver successfully added!');
+          reloadDrivers();
+          $rootScope.closeDialog();
+        }else {
+          ToastsService.showToast('error', response.data.message);
+        }
       })
       .catch(function (error) {
         $scope.addingDriver = false;
