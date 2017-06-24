@@ -103,13 +103,18 @@ SettingsService, ToastsService, ValidationService, UploadService, CachingService
       if ($scope.categoryPricing.length == 0) {
         ToastsService.showToast('error', 'Please add at least one price range');
       }else {
-        $scope.categories.push($scope.newCategory);
-        ToastsService.showToast('success', 'New category successfully created!');
-        $rootScope.closeDialog();
+        $scope.addingPriceCategory = true;
 
         SettingsService.addPriceCategory($scope.newCategory)
         .then(function (response) {
           $scope.addingPriceCategory = false;
+
+          if (response.data.code == 200) {
+            ToastsService.showToast('success', 'New category successfully created!');
+            $rootScope.closeDialog();
+          }else {
+            ToastsService.showToast('error', response.data.message);
+          }
         })
         .catch(function (error) {
           $scope.addingPriceCategory = false;
