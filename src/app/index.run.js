@@ -17,10 +17,11 @@
       $rootScope.authenticatedUser = localStorageService.get('profile');
 
       Offline.options = {
+        checkOnLoad: true,
         interceptRequests: true,
         reconnect: {
           initialDelay: 3,
-          delay: 5,
+          delay: 30,
         },
         requests: true,
       };
