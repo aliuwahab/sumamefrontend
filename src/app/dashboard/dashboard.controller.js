@@ -6,7 +6,7 @@ angular
     .controller('DashboardController', DashboardController);
 
 /** @ngInject */
-function DashboardController($scope, $rootScope, $state, $location, DashboardService) {
+function DashboardController($scope, $rootScope, $state, $location, DashboardService, Webworker) {
 
   activate();
 
@@ -21,6 +21,17 @@ function DashboardController($scope, $rootScope, $state, $location, DashboardSer
     .then(function (response) {
       $scope.statistics = response.data.data.statistics;
       $scope.dataLoaded = true;
+
+      var grapStatsWorker = Webworker.create(processGraphData);
+
+      grapStatsWorker.run($scope.statistics.past_six_months_requests)
+      .then(function (result) {
+        $scope.series = ['All Requests'];
+        $scope.labels = result.months;
+        $scope.data = [
+          result.requestsData,
+        ];
+      });
     })
     .catch(function (error) {
       $scope.dataLoaded = true;
@@ -28,16 +39,28 @@ function DashboardController($scope, $rootScope, $state, $location, DashboardSer
     });
   }
 
-  $scope.gotoMetricPage = function (metricPage) {
-    $state.transitionTo(metricPage);
-  };
+  function processGraphData(requestStats) {
+    var allMonths = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December',
+    ];
+    var months = Object.keys(requestStats);
 
-  $scope.labels = ['December', 'January', 'February', 'March', 'April', 'May'];
-  $scope.series = ['All Requests', 'Successfully Completed'];
-  $scope.data = [
-    [0, 0, 0, 0, 0, 3],
-    [0, 0, 0, 0, 0, 5],
-  ];
+    months.sort(function (a, b) {
+      return allMonths.indexOf(a) > allMonths.indexOf(b);
+    });
+
+    var requestsData = [];
+
+    for (var i = 0; i < months.length; i++) {
+      requestsData.push(requestStats[months[i]]);
+    }
+
+    return {
+      months: months,
+      requestsData: requestsData,
+    };
+  }
 
   $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
   $scope.options = {
@@ -57,6 +80,11 @@ function DashboardController($scope, $rootScope, $state, $location, DashboardSer
         },
       ],
     },
+  };
+
+  /////////////////// HELPER FUNCTIONS //////////////////////
+  $scope.gotoMetricPage = function (metricPage) {
+    $state.transitionTo(metricPage);
   };
 
 }

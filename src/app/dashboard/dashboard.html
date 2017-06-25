@@ -5,7 +5,7 @@
 
   <div class="" ng-if="dataLoaded">
     <div layout="row">
-      <md-card class="dashboard-statistic-container pending" ng-click="gotoMetricPage('app.requests')">
+      <md-card class="dashboard-statistic-container pending" ng-click="gotoMetricPage('app.requests.pending')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <span class="lnr lnr-clock"></span>
@@ -17,7 +17,7 @@
         </md-card-content>
       </md-card>
 
-      <md-card class="dashboard-statistic-container in-progress" ng-click="gotoMetricPage('app.requests')">
+      <md-card class="dashboard-statistic-container in-progress" ng-click="gotoMetricPage('app.requests.delivery-in-progress')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <span class="lnr lnr-hourglass"></span>
