@@ -143,8 +143,10 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
 
   $scope.resetPassword = function () {
     if ($scope.user.email) {
+      $scope.enableProgressBar = true;
       UserService.resetPassword($scope.user.email)
       .then(function (response) {
+        $scope.enableProgressBar = false;
         if (response.data.code == 200) {
           $scope.resetShowing = false;
           ToastsService.showToast('success',
@@ -155,6 +157,7 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
       })
       .catch(function (error) {
         ToastsService.showToast('error', error.data.message);
+        $scope.enableProgressBar = false;
       });
     }else {
       ToastsService.showToast('error', 'Please enter a valid email address.');
