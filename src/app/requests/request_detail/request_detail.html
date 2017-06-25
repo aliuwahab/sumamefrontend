@@ -158,7 +158,7 @@
             <div class="sm-request-detail-right" flex="50">
               <div class="">
                 <h3 class="sm-rq-inner-title">Additional Instructions</h3>
-                <p ng-if="request.request_additional_description">{{request.request_additional_description}}</p>
+                <div ng-bind-html="request.request_additional_description"></div>
                 <p ng-if="!request.request_additional_description">No additional instructions added to this request.</p>
               </div>
 
@@ -272,7 +272,7 @@
             <div class="sm-request-detail-right" flex="50">
               <div class="">
                 <h3 class="sm-rq-inner-title">Additional Instructions</h3>
-                <p ng-bind-html="request.request_additional_description"></p>
+                <div ng-bind-html="request.request_additional_description"></div>
                 <p ng-if="!request.request_additional_description">No additional instructions added to this request.</p>
               </div>
               <div class="sm-rq-map-container">
@@ -393,7 +393,7 @@
             <div class="sm-request-detail-right" flex="50">
               <div class="">
                 <h3 class="sm-rq-inner-title">Additional Instructions</h3>
-                <p ng-if="request.request_additional_description">{{request.request_additional_description}}</p>
+                <div ng-bind-html="request.request_additional_description"></div>
                 <p ng-if="!request.request_additional_description">No additional instructions added to this request.</p>
               </div>
               <div class="sm-rq-map-container">

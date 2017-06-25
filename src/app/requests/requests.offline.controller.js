@@ -113,6 +113,18 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
     $rootScope.closeDialog();
   };
 
+  $scope.$watchGroup(['mapping.pickupLocation', 'mapping.deliveryLocation'], function () {
+    if ($scope.mapping && $scope.mapping.deliveryLocation && $scope.mapping.pickupLocation) {
+      NgMap.getMap().then(function (map) {
+        google.maps.event.trigger(map, 'resize');
+        if ($scope.mapping.deliveryLocation.latitude && $scope.mapping.pickupLocation.longitude) {
+          map.setCenter({ lat: $scope.mapping.deliveryLocation.latitude,
+            lng: $scope.mapping.deliveryLocation.longitude, });
+        }
+      });
+    }
+  });
+
   ////////////////////// HELPER FUNCTIONS ///////////////////////////
 
   $scope.selectServiceCategory = function (category) {
