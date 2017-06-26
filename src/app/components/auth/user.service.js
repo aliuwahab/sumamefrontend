@@ -50,13 +50,10 @@
       });
     }
 
-    function resetPassword(email) {
-      return $http({
-        method: 'POST',
-        url: absoluteApiBaseURL + '/request/password/reset?email=' + email,
-      });
+    function resetPassword(data) {
+      var params = $.param(data);
+      return $http.post(absoluteApiBaseURL + '/request/password/reset?' + params);
     }
-
   }
 
 })();
