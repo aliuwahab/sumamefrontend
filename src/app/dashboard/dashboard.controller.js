@@ -6,17 +6,21 @@ angular
     .controller('DashboardController', DashboardController);
 
 /** @ngInject */
-function DashboardController($scope, $rootScope, $state, $location, DashboardService, Webworker) {
+function DashboardController($scope, $rootScope, $state, $location, DashboardService, Webworker,
+  CachingService) {
 
   activate();
 
   function activate() {
     getStatistics();
+
+    $rootScope.pusher.subscribe('dashboard');
+    $rootScope.pusher.bind('dashboard-stats', function (data) {
+      reloadStats();
+    });
   }
 
   function getStatistics() {
-    $scope.dataLoaded = false;
-
     DashboardService.getStatistics()
     .then(function (response) {
       $scope.statistics = response.data.data.statistics;
@@ -37,6 +41,11 @@ function DashboardController($scope, $rootScope, $state, $location, DashboardSer
       $scope.dataLoaded = true;
       debugger;
     });
+  }
+
+  function reloadStats() {
+    CachingService.destroyOnCreateOperation('dashboardStats');
+    getStatistics();
   }
 
   function processGraphData(requestStats) {
