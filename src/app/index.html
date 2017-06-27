@@ -15,8 +15,9 @@
           <img ng-if="authenticatedUser.user_profile_image_url" class="sm-user-gravatar" ng-src="{{authenticatedUser.user_profile_image_url}}"/>
         </div>
         <h2 class="sm-user-display_name" ng-click="showUserEditDialog($event)" style="outline: none;">{{authenticatedUser.first_name}} {{authenticatedUser.last_name}}</h2>
-        <p class="sm-user-role" ng-if="authenticatedUser.user_type == 'admin'">Administrator</p>
-        <p class="sm-user-role" ng-if="authenticatedUser.user_type == 'consultant'"> {{authenticatedUser.subject.subject_name}} Consultant</p>
+        <p class="sm-user-role" ng-if="authenticatedUser.admin_type == 'super'">Administrator</p>
+        <p class="sm-user-role" ng-if="authenticatedUser.admin_type == 'normal'">Service Staff</p>
+        <p class="sm-user-role" ng-if="authenticatedUser.admin_type == 'staff'">View Access Staff</p>
       </md-card-content>
     </md-card>
 
