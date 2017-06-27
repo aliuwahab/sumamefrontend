@@ -13,6 +13,7 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
   activate();
 
   function activate() {
+    $scope.newRequestData = {};
     getRequest();
   }
 
@@ -103,8 +104,8 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
       .then(function (response) {
         ToastsService.showToast('success', 'Request cost successfully changed!');
         $scope.showInput = false;
-
-        // reloadRequest();
+        $scope.processInProgress = false;
+        reloadRequest();
       })
       .catch(function (error) {
         ToastsService.showToast('success', 'Request cost successfully changed!');
