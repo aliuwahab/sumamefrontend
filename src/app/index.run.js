@@ -37,7 +37,7 @@
       });
 
       PermPermissionStore
-      .defineManyPermissions(['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles',
+      .defineManyPermissions(['seeRequests', 'seeDrivers', 'seeCourierVehicles',
       'seeEquipment', 'seeCustomers',
       ],
       function () {
@@ -45,7 +45,7 @@
       });
 
       PermPermissionStore
-      .defineManyPermissions(['seeSettings'],
+      .defineManyPermissions(['seeDashboard', 'seeSettings'],
       function () {
         return (['super'].indexOf($rootScope.authenticatedUser.admin_type) != -1);
       });
@@ -55,10 +55,10 @@
         super: ['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
         'seeCustomers', 'seeSettings',
         ],
-        normal: ['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
+        normal: ['seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
         'seeCustomers',
         ],
-        staff: ['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
+        staff: ['seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
         'seeCustomers',
         ],
       });
@@ -81,6 +81,7 @@
 
     if ($rootScope.authenticatedUser && ($rootScope.authenticatedUser.admin_type == 'staff' ||
       $rootScope.authenticatedUser.admin_type == 'normal')) {
+      ssSideNav.setVisible('dashboard', false);
       ssSideNav.setVisible('settings', false);
     }
 

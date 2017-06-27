@@ -108,13 +108,14 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
   function resetUserState() {
     if ($rootScope.authenticatedUser.admin_type == 'staff' ||
     $rootScope.authenticatedUser.admin_type == 'normal') {
+      ssSideNav.setVisible('dashboard', false);
       ssSideNav.setVisible('settings', false);
     }
   }
 
   function redefineRoles() {
     PermPermissionStore
-    .defineManyPermissions(['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles',
+    .defineManyPermissions(['seeRequests', 'seeDrivers', 'seeCourierVehicles',
     'seeEquipment', 'seeCustomers',
     ],
     function () {
@@ -122,7 +123,7 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
     });
 
     PermPermissionStore
-    .defineManyPermissions(['seeSettings'],
+    .defineManyPermissions(['seeDashboard', 'seeSettings'],
     function () {
       return (['super'].indexOf($rootScope.authenticatedUser.admin_type) != -1);
     });
@@ -132,10 +133,10 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
       super: ['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
       'seeCustomers', 'seeSettings',
       ],
-      normal: ['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
+      normal: ['seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
       'seeCustomers',
       ],
-      staff: ['seeDashboard', 'seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
+      staff: ['seeRequests', 'seeDrivers', 'seeCourierVehicles', 'seeEquipment',
       'seeCustomers',
       ],
     });
