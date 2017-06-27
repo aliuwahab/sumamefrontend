@@ -46,10 +46,10 @@
       data: {
         permissions: {
           only: function () {
-            return ['super'] || false;
+            return ['super', 'normal', 'staff'] || false;
           },
 
-          redirectTo: 'app.requests',
+          redirectTo: 'auth.login',
         },
       },
       resolve: {
