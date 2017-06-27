@@ -41,10 +41,10 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
 
         UserService.getUserProfile(token)
         .then(function (user) {
-          localStorageService.set('profile', user.data.user);
-          $rootScope.authenticatedUser = user.data.user;
+          user.data && user.data.user ? $rootScope.authenticatedUser = user.data.user : false;
 
-          if ($rootScope.authenticatedUser) {
+          if ($rootScope.authenticatedUser && $rootScope.authenticatedUser.user_type == 'admin') {
+            localStorageService.set('profile', user.data.user);
             resetUserState();
             redefineRoles();
             $scope.enableProgressBar = false;
@@ -52,11 +52,10 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
 
             subscribeToPusherChannels();
             subscribeToActivityMonitor();
-
           }else {
+            ToastsService.showToast('error', 'Please login with a valid back office account.');
             localStorageService.clearAll();
             $scope.enableProgressBar = false;
-            ToastsService.showToast('error', 'Unable to determine your user type');
           }
         })
         .catch(function (error) {
@@ -140,5 +139,34 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
       ],
     });
   }
+
+  $scope.resetPassword = function () {
+    $scope.enableProgressBar = true;
+
+    var data = {
+      email: $scope.user.email,
+    };
+
+    if ($scope.user.email) {
+      UserService.resetPassword(data)
+      .then(function (response) {
+        $scope.enableProgressBar = false;
+
+        if (response.data.code == 200) {
+          $scope.resetShowing = false;
+          ToastsService.showToast('success',
+          'Reset successful, please check your email to complete the process.');
+        }else {
+          ToastsService.showToast('error', response.data.message);
+        }
+      })
+      .catch(function (error) {
+        $scope.enableProgressBar = false;
+        ToastsService.showToast('error', error.data.message);
+      });
+    }else {
+      ToastsService.showToast('error', 'Please enter a valid email address.');
+    }
+  };
 }
 })();

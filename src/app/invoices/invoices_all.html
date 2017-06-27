@@ -38,7 +38,7 @@
                 <span ng-if="invoice.invoice_paid">PAID</span>
                 <span ng-if="!invoice.invoice_paid">NOT PAID</span>
               </td>
-              <td md-cell>
+              <td md-cell ng-if="authenticatedUser.admin_type != 'staff'">
                 <md-button class="md-raised md-primary" href="#invoices/{{invoice.id}}" aria-label="description" md-ripple-size="full">
                   <i class="material-icons">remove_red_eye</i>
                 </md-button>

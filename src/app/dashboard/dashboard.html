@@ -5,7 +5,7 @@
 
   <div class="" ng-if="dataLoaded">
     <div layout="row">
-      <md-card class="dashboard-statistic-container pending" ng-click="gotoMetricPage('app.requests')">
+      <md-card class="dashboard-statistic-container pending" ng-click="gotoMetricPage('app.requests.pending')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <span class="lnr lnr-clock"></span>
@@ -17,7 +17,7 @@
         </md-card-content>
       </md-card>
 
-      <md-card class="dashboard-statistic-container in-progress" ng-click="gotoMetricPage('app.requests')">
+      <md-card class="dashboard-statistic-container in-progress" ng-click="gotoMetricPage('app.requests.delivery-in-progress')">
         <md-card-content class="dashboard-card-content" layout="row">
           <div class="dashboard-icon-container" flex="20">
             <span class="lnr lnr-hourglass"></span>
@@ -79,7 +79,10 @@
         </md-card-content>
       </md-card>
 
-      <md-card class="dashboard-statistic-container this-month">
+      <md-card ng-if="authenticatedUser.admin_type != 'super'" class="dashboard-statistic-container hidden"></md-card>
+      <md-card ng-if="authenticatedUser.admin_type != 'super'" class="dashboard-statistic-container hidden"></md-card>
+
+      <md-card ng-if="authenticatedUser.admin_type == 'super'" class="dashboard-statistic-container this-month">
         <md-card-content class="dashboard-card-content">
           <div class="dashboard-icon-container">
             <span class="lnr lnr-cart"></span>
@@ -91,13 +94,13 @@
         </md-card-content>
       </md-card>
 
-      <md-card class="dashboard-statistic-container all-time">
+      <md-card ng-if="authenticatedUser.admin_type == 'super'" class="dashboard-statistic-container all-time">
         <md-card-content class="dashboard-card-content">
           <div class="dashboard-icon-container">
             <span class="lnr lnr-cart"></span>
           </div>
           <div class="dashboard-stat-info">
-            <h2 class="dashboard-stat-number">GHS {{statistics.current_month_payment.total_month_payment | currency:"GHS ":2}}</h2>
+            <h2 class="dashboard-stat-number">{{statistics.current_month_payment.total_month_payment | currency:"GHS ":2}}</h2>
             <p class="dashboard-stat-name">Income All Time</p>
           </div>
         </md-card-content>

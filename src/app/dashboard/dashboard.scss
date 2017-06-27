@@ -14,6 +14,12 @@
 .dashboard-statistic-container:hover {
   border: 3px solid #019AD6;
 }
+.dashboard-statistic-container.hidden {
+  box-shadow: none !important;
+  background-color: transparent !important;
+  border: none !important;
+  cursor: auto;
+}
 .dashboard-statistic-container.pending {
   background-color: #5BA23E;
   border: #5BA23E;
@@ -89,6 +95,14 @@
   font-weight: 600;
   // margin-bottom: 25px !important;
   margin: 0;
+}
+.dashboard-statistic-blur-bg {
+  height: 100%;
+  width: 100%;
+  background-image: url('../assets/patterns/brickwall.png');
+  position: absolute;
+  margin-left: -16px;
+  margin-top: -16px;
 }
 .md-open-menu-container.md-active {
   height: auto;

@@ -56,6 +56,8 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
   };
 
   $scope.updateStaff = function () {
+    $scope.selectedStaffMember.user_type = 'admin';
+
     ValidationService.validate($scope.selectedStaffMember, 'staff')
     .then(function (result) {
       $scope.addingStaff = true;
@@ -136,6 +138,7 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
   $scope.showAddStaffDialog = function (ev) {
     $scope.newStaffMember = {
       user_created_by: $rootScope.authenticatedUser.id,
+      user_type: 'admin',
     };
     Dialog.showCustomDialog(ev, 'add_staff', $scope);
   };

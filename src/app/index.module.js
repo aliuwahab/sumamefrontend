@@ -39,6 +39,7 @@
       'ngAudio',
       'ui.tinymce',
       'ngIntlTelInput',
+      'ngWebworker',
     ]);
 
 })();

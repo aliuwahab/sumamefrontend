@@ -10,7 +10,7 @@
 
     <i class="material-icons toolbar-search-icon" ng-click="slide=!slide">search</i>
 
-    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddEquipmentDialog($event)">
+    <md-button ng-if="authenticatedUser.admin_type != 'staff'" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddEquipmentDialog($event)">
       Add New Equipment
     </md-button>
   </div>
@@ -51,7 +51,7 @@
               <td md-cell>{{equipment.equipment_category}}</td>
               <td md-cell>{{equipment.equipment_location_name}}</td>
               <td md-cell>{{equipment.equipment_hired}}</td>
-              <td md-cell>
+              <td md-cell ng-if="authenticatedUser.admin_type != 'staff'">
                 <button class="md-button md-raised md-primary" ng-click="showViewEquipmentDialog($event, equipment)">
                   <md-tooltip md-direction="top">
                     View Equipment Details

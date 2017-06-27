@@ -25,12 +25,6 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
       request_status: $scope.viewName,
     };
 
-    if ($stateParams && ($stateParams.referer == 'dashboard')) {
-      $scope.viewName = $stateParams.viewName;
-      $scope.filterParams.request_status = $stateParams.requestStatus;
-      $scope.selectedStatus = $stateParams.requestStatus;
-    }
-
     $scope.newRequestSound = ngAudio.load('../assets/sounds/bbm.mp3');
   }
 

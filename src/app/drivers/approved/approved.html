@@ -8,7 +8,7 @@
             <th md-column><span>DRIVER NAME</span></th>
             <th md-column>PHONE NUMBER</th>
             <th md-column>ASSIGNED DELIVERIES</th>
-            <th md-column></th>
+            <th md-column ng-if="authenticatedUser.admin_type != 'staff'"></th>
           </tr>
         </thead>
 
@@ -17,7 +17,7 @@
             <td md-cell>{{driver.first_name}} {{driver.last_name}}</td>
             <td md-cell>{{driver.phone_number}}</td>
             <td md-cell>{{driver.assigned_deliveries.length}}</td>
-            <td md-cell>
+            <td md-cell ng-if="authenticatedUser.admin_type != 'staff'">
               <button class="md-button md-raised md-primary" ng-click="showDriverDialog($event, driver, 'view_driver')">
                 <md-tooltip md-direction="top">
                   View Driver Details

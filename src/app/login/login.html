@@ -39,7 +39,6 @@
           </form>
 
           <form ng-if="resetShowing == true" name="resetPasswordForm" class="sm-signup-form" ng-submit="restPassword(resetPasswordForm.$valid)" novalidate>
-            <md-progress-linear class="login-progressbar" md-mode="indeterminate" ng-disabled="!enableProgressBar"></md-progress-linear>
 
             <div layout="row">
               <md-input-container style="width:450px;">
@@ -49,7 +48,7 @@
             </div>
 
             <div layout="column" layout-align="center center">
-              <md-button type="submit" class="md-raised md-accent" aria-label="Login" ng-disabled="resetPasswordForm.$invalid" md-ripple-size="full">
+              <md-button type="submit" class="md-raised md-accent" aria-label="Login" ng-disabled="resetPasswordForm.$invalid" md-ripple-size="full" ng-click="resetPassword()">
                 Reset Password
                 <i class="material-icons">arrow_forward</i>
               </md-button>

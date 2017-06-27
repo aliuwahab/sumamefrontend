@@ -22,7 +22,7 @@
               <td md-cell>{{request.created_at | date:'medium'}}</td>
               <td md-cell>
                 <span ng-if="request.requester.consumer_type == 'individual'">{{request.requester.first_name}} {{request.requester.last_name}}</span>
-                <span ng-if="request.requester.consumer_type != 'individual'">{{request.requester.business_name}}</span>
+                <span ng-if="request.requester.consumer_type != 'individual'">{{request.requester.business_name || 'Undetermined Business'}}</span>
               </td>
               <td md-cell>
                 {{request.pickup_location_name | characters:30}}
@@ -40,7 +40,7 @@
                 <md-button class="md-raised md-primary" href="#requests/{{request.id}}" aria-label="description" md-ripple-size="full">
                   <i class="material-icons">remove_red_eye</i>
                 </md-button>
-                <md-button class="md-raised md-warn" aria-label="description" md-ripple-size="full" ng-click="cancelRequest(request)">
+                <md-button ng-if="authenticatedUser.admin_type != 'staff'" class="md-raised md-warn" aria-label="description" md-ripple-size="full" ng-click="cancelRequest(request)">
                   <i class="material-icons">cancel</i>
                 </md-button>
               </td>

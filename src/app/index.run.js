@@ -16,6 +16,16 @@
 
       $rootScope.authenticatedUser = localStorageService.get('profile');
 
+      Offline.options = {
+        checkOnLoad: true,
+        interceptRequests: true,
+        reconnect: {
+          initialDelay: 3,
+          delay: 30,
+        },
+        requests: true,
+      };
+
       Rollbar.configure({
         payload: {
           person: {
