@@ -14,60 +14,62 @@
         Go back to all requests.
       </md-tooltip>
     </md-button>
-    <md-button ng-if="request.request_deliverer.length == 0" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAssignRequestDialog($event)">
-      <i class="material-icons">person_add</i>
-      <md-tooltip md-direction="bottom">
-        Assign request to driver.
-      </md-tooltip>
-    </md-button>
-    <md-button ng-if="request.request_deliverer.length > 0" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAssignRequestDialog($event)">
-      <i class="material-icons">person_add</i>
-      <md-tooltip md-direction="bottom">
-        Change driver.
-      </md-tooltip>
-    </md-button>
-    <md-menu>
-      <md-button aria-label="Open phone interactions menu" class="md-raised md-primary" ng-click="openStatusMenu($mdMenu, $event)">
-        <i class="material-icons">assignment</i>
+    <div class="" ng-if="authenticatedUser.admin_type != 'staff'">
+      <md-button ng-if="request.request_deliverer.length == 0" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAssignRequestDialog($event)">
+        <i class="material-icons">person_add</i>
         <md-tooltip md-direction="bottom">
-          Change request status.
+          Assign request to driver.
         </md-tooltip>
       </md-button>
-      <md-menu-content width="4">
-        <md-menu-item>
-          <md-button ng-click="changeRequestStatus('pending')">
-            Pending
-          </md-button>
-        </md-menu-item>
-        <md-menu-item>
-          <md-button ng-click="changeRequestStatus('assigned')">
-            Assigned
-          </md-button>
-        </md-menu-item>
-        <md-menu-item>
-          <md-button ng-click="changeRequestStatus('delivery-in-progress')">
-            Delivery In Progress
-          </md-button>
-        </md-menu-item>
-        <md-menu-item>
-          <md-button ng-click="changeRequestStatus('declined')">
-            Rejected
-          </md-button>
-        </md-menu-item>
-        <md-menu-item>
-          <md-button ng-click="changeRequestStatus('completed')">
-            Completed
-          </md-button>
-        </md-menu-item>
-      </md-menu-content>
-    </md-menu>
+      <md-button ng-if="request.request_deliverer.length > 0" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAssignRequestDialog($event)">
+        <i class="material-icons">person_add</i>
+        <md-tooltip md-direction="bottom">
+          Change driver.
+        </md-tooltip>
+      </md-button>
+      <md-menu>
+        <md-button aria-label="Open phone interactions menu" class="md-raised md-primary" ng-click="openStatusMenu($mdMenu, $event)">
+          <i class="material-icons">assignment</i>
+          <md-tooltip md-direction="bottom">
+            Change request status.
+          </md-tooltip>
+        </md-button>
+        <md-menu-content width="4">
+          <md-menu-item>
+            <md-button ng-click="changeRequestStatus('pending')">
+              Pending
+            </md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-click="changeRequestStatus('assigned')">
+              Assigned
+            </md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-click="changeRequestStatus('delivery-in-progress')">
+              Delivery In Progress
+            </md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-click="changeRequestStatus('declined')">
+              Rejected
+            </md-button>
+          </md-menu-item>
+          <md-menu-item>
+            <md-button ng-click="changeRequestStatus('completed')">
+              Completed
+            </md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
 
-    <md-button aria-label="print request printout" class="md-raised md-warn" ng-click="showDialog($event, 'print_request')">
-      <i class="material-icons">print</i>
-      <md-tooltip md-direction="bottom">
-        Print request sticker.
-      </md-tooltip>
-    </md-button>
+      <md-button aria-label="print request printout" class="md-raised md-warn" ng-click="showDialog($event, 'print_request')">
+        <i class="material-icons">print</i>
+        <md-tooltip md-direction="bottom">
+          Print request sticker.
+        </md-tooltip>
+      </md-button>
+    </div>
   </div>
 </md-toolbar>
 

@@ -10,7 +10,7 @@
 
     <i class="material-icons toolbar-search-icon" ng-click="slide=!slide">search</i>
 
-    <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddDriverDialog($event)">
+    <md-button ng-if="authenticatedUser.admin_type != 'staff'" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddDriverDialog($event)">
       Add New Driver
     </md-button>
   </div>

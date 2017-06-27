@@ -40,11 +40,11 @@
               <td md-cell>
                 {{request.request_deliverer[0].first_name}} {{request.request_deliverer[0].last_name}}
               </td>
-              <td md-cell>
+              <td md-cell >
                 <md-button class="md-raised md-primary" href="#requests/{{request.id}}" aria-label="description" md-ripple-size="full">
                   <i class="material-icons">remove_red_eye</i>
                 </md-button>
-                <md-button class="md-raised md-warn" aria-label="description" md-ripple-size="full" ng-click="cancelRequest(request)">
+                <md-button ng-if="authenticatedUser.admin_type != 'staff'" class="md-raised md-warn" aria-label="description" md-ripple-size="full" ng-click="cancelRequest(request)">
                   <i class="material-icons">cancel</i>
                 </md-button>
               </td>

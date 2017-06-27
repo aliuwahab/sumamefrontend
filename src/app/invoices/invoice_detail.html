@@ -14,24 +14,26 @@
         Go back to all requests.
       </md-tooltip>
     </md-button>
-    <md-button ng-if="!invoice.invoice_paid" aria-label="mark invoice as paid" class="md-raised md-accent" ng-click="changeInvoiceStatus(1)">
-      <md-tooltip md-direction="top">
-        Mark As Paid
-      </md-tooltip>
-      <i class="material-icons">check</i>
-    </md-button>
-    <md-button ng-if="invoice.invoice_paid" aria-label="mark invoice as unpaid" class="md-raised md-warn" ng-click="changeInvoiceStatus(0)">
-      <md-tooltip md-direction="top">
-        Mark As Unpaid
-      </md-tooltip>
-      <i class="material-icons">check</i>
-    </md-button>
-    <md-button aria-label="Open phone interactions menu" class="md-raised md-warn" ng-click="printInvoice($event)">
-      <md-tooltip md-direction="top">
-        Print Invoice
-      </md-tooltip>
-      <i class="material-icons">print</i>
-    </md-button>
+    <div class="" ng-if="authenticatedUser.admin_type != 'staff'">
+      <md-button ng-if="!invoice.invoice_paid" aria-label="mark invoice as paid" class="md-raised md-accent" ng-click="changeInvoiceStatus(1)">
+        <md-tooltip md-direction="top">
+          Mark As Paid
+        </md-tooltip>
+        <i class="material-icons">check</i>
+      </md-button>
+      <md-button ng-if="invoice.invoice_paid" aria-label="mark invoice as unpaid" class="md-raised md-warn" ng-click="changeInvoiceStatus(0)">
+        <md-tooltip md-direction="top">
+          Mark As Unpaid
+        </md-tooltip>
+        <i class="material-icons">check</i>
+      </md-button>
+      <md-button aria-label="Open phone interactions menu" class="md-raised md-warn" ng-click="printInvoice($event)">
+        <md-tooltip md-direction="top">
+          Print Invoice
+        </md-tooltip>
+        <i class="material-icons">print</i>
+      </md-button>
+    </div>
   </div>
 </md-toolbar>
 
