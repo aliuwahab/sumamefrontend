@@ -41,10 +41,10 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
 
         UserService.getUserProfile(token)
         .then(function (user) {
-          localStorageService.set('profile', user.data.user);
-          $rootScope.authenticatedUser = user.data.user;
+          user.data && user.data.user ? $rootScope.authenticatedUser = user.data.user : false;
 
-          if ($rootScope.authenticatedUser) {
+          if ($rootScope.authenticatedUser && $rootScope.authenticatedUser.user_type == 'admin') {
+            localStorageService.set('profile', user.data.user);
             resetUserState();
             redefineRoles();
             $scope.enableProgressBar = false;
@@ -52,11 +52,10 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
 
             subscribeToPusherChannels();
             subscribeToActivityMonitor();
-
           }else {
+            ToastsService.showToast('error', 'Please login with a valid back office account.');
             localStorageService.clearAll();
             $scope.enableProgressBar = false;
-            ToastsService.showToast('error', 'Unable to determine your user type');
           }
         })
         .catch(function (error) {
