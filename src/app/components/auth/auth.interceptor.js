@@ -16,7 +16,7 @@
 
         responseError: function (response) {
           if (response.status == 401) {
-            $location.path('/logout');
+            // $location.path('/logout');
           }
 
           return $q.reject(response);
