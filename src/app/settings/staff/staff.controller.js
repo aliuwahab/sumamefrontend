@@ -34,8 +34,7 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
     ValidationService.validate($scope.newStaffMember, 'staff')
     .then(function (result) {
       $scope.addingStaff = true;
-      $scope.staff ? $scope.staff.push($scope.newStaffMember) : false;
-      $rootScope.closeDialog();
+      // $scope.staff ? $scope.staff.push($scope.newStaffMember) : false;
 
       SettingsService.addStaff($scope.newStaffMember)
       .then(function (response) {
@@ -46,11 +45,16 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
       })
       .catch(function (error) {
         $scope.addingStaff = false;
-        ToastsService.showToast('error', error.data.message);
-        debugger;
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
       });
     })
     .catch(function (error) {
+      debugger;
       ToastsService.showToast('error', error.message);
     });
   };
@@ -70,8 +74,12 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
       })
       .catch(function (error) {
         $scope.addingStaff = false;
-        ToastsService.showToast('error', error.data.message);
-        debugger;
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
       });
     })
     .catch(function (error) {
