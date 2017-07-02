@@ -74,8 +74,12 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
       })
       .catch(function (error) {
         $scope.addingStaff = false;
-        ToastsService.showToast('error', error.data.message);
-        debugger;
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
       });
     })
     .catch(function (error) {
