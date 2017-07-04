@@ -79,11 +79,6 @@
             </div>
           </wz-step>
           <wz-step wz-title="confirm">
-            <md-input-container class="sm-input-container">
-              <label>Number of days rented for?</label>
-              <input type="text" ng-model="data.numberOfDays" ng-change="calculateRequestCost()" required>
-            </md-input-container>
-
             <md-input-container class="sm-input-container" style="margin: 0;">
               <md-autocomplete flex
                   md-input-name="customersAutocomplete"
@@ -102,7 +97,12 @@
             </md-input-container>
 
             <md-input-container class="sm-input-container">
-              <place-autocomplete label="Equipment destination" ng-model="mapping.deliveryLocation"></place-autocomplete>
+              <place-autocomplete label="Enter destination" ng-model="mapping.deliveryLocation"></place-autocomplete>
+            </md-input-container>
+
+            <md-input-container class="sm-input-container">
+              <label>Enter number of days rented for</label>
+              <input type="text" ng-model="data.numberOfDays" ng-change="calculateRequestCost()" required>
             </md-input-container>
 
             <h4 class="sm-custom-input-label">Any additional instructions?</h4>
