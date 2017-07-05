@@ -16,8 +16,10 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     localStorageService.get('selectedCustomersView') || 'app.customers.businesses';
     $state.transitionTo($scope.currentView);
 
+    var limit = localStorage.getItem('tablePageLimit') || 20;
+
     $scope.filterParams = {
-      limit: 50,
+      limit: limit,
       page: 1,
     };
   }
@@ -33,6 +35,30 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
   };
 
   $scope.getAllBusinessCustomers = function () {
+    $scope.requestsPromise = CustomersService.getAllBusinessCustomers($scope.filterParams)
+    .then(function (response) {
+      $scope.businessCustomers = response.data.data.business_consumers;
+    })
+    .catch(function (error) {
+      ToastsService.showToast('error', error.data.error);
+    });
+  };
+
+  $scope.paginateIndividualCustomers = function (page, limit) {
+    localStorage.setItem('tablePageLimit', limit);
+
+    $scope.requestsPromise = CustomersService.getAllIndividualCustomers($scope.filterParams)
+    .then(function (response) {
+      $scope.individualCustomers = response.data.data.all_consumers;
+    })
+    .catch(function (error) {
+      ToastsService.showToast('error', error.data.error);
+    });
+  };
+
+  $scope.paginateBusinessCustomers = function (page, limit) {
+    localStorage.setItem('tablePageLimit', limit);
+
     $scope.requestsPromise = CustomersService.getAllBusinessCustomers($scope.filterParams)
     .then(function (response) {
       $scope.businessCustomers = response.data.data.business_consumers;

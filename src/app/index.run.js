@@ -153,6 +153,15 @@
       $mdDialog.hide();
     };
 
+    $rootScope.tableOptions = {
+      rowSelection: true,
+      decapitate: false,
+      boundaryLinks: true,
+      limitSelect: true,
+      pageSelect: true,
+      limitOptions: [20, 50, 100],
+    };
+
   }
 
 })();

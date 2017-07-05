@@ -10,14 +10,18 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
   ToastsService, CachingService, UploadService, NgMap, localStorageService, $window,
   ValidationService) {
 
+  var scopeVarName;
+
   activate();
 
   function activate() {
     $scope.currentView = localStorageService.get('selectedDriversView') || 'app.drivers.approved';
     $state.transitionTo($scope.currentView);
 
+    var limit = localStorage.getItem('tablePageLimit') || 20;
+
     $scope.filterParams = {
-      limit: 50,
+      limit: limit,
       page: 1,
     };
   }
@@ -35,7 +39,20 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
 
   $scope.getAllDrivers = function (approvalStatus) {
     $scope.filterParams.driver_approved = approvalStatus;
-    var scopeVarName = 'drivers' + approvalStatus;
+    scopeVarName = 'drivers' + approvalStatus;
+
+    $scope.requestsPromise = DriversService.getAllDrivers($scope.filterParams)
+    .then(function (response) {
+      $scope[scopeVarName] = response.data.data.all_drivers;
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      debugger;
+    });
+  };
+
+  $scope.paginate = function (page, limit) {
+    localStorage.setItem('tablePageLimit', limit);
 
     $scope.requestsPromise = DriversService.getAllDrivers($scope.filterParams)
     .then(function (response) {

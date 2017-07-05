@@ -13,7 +13,6 @@
       'ngMaterial',
       'toastr',
       'sasrio.angular-material-sidenav',
-      'mdDataTable',
       'ui.gravatar',
       'somameEnv',
       'ngFileUpload',
