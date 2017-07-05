@@ -1,5 +1,5 @@
 <md-card ng-if="!searching">
-  <h3 class="view-main-title requests">Individual Customers</h3>
+  <h3 class="view-main-title requests">Deleted Customers</h3>
   <md-card-content>
     <md-table-container>
       <table md-table md-progress="requestsPromise">
@@ -12,7 +12,7 @@
           </tr>
         </thead>
         <tbody md-body>
-          <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in individualCustomers.data">
+          <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="customer in deletedCustomers.data">
             <td md-cell>{{customer.id}}</td>
             <td md-cell>{{customer.first_name}} {{customer.last_name}}</td>
             <td md-cell>{{customer.phone_number}}</td>
@@ -41,7 +41,7 @@
       </table>
     </md-table-container>
 
-    <md-table-pagination md-limit="filterParams.limit" md-limit-options="tableOptions.limitOptions" md-page-select="tableOptions.pageSelect" md-boundary-links="tableOptions.boundaryLinks" md-page="filterParams.page" md-total="{{$parent.individualCustomers.total}}" md-on-paginate="paginate" md-page-select></md-table-pagination>
+    <md-table-pagination md-limit="filterParams.limit" md-limit-options="tableOptions.limitOptions" md-page-select="tableOptions.pageSelect" md-boundary-links="tableOptions.boundaryLinks" md-page="filterParams.page" md-total="{{$parent.deletedCustomers.total}}" md-on-paginate="paginate" md-page-select></md-table-pagination>
 
   </md-card-content>
 </md-card>

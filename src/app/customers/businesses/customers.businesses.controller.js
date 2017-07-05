@@ -11,7 +11,7 @@ function BusinessCustomersController($scope) {
   activate();
 
   function activate() {
-    $scope.getAllBusinessCustomers();
+    $scope.getAllCustomers('business');
   }
 
 }

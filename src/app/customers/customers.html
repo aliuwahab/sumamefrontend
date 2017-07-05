@@ -44,6 +44,12 @@
         <h2 class="sm-rq-filter-item-title">Individuals</h2>
       </md-card-content>
     </md-card>
+    <md-card class="sm-rq-filter-item-card bg-color-shade-4" ng-style="currentView =='app.customers.deleted' && {'border':'3px solid white'}" flex="10" ng-click="changeCustomersTab('app.customers.deleted')">
+      <md-card-content>
+        <span class="lnr lnr-trash"></span>
+        <h2 class="sm-rq-filter-item-title">Deleted</h2>
+      </md-card-content>
+    </md-card>
   </div>
 
   <div class="" ui-view></div>

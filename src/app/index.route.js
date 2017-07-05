@@ -434,6 +434,24 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.customers.deleted', {
+      parent: 'app.customers',
+      url: '/deleted',
+      templateUrl: 'app/customers/deleted/deleted.html',
+      controller: 'DeletedCustomersController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
     .state('app.invoices', {
       url: '/invoices',
       templateUrl: 'app/invoices/invoices.html',
