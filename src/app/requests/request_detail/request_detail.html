@@ -430,33 +430,70 @@
         </div>
         <div class="sm-rq-notes">
           <div class="" layout="row">
-            <h2>Notes</h2>
-            <span flex></span>
-            <md-button class="md-raised md-accent sm-rq-notes-btn-add-new" aria-label="add new note" md-no-ink="true" md-ripple-size="full" ng-click="showDialog($event, 'add_note')">
-              <i class="material-icons">add</i>
-              <md-tooltip md-direction="bottom">
-                Add new note.
-              </md-tooltip>
-            </md-button>
-          </div>
+            <div class="sm-request-detail-left sm-request-detail-right-padding" flex="50">
+              <div class="" layout="row">
+                <h2>Internal Notes</h2>
+                <span flex></span>
+                <md-button class="md-raised md-accent sm-rq-notes-btn-add-new" aria-label="add new note" md-no-ink="true" md-ripple-size="full" ng-click="showDialog($event, 'add_note')">
+                  <i class="material-icons">add</i>
+                  <md-tooltip md-direction="bottom">
+                    Add new internal note.
+                  </md-tooltip>
+                </md-button>
+              </div>
 
-          <p ng-if="comments.length == 0">No notes on this request yet.</p>
+              <p ng-if="comments.length == 0">No internal notes on this request yet.</p>
 
-          <div class="sm-rq-notes-container" layout="row" ng-repeat="note in comments track by $index">
-            <div class="sm-rq-notes-img-container" flex="10">
-              <div class="md-media-sm card-media" layout>
-                <img ng-if="!authenticatedUser.user_profile_image_url" class="sm-user-gravatar" gravatar-src="'authenticatedUser.email'" gravatar-size="200"/>
-                <img ng-if="authenticatedUser.user_profile_image_url" class="sm-user-gravatar" ng-src="{{authenticatedUser.user_profile_image_url}}"/>
+              <div class="sm-rq-notes-container" layout="row" ng-repeat="note in comments track by $index">
+                <div class="sm-rq-notes-img-container" flex="15">
+                  <div class="md-media-sm card-media" layout>
+                    <img ng-if="!authenticatedUser.user_profile_image_url" class="sm-user-gravatar sm-gravatar-notes" gravatar-src="'authenticatedUser.email'" gravatar-size="200"/>
+                    <img ng-if="authenticatedUser.user_profile_image_url" class="sm-user-gravatar sm-gravatar-notes" ng-src="{{authenticatedUser.user_profile_image_url}}"/>
+                  </div>
+                </div>
+                <div class="" flex="85" layout="row">
+                  <div class="" flex="90">
+                    <h4 class="sm-rq-notes-name">{{note.commentor_name}}</h4>
+                    <p class="sm-rq-notes-time">{{note.date | date: 'MMM d, y h:mm a'}}</p>
+                    <div class="sm-rq-notes-text" ng-bind-html="note.note"></div>
+                  </div>
+                  <div class="" flex="10" ng-if="authenticatedUser.id == note.commentor_id">
+                    <md-button class="md-raised md-danger delete-note-btn" aria-label="description" ng-click="deleteNote($index)"><i class="material-icons">delete_forever</i></md-button>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="" flex="90" layout="row">
-              <div class="" flex="90">
-                <h4 class="sm-rq-notes-name">{{note.commentor_name}}</h4>
-                <p class="sm-rq-notes-time">{{note.date | date: 'MMM d, y h:mm a'}}</p>
-                <div class="sm-rq-notes-text" ng-bind-html="note.note"></div>
+            <div class="sm-request-detail-right" flex="50">
+              <div class="" layout="row">
+                <h2>Notes to Driver</h2>
+                <span flex></span>
+                <md-button class="md-raised md-accent sm-rq-notes-btn-add-new" aria-label="add new note" md-no-ink="true" md-ripple-size="full" ng-click="showDialog($event, 'add_note')">
+                  <i class="material-icons">add</i>
+                  <md-tooltip md-direction="bottom">
+                    Add new note to driver.
+                  </md-tooltip>
+                </md-button>
               </div>
-              <div class="" flex="10" ng-if="authenticatedUser.id == note.commentor_id">
-                <md-button class="md-raised md-danger delete-note-btn" aria-label="description" ng-click="deleteNote($index)"><i class="material-icons">delete_forever</i></md-button>
+
+              <p ng-if="comments.length == 0">No driver notes on this request yet.</p>
+
+              <div class="sm-rq-notes-container" layout="row" ng-repeat="note in comments track by $index">
+                <div class="sm-rq-notes-img-container" flex="15">
+                  <div class="md-media-sm card-media" layout>
+                    <img ng-if="!authenticatedUser.user_profile_image_url" class="sm-user-gravatar sm-gravatar-notes" gravatar-src="'authenticatedUser.email'" gravatar-size="200"/>
+                    <img ng-if="authenticatedUser.user_profile_image_url" class="sm-user-gravatar sm-gravatar-notes" ng-src="{{authenticatedUser.user_profile_image_url}}"/>
+                  </div>
+                </div>
+                <div class="" flex="85" layout="row">
+                  <div class="" flex="90">
+                    <h4 class="sm-rq-notes-name">{{note.commentor_name}}</h4>
+                    <p class="sm-rq-notes-time">{{note.date | date: 'MMM d, y h:mm a'}}</p>
+                    <div class="sm-rq-notes-text" ng-bind-html="note.note"></div>
+                  </div>
+                  <div class="" flex="10" ng-if="authenticatedUser.id == note.commentor_id">
+                    <md-button class="md-raised md-danger delete-note-btn" aria-label="description" ng-click="deleteNote($index)"><i class="material-icons">delete_forever</i></md-button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
