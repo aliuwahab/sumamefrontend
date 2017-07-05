@@ -10,6 +10,9 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
   ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
   SettingsService, EquipmentService, localStorageService, ngAudio, CustomersService, ENV) {
 
+  var requestsName;
+  var promiseName;
+
   activate();
 
   function activate() {
@@ -19,8 +22,10 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
 
     $state.current.name != 'app.requests.details' ? $state.transitionTo($scope.currentView) : false;
 
+    var limit = localStorage.getItem('tablePageLimit') || 20;
+
     $scope.filterParams = {
-      limit: 20,
+      limit: limit,
       page: 1,
       request_status: $scope.viewName,
     };
@@ -37,8 +42,27 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     delete $scope.filterParams.request_type : false;
 
     value ? $scope.filterParams[param] = value : false;
-    var requestsName = value + 'Requests';
-    var promiseName = value + 'RequestsPromise';
+    requestsName = value + 'Requests';
+    promiseName = value + 'RequestsPromise';
+
+    $scope.filterParams.page = 1;
+
+    $scope[promiseName] = RequestsService.getRequests($scope.filterParams)
+    .then(function (response) {
+      $scope[requestsName] = response.data.data.all_request;
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      debugger;
+    });
+  };
+
+  $scope.getRequestsByUserType = function (userType) {
+
+  };
+
+  $scope.paginate = function (page, limit) {
+    localStorage.setItem('tablePageLimit', limit);
 
     $scope[promiseName] = RequestsService.getRequests($scope.filterParams)
     .then(function (response) {

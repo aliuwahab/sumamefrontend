@@ -253,7 +253,7 @@ div[name="equipmentRequestWizard"] {
   // border: 3px solid white;
 }
 .sm-rq-filter-item-card span {
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .sm-rq-notes {
@@ -265,6 +265,10 @@ div[name="equipmentRequestWizard"] {
   padding: 10px;
   border-radius: 3px;
   margin-bottom: 20px;
+  margin-right: 7px;
+}
+.sm-request-detail-right-padding {
+  padding-right: 8px;
 }
 .sm-rq-notes-img-container {
   // padding-top: 20px;
@@ -317,14 +321,14 @@ div[name="equipmentRequestWizard"] {
 /** Request cards **/
 .sm-rq-filter-item-card {
   text-align: center;
-  width: 150px;
-  height: 100px;
+  width: 103px;
+  height: 80px;
   cursor: pointer;
   outline: none;
   margin-right: 20px;
 }
 .sm-rq-filter-item-title {
-  font-size: 14px !important;
+  font-size: 12px !important;
 }
 .sm-rq-filter-item-btn {
   padding: 0;

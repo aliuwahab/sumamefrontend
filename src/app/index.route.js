@@ -222,6 +222,60 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.requests.cancelled', {
+      parent: 'app.requests',
+      url: '/cancelled',
+      templateUrl: 'app/requests/cancelled/cancelled.html',
+      controller: 'CancelledRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.business', {
+      parent: 'app.requests',
+      url: '/business',
+      templateUrl: 'app/requests/business/business.html',
+      controller: 'BusinessRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.individual', {
+      parent: 'app.requests',
+      url: '/individual',
+      templateUrl: 'app/requests/individual/individual.html',
+      controller: 'IndividualRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
     .state('app.requests.details', {
       parent: 'app.requests',
       url: '/:requestId',
