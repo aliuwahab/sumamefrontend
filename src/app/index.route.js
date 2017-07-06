@@ -347,6 +347,24 @@
         loginRequired: loginRequired,
       },
     })
+    .state('app.drivers.deleted', {
+      parent: 'app.drivers',
+      url: '/deleted',
+      templateUrl: 'app/drivers/deleted/deleted.html',
+      controller: 'DeletedDriversController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
     .state('app.vehicles', {
       url: '/vehicles',
       templateUrl: 'app/vehicles/vehicles.html',

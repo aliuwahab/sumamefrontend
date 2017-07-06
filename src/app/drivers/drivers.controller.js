@@ -11,14 +11,13 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
   ValidationService) {
 
   var scopeVarName;
+  var limit = localStorage.getItem('tablePageLimit') || 20;
 
   activate();
 
   function activate() {
     $scope.currentView = localStorageService.get('selectedDriversView') || 'app.drivers.approved';
     $state.transitionTo($scope.currentView);
-
-    var limit = localStorage.getItem('tablePageLimit') || 20;
 
     $scope.filterParams = {
       limit: limit,
@@ -38,12 +37,31 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
   });
 
   $scope.getAllDrivers = function (approvalStatus) {
-    $scope.filterParams.driver_approved = approvalStatus;
-    scopeVarName = 'drivers' + approvalStatus;
+
+    if (approvalStatus != undefined) {
+      $scope.filterParams.driver_approved = approvalStatus;
+      scopeVarName = 'drivers' + approvalStatus;
+    }
 
     $scope.requestsPromise = DriversService.getAllDrivers($scope.filterParams)
     .then(function (response) {
       $scope[scopeVarName] = response.data.data.all_drivers;
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      debugger;
+    });
+  };
+
+  $scope.getDeletedDrivers = function () {
+    $scope.deletedDriverParams = {
+      limit: limit,
+      page: 1,
+    };
+
+    $scope.requestsPromise = DriversService.getDeletedDrivers($scope.deletedDriverParams)
+    .then(function (response) {
+      $scope.deletedDrivers = response.data.data.all_deleted;
     })
     .catch(function (error) {
       $scope.error = error.message;
@@ -78,7 +96,7 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
     }
   };
 
-  function refreshAllDrivers(approvalStatus) {
+  function refreshAllDrivers(approvalStatus, alternateCache) {
     approvalStatus ? $scope.filterParams.driver_approved = approvalStatus : false;
     var scopeVarName = 'drivers' + $scope.filterParams.driver_approved;
     var cache = 'drivers?' + $.param($scope.filterParams);
@@ -87,6 +105,13 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
     DriversService.getAllDrivers($scope.filterParams)
     .then(function (response) {
       $scope[scopeVarName] = response.data.data.all_drivers;
+
+      if (alternateCache != undefined) {
+        $scope.filterParams.driver_approved = alternateCache;
+        CachingService.destroyOnCreateOperation('drivers?' +
+        $.param($scope.filterParams));
+      }
+
     })
     .catch(function (error) {
       $scope.error = error.message;
@@ -120,7 +145,12 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
       })
       .catch(function (error) {
         $scope.addingDriver = false;
-        debugger;
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
       });
     })
     .catch(function (error) {
@@ -185,11 +215,16 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
         ToastsService.showToast('success', driver.first_name + ' '
         + driver.last_name + ' is now ' + action + 'd!');
         $scope.processInProgress = false;
-        action == 'approve' ? refreshAllDrivers(0) : refreshAllDrivers(1);
+        action == 'approve' ? refreshAllDrivers(0, 1) : refreshAllDrivers(1, 0);
       })
       .catch(function (error) {
         $scope.processInProgress = false;
-        debugger;
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
       });
     }, function () {
       // Dialog has been canccelled
@@ -208,18 +243,71 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
       DriversService.deleteDriver(data)
       .then(function (response) {
 
-        if (response.data == 200) {
+        if (response.code == 200) {
           ToastsService.showToast('success', 'Driver successfully deleted!');
         } else {
           ToastsService.showToast('error', response.data.message);
         }
 
         $scope.processInProgress = false;
-        refreshAllDrivers();
+        CachingService.destroyOnCreateOperation('deletedDrivers?' +
+        $.param($scope.deletedDriverParams));
+        driver.driver_approved ? $scope.filterParams.driver_approved = 1 :
+        $scope.filterParams.driver_approved = 0;
+        CachingService.destroyOnCreateOperation('drivers?' +
+        $.param($scope.filterParams));
+        $scope.getAllDrivers();
       })
       .catch(function (error) {
         $scope.processInProgress = false;
-        debugger;
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
+  };
+
+  $scope.restoreDeletedDriver = function (ev, driver) {
+    Dialog.confirmAction('Do you want to restore this deleted driver?')
+    .then(function () {
+      $scope.processInProgress = true;
+
+      var data = {
+        user_id: driver.id,
+      };
+
+      DriversService.restoreDeletedDriver(data)
+      .then(function (response) {
+
+        if (response.code == 200) {
+          ToastsService.showToast('success', 'Driver successfully restored!');
+        } else {
+          ToastsService.showToast('error', response.data.message);
+        }
+
+        CachingService.destroyOnCreateOperation('deletedDrivers?' +
+        $.param($scope.deletedDriverParams));
+        driver.driver_approved ? $scope.filterParams.driver_approved = 1 :
+        $scope.filterParams.driver_approved = 0;
+        CachingService.destroyOnCreateOperation('drivers?' +
+        $.param($scope.filterParams));
+
+        $scope.processInProgress = false;
+        $scope.getDeletedDrivers();
+      })
+      .catch(function (error) {
+        $scope.processInProgress = false;
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
       });
     }, function () {
       // Dialog has been canccelled

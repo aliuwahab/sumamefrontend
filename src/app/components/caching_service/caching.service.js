@@ -9,6 +9,7 @@
   function CachingService(CacheFactory, $timeout) {
 
     var timesTriggered = 0;
+    var previousCache;
 
     var service = {
       destroy: destroy,
@@ -18,9 +19,10 @@
     return service;
 
     function destroy(cacheName) {
-      if (timesTriggered == 0 && CacheFactory.get(cacheName)) {
+      if ((timesTriggered == 0 && CacheFactory.get(cacheName)) || cacheName != previousCache) {
         cacheName = CacheFactory.get(cacheName);
         cacheName.destroy();
+        previousCache = cacheName;
         timesTriggered += 1;
       }
 
