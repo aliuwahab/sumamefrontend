@@ -12,6 +12,7 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
 
   var requestsName;
   var promiseName;
+  var limit = localStorage.getItem('tablePageLimit') || 20;
 
   activate();
 
@@ -21,8 +22,6 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     $scope.viewName = getStateName($scope.currentView);
 
     $state.current.name != 'app.requests.details' ? $state.transitionTo($scope.currentView) : false;
-
-    var limit = localStorage.getItem('tablePageLimit') || 20;
 
     $scope.filterParams = {
       limit: limit,
@@ -91,7 +90,7 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
         .then(function (response) {
           ToastsService.showToast('success', 'Request has been successfully cancelled');
           $scope.processInProgress = false;
-          reloadRequests();
+          reloadRequests('pending');
         })
         .catch(function (error) {
           $scope.processInProgress = false;
@@ -137,15 +136,21 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     return stateName;
   }
 
-  function reloadRequests(status) {
-    status ? $scope.filterParams.request_status = status : false;
+  function reloadRequests(status, alternateCache) {
+    status != undefined ? $scope.filterParams.request_status = status : false;
     var requestsCache = 'requests?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(requestsCache);
-    var requestsName = status + 'Requests';
+    var requestsName = $scope.filterParams.request_status + 'Requests';
 
     RequestsService.getRequests($scope.filterParams)
     .then(function (response) {
       $scope[requestsName] = response.data.data.all_request;
+
+      if (alternateCache != undefined) {
+        $scope.filterParams.request_status = alternateCache;
+        CachingService.destroyOnCreateOperation('requests?' +
+        $.param($scope.filterParams));
+      }
     })
     .catch(function (error) {
       $scope.error = error.message;

@@ -20,9 +20,9 @@
 
     function destroy(cacheName) {
       if ((timesTriggered == 0 && CacheFactory.get(cacheName)) || cacheName != previousCache) {
+        previousCache = cacheName;
         cacheName = CacheFactory.get(cacheName);
         cacheName.destroy();
-        previousCache = cacheName;
         timesTriggered += 1;
       }
 

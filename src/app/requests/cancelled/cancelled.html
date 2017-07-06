@@ -7,7 +7,7 @@
     <h3 class="view-main-title requests">{{viewName | capitalize:first}} Requests</h3>
     <md-card-content>
       <md-table-container>
-        <table md-table md-progress="$parent.pendingRequestsPromise">
+        <table md-table md-progress="$parent.cancelledRequestsPromise">
           <thead md-head md-order="query.order" md-on-reorder="getrequests">
             <tr md-row>
               <th md-column><span>TIME REQUESTED</span></th>
@@ -40,16 +40,13 @@
                 <md-button class="md-raised md-primary" href="#requests/{{request.id}}" aria-label="description" md-ripple-size="full">
                   <i class="material-icons">remove_red_eye</i>
                 </md-button>
-                <md-button ng-if="authenticatedUser.admin_type != 'staff'" class="md-raised md-danger text-white" aria-label="description" md-ripple-size="full" ng-click="cancelRequest(request)">
-                  <i class="material-icons">cancel</i>
-                </md-button>
               </td>
             </tr>
           </tbody>
         </table>
       </md-table-container>
 
-      <md-table-pagination md-limit="filterParams.limit" md-limit-options="tableOptions.limitOptions" md-page-select="tableOptions.pageSelect" md-boundary-links="tableOptions.boundaryLinks" md-page="filterParams.page" md-total="{{$parent.cancelledRequests.total}}" md-on-paginate="paginate" md-page-select></md-table-pagination>
+      <md-table-pagination md-limit="filterParams.limit" md-limit-options="tableOptions.limitOptions" md-page-select="tableOptions.pageSelect" md-boundary-links="tableOptions.boundaryLinks" md-page="filterParams.page" md-total="{{$parent.filterParams.total}}" md-on-paginate="paginate" md-page-select></md-table-pagination>
 
     </md-card-content>
   </md-card>
