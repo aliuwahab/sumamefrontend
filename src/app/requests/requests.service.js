@@ -75,9 +75,17 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
     return $http.post(apiBaseURL + '/make/request?' + authDataString + '&' + params);
   }
 
-  function addNotes(data) {
+  function addNotes(data, noteType) {
     var params = $.param(data);
-    return $http.post(apiBaseURL + '/add/request/comment?' + authDataString + '&' + params);
+    var endpoint;
+
+    if (noteType == 'internal') {
+      endpoint = '/add/request/comment?';
+    }else if (noteType == 'driver') {
+      endpoint = '/add/request/driver/notes?';
+    }
+
+    return $http.post(apiBaseURL + endpoint + authDataString + '&' + params);
   }
 
   function cancelRequest(data) {

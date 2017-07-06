@@ -10,6 +10,8 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
   Dialog, RequestsService, ToastsService, DriversService, Twilio, EquipmentService,
   CachingService) {
 
+  var notesItem;
+
   activate();
 
   function activate() {
@@ -32,6 +34,12 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
         $scope.comments = JSON.parse($scope.request.comments);
       }else {
         $scope.comments = [];
+      }
+
+      if ($scope.request && $scope.request.request_notes_to_driver) {
+        $scope.driver_comments = JSON.parse($scope.request.request_notes_to_driver);
+      }else {
+        $scope.driver_comments = [];
       }
     })
     .catch(function (error) {
@@ -142,8 +150,8 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
 
   $scope.addNote = function () {
     if ($scope.note && $scope.note.newNote) {
-      $scope.comments.unshift({
-        id: $scope.comments.length + 1,
+      $scope[notesItem].unshift({
+        id: $scope[notesItem].length + 1,
         commentor_id: $rootScope.authenticatedUser.id,
         commentor_name: $rootScope.authenticatedUser.first_name + ' ' +
         $rootScope.authenticatedUser.last_name,
@@ -153,34 +161,49 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
 
       updateNotes();
       $rootScope.closeDialog();
-
+      $scope.addingNote = true;
     }else {
       ToastsService.showToast('error', 'There was no note created');
     }
   };
 
-  $scope.deleteNote = function (index) {
+  $scope.deleteNote = function (index, noteType) {
+    notesItem = noteType;
+
+    if (notesItem == 'comments') {
+      $scope.noteType = 'internal';
+    }else if (notesItem == 'driver_comments') {
+      $scope.noteType = 'driver';
+    }
+
     Dialog.confirmAction('Do you want to delete this note?')
     .then(function () {
-      $scope.comments.splice(index, 1);
+      $scope[notesItem].splice(index, 1);
       updateNotes();
     }, function () {
       // Dialog has been canccelled
     });
-
   };
 
   function updateNotes() {
-    var stringifiedComments = JSON.stringify($scope.comments);
+    var stringifiedComments = JSON.stringify($scope[notesItem]);
+    var data;
 
-    var data = {
-      request_id: $scope.request.id,
-      request_comments: stringifiedComments,
-    };
+    if ($scope.noteType == 'internal') {
+      data = {
+        request_comments: stringifiedComments,
+      };
+    } else if ($scope.noteType == 'driver') {
+      data = {
+        request_notes_to_driver: stringifiedComments,
+      };
+    }
 
-    RequestsService.addNotes(data)
+    data.request_id = $scope.request.id;
+
+    RequestsService.addNotes(data, $scope.noteType)
     .then(function (response) {
-      // Note added successfully
+      $scope.addingNote = false;
       reloadRequest();
     })
     .catch(function (error) {
@@ -230,7 +253,22 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     searchNearbyDrivers();
   };
 
-  $scope.showDialog = function (ev, dialog) {
+  $scope.showDialog = function (ev, dialog, additionalDetail) {
+    if (additionalDetail != undefined) {
+      switch (additionalDetail) {
+        case 'internalNote':
+          $scope.noteType = 'internal';
+          notesItem = 'comments';
+          break;
+        case 'driverNote':
+          $scope.noteType = 'driver';
+          notesItem = 'driver_comments';
+          break;
+        default:
+
+      }
+    }
+
     Dialog.showCustomDialog(ev, dialog, $scope);
   };
 
@@ -253,6 +291,5 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
     CachingService.destroyOnCreateOperation(cache);
     getRequest();
   }
-
 }
 })();
