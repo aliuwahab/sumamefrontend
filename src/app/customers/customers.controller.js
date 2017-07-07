@@ -104,35 +104,40 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
   };
 
   $scope.deleteCustomer = function (customer, customerType) {
-    var data;
-    if (customerType == 'individual') {
-      data = {
-        user_id: customer.id,
-      };
-    }else if (customerType == 'business') {
-      data = {
-        business_id: customer.business_id,
-        admin_to_delete_id: customer.id,
-      };
-    }
-
-    $scope.processInProgress = true;
-    CustomersService.deleteCustomer(data, customerType)
-    .then(function (response) {
-      ToastsService.showToast('success', 'Customer successfully blocked');
-      $scope.processInProgress = false;
-      CachingService.destroyOnCreateOperation('deletedCustomers' +
-      $.param($scope.filterParams));
-      reloadCustomers('individualCustomers');
-    })
-    .catch(function (error) {
-      $scope.processInProgress = false;
-      if (error.data && error.data.errors) {
-        var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
-        ToastsService.showToast('error', errorList[0]);
-      } else {
-        ToastsService.showToast('error', error.data.message);
+    Dialog.confirmAction('Do you want to deleted this customer?')
+    .then(function () {
+      var data;
+      if (customerType == 'individual') {
+        data = {
+          user_id: customer.id,
+        };
+      }else if (customerType == 'business') {
+        data = {
+          business_id: customer.business_id,
+          admin_to_delete_id: customer.id,
+        };
       }
+
+      $scope.processInProgress = true;
+      CustomersService.deleteCustomer(data, customerType)
+      .then(function (response) {
+        ToastsService.showToast('success', 'Customer successfully blocked');
+        $scope.processInProgress = false;
+        CachingService.destroyOnCreateOperation('deletedCustomers' +
+        $.param($scope.filterParams));
+        reloadCustomers(customerType + 'Customers');
+      })
+      .catch(function (error) {
+        $scope.processInProgress = false;
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
+      });
+    }, function () {
+      // Dialog has been canccelled
     });
   };
 
