@@ -243,7 +243,7 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
       DriversService.deleteDriver(data)
       .then(function (response) {
 
-        if (response.code == 200) {
+        if (response.data.code == 200) {
           ToastsService.showToast('success', 'Driver successfully deleted!');
         } else {
           ToastsService.showToast('error', response.data.message);
@@ -284,7 +284,7 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
       DriversService.restoreDeletedDriver(data)
       .then(function (response) {
 
-        if (response.code == 200) {
+        if (response.data.code == 200) {
           ToastsService.showToast('success', 'Driver successfully restored!');
         } else {
           ToastsService.showToast('error', response.data.message);
