@@ -23,7 +23,7 @@
                 </md-tooltip>
                 <i class="material-icons">remove_red_eye</i>
               </button>
-              <button class="md-button md-raised md-danger" ng-click="deleteCustomer(customer, 'individual')">
+              <button class="md-button md-raised md-danger" ng-if="authenticatedUser.admin_type == 'super'" ng-click="deleteCustomer(customer, 'individual')">
                 <md-tooltip md-direction="top">
                   Delete Customer
                 </md-tooltip>

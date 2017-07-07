@@ -26,7 +26,7 @@
                 </md-tooltip>
                 <i class="material-icons">remove_red_eye</i>
               </button>
-              <button class="md-button md-raised md-danger" ng-click="restoreDeletedCustomer($event, customer)">
+              <button class="md-button md-raised md-danger" ng-if="authenticatedUser.admin_type == 'super'" ng-click="restoreDeletedCustomer($event, customer)">
                 <md-tooltip md-direction="top">
                   Restore Customer
                 </md-tooltip>
