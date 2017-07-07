@@ -19,7 +19,8 @@
     return service;
 
     function destroy(cacheName) {
-      if ((timesTriggered == 0 && CacheFactory.get(cacheName)) || cacheName != previousCache) {
+      if ((timesTriggered == 0 && CacheFactory.get(cacheName)) ||
+      (cacheName != previousCache && CacheFactory.get(cacheName))) {
         previousCache = cacheName;
         cacheName = CacheFactory.get(cacheName);
         cacheName.destroy();
