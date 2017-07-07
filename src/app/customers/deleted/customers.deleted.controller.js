@@ -11,7 +11,7 @@ function DeletedCustomersController($scope) {
   activate();
 
   function activate() {
-    $scope.getAllCustomers('deleted');
+    $scope.getAllCustomers('deletedCustomers');
   }
 
 }

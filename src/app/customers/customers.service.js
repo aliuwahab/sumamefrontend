@@ -14,7 +14,8 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
   var service = {
     getAllCustomers: getAllCustomers,
     addCustomer: addCustomer,
-    changeCustomerStatus: changeCustomerStatus,
+    deleteCustomer: deleteCustomer,
+    restoreDeletedCustomer: restoreDeletedCustomer,
     searchCustomers: searchCustomers,
   };
 
@@ -53,9 +54,21 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
     return $http.post(apiBaseURL + '/create/consumer?' + authDataString + '&' + params);
   }
 
-  function changeCustomerStatus(data, action) {
+  function deleteCustomer(data, customerType) {
+    var endpoint;
+    if (customerType == 'individual') {
+      endpoint = '/delete/user?';
+    }else if (customerType == 'business') {
+      endpoint = '/delete/business/customer/admin?';
+    }
+
     var params = $.param(data);
-    return $http.post(apiBaseURL + '/' + action + '/user?' + authDataString + '&' + params);
+    return $http.post(apiBaseURL + endpoint + authDataString + '&' + params);
+  }
+
+  function restoreDeletedCustomer(data) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/restore/deleted/account?' + authDataString + '&' + params);
   }
 
   function searchCustomers(params) {

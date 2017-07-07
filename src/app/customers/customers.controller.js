@@ -10,6 +10,7 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
   CachingService, localStorageService, ValidationService) {
 
   var currentCustomerType;
+  var limit = localStorage.getItem('tablePageLimit') || 20;
 
   activate();
 
@@ -18,8 +19,6 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     localStorageService.get('selectedCustomersView') || 'app.customers.businesses';
     $state.transitionTo($scope.currentView);
 
-    var limit = localStorage.getItem('tablePageLimit') || 20;
-
     $scope.filterParams = {
       limit: limit,
       page: 1,
@@ -27,7 +26,7 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
   }
 
   $scope.getAllCustomers = function (customerType) {
-    customerType ? currentCustomerType = customerType + 'Customers' : false;
+    customerType ? currentCustomerType = customerType : false;
 
     $scope.requestsPromise =
     CustomersService.getAllCustomers($scope.filterParams, currentCustomerType)
@@ -102,18 +101,29 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     .catch(function (error) {
       ToastsService.showToast('error', error.message);
     });
-
   };
 
-  $scope.changeCustomerStatus = function (customer, action) {
+  $scope.deleteCustomer = function (customer, customerType) {
+    var data;
+    if (customerType == 'individual') {
+      data = {
+        user_id: customer.id,
+      };
+    }else if (customerType == 'business') {
+      data = {
+        business_id: customer.business_id,
+        admin_to_delete_id: customer.id,
+      };
+    }
+
     $scope.processInProgress = true;
-    CustomersService.changeCustomerStatus({
-      user_id: customer.id,
-    }, action)
+    CustomersService.deleteCustomer(data, customerType)
     .then(function (response) {
       ToastsService.showToast('success', 'Customer successfully blocked');
       $scope.processInProgress = false;
-      reloadCustomers();
+      CachingService.destroyOnCreateOperation('deletedCustomers' +
+      $.param($scope.filterParams));
+      reloadCustomers('individualCustomers');
     })
     .catch(function (error) {
       $scope.processInProgress = false;
@@ -123,6 +133,43 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
       } else {
         ToastsService.showToast('error', error.data.message);
       }
+    });
+  };
+
+  $scope.restoreDeletedCustomer = function (ev, customer) {
+    Dialog.confirmAction('Do you want to restore this deleted customer?')
+    .then(function () {
+      $scope.processInProgress = true;
+
+      var data = {
+        user_id: customer.id,
+      };
+
+      CustomersService.restoreDeletedCustomer(data)
+      .then(function (response) {
+        if (response.data.code == 200) {
+          ToastsService.showToast('success', 'Customer successfully restored!');
+        } else {
+          ToastsService.showToast('error', response.data.message);
+        }
+
+        CachingService.destroyOnCreateOperation(customer.consumer_type + 'Customers' +
+        $.param($scope.filterParams));
+
+        reloadCustomers('deletedCustomers');
+        $scope.processInProgress = false;
+      })
+      .catch(function (error) {
+        $scope.processInProgress = false;
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
+      });
+    }, function () {
+      // Dialog has been canccelled
     });
   };
 
@@ -148,12 +195,11 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
 
   function reloadCustomers(customerType) {
     var cachePrefix;
-    customerType ? cachePrefix = customerType : cachePrefix = currentCustomerType;
+    customerType != undefined ? cachePrefix = customerType : cachePrefix = currentCustomerType;
     var cache = cachePrefix + $.param($scope.filterParams);
 
     CachingService.destroyOnCreateOperation(cache);
-    $scope.getAllCustomers();
+    customerType != undefined ? $scope.getAllCustomers(customerType) : $scope.getAllCustomers();
   }
-
 }
 })();

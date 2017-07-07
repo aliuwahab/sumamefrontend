@@ -11,7 +11,7 @@ function IndividualCustomersController($scope) {
   activate();
 
   function activate() {
-    $scope.getAllCustomers('individual');
+    $scope.getAllCustomers('individualCustomers');
   }
 
 }
