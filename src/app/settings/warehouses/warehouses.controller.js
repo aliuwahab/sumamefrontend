@@ -32,7 +32,7 @@ function WarehousesController($scope, $rootScope, $interval, $state, $mdDialog, 
     .then(function (response) {
       $scope.warehouses = response.data.data.all_requested_addresses;
       $scope.loadingWarehouses = false;
-      $scope.processInProgress = false;
+      $scope.$parent.processInProgress = false;
     })
     .catch(function (error) {
       $scope.error = error.message;
@@ -146,7 +146,7 @@ function WarehousesController($scope, $rootScope, $interval, $state, $mdDialog, 
   function reloadWarehouses() {
     var cache = 'warehouses?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
-    $scope.processInProgress = true;
+    $scope.$parent.processInProgress = true;
     getAllWarehouses();
   }
 
