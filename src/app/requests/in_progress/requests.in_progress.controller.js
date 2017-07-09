@@ -7,12 +7,10 @@ angular
 
 /** @ngInject */
 function InProgressRequestsController($scope, $timeout) {
-
   activate();
 
   function activate() {
     $scope.$parent.getAllRequests('request_status', 'delivery-in-progress');
   }
-
 }
 })();

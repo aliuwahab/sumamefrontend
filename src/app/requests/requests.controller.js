@@ -41,8 +41,14 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
     delete $scope.filterParams.request_type : false;
 
     value ? $scope.filterParams[param] = value : false;
-    requestsName = value + 'Requests';
-    promiseName = value + 'RequestsPromise';
+
+    if (param == 'request_status' && value == 'delivery-in-progress') {
+      requestsName = 'deliveryInProgressRequests';
+      promiseName = 'deliveryInProgressRequestsPromise';
+    }else {
+      requestsName = value + 'Requests';
+      promiseName = value + 'RequestsPromise';
+    }
 
     $scope.filterParams.page = 1;
 
