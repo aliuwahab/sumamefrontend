@@ -44,6 +44,12 @@
         <h2 class="sm-rq-filter-item-title">Unapproved</h2>
       </md-card-content>
     </md-card>
+    <md-card class="sm-rq-filter-item-card bg-color-shade-4" ng-style="currentView == 'app.drivers.deleted' && {'border':'3px solid white'}" flex="10" ng-click="changeDriversTab('app.drivers.deleted')">
+      <md-card-content>
+        <span class="lnr lnr-trash"></span>
+        <h2 class="sm-rq-filter-item-title">Deleted</h2>
+      </md-card-content>
+    </md-card>
   </div>
 
   <div class="" ui-view></div>
@@ -80,24 +86,30 @@
                   </md-tooltip>
                   <i class="material-icons">edit</i>
                 </button>
-                <button ng-if="!driver.driver_approved" class="md-button md-raised md-accent" ng-click="approveUnapproveDriver(driver, 'approve')">
+                <button ng-if="!driver.driver_approved && !driver.deleted" class="md-button md-raised md-accent" ng-click="approveUnapproveDriver(driver, 'approve')">
                   <md-tooltip md-direction="top">
                     Approve Driver
                   </md-tooltip>
                   <i class="material-icons">spellcheck</i>
                 </button>
-                <button ng-if="driver.driver_approved" class="md-button md-raised md-warn" ng-click="approveUnapproveDriver(driver, 'unapprove')">
+                <button ng-if="driver.driver_approved && !driver.deleted" class="md-button md-raised md-warn" ng-click="approveUnapproveDriver(driver, 'unapprove')">
                   <md-tooltip md-direction="top">
                     Unapprove Driver
                   </md-tooltip>
                   <i class="material-icons">clear</i>
                 </button>
 
-                <button class="md-button md-raised md-warn" ng-click="deleteDriver($event, driver)">
+                <button ng-if="!driver.deleted" class="md-button md-raised md-danger" ng-click="deleteDriver($event, driver)">
                   <md-tooltip md-direction="top">
                     Delete Driver
                   </md-tooltip>
                   <i class="material-icons">delete_forever</i>
+                </button>
+                <button ng-if="driver.deleted" class="md-button md-raised md-danger" ng-click="restoreDeletedDriver($event, driver)">
+                  <md-tooltip md-direction="top">
+                    Restore Driver
+                  </md-tooltip>
+                  <i class="material-icons">undo</i>
                 </button>
               </td>
             </tr>

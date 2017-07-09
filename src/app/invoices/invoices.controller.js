@@ -12,8 +12,10 @@ function InvoicesController($scope, $rootScope, $state, Dialog, InvoicesService,
   activate();
 
   function activate() {
+    var limit = localStorage.getItem('tablePageLimit') || 20;
+
     $scope.filterParams = {
-      limit: 50,
+      limit: limit,
       page: 1,
     };
 
@@ -30,6 +32,19 @@ function InvoicesController($scope, $rootScope, $state, Dialog, InvoicesService,
       debugger;
     });
   }
+
+  $scope.paginate = function (page, limit) {
+    localStorage.setItem('tablePageLimit', limit);
+
+    $scope.requestsPromise = InvoicesService.getAllInvoices($scope.filterParams)
+    .then(function (response) {
+      $scope.invoices = response.data.data.invoices;
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      debugger;
+    });
+  };
 
   ///////////////////// HELPER FUNCTIONS ///////////////////////
 

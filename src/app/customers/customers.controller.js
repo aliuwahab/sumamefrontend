@@ -9,6 +9,9 @@ angular
 function CustomersController($scope, $rootScope, $state, CustomersService, Dialog, ToastsService,
   CachingService, localStorageService, ValidationService) {
 
+  var currentCustomerType;
+  var limit = localStorage.getItem('tablePageLimit') || 20;
+
   activate();
 
   function activate() {
@@ -17,29 +20,40 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     $state.transitionTo($scope.currentView);
 
     $scope.filterParams = {
-      limit: 50,
+      limit: limit,
       page: 1,
     };
   }
 
-  $scope.getAllIndividualCustomers = function () {
-    $scope.requestsPromise = CustomersService.getAllIndividualCustomers($scope.filterParams)
+  $scope.getAllCustomers = function (customerType) {
+    customerType ? currentCustomerType = customerType : false;
+
+    $scope.requestsPromise =
+    CustomersService.getAllCustomers($scope.filterParams, currentCustomerType)
     .then(function (response) {
-      $scope.individualCustomers = response.data.data.all_consumers;
+      switch (currentCustomerType) {
+        case 'individualCustomers':
+          $scope[currentCustomerType] = response.data.data.all_consumers;
+          break;
+        case 'businessCustomers':
+          $scope[currentCustomerType] = response.data.data.business_consumers;
+          break;
+        case 'deletedCustomers':
+          $scope[currentCustomerType] = response.data.data.all_deleted;
+          break;
+        default:
+          $scope[currentCustomerType] = response.data.data.all_consumers;
+      }
     })
     .catch(function (error) {
       ToastsService.showToast('error', error.data.error);
     });
   };
 
-  $scope.getAllBusinessCustomers = function () {
-    $scope.requestsPromise = CustomersService.getAllBusinessCustomers($scope.filterParams)
-    .then(function (response) {
-      $scope.businessCustomers = response.data.data.business_consumers;
-    })
-    .catch(function (error) {
-      ToastsService.showToast('error', error.data.error);
-    });
+  $scope.paginate = function (page, limit) {
+    localStorage.setItem('tablePageLimit', limit);
+
+    $scope.getAllCustomers();
   };
 
   $scope.searchCustomers = function () {
@@ -68,37 +82,99 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
         $scope.addingCustomer = false;
         if (response.data.code == 200) {
           ToastsService.showToast('success', 'Customer successfully added');
-          reloadIndividualCustomers();
+          reloadCustomers();
           $rootScope.closeDialog();
         }else {
           ToastsService.showToast('error', response.data.message);
         }
       })
       .catch(function (error) {
-        debugger;
         $scope.addingCustomer = false;
-        ToastsService.showToast('error', error.data.error);
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
       });
     })
     .catch(function (error) {
       ToastsService.showToast('error', error.message);
     });
-
   };
 
-  $scope.changeCustomerStatus = function (customer, action) {
-    $scope.processInProgress = true;
-    CustomersService.changeCustomerStatus({
-      user_id: customer.id,
-    }, action)
-    .then(function (response) {
-      ToastsService.showToast('success', 'Customer successfully blocked');
-      $scope.processInProgress = false;
-      reloadIndividualCustomers();
-    })
-    .catch(function (error) {
-      $scope.processInProgress = false;
-      ToastsService.showToast('error', error.data.error);
+  $scope.deleteCustomer = function (customer, customerType) {
+    Dialog.confirmAction('Do you want to deleted this customer?')
+    .then(function () {
+      var data;
+      if (customerType == 'individual') {
+        data = {
+          user_id: customer.id,
+        };
+      }else if (customerType == 'business') {
+        data = {
+          business_id: customer.business_id,
+          admin_to_delete_id: customer.id,
+        };
+      }
+
+      $scope.processInProgress = true;
+      CustomersService.deleteCustomer(data, customerType)
+      .then(function (response) {
+        ToastsService.showToast('success', 'Customer successfully blocked');
+        $scope.processInProgress = false;
+        CachingService.destroyOnCreateOperation('deletedCustomers' +
+        $.param($scope.filterParams));
+        reloadCustomers(customerType + 'Customers');
+      })
+      .catch(function (error) {
+        $scope.processInProgress = false;
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
+      });
+    }, function () {
+      // Dialog has been canccelled
+    });
+  };
+
+  $scope.restoreDeletedCustomer = function (ev, customer) {
+    Dialog.confirmAction('Do you want to restore this deleted customer?')
+    .then(function () {
+      $scope.processInProgress = true;
+
+      var data = {
+        user_id: customer.id,
+      };
+
+      CustomersService.restoreDeletedCustomer(data)
+      .then(function (response) {
+        if (response.data.code == 200) {
+          ToastsService.showToast('success', 'Customer successfully restored!');
+        } else {
+          ToastsService.showToast('error', response.data.message);
+        }
+
+        CachingService.destroyOnCreateOperation(customer.consumer_type + 'Customers' +
+        $.param($scope.filterParams));
+
+        reloadCustomers('deletedCustomers');
+        $scope.processInProgress = false;
+      })
+      .catch(function (error) {
+        $scope.processInProgress = false;
+        if (error.data && error.data.errors) {
+          var errorList = error.data.errors[Object.keys(error.data.errors)[0]];
+          ToastsService.showToast('error', errorList[0]);
+        } else {
+          ToastsService.showToast('error', error.data.message);
+        }
+      });
+    }, function () {
+      // Dialog has been canccelled
     });
   };
 
@@ -122,29 +198,13 @@ function CustomersController($scope, $rootScope, $state, CustomersService, Dialo
     $state.go(stateName);
   };
 
-  function reloadIndividualCustomers() {
-    var cache = 'individualCustomers?' + $.param($scope.filterParams);
-    CachingService.destroyOnCreateOperation(cache);
-    CustomersService.getAllIndividualCustomers($scope.filterParams)
-    .then(function (response) {
-      $scope.individualCustomers = response.data.data.all_consumers;
-    })
-    .catch(function (error) {
-      ToastsService.showToast('error', error.data.error);
-    });
-  }
+  function reloadCustomers(customerType) {
+    var cachePrefix;
+    customerType != undefined ? cachePrefix = customerType : cachePrefix = currentCustomerType;
+    var cache = cachePrefix + $.param($scope.filterParams);
 
-  function reloadBusinessCustomers() {
-    var cache = 'businessCustomers?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
-    CustomersService.getAllBusinessCustomers($scope.filterParams)
-    .then(function (response) {
-      $scope.businessCustomers = response.data.data.all_consumers;
-    })
-    .catch(function (error) {
-      ToastsService.showToast('error', error.data.error);
-    });
+    customerType != undefined ? $scope.getAllCustomers(customerType) : $scope.getAllCustomers();
   }
-
 }
 })();

@@ -1,5 +1,5 @@
 <md-card ng-if="!searching">
-  <h3 class="view-main-title requests">Approved Drivers</h3>
+  <h3 class="view-main-title requests">Deleted Drivers</h3>
   <md-card-content>
     <md-table-container>
       <table md-table md-progress="requestsPromise">
@@ -13,7 +13,7 @@
         </thead>
 
         <tbody md-body>
-          <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="driver in drivers1.data">
+          <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="driver in deletedDrivers.data">
             <td md-cell>{{driver.first_name}} {{driver.last_name}}</td>
             <td md-cell>{{driver.phone_number}}</td>
             <td md-cell>{{driver.assigned_deliveries.length}}</td>
@@ -30,17 +30,11 @@
                 </md-tooltip>
                 <i class="material-icons">edit</i>
               </button>
-              <button ng-if="authenticatedUser.admin_type == 'super'" class="md-button md-raised md-warn" ng-click="approveUnapproveDriver(driver, 'unapprove')">
+              <button ng-if="authenticatedUser.admin_type == 'super'" class="md-button md-raised md-danger text-white" ng-click="restoreDeletedDriver($event, driver)">
                 <md-tooltip md-direction="top">
-                  Unapprove Driver
+                  Restore Driver
                 </md-tooltip>
-                <i class="material-icons">clear</i>
-              </button>
-              <button ng-if="authenticatedUser.admin_type == 'super'" class="md-button md-raised md-danger text-white" ng-click="deleteDriver($event, driver)">
-                <md-tooltip md-direction="top">
-                  Delete Driver
-                </md-tooltip>
-                <i class="material-icons">delete_forever</i>
+                <i class="material-icons">undo</i>
               </button>
             </td>
           </tr>
@@ -48,7 +42,7 @@
       </table>
     </md-table-container>
 
-    <md-table-pagination md-limit="filterParams.limit" md-limit-options="tableOptions.limitOptions" md-page-select="tableOptions.pageSelect" md-boundary-links="tableOptions.boundaryLinks" md-page="filterParams.page" md-total="{{$parent.drivers1.total}}" md-on-paginate="paginate" md-page-select></md-table-pagination>
+    <md-table-pagination md-limit="deletedDriverParams.limit" md-limit-options="tableOptions.limitOptions" md-page-select="tableOptions.pageSelect" md-boundary-links="tableOptions.boundaryLinks" md-page="deletedDriverParams.page" md-total="{{$parent.deletedDrivers.total}}" md-on-paginate="paginateDeletedDrivers" md-page-select></md-table-pagination>
 
   </md-card-content>
 </md-card>

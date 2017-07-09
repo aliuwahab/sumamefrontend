@@ -12,37 +12,39 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
   var authDataString = $.param(AuthService.getAuthData());
 
   var service = {
-    getAllIndividualCustomers: getAllIndividualCustomers,
-    getAllBusinessCustomers: getAllBusinessCustomers,
+    getAllCustomers: getAllCustomers,
     addCustomer: addCustomer,
-    changeCustomerStatus: changeCustomerStatus,
+    deleteCustomer: deleteCustomer,
+    restoreDeletedCustomer: restoreDeletedCustomer,
     searchCustomers: searchCustomers,
   };
 
   return service;
 
-  function getAllIndividualCustomers(params) {
+  function getAllCustomers(params, customerType) {
+    var endpoint;
     var queryOptions = $.param(params);
-    var cache = 'individualCustomers?' + queryOptions;
+    var cache = customerType + queryOptions;
+
+    switch (customerType) {
+      case 'individualCustomers':
+        endpoint = '/all/consumers?consumer_type=individual&';
+        break;
+      case 'businessCustomers':
+        endpoint = '/all/business/consumers?';
+        break;
+      case 'deletedCustomers':
+        endpoint = '/all/deleted/accounts?';
+        break;
+      default:
+        endpoint = '/all/consumers?consumer_type=individual&';
+    }
 
     if (!CacheFactory.get(cache)) {
       CacheFactory(cache);
     };
 
-    return $http.get(apiBaseURL + '/all/consumers?consumer_type=individual&' + authDataString + '&' + queryOptions, {
-      cache: CacheFactory.get(cache),
-    });
-  }
-
-  function getAllBusinessCustomers(params) {
-    var queryOptions = $.param(params);
-    var cache = 'businessCustomers?' + queryOptions;
-
-    if (!CacheFactory.get(cache)) {
-      CacheFactory(cache);
-    };
-
-    return $http.get(apiBaseURL + '/all/business/consumers?' + authDataString + '&' + queryOptions, {
+    return $http.get(apiBaseURL + endpoint + authDataString + '&' + queryOptions, {
       cache: CacheFactory.get(cache),
     });
   }
@@ -52,9 +54,21 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
     return $http.post(apiBaseURL + '/create/consumer?' + authDataString + '&' + params);
   }
 
-  function changeCustomerStatus(data, action) {
+  function deleteCustomer(data, customerType) {
+    var endpoint;
+    if (customerType == 'individual') {
+      endpoint = '/delete/user?';
+    }else if (customerType == 'business') {
+      endpoint = '/delete/business/customer/admin?';
+    }
+
     var params = $.param(data);
-    return $http.post(apiBaseURL + '/' + action + '/user?' + authDataString + '&' + params);
+    return $http.post(apiBaseURL + endpoint + authDataString + '&' + params);
+  }
+
+  function restoreDeletedCustomer(data) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/restore/deleted/account?' + authDataString + '&' + params);
   }
 
   function searchCustomers(params) {

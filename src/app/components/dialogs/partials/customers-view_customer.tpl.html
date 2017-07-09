@@ -13,8 +13,15 @@
       <div class="sm-driver-header" layout="column" layout-align="center center">
         <div class="sm-driver-dp" ng-if="selectedCustomer.display_pictures_urls" background-img="{{splitDisplayPicUrl(selectedCustomer.display_pictures_urls)}}"></div>
         <img class="sm-driver-dp" ng-if="!selectedCustomer.display_pictures_urls" gravatar-src="'selectedCustomer.email'" gravatar-size="200"/>
-        <h1 class="sm-driver-name">{{selectedCustomer.first_name}} {{selectedCustomer.last_name}}</h1>
-        <h4 class="sm-driver-school">Driver</h4>
+
+        <div class="" ng-if="selectedCustomer.consumer_type == 'business'" style="text-align:center">
+          <h1 class="sm-driver-name">{{selectedCustomer.business_name}}</h1>
+          <h4 class="sm-driver-school">Business</h4>
+        </div>
+        <div class="" ng-if="selectedCustomer.consumer_type == 'individual'" style="text-align:center">
+          <h1 class="sm-driver-name">{{selectedCustomer.first_name}} {{selectedCustomer.last_name}}</h1>
+          <h4 class="sm-driver-school">Individual</h4>
+        </div>
       </div>
       <div class="sm-driver-info" layout="row">
         <div class="sm-driver-info-column left">
@@ -26,11 +33,10 @@
         </div>
       </div>
       <div class="sm-driver-profile-container">
-        <h3>Profile Description</h3>
-        <div ng-bind-html="selectedCustomer.user_profile"></div>
+        <!-- <h3>Last 5 requests</h3> -->
       </div>
       <div class="sm-driver-info" layout="row">
-        <p ng-if="selectedCustomer.created_at" class="sm-cs-info-contact"><i class="material-icons">schedule</i>Added: {{selectedCustomer.created_at | date:"MMMM d, y 'at ' h:mma"}}</p>
+        <p ng-if="selectedCustomer.created_at" class="sm-cs-info-contact"><i class="material-icons">schedule</i> Added: {{selectedCustomer.created_at | date:"MMMM d, y 'at ' h:mma"}}</p>
       </div>
     </md-dialog-content>
 

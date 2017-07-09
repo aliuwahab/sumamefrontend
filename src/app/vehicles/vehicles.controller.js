@@ -13,8 +13,10 @@ function VehiclesController($scope, $q, $timeout, $rootScope, $state, Dialog, Ve
   activate();
 
   function activate() {
+    var limit = localStorage.getItem('tablePageLimit') || 20;
+
     $scope.filterParams = {
-      limit: 50,
+      limit: limit,
       page: 1,
     };
 
@@ -31,6 +33,19 @@ function VehiclesController($scope, $q, $timeout, $rootScope, $state, Dialog, Ve
       debugger;
     });
   }
+
+  $scope.paginate = function (page, limit) {
+    localStorage.setItem('tablePageLimit', limit);
+
+    $scope.requestsPromise = VehiclesService.getAllVehicles($scope.filterParams)
+    .then(function (response) {
+      $scope.vehicles = response.data.data.all_vehicles;
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      debugger;
+    });
+  };
 
   $scope.addVehicle = function () {
     ValidationService.validate($scope.newVehicle, 'vehicle')

@@ -3,15 +3,15 @@
 
 angular
     .module('somameAdmin')
-    .controller('EquipmentRequestsController', EquipmentRequestsController);
+    .controller('EquipmentTypeRequestsController', EquipmentTypeRequestsController);
 
 /** @ngInject */
-function EquipmentRequestsController($scope, $timeout) {
+function EquipmentTypeRequestsController($scope, $timeout) {
 
   activate();
 
   function activate() {
-    $scope.$parent.getAllRequests('request_type', 'equipment_request');
+    $scope.getAllRequests('request_type', 'equipment_request');
   }
 
 }

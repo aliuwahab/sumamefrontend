@@ -15,8 +15,12 @@
       </div>
 
       <div ng-show="!addingNote">
-        <md-input-container class="md-block">
-          <textarea ui-tinymce ng-model="note.newNote" aria-label="message to customer" md-select-on-focus rows="4"></textarea>
+        <md-input-container class="md-block" ng-show="noteType == 'internal'">
+          <textarea ui-tinymce ng-model="note.newNote" aria-label="add internal note" md-select-on-focus rows="4"></textarea>
+        </md-input-container>
+
+        <md-input-container class="md-block" ng-show="noteType == 'driver'">
+          <textarea ng-model="note.newNote" aria-label="add note to " md-select-on-focus rows="4"></textarea>
         </md-input-container>
       </div>
 

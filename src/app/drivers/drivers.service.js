@@ -13,8 +13,10 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
 
   var service = {
     getAllDrivers: getAllDrivers,
+    getDeletedDrivers: getDeletedDrivers,
     addDriver: addDriver,
     deleteDriver: deleteDriver,
+    restoreDeletedDriver: restoreDeletedDriver,
     updateDriver: updateDriver,
     approveUnapproveDriver: approveUnapproveDriver,
     searchDrivers: searchDrivers,
@@ -35,6 +37,20 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
     });
   }
 
+  function getDeletedDrivers(params) {
+    var queryOptions = $.param(params);
+    var cache = 'deletedDrivers?' + queryOptions;
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.get(apiBaseURL + '/all/deleted/accounts?user_type=driver&' +
+    authDataString + '&' + queryOptions, {
+      cache: CacheFactory.get(cache),
+    });
+  }
+
   function addDriver(data) {
     var params = $.param(data);
     return $http.post(apiBaseURL + '/create/driver?' + authDataString + '&' + params);
@@ -43,6 +59,11 @@ function DriversService($http, AuthService, CacheFactory, ENV) {
   function deleteDriver(data) {
     var params = $.param(data);
     return $http.post(apiBaseURL + '/delete/user?' + authDataString + '&' + params);
+  }
+
+  function restoreDeletedDriver(data) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/restore/deleted/account?' + authDataString + '&' + params);
   }
 
   function updateDriver(driver) {

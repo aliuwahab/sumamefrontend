@@ -8,37 +8,43 @@
   <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
 </div>
 
-<div class="flex-grid" layout="row" ng-if="!loadingStaff">
+<div class="flex-grid" ng-if="!loadingStaff">
   <div class="staff-no-staff-container" layout-align="center center" ng-show="!staff || staff.length <= 1">
     <h2>Add your first staff. You don't have any yet!</h2>
     <p>Click on the Add New Staff Member button to add staff to your organization.</p>
   </div>
-  <div class="staff-col flip-container" ontouchstart="this.classList.toggle('hover');" ng-repeat="staffmember in staff track by $index" ng-if="staffmember.id != authenticatedUser.id">
-    <div class="flipper">
-      <div class="front">
-        <div class="sm-staff-img div" ng-if="staffmember.user_profile_image_url" background-img="{{staffmember.user_profile_image_url}}"></div>
-        <img class="sm-staff-img" ng-if="!staffmember.user_profile_image_url" gravatar-src="'staffmember.email'" gravatar-size="200"/>
 
-        <h2 class="sm-staff-name">{{staffmember.first_name}} {{staffmember.last_name}}</h2>
-        <h4 class="sm-staff-title">{{staffmember.user_title || 'Staff Member'}}</h4>
-        <p class="sm-staff-detail">{{staffmember.email}}</p>
-      </div>
-      <div class="back">
-        <h2 class="sm-staff-name">{{staffmember.first_name}} {{staffmember.last_name}}</h2>
-        <div class="" ng-bind-html="staffmember.user_profile_description"></div>
-        <md-button class="md-raised md-warn" aria-label="description" md-ripple-size="full" ng-click="showUpdateStaffDialog($event, staffmember)">
-          <i class="material-icons">edit</i>
-          <md-tooltip md-direction="top">
-            Edit Staff Details
-          </md-tooltip>
-        </md-button>
-        <md-button class="md-raised md-danger" aria-label="description" md-ripple-size="full" ng-click="deleteStaff($event, staffmember)">
-          <i class="material-icons">delete_forever</i>
-          <md-tooltip md-direction="top">
-            Delete Staff
-          </md-tooltip>
-        </md-button>
-      </div>
-    </div>
+  <div class="" ng-repeat="staffmember in staff track by $index" ng-if="staffmember.id != authenticatedUser.id">
+    <flippy
+    class="fancy"
+    ng-mouseenter="flip()"
+    ng-mouseleave="flip()"
+    flip-duration="500"
+    timing-function="ease-in-out">
+        <flippy-front>
+          <div class="sm-staff-img div" ng-if="staffmember.user_profile_image_url" background-img="{{staffmember.user_profile_image_url}}"></div>
+          <img class="sm-staff-img" ng-if="!staffmember.user_profile_image_url" gravatar-src="'staffmember.email'" gravatar-size="200"/>
+
+          <h2 class="sm-staff-name">{{staffmember.first_name}} {{staffmember.last_name}}</h2>
+          <h4 class="sm-staff-title">{{staffmember.user_title || 'Staff Member'}}</h4>
+          <p class="sm-staff-detail">{{staffmember.email}}</p>
+        </flippy-front>
+        <flippy-back>
+          <h2 class="sm-staff-name">{{staffmember.first_name}} {{staffmember.last_name}}</h2>
+          <div class="" ng-bind-html="staffmember.user_profile_description"></div>
+          <md-button class="md-raised md-warn" aria-label="description" md-ripple-size="full" ng-click="showUpdateStaffDialog($event, staffmember)">
+            <i class="material-icons">edit</i>
+            <md-tooltip md-direction="top">
+              Edit Staff Details
+            </md-tooltip>
+          </md-button>
+          <md-button class="md-raised md-danger" aria-label="description" md-ripple-size="full" ng-click="deleteStaff($event, staffmember)">
+            <i class="material-icons">delete_forever</i>
+            <md-tooltip md-direction="top">
+              Delete Staff
+            </md-tooltip>
+          </md-button>
+        </flippy-back>
+    </flippy>
   </div>
 </div>

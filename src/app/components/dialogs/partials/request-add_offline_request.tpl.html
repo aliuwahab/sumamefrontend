@@ -22,14 +22,6 @@
           <wz-step wz-title="location">
             <div class="" layout="row">
               <div class="" flex="50">
-                <md-input-container class="sm-input-container">
-                  <place-autocomplete label="Enter Pickup Location" ng-model="mapping.pickupLocation"></place-autocomplete>
-                </md-input-container>
-
-                <md-input-container class="sm-input-container">
-                  <place-autocomplete label="Enter Destination Location" ng-model="mapping.deliveryLocation"></place-autocomplete>
-                </md-input-container>
-
                 <md-input-container class="sm-input-container" style="margin: 0;">
                   <md-autocomplete flex
                       md-input-name="customersAutocomplete"
@@ -45,6 +37,14 @@
                       <span md-highlight-text="searchText">{{customer.full_name}}  ({{customer.phone_number}})</span>
                     </md-item-template>
                   </md-autocomplete>
+                </md-input-container>
+
+                <md-input-container class="sm-input-container">
+                  <place-autocomplete label="Enter Pickup Location" ng-model="mapping.pickupLocation"></place-autocomplete>
+                </md-input-container>
+
+                <md-input-container class="sm-input-container">
+                  <place-autocomplete label="Enter Destination Location" ng-model="mapping.deliveryLocation"></place-autocomplete>
                 </md-input-container>
               </div>
               <div class="" flex="40" flex-offset="10">

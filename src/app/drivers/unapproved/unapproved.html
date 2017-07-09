@@ -30,20 +30,13 @@
                 </md-tooltip>
                 <i class="material-icons">edit</i>
               </button>
-              <button ng-if="!driver.driver_approved" class="md-button md-raised md-accent" ng-click="approveUnapproveDriver(driver, 'approve')">
+              <button ng-if="authenticatedUser.admin_type == 'super'" class="md-button md-raised md-accent" ng-click="approveUnapproveDriver(driver, 'approve')">
                 <md-tooltip md-direction="top">
                   Approve Driver
                 </md-tooltip>
                 <i class="material-icons">spellcheck</i>
               </button>
-              <button ng-if="driver.driver_approved" class="md-button md-raised md-warn" ng-click="approveUnapproveDriver(driver, 'unapprove')">
-                <md-tooltip md-direction="top">
-                  Unapprove Driver
-                </md-tooltip>
-                <i class="material-icons">clear</i>
-              </button>
-
-              <button class="md-button md-raised md-danger text-white" ng-click="deleteDriver($event, driver)">
+              <button ng-if="authenticatedUser.admin_type == 'super'" class="md-button md-raised md-danger text-white" ng-click="deleteDriver($event, driver)">
                 <md-tooltip md-direction="top">
                   Delete Driver
                 </md-tooltip>
@@ -55,6 +48,7 @@
       </table>
     </md-table-container>
 
-    <md-table-pagination md-limit="filterParams.limit" md-limit-options="[50, 100, 200]" md-page="filterParams.page" md-total="{{drivers.total}}" md-on-paginate="" md-page-select></md-table-pagination>
+    <md-table-pagination md-limit="filterParams.limit" md-limit-options="tableOptions.limitOptions" md-page-select="tableOptions.pageSelect" md-boundary-links="tableOptions.boundaryLinks" md-page="filterParams.page" md-total="{{$parent.drivers0.total}}" md-on-paginate="paginate" md-page-select></md-table-pagination>
+
   </md-card-content>
 </md-card>

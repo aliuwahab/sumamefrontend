@@ -14,10 +14,10 @@
   padding: 5mm;
 }
 .printout-from-info {
-  margin-bottom: 10mm;
+  margin-bottom: 8mm;
 }
 .printout-to-info {
-  margin-bottom: 10mm;
+  margin-bottom: 0mm;
 }
 .printout-to {
   font-size: 10pt;
@@ -63,6 +63,9 @@
 .printout-qr-container h4 {
   margin-top: 0;
   font-size: 10pt;
+}
+.printout-company-contact p{
+  font-size: 10px !important;
 }
 
 @media print {

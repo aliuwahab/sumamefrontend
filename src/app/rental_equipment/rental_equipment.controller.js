@@ -12,8 +12,10 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
   activate();
 
   function activate() {
+    var limit = localStorage.getItem('tablePageLimit') || 20;
+
     $scope.filterParams = {
-      limit: 30,
+      limit: limit,
       page: 1,
     };
 
@@ -36,6 +38,19 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
       debugger;
     });
   }
+
+  $scope.paginate = function (page, limit) {
+    localStorage.setItem('tablePageLimit', limit);
+
+    $scope.requestsPromise = EquipmentService.getAllEquipment($scope.filterParams)
+    .then(function (response) {
+      $scope.equipment = response.data.data.rental_equipment;
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+      debugger;
+    });
+  };
 
   $scope.searchEquipment = function () {
     if ($scope.searchText && $scope.searchText.length > 0) {

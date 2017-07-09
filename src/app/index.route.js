@@ -114,7 +114,7 @@
         loginRequired: loginRequired,
       },
     })
-    .state('app.requests.delivery-in-progress', {
+    .state('app.requests.in_progress', {
       parent: 'app.requests',
       url: '/in-progress',
       templateUrl: 'app/requests/in_progress/in_progress.html',
@@ -208,7 +208,61 @@
       parent: 'app.requests',
       url: '/equipment',
       templateUrl: 'app/requests/equipment/equipment.html',
-      controller: 'EquipmentRequestsController',
+      controller: 'EquipmentTypeRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.cancelled', {
+      parent: 'app.requests',
+      url: '/cancelled',
+      templateUrl: 'app/requests/cancelled/cancelled.html',
+      controller: 'CancelledRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.business', {
+      parent: 'app.requests',
+      url: '/business',
+      templateUrl: 'app/requests/business/business.html',
+      controller: 'BusinessRequestsController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.requests.individual', {
+      parent: 'app.requests',
+      url: '/individual',
+      templateUrl: 'app/requests/individual/individual.html',
+      controller: 'IndividualRequestsController',
       data: {
         permissions: {
           only: function () {
@@ -280,6 +334,24 @@
       url: '/unapproved',
       templateUrl: 'app/drivers/unapproved/unapproved.html',
       controller: 'UnapprovedDriversController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.drivers.deleted', {
+      parent: 'app.drivers',
+      url: '/deleted',
+      templateUrl: 'app/drivers/deleted/deleted.html',
+      controller: 'DeletedDriversController',
       data: {
         permissions: {
           only: function () {
@@ -367,6 +439,24 @@
       url: '/individuals',
       templateUrl: 'app/customers/individuals/individuals.html',
       controller: 'IndividualCustomersController',
+      data: {
+        permissions: {
+          only: function () {
+            return ['super', 'normal', 'staff'] || false;
+          },
+
+          redirectTo: 'app.dashboard',
+        },
+      },
+      resolve: {
+        loginRequired: loginRequired,
+      },
+    })
+    .state('app.customers.deleted', {
+      parent: 'app.customers',
+      url: '/deleted',
+      templateUrl: 'app/customers/deleted/deleted.html',
+      controller: 'DeletedCustomersController',
       data: {
         permissions: {
           only: function () {

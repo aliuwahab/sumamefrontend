@@ -37,10 +37,12 @@
                     <span><i class="material-icons">public</i></span>  www.klloyds.com
                     <span flex="20"><i class="material-icons space-out">mail_outline</i></span>  courier@klloyds.com
                   </p>
-                  <p class="printout-company-contact">
-                    <span><i class="material-icons">local_phone</i></span>  +233 (0) 207968538
-                    <span flex="20"><i class="material-icons space-out">local_phone</i></span> +233 (0) 207968538
-                  </p>
+                  <div class="printout-company-contact">
+                    <p><span><i class="material-icons">local_phone</i></span> United States: +1 703 349 4245</p>
+                    <p><span><i class="material-icons">local_phone</i></span> United Kingdom: +44 207 701 0132</p>
+                    <p><span><i class="material-icons">local_phone</i></span> United Arab Emirates: +971 588 929 859</p>
+                    <p><span><i class="material-icons">local_phone</i></span> Ghana: +233 55 403 9876</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -48,7 +50,7 @@
               <h4>ABOUT THIS PACKAGE</h4>
               <p>Please treat with care. In case of complaints or loss, contact Klloyds Engineering Limited via the contact information provided at the bottom left. Scan the QR code below to get more information.</p>
               <p ng-if="request.request_is_hazardous"><b>Important!:</b> This item is hazardous. Treat with care.</p>
-              <qrcode version="5" error-correction-level="M" size="155" data="https://new.klloyds.com" class="printout-qr-code-image"></qrcode>
+              <qrcode version="12" error-correction-level="M" size="155" data="From: {{request.pickup_location_name}} ----- To: {{request.delivery_location_name}} ----- Customer Name: {{request.requester.first_name}} {{request.requester.last_name}} ----- Business Name: {{request.requester.business_name || 'None'}} ----- Customer Phone Number: {{request.requester.phone_number}}" class="printout-qr-code-image"></qrcode>
             </div>
           </div>
         </md-card-content>

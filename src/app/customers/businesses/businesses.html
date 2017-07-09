@@ -16,18 +16,18 @@
             <td md-cell>{{customer.id}}</td>
             <td md-cell>{{customer.business_name || "Unknown Business"}}</td>
             <td md-cell>{{customer.phone_number}}</td>
-            <td md-cell ng-if="authenticatedUser.admin_type != 'staff'">
-              <button class="md-button md-raised md-danger" ng-if="customer.user_block_status == 'unblocked'" ng-click="changeCustomerStatus(customer, 'block')">
+            <td md-cell>
+              <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">
                 <md-tooltip md-direction="top">
-                  Block Customer
+                  View Customer Details
                 </md-tooltip>
-                <i class="material-icons">block</i>
+                <i class="material-icons">remove_red_eye</i>
               </button>
-              <button class="md-button md-raised md-accent" ng-if="customer.user_block_status == 'blocked'" ng-click="changeCustomerStatus(customer, 'unblock')">
+              <button ng-if="authenticatedUser.admin_type == 'super'" class="md-button md-raised md-danger" ng-click="deleteCustomer(customer, 'business')">
                 <md-tooltip md-direction="top">
-                  Unblock Customer
+                  Delete Customer
                 </md-tooltip>
-                <i class="material-icons">done_all</i>
+                <i class="material-icons">delete_all</i>
               </button>
             </td>
           </tr>
@@ -35,6 +35,7 @@
       </table>
     </md-table-container>
 
-    <md-table-pagination md-limit="filterParams.limit" md-limit-options="[50, 100, 200]" md-page="filterParams.page" md-total="{{customers.total}}" md-on-paginate="" md-page-select></md-table-pagination>
+    <md-table-pagination md-limit="filterParams.limit" md-limit-options="tableOptions.limitOptions" md-page-select="tableOptions.pageSelect" md-boundary-links="tableOptions.boundaryLinks" md-page="filterParams.page" md-total="{{$parent.businessCustomers.total}}" md-on-paginate="paginate" md-page-select></md-table-pagination>
+
   </md-card-content>
 </md-card>
