@@ -43,7 +43,8 @@ function LoginController($scope, $rootScope, $state, $auth, localStorageService,
         .then(function (user) {
           user.data && user.data.user ? $rootScope.authenticatedUser = user.data.user : false;
 
-          if ($rootScope.authenticatedUser && $rootScope.authenticatedUser.user_type == 'admin') {
+          if ($rootScope.authenticatedUser && $rootScope.authenticatedUser.user_type == 'admin'
+          && !$rootScope.authenticatedUser.deleted) {
             localStorageService.set('profile', user.data.user);
             resetUserState();
             redefineRoles();
