@@ -18,6 +18,11 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
 
   function activate() {
 
+    if (($state.current.parent == 'app.requests') &&
+      ($state.current.name != 'app.requests.details')) {
+      setCurrentView($state.current.name);
+    }
+
     $scope.currentView = localStorageService.get('selectedRequestsView') || 'app.requests.pending';
     $scope.viewName = getStateName($scope.currentView);
 
@@ -63,7 +68,20 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
   };
 
   $scope.getRequestsByUserType = function (userType) {
+    requestsName = userType + 'Requests';
+    promiseName = userType + 'RequestsPromise';
 
+    $scope[promiseName] = RequestsService.getRequestsByUserType($scope.filterParams, userType)
+    .then(function (response) {
+      if (userType == 'individual') {
+        $scope.individualRequests = response.data.data.all_individual_request;
+      } else if (userType == 'business') {
+        $scope.businessRequests = response.data.data.all_business_request;
+      }
+    })
+    .catch(function (error) {
+      $scope.error = error.message;
+    });
   };
 
   $scope.paginate = function (page, limit) {

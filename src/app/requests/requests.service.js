@@ -13,6 +13,7 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
 
   var service = {
     getRequests: getRequests,
+    getRequestsByUserType: getRequestsByUserType,
     getRequest: getRequest,
     assignRequestToDriver: assignRequestToDriver,
     searchNearbyDrivers: searchNearbyDrivers,
@@ -34,6 +35,20 @@ function RequestsService($http, AuthService, CacheFactory, ENV) {
     };
 
     return $http.get(apiBaseURL + '/requests?' + authDataString + '&' + queryOptions, {
+      cache: CacheFactory.get(cache),
+    });
+  }
+
+  function getRequestsByUserType(params, userType) {
+    var queryOptions = $.param(params);
+    var cache = 'requests?' + queryOptions;
+
+    if (!CacheFactory.get(cache)) {
+      CacheFactory(cache);
+    };
+
+    return $http.get(apiBaseURL + '/' + userType + '/consumers/requests?' +
+    authDataString + '&' + queryOptions, {
       cache: CacheFactory.get(cache),
     });
   }
