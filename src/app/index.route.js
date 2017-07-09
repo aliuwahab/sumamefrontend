@@ -114,7 +114,7 @@
         loginRequired: loginRequired,
       },
     })
-    .state('app.requests.delivery-in-progress', {
+    .state('app.requests.in_progress', {
       parent: 'app.requests',
       url: '/in-progress',
       templateUrl: 'app/requests/in_progress/in_progress.html',
