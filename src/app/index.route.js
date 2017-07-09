@@ -208,7 +208,7 @@
       parent: 'app.requests',
       url: '/equipment',
       templateUrl: 'app/requests/equipment/equipment.html',
-      controller: 'EquipmentRequestsController',
+      controller: 'EquipmentTypeRequestsController',
       data: {
         permissions: {
           only: function () {

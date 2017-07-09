@@ -7,7 +7,7 @@
     <h3 class="view-main-title requests">{{viewName | capitalize:first}} Requests</h3>
     <md-card-content>
       <md-table-container>
-        <table md-table md-progress="$parent.equipment_requestsRequestsPromise">
+        <table md-table md-progress="$parent.equipment_requestRequestsPromise">
           <thead md-head md-order="query.order" md-on-reorder="getrequests">
             <tr md-row>
               <th md-column><span>TIME REQUESTED</span></th>
@@ -19,7 +19,7 @@
             </tr>
           </thead>
           <tbody md-body>
-            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in $parent.equipment_requestsRequests.data">
+            <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="request in $parent.equipment_requestRequests.data">
               <td md-cell>{{request.created_at | date:'medium'}}</td>
               <td md-cell>
                 <span ng-if="request.requester.consumer_type == 'individual'">{{request.requester.first_name}} {{request.requester.last_name}}</span>
