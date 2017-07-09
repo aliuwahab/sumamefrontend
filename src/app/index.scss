@@ -465,12 +465,6 @@ flippy.flipped flippy-back {
   transform: rotate3d(0, 0, 0, 0deg);
 }
 
-
-
-
-
-
-
 flippy.fancy {
   float: left;
   margin: 0 10px 10px 0;
@@ -479,10 +473,6 @@ flippy.fancy {
   cursor: pointer;
   width: 250px;
   height: 250px;
-}
-flippy.fancy img {
-  height: 100%;
-  width: 100%;
 }
 flippy.fancy flippy-front {
   float: none;

@@ -21,6 +21,7 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
     .then(function (response) {
       $scope.staff = response.data.data.admins;
       $scope.loadingStaff = false;
+      $scope.$parent.processInProgress = false;
     })
     .catch(function (error) {
       $scope.error = error.message;
@@ -34,7 +35,6 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
     ValidationService.validate($scope.newStaffMember, 'staff')
     .then(function (result) {
       $scope.addingStaff = true;
-      // $scope.staff ? $scope.staff.push($scope.newStaffMember) : false;
 
       SettingsService.addStaff($scope.newStaffMember)
       .then(function (response) {
@@ -160,6 +160,7 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
   function reloadStaff() {
     var cache = 'staff';
     CachingService.destroyOnCreateOperation(cache);
+    $scope.$parent.processInProgress = true;
     getAllStaff();
   }
 }
