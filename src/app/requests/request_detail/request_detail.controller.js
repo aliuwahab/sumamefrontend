@@ -203,6 +203,18 @@ function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stat
 
     RequestsService.addNotes(data, $scope.noteType)
     .then(function (response) {
+      if ($scope.addingNote &&
+        $scope.request.request_deliverer &&
+        $scope.request.request_deliverer.length > 0 &&
+        $scope.request.request_deliverer[0].phone_number) {
+
+        Twilio.create('Messages', {
+          From: '+14248885615',
+          To: $scope.request.request_deliverer[0].phone_number,
+          Body: $scope.note.newNote,
+        });
+      }
+
       $scope.addingNote = false;
       reloadRequest();
     })
