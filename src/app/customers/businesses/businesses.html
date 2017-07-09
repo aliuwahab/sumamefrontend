@@ -16,8 +16,14 @@
             <td md-cell>{{customer.id}}</td>
             <td md-cell>{{customer.business_name || "Unknown Business"}}</td>
             <td md-cell>{{customer.phone_number}}</td>
-            <td md-cell ng-if="authenticatedUser.admin_type == 'super'">
-              <button class="md-button md-raised md-danger" ng-click="deleteCustomer(customer, 'business')">
+            <td md-cell>
+              <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">
+                <md-tooltip md-direction="top">
+                  View Customer Details
+                </md-tooltip>
+                <i class="material-icons">remove_red_eye</i>
+              </button>
+              <button ng-if="authenticatedUser.admin_type == 'super'" class="md-button md-raised md-danger" ng-click="deleteCustomer(customer, 'business')">
                 <md-tooltip md-direction="top">
                   Delete Customer
                 </md-tooltip>
