@@ -6,7 +6,7 @@ angular
     .controller('WarehousesController', WarehousesController);
 
 /** @ngInject */
-function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dialog,
+function WarehousesController($scope, $rootScope, $interval, $state, $mdDialog, lodash, Dialog,
   SettingsService, ToastsService, CachingService, ValidationService) {
 
   activate();
@@ -32,10 +32,12 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
     .then(function (response) {
       $scope.warehouses = response.data.data.all_requested_addresses;
       $scope.loadingWarehouses = false;
+      $scope.processInProgress = false;
     })
     .catch(function (error) {
       $scope.error = error.message;
       $scope.loadingWarehouses = false;
+      $scope.processInProgress = false;
       debugger;
     });
   }
@@ -46,15 +48,13 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
 
     ValidationService.validate($scope.newWarehouse, 'warehouse')
     .then(function (result) {
-      $scope.warehouses.data.unshift($scope.newWarehouse);
-      ToastsService.showToast('success', 'Warehouse successfully added');
-      $rootScope.closeDialog();
-
+      $scope.addingWarehouse = true;
       SettingsService.addWarehouse($scope.newWarehouse)
       .then(function (response) {
+        ToastsService.showToast('success', 'Warehouse successfully added');
+        $scope.addingWarehouse = false;
+        $rootScope.closeDialog();
         reloadWarehouses();
-
-        // Warehouse Successfully added
       })
       .catch(function (error) {
         $scope.addingWarehouse = false;
@@ -87,7 +87,6 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
       SettingsService.updateWarehouse($scope.selectedWarehouse)
       .then(function (response) {
         $scope.addingWarehouse = false;
-        reloadWarehouses();
         $rootScope.closeDialog();
         ToastsService.showToast('success', 'Warehouse successfully updated');
         reloadWarehouses();
@@ -147,6 +146,7 @@ function WarehousesController($scope, $rootScope, $state, $mdDialog, lodash, Dia
   function reloadWarehouses() {
     var cache = 'warehouses?' + $.param($scope.filterParams);
     CachingService.destroyOnCreateOperation(cache);
+    $scope.processInProgress = true;
     getAllWarehouses();
   }
 
