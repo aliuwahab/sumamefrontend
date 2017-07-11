@@ -8,7 +8,7 @@ angular
 /** @ngInject */
 function RequestDetailController($scope, $rootScope, $timeout, $q, $state, $stateParams,
   Dialog, RequestsService, ToastsService, DriversService, Twilio, EquipmentService,
-  CachingService) {
+  CachingService, $window) {
 
   var notesItem;
 

@@ -27,7 +27,7 @@
         </md-tooltip>
         <i class="material-icons">check</i>
       </md-button>
-      <md-button aria-label="Open phone interactions menu" class="md-raised md-warn" ng-click="printInvoice($event)">
+      <md-button aria-label="Open phone interactions menu" class="md-raised md-warn" print-btn>
         <md-tooltip md-direction="top">
           Print Invoice
         </md-tooltip>
@@ -48,7 +48,7 @@
   </div>
 
   <div class="" ng-if="!loadingInvoice">
-    <div class="a4-page" size="A4" print-section>
+    <div class="a4-page" size="A4" print-section print-portrait>
       <div class="invoice-page">
         <div class="invoice-logo-container">
           <img src="../assets/images/logo_small.png" alt="Klloyds" height="30" width="auto">

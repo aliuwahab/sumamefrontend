@@ -10,8 +10,7 @@
       </div>
     </md-toolbar>
     <md-dialog-content class="sm-modal-content" layout="center center">
-
-      <md-card class="printout-card 4by6" print-section>
+      <md-card class="printout-card 4by6">
         <md-card-content class="printout-card-content">
           <div class="printout-main-container" layout="row">
             <div class="printout-info-container" flex="65" layout="column">
@@ -55,7 +54,6 @@
           </div>
         </md-card-content>
       </md-card>
-
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
@@ -63,10 +61,10 @@
       <md-button ng-click="closeDialog()" class="md-raised md-danger">
         Cancel
       </md-button>
-      <md-button ng-click="printQR()" class="md-raised md-warn">
+      <md-button print-btn printItem="qrcode" class="md-raised md-warn">
         Print QR Code Only
       </md-button>
-      <md-button print-btn class="md-raised md-accent">
+      <md-button print-btn printItem="fullPrintout" class="md-raised md-accent">
         Print Full
       </md-button>
     </md-dialog-actions>

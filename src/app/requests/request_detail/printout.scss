@@ -14,7 +14,7 @@
   padding: 5mm;
 }
 .printout-from-info {
-  margin-bottom: 8mm;
+  margin-bottom: 4mm;
 }
 .printout-to-info {
   margin-bottom: 0mm;
@@ -69,13 +69,21 @@
 }
 
 @media print {
-  @page {
-    size: landscape;
-  }
   .4by6 {
-    // margin-left: 0mm !important;
-    // margin-right: 10mm !important;
     float: none !important;
     overflow: visible !important;
+  }
+  .printout-card {
+    width: 6in !important;
+    height: 4in !important;
+    display: block !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+  }
+  .print-only-qrcode {
+    padding: 10mm !important;
+    margin-left: 25mm !important;
+    position: absolute;
+    top: 0;
   }
 }
