@@ -35,7 +35,6 @@
     "angular-moment-picker": "moment-picker#^0.9.1",
     "angular-momentjs": "^0.2.2",
     "angular-cache": "^4.6.0",
-    "angularPrint": "angular-print#^0.3.8",
     "angular-qrcode": "monospaced/angular-qrcode#^6.2.1",
     "angular-activity-monitor": "^1.1.0",
     "angular-chart.js": "^1.1.1",
