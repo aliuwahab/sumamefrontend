@@ -60,7 +60,6 @@
       staff: [
         { field: 'phone_number', friendlyName: 'Phone Number' },
         { field: 'email', friendlyName: 'Email Address' },
-        { field: 'username', friendlyName: 'Username' },
         { field: 'last_name', friendlyName: 'Last Name' },
         { field: 'first_name', friendlyName: 'First Name' },
         { field: 'admin_type', friendlyName: 'Permission Level' },
