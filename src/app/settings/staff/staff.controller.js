@@ -31,7 +31,12 @@ function StaffController($scope, $rootScope, $state, $mdDialog, lodash, Dialog, 
   }
 
   $scope.addStaff = function () {
-    $scope.newStaffMember.username = $scope.newStaffMember.phone_number;
+    if($scope.newStaffMember.email){
+      $scope.newStaffMember.username = $scope.newStaffMember.email;
+    }else {
+      $scope.newStaffMember.username = $scope.newStaffMember.phone_number;
+    }
+
     ValidationService.validate($scope.newStaffMember, 'staff')
     .then(function (result) {
       $scope.addingStaff = true;
