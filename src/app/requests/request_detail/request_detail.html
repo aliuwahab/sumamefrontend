@@ -551,7 +551,7 @@
             <p class="printout-from">From:</p>
             <div ng-if="request.request_type == 'offline_delivery'">
               <h2 class="printout-customer-name">{{request.requester.full_name}}</h2>
-              <p class="printout-destination">{{request.pickup_location_name}}</p>
+              <p class="printout-destination"><span class="printout-destination" ng-if="request.requester.consumer_type == 'business'">{{request.requester.business_name}}, </span> {{request.pickup_location_name}}</p>
             </div>
 
             <div ng-if="request.request_type == 'online_purchase_delivery'">

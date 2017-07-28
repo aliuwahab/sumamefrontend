@@ -25,7 +25,7 @@
                   <p class="printout-from">From:</p>
                   <div ng-if="request.request_type == 'offline_delivery'">
                     <h2 class="printout-customer-name">{{request.requester.full_name}}</h2>
-                    <p class="printout-destination">{{request.pickup_location_name}}</p>
+                    <p class="printout-destination"><span class="printout-destination" ng-if="request.requester.consumer_type == 'business'">{{request.requester.business_name}}, </span> {{request.pickup_location_name}}</p>
                   </div>
 
                   <div ng-if="request.request_type == 'online_purchase_delivery'">
@@ -73,11 +73,11 @@
       <md-button ng-click="closeDialog()" class="md-raised md-danger">
         Cancel
       </md-button>
-      <md-button print-btn printItem="qrcode" class="md-raised md-warn">
+      <!-- <md-button print-btn printItem="qrcode" class="md-raised md-warn">
         Print QR Code Only
-      </md-button>
+      </md-button> -->
       <md-button print-btn printItem="fullPrintout" class="md-raised md-accent">
-        Print Full
+        Print
       </md-button>
     </md-dialog-actions>
   </form>
