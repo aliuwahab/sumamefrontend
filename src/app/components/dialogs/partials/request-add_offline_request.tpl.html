@@ -133,7 +133,12 @@
             </div>
 
             <md-input-container class="md-block">
-              <label>Any additional instructions or package description?</label>
+              <label>Package Description</label>
+              <textarea ng-model="newRequest.package_description" aria-label="package description" rows="5"></textarea>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+              <label>Any additional instructions?</label>
               <textarea ng-model="newRequest.request_additional_description" aria-label="Request Instructions" rows="5"></textarea>
             </md-input-container>
           </wz-step>
