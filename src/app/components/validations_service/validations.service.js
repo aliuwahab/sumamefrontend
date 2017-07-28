@@ -12,6 +12,8 @@
 
     var requiredFields = {
       foreignPurchaseRequest: [
+        { field: 'request_recipient_name', friendlyName: 'Recipient Name'},
+        { field: 'request_recipient_phone_number', friendlyName: 'Recipient Phone Number'},
         { field: 'delivery_location_longitude', friendlyName: 'Delivery Location' },
         { field: 'delivery_location_latitude', friendlyName: 'Delivery Location' },
         { field: 'delivery_location_name', friendlyName: 'Delivery Location' },
@@ -26,6 +28,8 @@
         { field: 'requester_id', friendlyName: 'Customer Name' },
       ],
       otherRequest: [
+        { field: 'request_recipient_name', friendlyName: 'Recipient Name'},
+        { field: 'request_recipient_phone_number', friendlyName: 'Recipient Phone Number'},
         { field: 'delivery_location_longitude', friendlyName: 'Delivery Location' },
         { field: 'delivery_location_latitude', friendlyName: 'Delivery Location' },
         { field: 'delivery_location_name', friendlyName: 'Delivery Location' },
