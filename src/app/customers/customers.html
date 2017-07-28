@@ -1,8 +1,7 @@
 <md-toolbar>
   <div class="md-toolbar-tools">
     <md-button class="md-icon-button" aria-label="Menu Button" hide-gt-md ng-click="onClickMenu();">
-      <md-icon
-        md-svg-icon="assets/icons/menu.svg" aria-label="Menu Icon">
+      <md-icon md-svg-icon="assets/icons/menu.svg" aria-label="Menu Icon">
       </md-icon>
     </md-button>
 
@@ -10,7 +9,8 @@
 
     <i class="material-icons toolbar-search-icon" ng-click="slide=!slide">search</i>
 
-    <md-button ng-if="authenticatedUser.admin_type != 'staff'" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddCustomerDialog($event)">
+    <md-button ng-if="authenticatedUser.admin_type != 'staff'" aria-label="Open phone interactions menu" class="md-raised md-accent"
+      ng-click="showAddCustomerDialog($event)">
       Add New Individual Customer
     </md-button>
   </div>
@@ -32,19 +32,22 @@
 <div class="view-main-container">
 
   <div class="" layout="row">
-    <md-card class="sm-rq-filter-item-card bg-color-shade-1" ng-style="currentView =='app.customers.businesses' && {'border':'3px solid white'}" flex="10" ng-click="changeCustomersTab('app.customers.businesses')">
+    <md-card class="sm-rq-filter-item-card bg-color-shade-1" ng-style="currentView =='app.customers.businesses' && {'border':'3px solid white'}"
+      flex="10" ng-click="changeCustomersTab('app.customers.businesses')">
       <md-card-content>
         <span class="lnr lnr-apartment"></span>
         <h2 class="sm-rq-filter-item-title">Businesses</h2>
       </md-card-content>
     </md-card>
-    <md-card class="sm-rq-filter-item-card bg-color-shade-2" ng-style="currentView =='app.customers.individuals' && {'border':'3px solid white'}" flex="10" ng-click="changeCustomersTab('app.customers.individuals')">
+    <md-card class="sm-rq-filter-item-card bg-color-shade-2" ng-style="currentView =='app.customers.individuals' && {'border':'3px solid white'}"
+      flex="10" ng-click="changeCustomersTab('app.customers.individuals')">
       <md-card-content>
         <span class="lnr lnr-users"></span>
         <h2 class="sm-rq-filter-item-title">Individuals</h2>
       </md-card-content>
     </md-card>
-    <md-card class="sm-rq-filter-item-card bg-color-shade-4" ng-style="currentView =='app.customers.deleted' && {'border':'3px solid white'}" flex="10" ng-click="changeCustomersTab('app.customers.deleted')">
+    <md-card class="sm-rq-filter-item-card bg-color-shade-4" ng-style="currentView =='app.customers.deleted' && {'border':'3px solid white'}"
+      flex="10" ng-click="changeCustomersTab('app.customers.deleted')">
       <md-card-content>
         <span class="lnr lnr-trash"></span>
         <h2 class="sm-rq-filter-item-title">Deleted</h2>
