@@ -44,7 +44,7 @@
 <div class="view-main-container">
 
   <div ng-if="loadingInvoice" layout="row" layout-align="center center" style="min-height: 40vh;">
-    <md-progress-circular md-mode="indeterminate" md-diameter="48"></md-progress-circular>
+    <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
   </div>
 
   <div class="" ng-if="!loadingInvoice">
@@ -90,9 +90,13 @@
                   <h4><span ng-if="$index < 10">0</span>{{$index + 1}}</h4>
                 </div>
                 <div class="invoice-item-description">
-                  <h4>{{item.requester.first_name || 'Unknown'}} {{item.requester.last_name || 'Requester'}}</h4>
+                  <h4>
+                    <span ng-if="item.request_type == 'offline_delivery'">Local Pickup</span>
+                    <span ng-if="item.request_type == 'online_purchase_delivery'">Foreign Purchase</span>
+                    <span ng-if="item.request_type == 'equipment_request'">Equipment Request</span>
+                  </h4>
+                  <p>{{item.created_at | date : 'yyyy'}} | <em>Requested by</em> {{item.requester.first_name || 'Unknown'}} {{item.requester.last_name || 'Requester'}}</p>
                   <p>{{item.pickup_location_name}} - {{item.delivery_location_name}}</p>
-                  <p class="invoice-item-date">24th September, 2017</p>
                 </div>
               </div>
             </md-card-content>
@@ -102,13 +106,13 @@
             <div class="invoice-price-container" flex="50">
               <h3 class="invoice-content-title">Price</h3>
               <div class="invoice-price-content" ng-repeat="item in invoice.invoice_requests">
-                <p>GHS {{item.request_cost}}</p>
+                <p>{{item.request_cost| currency: 'GHS '}}</p>
               </div>
             </div>
             <div class="invoice-total-container" flex="50">
               <h3 class="invoice-content-title">Total</h3>
               <div class="invoice-price-content" ng-repeat="item in invoice.invoice_requests">
-                <p>GHS {{item.request_cost}}</p>
+                <p>{{item.request_cost| currency: 'GHS '}}</p>
               </div>
             </div>
           </md-card>
@@ -138,7 +142,6 @@
                   </div>
                 </div>
               </div>
-
             </md-card-content>
           </md-card>
 
@@ -149,7 +152,7 @@
                   SUB TOTAL:
                 </div>
                 <div class="invoice-inner-value" flex="50">
-                  GHS {{invoice.total_invoice_amount}}
+                  {{invoice.total_invoice_amount | currency: 'GHS '}}
                 </div>
               </div>
               <div class="invoice-inner-line" layout="row">
@@ -173,7 +176,7 @@
                   GRAND TOTAL:
                 </div>
                 <div class="invoice-inner-value" flex="50">
-                  GHS {{invoice.total_invoice_amount}}
+                  {{invoice.total_invoice_amount | currency: 'GHS '}}
                 </div>
               </div>
             </md-card-content>
@@ -193,12 +196,12 @@
         <div class="invoice-bottom-contact-info">
           <div class="invoice-contact-wrapper" layout="row">
             <div class="invoice-contact-info left" flex="33">
-              <p><span><i class="material-icons">location_on</i></span>  19 Banana Street</p>
-              <p><span><i class="material-icons">location_on</i></span>  Ambassadorial Enclave, East Legon</p>
+              <p><span><i class="material-icons">local_phone</i></span>  <b>United States:</b> +1 703 349 4245</p>
+              <p><span><i class="material-icons">local_phone</i></span>  <b>United Kingdom:</b> +44 207 701 0132</p>
             </div>
             <div class="invoice-contact-info middle" flex="33">
-              <p><span><i class="material-icons">local_phone</i></span>  +233 20 796 8538</p>
-              <p><span><i class="material-icons">local_phone</i></span>  +233 20 796 8538</p>
+              <p><span><i class="material-icons">local_phone</i></span>  <b>Ghana:</b> +233 55 403 9876</p>
+              <p><span><i class="material-icons">local_phone</i></span>  <b>UAE:</b> +971 588 929 859</p>
             </div>
             <div class="invoice-contact-info right" flex="33">
               <p><span><i class="material-icons">email</i></span>  info@klloyds.com</p>
