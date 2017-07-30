@@ -22,8 +22,8 @@
     flip-duration="500"
     timing-function="ease-in-out">
         <flippy-front>
-          <div class="sm-staff-img div" ng-if="staffmember.user_profile_image_url" background-img="{{staffmember.user_profile_image_url}}"></div>
-          <img class="sm-staff-img" ng-if="!staffmember.user_profile_image_url" gravatar-src="'staffmember.email'" gravatar-size="200"/>
+          <div class="sm-staff-img staff" ng-if="staffmember.user_profile_image_url" background-img="{{staffmember.user_profile_image_url}}"></div>
+          <img class="sm-staff-img staff" ng-if="!staffmember.user_profile_image_url" gravatar-src="'staffmember.email'" gravatar-size="200"/>
 
           <h2 class="sm-staff-name">{{staffmember.first_name}} {{staffmember.last_name}}</h2>
           <h4 class="sm-staff-title">{{staffmember.user_title || 'Staff Member'}}</h4>
