@@ -66,6 +66,22 @@
                 </ng-map>
               </div>
             </div>
+            <md-input-container layout="column">
+              <md-checkbox class="primary" ng-model="data.reciever_same_as_customer" ng-true-value="1" ng-false-value="0" aria-label="Is this a hazardous substance?">
+                Items will be received by a different person.
+              </md-checkbox>
+            </md-input-container>
+
+            <div layout="row" ng-if="data.reciever_same_as_customer">
+              <md-input-container class="sm-input-container">
+                <label>Enter recipient name</label>
+                <input type="text" ng-model="newRequest.request_recipient_name" aria-label="enter recipient name">
+              </md-input-container>
+
+              <md-input-container class="sm-input-container">
+                <input type="text" ng-intl-tel-input ng-model="newRequest.request_recipient_phone_number" aria-label="enter recipient name">
+              </md-input-container>
+            </div>
           </wz-step>
           <wz-step wz-title="vehicle_type">
             <div class="flex-grid" layout="row">
@@ -117,7 +133,12 @@
             </div>
 
             <md-input-container class="md-block">
-              <label>Any additional instructions or package description?</label>
+              <label>Package Description</label>
+              <textarea ng-model="newRequest.package_description" aria-label="package description" rows="5"></textarea>
+            </md-input-container>
+
+            <md-input-container class="md-block">
+              <label>Any additional instructions?</label>
               <textarea ng-model="newRequest.request_additional_description" aria-label="Request Instructions" rows="5"></textarea>
             </md-input-container>
           </wz-step>

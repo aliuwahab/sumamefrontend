@@ -258,6 +258,13 @@
                         </md-button>
                       </span>
                     </div>
+                    <h3 class="sm-rq-inner-title">Recipient</h3>
+                    <div class="sm-rq-pkg-details-container">
+                      <i class="material-icons">assignment_ind</i> <span class="bold-span">Full Name: </span> {{request.request_recipient_name}}
+                    </div>
+                    <div class="sm-rq-pkg-details-container">
+                      <i class="material-icons">phone</i> <span class="bold-span">Phone Number: </span> {{request.request_recipient_phone_number}}
+                    </div>
                   </div>
                   <div class="" flex="50">
                     <div class="sm-rq-pkg-details-container">
@@ -278,6 +285,11 @@
                 </div>
               </div>
               <div class="sm-request-detail-right" flex="50">
+                <div class="">
+                  <h3 class="sm-rq-inner-title">Package Description</h3>
+                  <div ng-bind-html="request.package_description"></div>
+                  <p ng-if="!request.package_description">No description for this package.</p>
+                </div>
                 <div class="">
                   <h3 class="sm-rq-inner-title">Additional Instructions</h3>
                   <div ng-bind-html="request.request_additional_description"></div>
@@ -367,6 +379,13 @@
                         </span>
                       </span>
                     </div>
+                    <h3 class="sm-rq-inner-title">Recipient</h3>
+                    <div class="sm-rq-pkg-details-container">
+                      <i class="material-icons">assignment_ind</i> <span class="bold-span">Full Name: </span> {{request.request_recipient_name}}
+                    </div>
+                    <div class="sm-rq-pkg-details-container">
+                      <i class="material-icons">phone</i> <span class="bold-span">Phone Number: </span> {{request.request_recipient_phone_number}}
+                    </div>
                   </div>
                   <div class="" flex="50">
                     <div class="sm-rq-pkg-details-container">
@@ -399,6 +418,11 @@
                 </div>
               </div>
               <div class="sm-request-detail-right" flex="50">
+                <div class="">
+                  <h3 class="sm-rq-inner-title">Package Description</h3>
+                  <div ng-bind-html="request.package_description"></div>
+                  <p ng-if="!request.package_description">No description for this package.</p>
+                </div>
                 <div class="">
                   <h3 class="sm-rq-inner-title">Additional Instructions</h3>
                   <div ng-bind-html="request.request_additional_description"></div>
@@ -519,14 +543,26 @@
         <div class="printout-request-info">
           <div class="printout-from-info">
             <p class="printout-to">To:</p>
-            <h2 class="printout-customer-name">{{request.requester.full_name}}</h2>
+            <h2 class="printout-customer-name">{{request.request_recipient_name}}</h2>
             <p class="printout-destination">{{request.delivery_location_name}}</p>
           </div>
 
           <div class="printout-to-info">
             <p class="printout-from">From:</p>
-            <h4 class="printout-from-name">{{request.online_store || request.pickup_location_name}}</h4>
-            <p class="printout-warehouse-name" ng-if="request.request_type == 'online_purchase_delivery'">{{request.pickup_location_name}}</p>
+            <div ng-if="request.request_type == 'offline_delivery'">
+              <h2 class="printout-customer-name">{{request.requester.full_name}}</h2>
+              <p class="printout-destination"><span class="printout-destination" ng-if="request.requester.consumer_type == 'business'">{{request.requester.business_name}}, </span> {{request.pickup_location_name}}</p>
+            </div>
+
+            <div ng-if="request.request_type == 'online_purchase_delivery'">
+              <h2 class="printout-customer-name">{{request.online_store | capitalize: 'first'}}</h2>
+              <p class="printout-destination">Picked Up From: <b>{{request.pickup_location_name}}</b></p>
+            </div>
+
+            <div ng-if="request.request_type == 'equipment_request'">
+              <h2 class="printout-customer-name">Klloyds Engineering Ltd.</h2>
+              <p class="printout-destination">Equipment Moved From: <b>{{request.pickup_location_name}}</b></p>
+            </div>
           </div>
         </div>
         <div class="printout-company-info" layout="column">
@@ -551,7 +587,7 @@
         <h4>ABOUT THIS PACKAGE</h4>
         <p>Please treat with care. In case of complaints or loss, contact Klloyds Engineering Limited via the contact information provided at the bottom left. Scan the QR code below to get more information.</p>
         <p ng-if="request.request_is_hazardous"><b>Important!:</b> This item is hazardous. Treat with care.</p>
-        <qrcode version="12" error-correction-level="M" size="155" data="From: {{request.pickup_location_name}} ----- To: {{request.delivery_location_name}} ----- Customer Name: {{request.requester.first_name}} {{request.requester.last_name}} ----- Business Name: {{request.requester.business_name || 'None'}} ----- Customer Phone Number: {{request.requester.phone_number}}" class="printout-qr-code-image"></qrcode>
+        <qrcode version="10" error-correction-level="M" size="155" data="Package Description: {{request.package_description}}" class="printout-qr-code-image"></qrcode>
       </div>
     </div>
   </md-card-content>

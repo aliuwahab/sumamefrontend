@@ -38,7 +38,6 @@ function WarehousesController($scope, $rootScope, $interval, $state, $mdDialog, 
       $scope.error = error.message;
       $scope.loadingWarehouses = false;
       $scope.processInProgress = false;
-      debugger;
     });
   }
 
@@ -77,9 +76,9 @@ function WarehousesController($scope, $rootScope, $interval, $state, $mdDialog, 
       $scope.selectedWarehouse.location_longitude = $scope.existingWarehouseLocation.longitude;
     }
 
-    $scope.selectedWarehouse.created_by = $scope.selectedWarehouse.created_by.id;
+    $scope.selectedWarehouse.created_by = $scope.selectedWarehouse.created_by;
     $scope.selectedWarehouse.address_id = $scope.selectedWarehouse.id;
-
+    
     ValidationService.validate($scope.selectedWarehouse, 'warehouse')
     .then(function (result) {
       $scope.addingWarehouse = true;
@@ -105,13 +104,13 @@ function WarehousesController($scope, $rootScope, $interval, $state, $mdDialog, 
   $scope.deleteWarehouse = function (warehouse, index) {
     Dialog.confirmAction('Do you want to delete this warehouse?')
     .then(function () {
-
-      $scope.warehouses.data.splice(index, 1);
-      ToastsService.showToast('success', 'Warehouse successfully deleted!');
+      $scope.processInProgress = true;
 
       SettingsService.deleteWarehouse(warehouse.id)
       .then(function (response) {
+        ToastsService.showToast('success', 'Warehouse successfully deleted!');
         reloadWarehouses();
+        $scope.processInProgress = false;
       })
       .catch(function (error) {
         ToastsService.showToast('error',

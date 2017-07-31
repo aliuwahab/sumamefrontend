@@ -32,7 +32,7 @@
             <tr md-row md-select="dessert" md-select-id="name" md-auto-select ng-repeat="invoice in invoices.data">
               <td md-cell>{{invoice.id}}</td>
               <td md-cell>{{invoice.invoice_receiver.business_name}}</td>
-              <td md-cell>GHS {{invoice.total_invoice_amount}}</td>
+              <td md-cell>{{invoice.total_invoice_amount | currency : 'GHS '}}</td>
               <td md-cell>{{invoice.created_at}}</td>
               <td md-cell>
                 <span ng-if="invoice.invoice_paid">PAID</span>
@@ -48,12 +48,12 @@
                   </md-tooltip>
                   <i class="material-icons">check</i>
                 </button>
-                <button class="md-button md-raised md-danger" ng-click="deleteInvoice($event, invoice)">
+                <!-- <button class="md-button md-raised md-danger" ng-click="deleteInvoice($event, invoice)">
                   <md-tooltip md-direction="top">
                     Delete Invoice
                   </md-tooltip>
                   <i class="material-icons">delete_forever</i>
-                </button>
+                </button> -->
               </td>
             </tr>
           </tbody>

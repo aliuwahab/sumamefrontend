@@ -46,7 +46,6 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
     .catch(function (error) {
       ToastsService.showToast('error', error.message);
     });
-
   };
 
   $scope.offlineRequestNextStep = function () {
@@ -55,17 +54,22 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
       if ($scope.mapping.pickupLocation.latitude &&
         $scope.mapping.deliveryLocation.latitude &&
         $scope.data.selectedCustomer) {
-        executeNextStep();
-        PriceCalculator.calculateDeliveryDistance($scope.mapping.pickupLocation,
-        $scope.mapping.deliveryLocation)
-        .then(function (response) {
-          $scope.deliveryDistance = response;
-        })
-        .catch(function (error) {
-          debugger;
-        });
+          if($scope.data.reciever_same_as_customer && (!$scope.newRequest.request_recipient_name || !$scope.newRequest.request_recipient_phone_number)){
+            ToastsService.showToast('error', 'Recipient name and phone number are required');
+            return;
+          }
+          
+          executeNextStep();
+          PriceCalculator.calculateDeliveryDistance($scope.mapping.pickupLocation,
+          $scope.mapping.deliveryLocation)
+          .then(function (response) {
+            $scope.deliveryDistance = response;
+          })
+          .catch(function (error) {
+            debugger;
+          });
       }else {
-        ToastsService.showToast('error', 'Please enter valid locations and CustomersService');
+        ToastsService.showToast('error', 'Please pick a customer and enter valid locations');
       }
     } else if ($scope.offlineWizardCurrentStep == 1) {
       if ($scope.selectedServiceCategory && $scope.deliveryDistance) {
@@ -142,6 +146,11 @@ function OfflineRequestsController($scope, $rootScope, $state, $timeout, $stateP
       $scope.newRequest.delivery_location_name = $scope.mapping.deliveryLocation.name;
       $scope.newRequest.delivery_location_latitude = $scope.mapping.deliveryLocation.latitude;
       $scope.newRequest.delivery_location_longitude = $scope.mapping.deliveryLocation.longitude;
+    }
+
+    if(!$scope.data.reciever_same_as_customer){
+      $scope.newRequest.request_recipient_name = $scope.data.selectedCustomer.full_name;
+      $scope.newRequest.request_recipient_phone_number = $scope.data.selectedCustomer.phone_number;
     }
 
     if ($scope.deliveryDistance && $scope.calculatedFare && $scope.data.selectedCustomer) {

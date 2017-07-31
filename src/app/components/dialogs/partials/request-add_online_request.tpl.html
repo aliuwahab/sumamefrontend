@@ -41,7 +41,7 @@
         <md-input-container style="width:100%;">
           <label>Choose a warehouse location</label>
           <md-select ng-model="selectedWarehouse">
-            <md-option ng-value="warehouse" ng-repeat="warehouse in warehouses.data">{{warehouse.name}}</md-option>
+            <md-option ng-value="warehouse" ng-repeat="warehouse in warehouses">{{warehouse.name}}</md-option>
           </md-select>
         </md-input-container>
 
@@ -103,6 +103,23 @@
           <place-autocomplete label="Where should we deliver your item?" ng-model="mapping.deliveryLocation"></place-autocomplete>
         </md-input-container>
 
+        <md-input-container layout="column">
+          <md-checkbox class="primary" ng-model="data.reciever_same_as_customer" ng-true-value="1" ng-false-value="0" aria-label="Is this a hazardous substance?">
+            Items will be received by a different person.
+          </md-checkbox>
+        </md-input-container>
+
+        <div layout="row" ng-if="data.reciever_same_as_customer">
+          <md-input-container class="sm-input-container">
+            <label>Enter recipient name</label>
+            <input type="text" ng-model="newRequest.request_recipient_name" aria-label="enter recipient name">
+          </md-input-container>
+
+          <md-input-container class="sm-input-container">
+            <input type="text" ng-intl-tel-input ng-model="newRequest.request_recipient_phone_number" aria-label="enter recipient name">
+          </md-input-container>
+        </div>
+
         <md-input-container>
           <md-checkbox class="primary" ng-model="newRequest.request_is_hazardous" ng-true-value="1" ng-false-value="0" aria-label="Is this a hazardous substance?">
             This is a hazardous substance.
@@ -131,6 +148,11 @@
             </div>
           </div>
         </div>
+
+        <md-input-container class="md-block">
+          <label>Package Description</label>
+          <textarea ng-model="newRequest.package_description" aria-label="package description" rows="5"></textarea>
+        </md-input-container>
 
         <h4 class="sm-custom-input-label">Any additional instructions? (Please include a link to the item)</h4>
         <md-input-container class="md-block">

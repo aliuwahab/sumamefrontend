@@ -60,6 +60,11 @@ function OnlineRequestsController($scope, $rootScope, $state, $timeout, $statePa
   ////////////////////// HELPER FUNCTIONS ///////////////////////////
 
   function populateNewOnlineRequestData() {
+    if(!$scope.data.reciever_same_as_customer){
+      $scope.newRequest.request_recipient_name = $scope.data.selectedCustomer.full_name;
+      $scope.newRequest.request_recipient_phone_number = $scope.data.selectedCustomer.phone_number;
+    }
+
     if ($scope.selectedWarehouse) {
       $scope.newRequest.pickup_location_name = $scope.selectedWarehouse.name;
       $scope.newRequest.pickup_location_latitude = $scope.selectedWarehouse.location_latitude;

@@ -128,6 +128,8 @@ function EquipmentRequestsController($scope, $rootScope, $state, $timeout, $stat
 
     if ($scope.data.selectedCustomer) {
       $scope.newRequest.requester_id = $scope.data.selectedCustomer.id;
+      $scope.newRequest.request_recipient_name = $scope.data.selectedCustomer.full_name;
+      $scope.newRequest.request_recipient_phone_number = $scope.data.selectedCustomer.phone_number;
     }
   }
 

@@ -8,6 +8,7 @@
             <th md-column>ACCOUNT NUMBER</th>
             <th md-column><span>BUSINESS NAME</span></th>
             <th md-column>PHONE NUMBER</th>
+            <th md-column>INVOICING PERIOD</th>
             <th md-column></th>
           </tr>
         </thead>
@@ -16,6 +17,16 @@
             <td md-cell>{{customer.id}}</td>
             <td md-cell>{{customer.business_name || "Unknown Business"}}</td>
             <td md-cell>{{customer.phone_number}}</td>
+            <td md-cell>
+              <md-select ng-model="customer.choice_of_invoice_duration" ng-change="changeInvoicingPeriod(customer, '{{customer.choice_of_invoice_duration}}')" aria-label="customer invoicing duration">
+                <md-option value="per_request">Per Request</md-option>
+                <md-option value="weekly">Weekly</md-option>
+                <md-option value="monthly">Monthly</md-option>
+                <md-option value="quaterly">Quaterly</md-option>
+                <md-option value="half_year">Semi Annually</md-option>
+                <md-option value="yearly">Annually</md-option>
+              </md-select>
+            </td>
             <td md-cell>
               <button class="md-button md-raised md-primary" ng-click="showCustomerDialog($event, customer, 'view_customer')">
                 <md-tooltip md-direction="top">

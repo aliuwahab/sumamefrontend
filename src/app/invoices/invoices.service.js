@@ -21,7 +21,7 @@ function InvoicesService($http, AuthService, CacheFactory, ENV) {
 
   function getAllInvoices(params) {
     var queryOptions = $.param(params);
-    var cache = 'invoices?page=' + params.page + 'limit=' + params.limit;
+    var cache = 'invoices?' + queryOptions;
 
     if (!CacheFactory.get(cache)) {
       CacheFactory(cache);

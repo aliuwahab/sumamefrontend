@@ -16,6 +16,7 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
     addCustomer: addCustomer,
     deleteCustomer: deleteCustomer,
     restoreDeletedCustomer: restoreDeletedCustomer,
+    changeInvoicingPeriod: changeInvoicingPeriod,
     searchCustomers: searchCustomers,
   };
 
@@ -69,6 +70,11 @@ function CustomersService($http, AuthService, CacheFactory, ENV) {
   function restoreDeletedCustomer(data) {
     var params = $.param(data);
     return $http.post(apiBaseURL + '/restore/deleted/account?' + authDataString + '&' + params);
+  }
+
+  function changeInvoicingPeriod(data) {
+    var params = $.param(data);
+    return $http.post(apiBaseURL + '/change/consumer/payment/duration?' + authDataString + '&' + params);
   }
 
   function searchCustomers(params) {
