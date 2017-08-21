@@ -14,7 +14,7 @@
       </md-tooltip>
     </md-button>
 
-    <md-menu>
+    <md-menu ng-if="authenticatedUser.admin_type == 'super'">
       <md-button aria-label="Open phone interactions menu" class="md-raised md-warn" ng-click="openMenu($mdMenu, $event)">
         <i class="material-icons">cloud_download</i>
         <md-tooltip md-direction="bottom">

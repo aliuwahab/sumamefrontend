@@ -8,7 +8,7 @@
 
     <span flex></span>
 
-    <md-button aria-label="Open phone interactions menu" class="md-raised md-warn" ng-csv="exportToCSV()" lazy-load="true" csv-label="true" filename="klloyds_all_vehicles.csv">
+    <md-button ng-if="authenticatedUser.admin_type == 'super'" aria-label="Open phone interactions menu" class="md-raised md-warn" ng-csv="exportToCSV()" lazy-load="true" csv-label="true" filename="klloyds_all_vehicles.csv">
       <i class="material-icons">cloud_download</i>
       <md-tooltip md-direction="bottom">
         Export vehicles to excel
