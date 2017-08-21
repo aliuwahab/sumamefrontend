@@ -6,7 +6,7 @@
     .controller('CustomersController', CustomersController);
 
   /** @ngInject */
-  function CustomersController($scope, $rootScope, $state, CustomersService, Dialog, ToastsService,
+  function CustomersController($scope, $q, $rootScope, $state, CustomersService, Dialog, ToastsService,
     CachingService, localStorageService, ValidationService) {
 
     var currentCustomerType;
@@ -210,6 +210,38 @@
           // Dialog has been canccelled
         });
     };
+
+    $scope.exportToCSV = function(customersType) {
+      var params = angular.copy($scope.filterParams);
+      params.limit = 1000;
+      var deferred = $q.defer();
+      $scope.processInProgress = true;
+      var dataToExport;
+      
+      CustomersService.getAllCustomers(params, customersType)
+      .then(function (response) {
+        switch (customersType) {
+          case 'individualCustomers':
+            dataToExport = response.data.data.all_consumers.data;
+            break;
+          case 'businessCustomers':
+            dataToExport = response.data.data.business_consumers.data;
+            break;
+          default:
+            // default
+        }
+
+        $scope.processInProgress = false;
+        deferred.resolve(dataToExport);
+      })
+      .catch(function (error) {;
+        $scope.processInProgress = false;
+        ToastsService.showToast('error', 'There was an error in the export process');
+        deferred.reject('There was an error generating data');
+      });
+  
+      return deferred.promise;
+    }
 
     // SHOW CUSTOMER DIALOG
     $scope.showCustomerDialog = function (ev, customer, dialog) {

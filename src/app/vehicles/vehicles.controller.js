@@ -147,6 +147,28 @@ function VehiclesController($scope, $q, $timeout, $rootScope, $state, Dialog, Ve
     });
   };
 
+  $scope.exportToCSV = function() {
+    var params = angular.copy($scope.filterParams);
+    params.limit = 1000;
+    $scope.processInProgress = true;
+
+    var deferred = $q.defer();
+    
+    VehiclesService.getAllVehicles(params)
+    .then(function (response) {
+      var dataToExport = response.data.data.all_vehicles.data;
+      $scope.processInProgress = false;
+      deferred.resolve(dataToExport);
+    })
+    .catch(function (error) {
+      $scope.processInProgress = false;
+      ToastsService.showToast('error', 'There was an error in the export process');
+      deferred.reject('There was an error generating data');
+    });
+
+    return deferred.promise;
+  }
+
   ///////////////////// HELPER FUNCTIONS ///////////////////////
 
   // SHOW ADD VEHICLE DIALOG

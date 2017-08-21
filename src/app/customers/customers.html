@@ -7,7 +7,42 @@
 
     <span flex></span>
 
-    <i class="material-icons toolbar-search-icon" ng-click="slide=!slide">search</i>
+    <md-button aria-label="Open phone interactions menu" class="md-raised md-primary" ng-click="slide=!slide">
+      <i class="material-icons">search</i>
+      <md-tooltip md-direction="bottom">
+        Export equipment to excel
+      </md-tooltip>
+    </md-button>
+
+    <md-menu>
+      <md-button aria-label="Open phone interactions menu" class="md-raised md-warn" ng-click="openMenu($mdMenu, $event)">
+        <i class="material-icons">cloud_download</i>
+        <md-tooltip md-direction="bottom">
+          Export customers to excel
+        </md-tooltip>
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-csv="exportToCSV('businessCustomers')" lazy-load="true" csv-label="true" filename="klloyds_business_customers.csv">
+            <span class="lnr lnr-apartment"></span>
+            Export Business Customers
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-csv="exportToCSV('individualCustomers')" lazy-load="true" csv-label="true" filename="klloyds_individual_customers.csv">
+            <span class="lnr lnr-users"></span>
+            Export Individual Customers
+          </md-button>
+        </md-menu-item>
+        <md-menu-divider></md-menu-divider>
+        <md-menu-item>
+          <md-button ng-csv="exportToCSV('all')" lazy-load="true" csv-label="true" filename="klloyds_all_customers.csv">
+            <span class="lnr lnr-text-align-justify"></span>
+            Export All Drivers
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
 
     <md-button ng-if="authenticatedUser.admin_type != 'staff'" aria-label="Open phone interactions menu" class="md-raised md-accent"
       ng-click="showAddCustomerDialog($event)">

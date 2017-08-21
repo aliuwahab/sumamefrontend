@@ -8,7 +8,21 @@
 
     <span flex></span>
 
-    <i class="material-icons toolbar-search-icon" ng-click="slide=!slide">search</i>
+    
+
+    <md-button aria-label="Open phone interactions menu" class="md-raised md-primary" ng-click="slide=!slide">
+      <i class="material-icons">search</i>
+      <md-tooltip md-direction="bottom">
+        Search for equipment
+      </md-tooltip>
+    </md-button>
+
+    <md-button aria-label="Open phone interactions menu" class="md-raised md-warn" ng-csv="exportToCSV()" lazy-load="true" csv-label="true" filename="klloyds_all_rental_equipment.csv">
+      <i class="material-icons">cloud_download</i>
+      <md-tooltip md-direction="bottom">
+        Export equipment to excel
+      </md-tooltip>
+    </md-button>
 
     <md-button ng-if="authenticatedUser.admin_type != 'staff'" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddEquipmentDialog($event)">
       Add New Equipment
