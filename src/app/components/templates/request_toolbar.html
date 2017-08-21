@@ -8,6 +8,32 @@
 
     <span flex></span>
 
+    <md-menu>
+      <md-button aria-label="Open phone interactions menu" class="md-raised md-warn" ng-click="openMenu($mdMenu, $event)">
+        <i class="material-icons">cloud_download</i>
+        <md-tooltip md-direction="bottom">
+          Export requests to excel
+        </md-tooltip>
+      </md-button>
+      <md-menu-content width="4">
+        <div ng-repeat="type in $parent.requestTypes">
+          <md-menu-item>
+            <md-button ng-csv="exportToCSV(type)" lazy-load="true" csv-label="true" filename="klloyds_{{type.name}}_requests.csv">
+              <span class="lnr {{type.icon}}"></span>
+                  Export {{type.name}} Requests
+            </md-button>
+          </md-menu-item>
+        </div>
+        <md-menu-divider></md-menu-divider>
+        <md-menu-item>
+          <md-button ng-csv="exportToCSV('all')" lazy-load="true" csv-label="true" filename="klloyds_all_requests.csv">
+            <span class="lnr lnr-text-align-justify"></span>
+               Export All Requests
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
+
     <md-menu ng-if="authenticatedUser.admin_type != 'staff'">
       <md-button aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="openMenu($mdMenu, $event)">
         Add New Request
