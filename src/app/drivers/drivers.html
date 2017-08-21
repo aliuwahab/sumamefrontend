@@ -8,7 +8,39 @@
 
     <span flex></span>
 
-    <i class="material-icons toolbar-search-icon" ng-click="slide=!slide">search</i>
+    <md-button aria-label="search drivers" class="md-raised md-primary" ng-click="slide=!slide">
+      <i class="material-icons">search</i>
+    </md-button>
+
+    <md-menu>
+      <md-button aria-label="Open phone interactions menu" class="md-raised md-warn" ng-click="openMenu($mdMenu, $event)">
+        <i class="material-icons">cloud_download</i>
+        <md-tooltip md-direction="bottom">
+          Export drivers to excel
+        </md-tooltip>
+      </md-button>
+      <md-menu-content width="4">
+        <md-menu-item>
+          <md-button ng-csv="exportToCSV('1')" lazy-load="true" csv-label="true" filename="klloyds_approved_drivers.csv">
+            <span class="lnr lnr-thumbs-up"></span>
+            Export Approved Drivers
+          </md-button>
+        </md-menu-item>
+        <md-menu-item>
+          <md-button ng-csv="exportToCSV('0')" lazy-load="true" csv-label="true" filename="klloyds_unapproved_drivers.csv">
+            <span class="lnr lnr-hourglass"></span>
+            Export Unapproved Drivers
+          </md-button>
+        </md-menu-item>
+        <md-menu-divider></md-menu-divider>
+        <md-menu-item>
+          <md-button ng-csv="exportToCSV('all')" lazy-load="true" csv-label="true" filename="klloyds_all_drivers.csv">
+            <span class="lnr lnr-text-align-justify"></span>
+            Export All Drivers
+          </md-button>
+        </md-menu-item>
+      </md-menu-content>
+    </md-menu>
 
     <md-button ng-if="authenticatedUser.admin_type != 'staff'" aria-label="Open phone interactions menu" class="md-raised md-accent" ng-click="showAddDriverDialog($event)">
       Add New Driver

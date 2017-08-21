@@ -39,6 +39,7 @@
       'ui.tinymce',
       'ngIntlTelInput',
       'ngWebworker',
+      'ngCsv',
     ]);
 
 })();
