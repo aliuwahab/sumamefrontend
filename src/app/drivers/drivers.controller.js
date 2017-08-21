@@ -6,7 +6,7 @@ angular
     .controller('DriversController', DriversController);
 
 /** @ngInject */
-function DriversController($scope, $rootScope, $timeout, $state, Dialog, DriversService,
+function DriversController($scope, $q, $rootScope, $timeout, $state, Dialog, DriversService,
   ToastsService, CachingService, UploadService, NgMap, localStorageService, $window,
   ValidationService) {
 
@@ -42,7 +42,7 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
       $scope.filterParams.driver_approved = approvalStatus;
       scopeVarName = 'drivers' + approvalStatus;
     }
-
+    
     $scope.requestsPromise = DriversService.getAllDrivers($scope.filterParams)
     .then(function (response) {
       $scope[scopeVarName] = response.data.data.all_drivers;
@@ -313,6 +313,33 @@ function DriversController($scope, $rootScope, $timeout, $state, Dialog, Drivers
       // Dialog has been canccelled
     });
   };
+
+  $scope.exportToCSV = function(itemFilter) {
+    var params = angular.copy($scope.filterParams);
+
+    params.driver_approved = itemFilter;
+    params.limit = 1000;
+
+    itemFilter == 'all' ? delete params.driver_approved : false;
+
+    $scope.processInProgress = true;
+
+    var deferred = $q.defer();
+    
+    DriversService.getAllDrivers(params)
+    .then(function (response) {
+      var dataToExport = response.data.data.all_drivers.data;
+      $scope.processInProgress = false;
+      deferred.resolve(dataToExport);
+    })
+    .catch(function (error) {;
+      $scope.processInProgress = false;
+      ToastsService.showToast('error', 'There was an error in the export process');
+      deferred.reject('There was an error generating data');
+    });
+
+    return deferred.promise;
+  }
 
   ///////////////////// HELPER FUNCTIONS ///////////////////////
 

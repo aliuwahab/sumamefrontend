@@ -6,7 +6,7 @@ angular
     .controller('InvoicesController', InvoicesController);
 
 /** @ngInject */
-function InvoicesController($scope, $rootScope, $state, Dialog, InvoicesService,
+function InvoicesController($scope, $q, $rootScope, $state, Dialog, InvoicesService,
   ToastsService) {
 
   activate();
@@ -45,6 +45,28 @@ function InvoicesController($scope, $rootScope, $state, Dialog, InvoicesService,
       debugger;
     });
   };
+
+  $scope.exportToCSV = function() {
+    var params = angular.copy($scope.filterParams);
+    params.limit = 1000;
+    $scope.processInProgress = true;
+
+    var deferred = $q.defer();
+    
+    InvoicesService.getAllInvoices(params)
+    .then(function (response) {
+      var dataToExport = response.data.data.invoices.data;
+      $scope.processInProgress = false;
+      deferred.resolve(dataToExport);
+    })
+    .catch(function (error) {
+      $scope.processInProgress = false;
+      ToastsService.showToast('error', 'There was an error in the export process');
+      deferred.reject('There was an error generating data');
+    });
+
+    return deferred.promise;
+  }
 
   ///////////////////// HELPER FUNCTIONS ///////////////////////
 

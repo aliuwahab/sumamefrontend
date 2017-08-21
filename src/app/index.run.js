@@ -153,6 +153,10 @@
       $mdDialog.hide();
     };
 
+    $rootScope.openMenu = function($mdMenu, ev) {
+      $mdMenu.open(ev);
+    };
+
     $rootScope.tableOptions = {
       rowSelection: true,
       decapitate: false,

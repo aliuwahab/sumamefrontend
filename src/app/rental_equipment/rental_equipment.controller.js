@@ -6,7 +6,7 @@ angular
     .controller('EquipmentController', EquipmentController);
 
 /** @ngInject */
-function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentService, UploadService,
+function EquipmentController($scope, $q, $rootScope, $state, Dialog, EquipmentService, UploadService,
   CachingService, ToastsService, ValidationService) {
 
   activate();
@@ -158,6 +158,28 @@ function EquipmentController($scope, $rootScope, $state, Dialog, EquipmentServic
       // Dialog has been canccelled
     });
   };
+
+  $scope.exportToCSV = function() {
+    var params = angular.copy($scope.filterParams);
+    params.limit = 1000;
+    $scope.processInProgress = true;
+
+    var deferred = $q.defer();
+    
+    EquipmentService.getAllEquipment(params)
+    .then(function (response) {
+      var dataToExport = response.data.data.rental_equipment.data;
+      $scope.processInProgress = false;
+      deferred.resolve(dataToExport);
+    })
+    .catch(function (error) {
+      $scope.processInProgress = false;
+      ToastsService.showToast('error', 'There was an error in the export process');
+      deferred.reject('There was an error generating data');
+    });
+
+    return deferred.promise;
+  }
 
   ///////////////////// HELPER FUNCTIONS ///////////////////////
 

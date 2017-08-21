@@ -6,13 +6,26 @@ angular
     .controller('RequestsController', RequestsController);
 
 /** @ngInject */
-function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, Dialog,
+function RequestsController($scope, $q, $rootScope, $state, $timeout, $stateParams, Dialog,
   ToastsService, RequestsService, NgMap, WizardHandler, PriceCalculator, CachingService,
   SettingsService, EquipmentService, localStorageService, ngAudio, CustomersService, ENV) {
 
   var requestsName;
   var promiseName;
   var limit = localStorage.getItem('tablePageLimit') || 20;
+  $scope.requestTypes = [
+    {name: 'Pending', status: 'pending', param: 'request_status', icon: 'lnr-clock'},
+    {name: 'Assigned', status: 'assigned', param: 'request_status', icon: 'lnr-sync'},
+    {name: 'In-Progress', status: 'delivery-in-progress', param: 'request_status', icon: 'lnr-rocket'},
+    {name: 'Declined', status: 'declined', param: 'request_status', icon: 'lnr-warning'},
+    {name: 'Completed', status: 'completed', param: 'request_status', icon: 'lnr-thumbs-up'},
+    {name: 'Local', status: 'offline_delivery', param: 'request_type', icon: 'lnr-map-marker'},
+    {name: 'Foreign', status: 'online_purchase_delivery', param: 'request_type', icon: 'lnr-earth'},
+    {name: 'Equipment', status: 'equipment_request', param: 'request_type', icon: 'lnr-train'},
+    // {name: 'Business', status: 'business', param: 'request_status', icon: 'lnr-apartment'},
+    // {name: 'Individual', status: 'individual', param: 'request_status', icon: 'lnr-users'},
+    {name: 'Cancelled', status: 'cancelled', param: 'request_status', icon: 'lnr-cross-circle'},
+  ]
 
   activate();
 
@@ -180,6 +193,38 @@ function RequestsController($scope, $rootScope, $state, $timeout, $stateParams, 
       $scope.error = error.message;
       debugger;
     });
+  }
+
+  $scope.exportToCSV = function(type) {
+    var params = angular.copy($scope.filterParams);
+    params.limit = 1000;
+    var deferred = $q.defer();
+    $scope.processInProgress = true;
+
+    if (type.param == 'request_status') {
+      params.request_status = type.status;
+      delete params.request_type;
+    }else if (type.param == 'request_type') {
+      params.request_type = type.status;
+      delete params.request_status;
+    }else if (type == 'all') {
+      delete params.request_status;
+      delete params.request_type;
+    }
+    
+    RequestsService.getRequests(params)
+    .then(function (response) {
+      var dataToExport = response.data.data.all_request.data;
+      $scope.processInProgress = false;
+      deferred.resolve(dataToExport);
+    })
+    .catch(function (error) {;
+      $scope.processInProgress = false;
+      ToastsService.showToast('error', 'There was an error in the export process');
+      deferred.reject('There was an error generating data');
+    });
+
+    return deferred.promise;
   }
 
   //////////// PUSHER BINDINGS /////////////////
