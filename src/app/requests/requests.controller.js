@@ -211,7 +211,7 @@ function RequestsController($scope, $q, $rootScope, $state, $timeout, $statePara
       delete params.request_status;
       delete params.request_type;
     }
-    
+
     RequestsService.getRequests(params)
     .then(function (response) {
       var dataToExport = response.data.data.all_request.data;
