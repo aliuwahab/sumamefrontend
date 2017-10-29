@@ -15,7 +15,7 @@
               <th md-column><span>CUSTOMER NAME</span></th>
               <th md-column>PICKUP FROM</th>
               <th md-column>DELIVER TO</th>
-              <th md-column>REQUEST STATUS</th>
+              <th md-column>PAYMENT STATUS</th>
               <th md-column></th>
             </tr>
           </thead>
@@ -27,18 +27,21 @@
                 <span ng-if="request.requester.consumer_type != 'individual'">{{request.requester.business_name || 'Undetermined Business'}}</span>
               </td>
               <td md-cell>
-                {{request.pickup_location_name | characters:25}}
+                {{request.pickup_location_name | characters:20}}
                 <md-tooltip md-direction="bottom">
                   {{request.pickup_location_name}}
                 </md-tooltip>
               </td>
               <td md-cell>
-                {{request.delivery_location_name | characters:25}}
+                {{request.delivery_location_name | characters:20}}
                 <md-tooltip md-direction="bottom">
                   {{request.pickup_location_name}}
                 </md-tooltip>
               </td>
-              <td md-cell>{{request.request_status}}</td>
+              <td md-cell>
+                <span ng-if="request.request_cost_is_paid">PAID</span>
+                <span ng-if="!request.request_cost_is_paid">UNPAID</span>
+              </td>
               <td md-cell>
                 <md-button class="md-raised md-primary" href="#requests/{{request.id}}" aria-label="description" md-ripple-size="full">
                   <i class="material-icons">remove_red_eye</i>

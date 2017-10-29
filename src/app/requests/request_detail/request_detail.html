@@ -136,7 +136,8 @@
                         <i class="material-icons">payment</i> <span class="bold-span">Total Cost:
                           <span ng-if="!showInput">GHS {{request.request_cost | number:2}}</span>
                           <span ng-if="showInput"> <input class="sm-rq-cost-input" type="text" ng-model="newRequestData.new_request_cost"> </span>
-                          <span>
+                          <span ng-if="request.request_cost_is_paid"><img src="assets/icons/paid.svg" alt="PAID" height="40px" style="margin-bottom:-15px;"></span>
+                          <span ng-if="!request.request_cost_is_paid">
                             <md-button class="sm-rq-sms-button" aria-label="description" ng-show="!showInput" ng-click="showInput = true">
                               <i class="material-icons sm-rq-message-icon">edit</i>
                               <md-tooltip md-direction="bottom">
@@ -240,7 +241,8 @@
                       <span class="bold-span">Total Cost: </span>
                       <span ng-if="!showInput">GHS {{request.request_cost | number:2}}</span>
                       <span ng-if="showInput"> <input class="sm-rq-cost-input" type="text" ng-model="newRequestData.new_request_cost"> </span>
-                      <span>
+                      <span ng-if="request.request_cost_is_paid"><img src="assets/icons/paid.svg" alt="PAID" height="40px" style="margin-bottom:-15px;"></span>
+                      <span ng-if="!request.request_cost_is_paid">
                         <md-button class="sm-rq-sms-button" aria-label="description" ng-show="!showInput" ng-click="showInput = true">
                           <i class="material-icons sm-rq-message-icon">edit</i>
                           <md-tooltip md-direction="bottom">
@@ -358,7 +360,8 @@
                     <div class="sm-rq-pkg-details-container">
                       <i class="material-icons">payment</i> <span class="bold-span">Delivery Cost: </span>
                       <span ng-if="!showInput">{{request.item_cost_currency}} {{request.request_cost | number:2}}</span>
-                      <span>
+                      <span ng-if="request.request_cost_is_paid"><img src="assets/icons/paid.svg" alt="PAID" height="40px" style="margin-bottom:-15px;"></span>
+                      <span ng-if="!request.request_cost_is_paid">
                         <span ng-if="showInput"> <input class="sm-rq-cost-input" type="text" ng-model="newRequestData.new_request_cost"> </span>
                         <span ng-if="authenticatedUser.admin_type == 'super'">
                           <md-button class="sm-rq-sms-button" aria-label="description" ng-show="!showInput" ng-click="showInput = true">
